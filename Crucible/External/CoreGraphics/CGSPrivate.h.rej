@@ -1,0 +1,88 @@
+***************
+*** 13,18 ****
+  //    Tony Arnold: Workspaces notifications enum filters
+  //
+  //  Changes:
+  //    2.2 - Moved back to CGSPrivate, added more enums to the CGSConnectionNotifyEvent
+  //    2.1 - Added spaces notifications
+  //    2.0 - Original Release
+--- 13,19 ----
+  //    Tony Arnold: Workspaces notifications enum filters
+  //
+  //  Changes:
++ //    2.3 - Added hotkeys operating mode access
+  //    2.2 - Moved back to CGSPrivate, added more enums to the CGSConnectionNotifyEvent
+  //    2.1 - Added spaces notifications
+  //    2.0 - Original Release
+***************
+*** 246,272 ****
+    
+    // For spaces notifications: CGSRegisterConnectionNotifyProc(_CGSDefaultConnection(), spacesCallback, 1401, (void*)userInfo);
+    
+-   extern CGError CGSRegisterConnectionNotifyProc(const CGSConnection
+-                                                  cid, CGConnectionNotifyProc function, CGSConnectionNotifyEvent event,
+-                                                  void* userParameter);
+-   
+  # pragma mark Miscellaneous
+    
+-   // Regions
+-   typedef void *CGSRegionRef;
+-   extern CGError CGSNewRegionWithRect(CGRect const *inRect, CGSRegionRef *outRegion);
+-   extern CGError CGSNewEmptyRegion(CGSRegionRef *outRegion);
+-   extern CGError CGSReleaseRegion(CGSRegionRef region);
+    
+-   // Creating Windows
+-   extern CGError CGSNewWindowWithOpaqueShape(CGSConnection cid, int always2, float x, float y, CGSRegionRef shape, CGSRegionRef opaqueShape, int unknown1, void *unknownPtr, int always32, CGSWindowID *outWID);
+-   extern CGError CGSReleaseWindow(CGSConnection cid, CGSWindowID wid);
+-   extern CGContextRef CGWindowContextCreate(CGSConnection cid, CGSWindowID wid, void *unknown);
+    
+-   // Values
+-   extern int CGSIntegerValue(CGSValue intVal);
+-   extern void *CGSReleaseGenericObj(void*);
+  
+  // Deprecated in 10.5
+  extern CGSValue CGSCreateCStringNoCopy(const char *str); //Normal CFStrings will work
+  extern CGSValue CGSCreateCString(const char* str);
+--- 247,288 ----
+    
+    // For spaces notifications: CGSRegisterConnectionNotifyProc(_CGSDefaultConnection(), spacesCallback, 1401, (void*)userInfo);
+    
++ extern CGError CGSRegisterConnectionNotifyProc(const CGSConnection cid,
++                                                CGConnectionNotifyProc function,
++                                                CGSConnectionNotifyEvent event,
++                                                void* userParameter);
++ 
++ #pragma mark Hotkeys
++     
++ typedef enum {
++     CGSGlobalHotKeyEnable = 0,
++     CGSGlobalHotKeyDisable = 1,
++ } CGSGlobalHotKeyOperatingMode;
++     
++ extern CGError CGSGetGlobalHotKeyOperatingMode(CGSConnection connection, CGSGlobalHotKeyOperatingMode *mode);
++     
++ extern CGError CGSSetGlobalHotKeyOperatingMode(CGSConnection connection, CGSGlobalHotKeyOperatingMode mode);
++     
+  # pragma mark Miscellaneous
+    
++ // Regions
++ typedef void *CGSRegionRef;
++ extern CGError CGSNewRegionWithRect(CGRect const *inRect, CGSRegionRef *outRegion);
++ extern CGError CGSNewEmptyRegion(CGSRegionRef *outRegion);
++ extern CGError CGSReleaseRegion(CGSRegionRef region);
+    
++ // Creating Windows
++ extern CGError CGSNewWindowWithOpaqueShape(CGSConnection cid, int always2, float x, float y, CGSRegionRef shape, CGSRegionRef opaqueShape, int unknown1, void *unknownPtr, int always32, CGSWindowID *outWID);
++ extern CGError CGSReleaseWindow(CGSConnection cid, CGSWindowID wid);
++ extern CGContextRef CGWindowContextCreate(CGSConnection cid, CGSWindowID wid, void *unknown);
+    
++ // Values
++ extern int CGSIntegerValue(CGSValue intVal);
++ extern void *CGSReleaseGenericObj(void*);
+  
++ // Contexts
++ extern void CGContextSetCompositeOperation(CGContextRef context, int unknown);
++     
+  // Deprecated in 10.5
+  extern CGSValue CGSCreateCStringNoCopy(const char *str); //Normal CFStrings will work
+  extern CGSValue CGSCreateCString(const char* str);

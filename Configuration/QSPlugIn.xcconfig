@@ -1,0 +1,8 @@
+WRAPPER_EXTENSION = qsplugin
+INFOPLIST_PREPROCESS = YES
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+GCC_PREFIX_HEADER = $(QS_SOURCE_ROOT)/Configuration/QSPlugIn_Prefix.pch
+OTHER_LDFLAGS = -framework QSElements -framework QSCrucible -undefined dynamic_lookup
+BUNDLE_LOADER = $(QS_APP_CONTENTS_FOLDER)/MacOS/Quicksilver
+
+

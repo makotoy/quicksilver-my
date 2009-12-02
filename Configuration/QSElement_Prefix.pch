@@ -1,0 +1,11 @@
+//
+// Prefix header for all source files of the 'QSCubeInterfacePlugIn' target in the 'QSCubeInterfacePlugIn' project
+//
+
+#ifdef __OBJC__
+#import <Cocoa/Cocoa.h>
+#import <QSElements/QSElements.h>
+#import <QSCrucible/QSCrucible.h>
+#endif
+
+#define QSAlchemy TRUE
