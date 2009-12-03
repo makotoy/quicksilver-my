@@ -1,0 +1,313 @@
+<element id="com.QuickSilver.element.iTunes" name="iTunes Module" version="01">
+  <info>
+    <category>Applications</category>
+    <category>Music</category>
+    <image>com.apple.iTunes</image>
+  </info>
+  <requirements>
+  </requirements>
+  <extensions xmlns:qs="com.blacktree">
+    <extension point="com.blacktree.catalog.presets">
+      <catalog-preset name="iTunes" id="QSiTunesGroup">
+		<plist version="1.0">
+		  <dict>
+			<key>ID</key>
+			<string>QSPresetiTunesGroup</string>
+			<key>name</key>
+			<string>iTunes</string>
+			<key>icon</key>
+			<string>com.apple.iTunes</string>
+			<key>requiresBundle</key>
+			<string>com.apple.iTunes</string>
+			<key>source</key>
+			<string>QSGroupObjectSource</string>
+			<key>children</key>
+			<array>
+				<dict>
+					<key>ID</key>
+					<string>QSPresetiTunesPlaylists</string>
+					<key>name</key>
+					<string>iTunes Playlists</string>
+					<key>enabled</key>
+					<true/>
+					<key>source</key>
+					<string>QSiTunesPlaylistSource</string>
+				  </dict>
+				  <dict>
+					<key>ID</key>
+					<string>QSPresetiTunesTracks</string>
+					<key>name</key>
+					<string>iTunes Tracks</string>
+					<key>enabled</key>
+					<false/>
+					<key>source</key>
+					<string>QSiTunesTrackSource</string>
+				  </dict>
+			</array>
+		</dict>
+		</plist>
+      </catalog-preset>
+	</extension>
+    <extension point="com.blacktree.resources.images">
+      <image-resource id="QSiTunesPlaylistType">
+		<plist version="1.0">
+		  <dict>
+			<key>bundle</key>
+			<string>com.QuickSilver.element.iTunes</string>
+			<key>resource</key>
+			<string>iTunesPlaylistIcon.icns</string>
+		  </dict>
+		</plist>
+      </image-resource>
+      <image-resource id="QSiTunesTrackType">
+		<plist version="1.0">
+		  <dict>
+			<key>bundle</key>
+			<string>com.QuickSilver.element.iTunes</string>
+			<key>resource</key>
+			<string>iTunesAlbumBrowserIcon.icns</string>
+		  </dict>
+		</plist>
+      </image-resource>
+      <image-resource id="QSiTuesNextSongCommand">
+	<plist version="1.0">
+	  <dict>
+	    <key>bundle</key>
+	    <string>com.QuickSilver.element.iTunes</string>
+	    <key>resource</key>
+	    <string>Next Song.icns</string>
+	  </dict>
+	</plist>
+      </image-resource>
+      <image-resource id="QSiTuesPauseCommand">
+	<plist version="1.0">
+	  <dict>
+	    <key>bundle</key>
+	    <string>com.QuickSilver.element.iTunes</string>
+	    <key>resource</key>
+	    <string>Pause.icns</string>
+	  </dict>
+	</plist>
+      </image-resource>
+      <image-resource id="QSiTuesPlayCommand">
+	<plist version="1.0">
+	  <dict>
+	    <key>bundle</key>
+	    <string>com.QuickSilver.element.iTunes</string>
+	    <key>resource</key>
+	    <string>Play.icns</string>
+	  </dict>
+	</plist>
+      </image-resource>
+      <image-resource id="QSiTunesPlayInITunesAction">
+	<plist version="1.0">
+	  <dict>
+	    <key>bundle</key>
+	    <string>com.QuickSilver.element.iTunes</string>
+	    <key>resource</key>
+	    <string>Play.icns</string>
+	  </dict>
+	</plist>
+      </image-resource>
+      <image-resource id="QSiTunesShufflePlaylistAction">
+	<plist version="1.0">
+	  <dict>
+	    <key>bundle</key>
+	    <string>com.QuickSilver.element.iTunes</string>
+	    <key>resource</key>
+	    <string>Play.icns</string>
+	  </dict>
+	</plist>
+      </image-resource>
+    </extension>
+    <extension point="com.blacktree.actions">
+      <action id="QSiTunesPlayInITunesAction">
+		<plist version="1.0">
+		  <dict>
+			<key>actionClass</key>
+			<string>QSiTunesUtilityProvider</string>
+			<key>actionSelector</key>
+			<string>playInITunes:</string>
+			<key>description</key>
+			<string>Play in iTunes</string>
+			<key>directTypes</key>
+			<array>
+			  <string>QSiTunesPlaylistType</string>
+			  <string>QSiTunesTrackType</string>
+			  <string>NSStringPboardType</string>
+			</array>
+			<key>displaysResult</key>
+			<false />
+			<key>icon</key>
+			<string>iTunes-Play</string>
+			<key>name</key>
+			<string>Play in iTunes</string>
+			<key>precedence</key>
+			<real>4</real>
+		  </dict>
+		</plist>
+      </action>
+      <action id="QSiTunesShufflePlaylistAction">
+	<plist version="1.0">
+	  <dict>
+	    <key>actionClass</key>
+	    <string>QSiTunesUtilityProvider</string>
+	    <key>actionSelector</key>
+	    <string>shufflePlaylist:</string>
+	    <key>description</key>
+	    <string>Shuffle Play Playlist in iTunes</string>
+	    <key>directTypes</key>
+	    <array>
+	      <string>NSStringPboardType</string>
+	      <string>QSiTunesPlaylistType</string>
+	    </array>
+	    <key>displaysResult</key>
+	    <false />
+	    <key>icon</key>
+	    <string>iTunes-Shuffle-Playlist</string>
+	    <key>name</key>
+	    <string>Shuffle Playlist</string>
+	  </dict>
+	</plist>
+      </action>
+    </extension>
+    <extension point="QSCommands">
+    </extension>
+    <extension point="QSApplicationActions">
+      <application-action id="com.apple.iTunes">
+	<plist version="1.0">
+	  <dict>
+	    <key>QSiTuesNextSongCommand</key>
+	    <dict>
+	      <key>actionClass</key>
+	      <string>QSCommandObjectHandler</string>
+	      <key>command</key>
+	      <dict>
+		<key>actionID</key>
+		<string>AppleScriptRunAction</string>
+		<key>directResource</key>
+		<dict>
+		  <key>bundle</key>
+		  <string>com.QuickSilver.element.iTunes</string>
+		  <key>path</key>
+		  <string>Contents/Resources/Scripts/Next Song.scpt</string>
+		</dict>
+	      </dict>
+	      <key>name</key>
+	      <string>Next Song</string>
+	    </dict>
+	    <key>QSiTuesPauseCommand</key>
+	    <dict>
+	      <key>actionClass</key>
+	      <string>QSCommandObjectHandler</string>
+	      <key>command</key>
+	      <dict>
+		<key>actionID</key>
+		<string>AppleScriptRunAction</string>
+		<key>directResource</key>
+		<dict>
+		  <key>bundle</key>
+		  <string>com.QuickSilver.element.iTunes</string>
+		  <key>path</key>
+		  <string>Contents/Resources/Scripts/Pause.scpt</string>
+		</dict>
+	      </dict>
+	      <key>name</key>
+	      <string>Pause</string>
+	    </dict>
+	    <key>QSiTuesPlayCommand</key>
+	    <dict>
+	      <key>actionClass</key>
+	      <string>QSCommandObjectHandler</string>
+	      <key>command</key>
+	      <dict>
+		<key>actionID</key>
+		<string>AppleScriptRunAction</string>
+		<key>directResource</key>
+		<dict>
+		  <key>bundle</key>
+		  <string>com.QuickSilver.element.iTunes</string>
+		  <key>path</key>
+		  <string>Contents/Resources/Scripts/Play.scpt</string>
+		</dict>
+	      </dict>
+	      <key>name</key>
+	      <string>Play</string>
+	    </dict>
+	    <key>QSiTuesIncreaseVolumeCommand</key>
+	    <dict>
+	      <key>actionClass</key>
+	      <string>QSCommandObjectHandler</string>
+	      <key>command</key>
+	      <dict>
+		<key>actionID</key>
+		<string>AppleScriptRunAction</string>
+		<key>directResource</key>
+		<dict>
+		  <key>bundle</key>
+		  <string>com.QuickSilver.element.iTunes</string>
+		  <key>path</key>
+		  <string>Contents/Resources/Scripts/Increase iTunes Volume.scpt</string>
+		</dict>
+	      </dict>
+	      <key>name</key>
+	      <string>Increase iTunes Volume</string>
+	    </dict>
+	    <key>QSiTuesDecreaseVolumeCommand</key>
+	    <dict>
+	      <key>actionClass</key>
+	      <string>QSCommandObjectHandler</string>
+	      <key>command</key>
+	      <dict>
+		<key>actionID</key>
+		<string>AppleScriptRunAction</string>
+		<key>directResource</key>
+		<dict>
+		  <key>bundle</key>
+		  <string>com.QuickSilver.element.iTunes</string>
+		  <key>path</key>
+		  <string>Contents/Resources/Scripts/Decrease iTunes Volume.scpt</string>
+		</dict>
+	      </dict>
+	      <key>name</key>
+	      <string>Decrease iTunes Volume</string>
+	    </dict>
+	  </dict>
+	</plist>
+      </application-action>
+    </extension>
+    <extension point="QSActionProviders">
+      <action-provider id="QSiTunesUtilityProvider" class="QSiTunesUtilityProvider"/>
+    </extension>
+    <extension point="QSObjectSources">
+      <object-source id="QSiTunesPlaylistSource" class="QSiTunesPlaylistSource"/>
+      <object-source id="QSiTunesTrackSource" class="QSiTunesTrackSource"/>
+    </extension>
+    <extension point="QSTypeDefinitions">
+      <object-type name="iTunes Playlist" id="QSiTunesPlaylistType">
+		<plist version="1.0">
+		  <dict>
+			<key>icon</key>
+			<string>com.apple.iTunes</string>
+			<key>name</key>
+			<string>iTunes Playlist</string>
+		  </dict>
+		</plist>
+      </object-type>
+      <object-type name="iTunes Track" id="QSiTunesTrackType">
+		<plist version="1.0">
+		  <dict>
+			<key>icon</key>
+			<string>com.apple.iTunes</string>
+			<key>name</key>
+			<string>iTunes Track</string>
+		  </dict>
+		</plist>
+      </object-type>
+    </extension>
+    <extension point="QSObjectHandlers">
+      <object-handler id="QSiTunesPlaylistType" class="QSiTunesPlaylistSource"/>
+      <object-handler id="QSiTunesTrackType" class="QSiTunesTrackSource"/>
+    </extension>
+  </extensions>
+</element>
