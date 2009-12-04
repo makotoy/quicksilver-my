@@ -3,7 +3,7 @@
 //  iTunesElement
 //
 //  Created by Makoto Yamashita on 11/1/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Makoto Yamashita (QuickSilver-MY project). All rights reserved.
 //
 
 #import "QSiTunesTrackSource.h"
@@ -52,11 +52,34 @@
 
 @implementation QSiTunesTrackSource
 
-- (void)setQuickIconForObject:(QSObject *)object {
+- (void)setQuickIconForObject:(QSObject *)object
+{
     [object setIcon:[[QSiTunes iTunesBundle] imageNamed:@"iTunesAlbumBrowserIcon"]];
 }
 
-- (NSImage *) iconForEntry:(NSDictionary *)dict{
+- (BOOL)loadIconForObject:(QSObject *)object
+{
+	NSDictionary* trackDesc = [object objectForType:kQSiTunesTrackType];
+	NSArray *trackArgs = [NSArray arrayWithObjects:
+						  [trackDesc objectForKey:@"Name"],
+						  [trackDesc objectForKey:@"Album"],
+						  nil];
+	NSData* data;
+	data = [[[QSiTunes mainScript] executeSubroutine:@"get_track_artwork"
+												arguments:trackArgs
+													error:NULL] data];
+	NSImage *trackImage = [[NSImage alloc] initWithData:data];
+	if (trackImage) {
+		[trackImage createRepresentationOfSize:NSMakeSize(32, 32)];
+		[trackImage createRepresentationOfSize:NSMakeSize(16, 16)];
+		[object setIcon:trackImage];
+		[trackImage release];
+	}
+	return YES;
+}
+
+- (NSImage *) iconForEntry:(NSDictionary *)dict
+{
 	return [[QSiTunes iTunesBundle] imageNamed:@"iTunesAlbumBrowserIcon"];
 }
 
@@ -69,29 +92,14 @@
 		[trackNames addObjectsFromArray:[NSArray arrayWithContentsOfFile:tracksCachePath]];
 	} else {
 		NSLog(@"Failed to get track names from iTunes libray xml.");
-		NSString *event_name = @"get_tracks";
-		NSAppleEventDescriptor* event;
-		NSAppleEventDescriptor* targetAddress;
-		NSAppleEventDescriptor* subroutineDescriptor;
-		
-		int pid = [[NSProcessInfo processInfo] processIdentifier];
-		targetAddress = [[NSAppleEventDescriptor alloc]
-						 initWithDescriptorType:typeKernelProcessID
-						 bytes:&pid length:sizeof(pid)];
-		event = [[[NSAppleEventDescriptor alloc]
-				  initWithEventClass:kASAppleScriptSuite
-				  eventID:kASSubroutineEvent
-				  targetDescriptor:targetAddress
-				  returnID:kAutoGenerateReturnID
-				  transactionID:kAnyTransactionID] autorelease];
-		subroutineDescriptor = [NSAppleEventDescriptor descriptorWithString:event_name];
-		[event setParamDescriptor:subroutineDescriptor forKeyword:keyASSubroutineName];
-		
 		NSDictionary* errorInfo = nil;
 		NSAppleEventDescriptor* scriptRes;
-		scriptRes = [[QSiTunes mainScript] executeAppleEvent:event error:&errorInfo];
+		scriptRes = [[QSiTunes mainScript] executeSubroutine:@"get_tracks"
+												   arguments:nil
+													   error:&errorInfo];
 		if (errorInfo) {
 			NSLog(@"Error: %@", errorInfo);
+			return [NSArray array];
 		}
 		NSInteger i;
 		NSAppleEventDescriptor* iThDesc;

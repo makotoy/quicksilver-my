@@ -3,7 +3,7 @@
 //  iTunesElement
 //
 //  Created by Makoto Yamashita on 10/28/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Makoto Yamashita (QuickSilver-MY project). All rights reserved.
 //
 
 #import "QSiTunes.h"
@@ -56,4 +56,5 @@
 	NSString* libraryPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Music/iTunes/iTunes Music Library.xml"];
 	return [NSDictionary dictionaryWithContentsOfFile:libraryPath];
 }
+
 @end

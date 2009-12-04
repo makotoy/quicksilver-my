@@ -3,7 +3,7 @@
 //  iTunesElement
 //
 //  Created by Makoto Yamashita on 10/27/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Makoto Yamashita (QuickSilver-MY project). All rights reserved.
 //
 
 #import "QSiTunesPlaylistSource.h"
