@@ -13,17 +13,20 @@
 @implementation QSiTunesUtilityProvider
 - (QSObject *)playInITunes:(QSObject *)dObject
 {
-	NSString *thingName = [dObject objectForType:NSStringPboardType];
-	if (!thingName) thingName = [dObject stringValue];
-	if (thingName) {
-		if ([[dObject primaryType] isEqualTo:kQSiTunesTrackType]) {
-			thingName = [[dObject objectForType:kQSiTunesTrackType]
-						 objectForKey:@"Name"];
-			[[QSiTunes mainScript] executeSubroutine:@"play_track"
-										   arguments:thingName error:NULL];
-		} else {
+	if ([[dObject primaryType] isEqualTo:kQSiTunesTrackType]) {
+		NSDictionary* trackDesc = [dObject objectForType:kQSiTunesTrackType];
+		NSArray* trackArgs = [NSArray arrayWithObjects:
+							  [trackDesc objectForKey:@"Name"],
+							  [trackDesc objectForKey:@"Album"],
+							  nil];		
+		[[QSiTunes mainScript] executeSubroutine:@"play_track"
+									   arguments:trackArgs error:NULL];
+	} else {
+		NSString *thingName = [dObject objectForType:NSStringPboardType];
+		if (!thingName) thingName = [dObject stringValue];
+		if (thingName) {
 			[[QSiTunes mainScript] executeSubroutine:@"play_ambiguous"
-										   arguments:thingName error:NULL];
+											   arguments:thingName error:NULL];
 		}
 	}
 	return dObject;
