@@ -15,29 +15,10 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>120A</string>
+	<string>120B</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2004, Blacktree, Inc.</string>
 	<key>QSModulePreview</key>
 	<string>BezelInterfacePreview</string>
-	<key>QSPlugIn</key>
-	<dict>
-		<key>author</key>
-		<string>Blacktree, Inc.</string>
-		<key>categories</key>
-		<array>
-			<string>Interfaces</string>
-		</array>
-		<key>description</key>
-		<string>Provides a Bezel Interface</string>
-	</dict>
-	<key>QSRegistration</key>
-	<dict>
-		<key>QSCommandInterfaceControllers</key>
-		<dict>
-			<key>QSBezelInterfaceController</key>
-			<string>QSBezelInterfaceController</string>
-		</dict>
-	</dict>
 </dict>
 </plist>
