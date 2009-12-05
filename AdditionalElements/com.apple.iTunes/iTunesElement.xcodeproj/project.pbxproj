@@ -150,6 +150,7 @@
 				084A9FF91094D1D200E2CB93 /* Resources */,
 				084A9FFA1094D1D200E2CB93 /* Sources */,
 				084A9FFB1094D1D200E2CB93 /* Frameworks */,
+				08E8F53D10CA827C000CB4D9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -196,6 +197,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		08E8F53D10CA827C000CB4D9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/perl $QS_SOURCE_ROOT/put_bndl_ver.pl";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		084A9FFA1094D1D200E2CB93 /* Sources */ = {

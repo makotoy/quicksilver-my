@@ -19,13 +19,6 @@
 		7F7EB2DD0BFEB69300AFDF2C /* QSWebSearchPlugIn_Source.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B32EA0078CCD0A0076DA42 /* QSWebSearchPlugIn_Source.m */; };
 		7F7EB2DF0BFEB69300AFDF2C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		7F7EB40C0BFEB72500AFDF2C /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7F7EB40B0BFEB72500AFDF2C /* element.xml */; };
-		8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
-		E1812CB5076BDBFA00A8EFA8 /* QSWebSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1812CB3076BDBFA00A8EFA8 /* QSWebSearchController.m */; };
-		E1812D47076BDEE700A8EFA8 /* QSURLSearchActions.m in Sources */ = {isa = PBXBuildFile; fileRef = E1812D45076BDEE700A8EFA8 /* QSURLSearchActions.m */; };
-		E1B32EA1078CCD0A0076DA42 /* QSWebSearchPlugIn_Source.h in Resources */ = {isa = PBXBuildFile; fileRef = E1B32E9F078CCD0A0076DA42 /* QSWebSearchPlugIn_Source.h */; };
-		E1B32EA2078CCD0A0076DA42 /* QSWebSearchPlugIn_Source.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B32EA0078CCD0A0076DA42 /* QSWebSearchPlugIn_Source.m */; };
-		E1B332FF078CD6980076DA42 /* QSWebSearchSource.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1B332FE078CD6980076DA42 /* QSWebSearchSource.nib */; };
-		E1F2DC1F078D977D007B9046 /* QSObjectSource.name.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1F2DC1D078D977D007B9046 /* QSObjectSource.name.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +34,6 @@
 		7FE7D30A0D1EFF470043A815 /* QSPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSPlugIn_Prefix.pch; path = Configuration/QSPlugIn_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
 		7FE7D30B0D1EFF470043A815 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Configuration/Release.xcconfig; sourceTree = QS_SOURCE_ROOT; };
 		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1AC9740486D14A00FE50C9 /* Web Search Module.element */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Web Search Module.element"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E1812CB2076BDBFA00A8EFA8 /* QSWebSearchController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QSWebSearchController.h; sourceTree = "<group>"; };
 		E1812CB3076BDBFA00A8EFA8 /* QSWebSearchController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QSWebSearchController.m; sourceTree = "<group>"; };
@@ -63,14 +55,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F7EB2DF0BFEB69300AFDF2C /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8D1AC96E0486D14A00FE50C9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,7 +88,6 @@
 		1ED78706FE9D4A0611CA0C5A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1AC9740486D14A00FE50C9 /* Web Search Module.element */,
 				7F7EB2E90BFEB69300AFDF2C /* Web Search.element */,
 			);
 			name = Products;
@@ -195,25 +178,6 @@
 			productReference = 7F7EB2E90BFEB69300AFDF2C /* Web Search.element */;
 			productType = "com.apple.product-type.bundle";
 		};
-		8D1AC9600486D14A00FE50C9 /* Web Search Module */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7FFF25CC085E488700266176 /* Build configuration list for PBXNativeTarget "Web Search Module" */;
-			buildPhases = (
-				8D1AC9660486D14A00FE50C9 /* Resources */,
-				8D1AC96A0486D14A00FE50C9 /* Sources */,
-				8D1AC96E0486D14A00FE50C9 /* Frameworks */,
-				E1022B2806B3475D00299BEC /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Web Search Module";
-			productInstallPath = "$(HOME)/Developer/Palettes";
-			productName = QSWebSearchPlugIn;
-			productReference = 8D1AC9740486D14A00FE50C9 /* Web Search Module.element */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -226,7 +190,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1AC9600486D14A00FE50C9 /* Web Search Module */,
 				7F7EB2D50BFEB69300AFDF2C /* Web Search */,
 			);
 		};
@@ -240,16 +203,6 @@
 				7F7EB2D80BFEB69300AFDF2C /* QSWebSearchSource.nib in Resources */,
 				7F7EB2D90BFEB69300AFDF2C /* QSObjectSource.name.strings in Resources */,
 				7F7EB40C0BFEB72500AFDF2C /* element.xml in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8D1AC9660486D14A00FE50C9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1B32EA1078CCD0A0076DA42 /* QSWebSearchPlugIn_Source.h in Resources */,
-				E1B332FF078CD6980076DA42 /* QSWebSearchSource.nib in Resources */,
-				E1F2DC1F078D977D007B9046 /* QSObjectSource.name.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,20 +220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# $SRCROOT/bltrversion $INFOPLIST_FILE";
-		};
-		E1022B2806B3475D00299BEC /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/bltrversion $INFOPLIST_FILE";
+			shellScript = "/usr/bin/perl $QS_SOURCE_ROOT/put_bndl_ver.pl";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -293,16 +233,6 @@
 				7F7EB2DC0BFEB69300AFDF2C /* QSURLSearchActions.m in Sources */,
 				7F7EB2DD0BFEB69300AFDF2C /* QSWebSearchPlugIn_Source.m in Sources */,
 				08368A25108D12F100FDAB28 /* QSWebSearchPlugIn.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8D1AC96A0486D14A00FE50C9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1812CB5076BDBFA00A8EFA8 /* QSWebSearchController.m in Sources */,
-				E1812D47076BDEE700A8EFA8 /* QSURLSearchActions.m in Sources */,
-				E1B32EA2078CCD0A0076DA42 /* QSWebSearchPlugIn_Source.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,13 +257,6 @@
 			};
 			name = Debug;
 		};
-		7F69A1990D1F078400D5C99E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7FE7D3070D1EFF470043A815 /* QSElement.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
 		7F69A19A0D1F078400D5C99E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D3070D1EFF470043A815 /* QSElement.xcconfig */;
@@ -343,13 +266,6 @@
 			name = Debug;
 		};
 		7F7EB2E70BFEB69300AFDF2C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7FE7D3070D1EFF470043A815 /* QSElement.xcconfig */;
-			buildSettings = {
-			};
-			name = Release;
-		};
-		7FFF25CE085E488700266176 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D3070D1EFF470043A815 /* QSElement.xcconfig */;
 			buildSettings = {
@@ -371,15 +287,6 @@
 			buildConfigurations = (
 				7F7EB2E70BFEB69300AFDF2C /* Release */,
 				7F69A19A0D1F078400D5C99E /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		7FFF25CC085E488700266176 /* Build configuration list for PBXNativeTarget "Web Search Module" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7FFF25CE085E488700266176 /* Release */,
-				7F69A1990D1F078400D5C99E /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
