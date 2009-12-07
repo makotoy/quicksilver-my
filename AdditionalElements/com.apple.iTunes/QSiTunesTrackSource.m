@@ -24,7 +24,6 @@
 				 forKey:kQSiTunesTrackType];
 		[self setIdentifier:[@"QSiTunes-Track-" stringByAppendingString:trackName]];
 		[self setName:trackName];
-//		[self setIcon:[[QSiTunes iTunesBundle] imageNamed:@"iTunesAlbumBrowserIcon"]];
 		[self setPrimaryType:kQSiTunesTrackType];
 	}
 	return self;
@@ -59,6 +58,8 @@
 
 - (BOOL)loadIconForObject:(QSObject *)object
 {
+	if (![QSiTunes isITunesRunning]) return NO;
+	
 	NSDictionary* trackDesc = [object objectForType:kQSiTunesTrackType];
 	NSArray *trackArgs = [NSArray arrayWithObjects:
 						  [trackDesc objectForKey:@"Name"],
