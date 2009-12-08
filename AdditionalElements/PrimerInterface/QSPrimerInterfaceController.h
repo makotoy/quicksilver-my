@@ -1,11 +1,13 @@
+/*
+ * Derived from Blacktree codebase.
+ * 2009-12-08 Makoto Yamashita.
+ */
+
 /* QSController */
 
-
 #import <Cocoa/Cocoa.h>
-// #import <Crucible/QSResizingInterfaceController.h>
 
-@interface QSPrimerInterfaceController : QSResizingInterfaceController{
-	//     NSRect standardRect;
+@interface QSPrimerInterfaceController : QSResizingInterfaceController {
 	IBOutlet NSButton *executeButton;
 	
 	IBOutlet NSTextField *dSearchText;
@@ -21,5 +23,5 @@
 	IBOutlet NSButton *iSearchResultDisclosure;
 	
 	IBOutlet NSView *indirectView;
-  }
+}
 @end
