@@ -46,24 +46,28 @@
 }
 
 - (NSMutableArray *)pluginSearchPaths {
-  NSMutableArray *pluginSearchPaths = [NSMutableArray array];
-  NSString *applicationSupportSubpath = @"Application Support/Alchemy/Elements";
-// NOTE: above was [NSString stringWithFormat:@"Application Support/Alchemy/Elements", [[NSProcessInfo processInfo] processName]];
-  NSEnumerator *searchPathEnumerator = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES) objectEnumerator];
-  NSString *eachSearchPath;
-  
-  while((eachSearchPath = [searchPathEnumerator nextObject])) {
-		[pluginSearchPaths addObject:[eachSearchPath stringByAppendingPathComponent:applicationSupportSubpath]];
-  }
-  [pluginSearchPaths addObject:[[NSFileManager defaultManager] currentDirectoryPath]];
-  
-  NSArray *paths = [[NSUserDefaults standardUserDefaults] objectForKey:@"QSElementSearchPaths"];
+	NSMutableArray *pluginSearchPaths = [NSMutableArray arrayWithCapacity:0];
+    
+    [pluginSearchPaths addObject:@"/Users/makotoy/Documents/quicksilver-hack/trunk/build/Debug/Quicksilver.app/Contents/PlugIns"];
 
-  if ([paths isKindOfClass:[NSString class]]) {
-    [pluginSearchPaths addObject:paths];
-  } else {
-    [pluginSearchPaths addObjectsFromArray:paths];
-  }
+    
+	NSString *applicationSupportSubpath = @"Application Support/Alchemy/Elements";
+	// NOTE: above was [NSString stringWithFormat:@"Application Support/Alchemy/Elements", [[NSProcessInfo processInfo] processName]];
+	NSEnumerator *searchPathEnumerator = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES) objectEnumerator];
+	NSString *eachSearchPath;
+
+	while((eachSearchPath = [searchPathEnumerator nextObject])) {
+		[pluginSearchPaths addObject:[eachSearchPath stringByAppendingPathComponent:applicationSupportSubpath]];
+	}
+	[pluginSearchPaths addObject:[[NSFileManager defaultManager] currentDirectoryPath]];
+
+	NSArray *paths = [[NSUserDefaults standardUserDefaults] objectForKey:@"QSElementSearchPaths"];
+
+	if ([paths isKindOfClass:[NSString class]]) {
+        [pluginSearchPaths addObject:paths];
+	} else {
+        [pluginSearchPaths addObjectsFromArray:paths];
+	}
   
 	
 	NSEnumerator *bundleEnumerator = [[NSBundle allBundles] objectEnumerator];
@@ -73,7 +77,7 @@
 		[pluginSearchPaths addObject:[eachBundle builtInPlugInsPath]];
 	}
 	//BLogDebug(@"pluginSearchPaths %@", pluginSearchPaths);
-  return pluginSearchPaths;
+	return pluginSearchPaths;
 }
 
 
@@ -88,8 +92,8 @@
   
   // For now just load any main functions to allow modification
   
-  [self loadedInstancesForPointID:mainID];
-  [self loadedInstancesForPointID:@"global.main"];
+	[self loadedInstancesForPointID:mainID];
+	[self loadedInstancesForPointID:@"global.main"];
   
   //  NSArray *mainElements = [self elementsForPointID:mainID];
   //  BElement *mainElement= [mainElements lastObject];

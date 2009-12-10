@@ -64,9 +64,9 @@
 	return @"QSCatalystPref";
 }
 
-- (void) mainViewDidLoad {
+//- (void) mainViewDidLoad {
 //  NSLog(@"mainview didload"); 
-}
+//}
 //- (NSView *) loadMainView {
 ///*	NSView *oldMainView = [super loadMainView];	
 //	
@@ -81,83 +81,85 @@
 //    return splitView;
 //}
 //
-//- (void) mainViewDidLoad {
-//    [splitView setVertical:YES];
-//	[splitView addSubview:sidebar];
-//	[splitView addSubview:mainView];
-//    [splitView setNeedsDisplay:YES];
-//    
-//	typeMenu = nil;
+
+- (void) mainViewDidLoad {
+    [splitView setVertical:YES];
+	[splitView addSubview:sidebar];
+	[splitView addSubview:mainView];
+    [splitView setNeedsDisplay:YES];
+    
+	typeMenu = nil;
 //	[self populateTypeMenu];
-//	[triggerTable registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, @"QSTriggerDragType", nil]];
-//	
-//    [triggerTable setVerticalMotionCanBeginDrag:YES];
-//    
-//    //[[self window] setRepresentedFilename:[pTriggerSettings stringByStandardizingPath]];
-//    //[[[self window] standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"DocTriggers"]];
-//    
-//    [triggerTable setAction:@selector(outlineClicked:)];
-//    [triggerTable setTarget:self];
-//    [triggerTable setOutlineTableColumn:[triggerTable tableColumnWithIdentifier:@"command"]];
+	[triggerTable registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, @"QSTriggerDragType", nil]];
+	
+    [triggerTable setVerticalMotionCanBeginDrag:YES];
+    
+    //[[self window] setRepresentedFilename:[pTriggerSettings stringByStandardizingPath]];
+    //[[[self window] standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"DocTriggers"]];
+    
+    [triggerTable setAction:@selector(outlineClicked:)];
+    [triggerTable setTarget:self];
+    [triggerTable setOutlineTableColumn:[triggerTable tableColumnWithIdentifier:@"command"]];
 //    [[[triggerTable tableColumnWithIdentifier:@"type"] dataCell] setArrowPosition:NSPopUpNoArrow];
-//    
-//    //   QSImageAndTextCell *imageAndTextCell = [[[QSImageAndTextCell alloc] initTextCell:@""] autorelease];
-//    //	   [imageAndTextCell setEditable: YES];
-//    //	   [imageAndTextCell setWraps:NO];
-//    //	   [imageAndTextCell setFont:[[[triggerTable tableColumnWithIdentifier: @"command"] dataCell] font]];
-//    //	   [[triggerTable tableColumnWithIdentifier: @"command"] setDataCell:imageAndTextCell];
-//    
-//    NSColor *color = [triggerSetsTable backgroundColor];
-//    float hue, saturation, brightness, alpha;
-//    [color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
-//    //  QSLog(@"hu %f %f %f %f", hue, saturation, brightness, alpha);
-//    
-//    
-//    [triggerSetsTable setBackgroundColor:[NSColor colorWithCalibratedHue:0.15f
-//                                                              saturation:0.1f
-//                                                              brightness:0.980000f
-//                                                                   alpha:1.000000f]];
-//    NSColor *highlightColor = [NSColor colorWithCalibratedHue:0.11944444444
-//                                                   saturation:0.88f
-//                                                   brightness:1.000000f
-//                                                        alpha:1.000000f];
-//    
+    
+    //   QSImageAndTextCell *imageAndTextCell = [[[QSImageAndTextCell alloc] initTextCell:@""] autorelease];
+    //	   [imageAndTextCell setEditable: YES];
+    //	   [imageAndTextCell setWraps:NO];
+    //	   [imageAndTextCell setFont:[[[triggerTable tableColumnWithIdentifier: @"command"] dataCell] font]];
+    //	   [[triggerTable tableColumnWithIdentifier: @"command"] setDataCell:imageAndTextCell];
+    
+    NSColor *color = [triggerSetsTable backgroundColor];
+    float hue, saturation, brightness, alpha;
+    [color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
+    //  QSLog(@"hu %f %f %f %f", hue, saturation, brightness, alpha);
+    
+    
+    [triggerSetsTable setBackgroundColor:[NSColor colorWithCalibratedHue:0.15f
+                                                              saturation:0.1f
+                                                              brightness:0.980000f
+                                                                   alpha:1.000000f]];
+    NSColor *highlightColor = [NSColor colorWithCalibratedHue:0.11944444444
+                                                   saturation:0.88f
+                                                   brightness:1.000000f
+                                                        alpha:1.000000f];
+    
 //    [triggerSetsTable setHighlightColor:highlightColor];
 //    [triggerTable setHighlightColor:highlightColor];
-//    
-//    //[[triggerTable tableColumnWithIdentifier: @"command"] bind:@"objectValue"
-//    //                                                  toObject:triggerTreeController
-//    //                                               withKeyPath:@"arrangedObjects" 
-//    //                                                   options:0];
-//    
-//    //NSView *border=[[optionsDrawer _drawerWindow] _borderView];
-//    //NSView *background=[[QSBackgroundView alloc] initWithFrame:NSMakeRect(0,0,200,200)];
-//    
-//    //[border addSubview:background];
-//    //QSLog(@"%@",[[optionsDrawer _drawerWindow] _borderView]);
-//    //QSLog(@"%@",[triggerTable columnWithIdentifier:@"type"]);
-//    //[[[triggerTable columnWithIdentifier:@"type"] dataCell] setMenu:nil];   
-//    
-//    NSSortDescriptor* aSortDesc = [[NSSortDescriptor alloc] 
-//                                   initWithKey:@"name" ascending:YES
-//                                   selector:@selector(caseInsensitiveCompare:)];
-//    [triggerArrayController setSortDescriptors:[NSArray arrayWithObject: aSortDesc]];
-//    [triggerArrayController rearrangeObjects];
-//    [aSortDesc release];
-//    
+    
+	/* [[triggerTable tableColumnWithIdentifier: @"command"] bind:@"objectValue"
+													  toObject:triggerTreeController
+												   withKeyPath:@"arrangedObjects" 
+													   options:0]; */
+    
+    //NSView *border=[[optionsDrawer _drawerWindow] _borderView];
+    //NSView *background=[[QSBackgroundView alloc] initWithFrame:NSMakeRect(0,0,200,200)];
+    
+    //[border addSubview:background];
+    //QSLog(@"%@",[[optionsDrawer _drawerWindow] _borderView]);
+    //QSLog(@"%@",[triggerTable columnWithIdentifier:@"type"]);
+    //[[[triggerTable columnWithIdentifier:@"type"] dataCell] setMenu:nil];   
+    
+    NSSortDescriptor* aSortDesc = [[NSSortDescriptor alloc] 
+                                   initWithKey:@"name" ascending:YES
+                                   selector:@selector(caseInsensitiveCompare:)];
+    [triggerArrayController setSortDescriptors:[NSArray arrayWithObject: aSortDesc]];
+    [triggerArrayController rearrangeObjects];
+    [aSortDesc release];
+    
+    [self setTriggerArray:[[[[[QSTriggerCenter sharedInstance] triggersDict] allValues] mutableCopy] autorelease]];
 //    [self reloadFilters];
-//    
-//    [triggerSetsController addObserver:self
-//                            forKeyPath:@"selection"
-//                               options:0
-//                               context:triggerSetsController];
-//    
-//    [triggerTreeController addObserver:self
-//                            forKeyPath:@"selectedObjects"
-//                               options:0
-//                               context:nil];
-//    
-//}
+    
+    [triggerSetsController addObserver:self
+                            forKeyPath:@"selection"
+                               options:0
+                               context:triggerSetsController];
+    
+    [triggerTreeController addObserver:self
+                            forKeyPath:@"selectedObjects"
+                               options:0
+                               context:nil];
+    
+}
 
 
 //
@@ -253,19 +255,16 @@
 //	[self showTrigger:trigger];
 //}
 //
-//- (void) updateTriggerArray {
-//	[self setTriggerArray:[[[[[QSTriggerCenter sharedInstance] triggersDict] allValues] mutableCopy] autorelease]];
-//	[triggerArrayController rearrangeObjects];
-//	[triggerTreeController rearrangeObjects];
-//	[triggerTable reloadData];
-//}
-//
-//- (NSArray *) triggerArray { return [[[QSTriggerCenter sharedInstance] triggersDict] allValues]; }
-//
-//- (void) setTriggerArray:(NSArray *)newTriggerArray {
-//	[triggerArray release];
-//	triggerArray = [newTriggerArray mutableCopy];
-//}
+- (void) updateTriggerArray
+{
+	[self setTriggerArray:[[[[[QSTriggerCenter sharedInstance] triggersDict] allValues] mutableCopy] autorelease]];
+	[triggerArrayController rearrangeObjects];
+	[triggerTreeController rearrangeObjects];
+	[triggerTable reloadData];
+}
+
+@synthesize triggerArray;
+
 //
 //- (void) showTriggerGroupWithIdentifier:(NSString *)groupID {
 //	[self setCurrentSet:groupID];

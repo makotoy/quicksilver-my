@@ -25,15 +25,18 @@
 	return [info objectForKey:kItemID];	
 }
 
-- (id)initWithInfo:(NSDictionary *)dict {
+- (id)initWithInfo:(NSDictionary *)dict
+{
 	self = [super init];
-	if (self != nil) {
-		info = [dict mutableCopy];
+	if (self) {
+		info = [[NSMutableDictionary alloc] initWithCapacity:0];
+        [info addEntriesFromDictionary:dict];
 	}
 	return self;
 }
 
-- (id) init {
+- (id) init
+{
 	self = [super init];
 	if (self != nil) {
 		info = [[NSMutableDictionary alloc] init];
@@ -41,14 +44,22 @@
 	return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
 	QSLog(@"dealloc %@",self);
 	[info release];
 	info = nil;
 	[children release];
 	children = nil;
-	[super dealloc];	
+	[super dealloc];
 }
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    QSTrigger* newTrigger = [[QSTrigger allocWithZone:zone] initWithInfo:info];
+    return newTrigger;
+}
+
 - (BOOL)isGroup {
 	return [[self type] isEqualToString:@"QSGroupTrigger"];
 }
@@ -130,16 +141,13 @@
 }
 
 - (QSCommand *)command {
-	//	QSLog(@"command %@",command);
     id command = [info objectForKey:@"command"];
     if ([command isKindOfClass:[NSDictionary class]]) {
 		command = [QSCommand commandWithDictionary:command];
 		[info setObject:command forKey:@"command"];
 	} else if ([command isKindOfClass:[NSString class]]) {
-		NSDictionary *commandInfo = [QSReg valueForKey:command inTable:@"QSCommands"];
-		
-		//QSLog(@"looking up command %@ %@",command, commandInfo );
-		command = [QSCommand commandWithDictionary:[commandInfo objectForKey:@"command"]];
+		NSDictionary *commandInfo = [[QSReg elementForPointID:@"QSCommands" withID:command] plistContent];
+        command = [QSCommand commandWithDictionary:[commandInfo objectForKey:@"command"]];
 	}
 	return command;
 }

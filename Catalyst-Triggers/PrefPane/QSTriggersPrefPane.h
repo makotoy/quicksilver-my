@@ -61,6 +61,8 @@
 
 + (QSTriggersPrefPane *) sharedInstance;
 
+@property (retain) NSMutableArray* triggerArray;
+
 - (NSString *) currentSet;
 - (void) setCurrentSet:(NSString *)value;
 - (NSArray *) selectionIndexPaths;
@@ -73,8 +75,6 @@
 - (void) setTriggerSets:(NSArray *)newTriggerSets;
 
 - (void) updateTriggerArray;
-- (NSArray *) triggerArray;
-- (void) setTriggerArray:(NSArray *)newTriggerArray;
 - (NSSortDescriptor *) sort;
 - (void) setSort:(NSSortDescriptor *)newSort;
 

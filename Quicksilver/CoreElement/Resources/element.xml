@@ -773,39 +773,7 @@
                 </catalog-preset>
             </extension>
         <extension point="com.blacktree.triggers.presets">
-            <trigger-preset name="Command Window with Selection" id="QSGetGlobalSelectionTrigger">
-                <plist version="1.0">
-                    <dict>
-                        <key>ID</key>
-                        <string>QSGetGlobalSelectionTrigger</string>
-                        <key>command</key>
-                        <string>QSGetGlobalSelectionCommand</string>
-                        <key>name</key>
-                        <string>Command Window with Selection</string>
-                        <key>set</key>
-                        <string>Quicksilver</string>
-                        <key>type</key>
-                        <string>QSHotKeyTrigger</string>
-                        </dict>
-                    </plist>
-                </trigger-preset>
-            <trigger-preset name="Command Window in Text Mode" id="QSActivateTextModeTrigger">
-                <plist version="1.0">
-                    <dict>
-                        <key>ID</key>
-                        <string>QSActivateTextModeTrigger</string>
-                        <key>command</key>
-                        <string>QSActivateTextModeCommand</string>
-                        <key>name</key>
-                        <string>Command Window in Text Mode</string>
-                        <key>set</key>
-                        <string>Quicksilver</string>
-                        <key>type</key>
-                        <string>QSHotKeyTrigger</string>
-                        </dict>
-                    </plist>
-                </trigger-preset>
-            </extension>
+        </extension>
         <extension point="com.blacktree.resources.images">
             <image-resource name="Rocket" id="Rocket">
                 <plist version="1.0">

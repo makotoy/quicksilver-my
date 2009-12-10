@@ -15,25 +15,28 @@
 }
 
 - (id) init {
-    if ((self = [super init])) {
+	self = [super init];
+    if (self) {
+		triggersDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+		triggers = [[NSMutableArray alloc] initWithCapacity:0];
+		NSDictionary* triggerPresets;
+        [QSReg scanPlugins];
+		triggerPresets = [QSReg elementsByIDForPointID:@"com.blacktree.triggers.presets"];
+		for (BElement* triggerPreset in [triggerPresets allValues]) {
+            QSTrigger* theTrigger = [[QSTrigger alloc] initWithInfo:[triggerPreset plistContent]];
+			[triggersDict setObject:theTrigger
+                             forKey:[[triggerPreset plistContent] objectForKey:kItemID]];
+//			[triggers addObject:[QSTrigger triggerWithInfo:[triggerPreset plistContent]]];
+		}
 		
-        NSDictionary *triggerStorage = [NSDictionary dictionaryWithContentsOfFile:[pTriggerSettings stringByStandardizingPath]];
-        NSLog(@"storage %@", triggerStorage);
-        triggers = [triggerStorage objectForKey:@"triggers"];
-		NSArray *ids = [triggers valueForKey:kItemID];
-		triggers = [QSTrigger performSelector:@selector(triggerWithInfo:) onObjectsInArray:triggers returnValues:YES];
-        triggersDict = [[NSMutableDictionary dictionaryWithObjects:triggers forKeys:ids] retain];
-		
-        NSMutableDictionary *triggerDict;
-        NSEnumerator *triggerEnum = [triggers objectEnumerator];
-        while ((triggerDict = [triggerEnum nextObject])) {
+        /*
+        for (NSMutableDictionary *triggerDict in triggers) {
             [triggerDict setObject:[QSCommand commandWithDictionary:[triggerDict objectForKey:@"command"]] forKey:@"command"];
             
             [self enableTrigger:triggerDict];
             
         }
-		if (!triggersDict)
-            triggersDict = [[NSMutableDictionary dictionary] retain];
+         */
 		[[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(appChanged:)
                                                      name:@"QSActiveApplicationChanged"

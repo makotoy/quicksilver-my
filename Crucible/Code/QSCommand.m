@@ -423,8 +423,9 @@ NSTimeInterval QSTimeIntervalForString(NSString *intervalString) {
 
 - (QSAction *) aObject {
     QSAction *aObject = [oDict objectForKey:@"actionObject"];
-	if (!aObject)
-        aObject = [QSExec actionForIdentifier:[oDict objectForKey:@"actionID"]];
+	if (!aObject) {
+        aObject = [[QSExecutor sharedInstance] actionForIdentifier:[oDict objectForKey:@"actionID"]];
+    }
 	return aObject;  
 }
 
@@ -475,8 +476,10 @@ NSTimeInterval QSTimeIntervalForString(NSString *intervalString) {
 }
 
 - (NSString *) description {
-	if (![self aObject])
+	if (![self aObject]) {
+        NSLog(@"This command has oDict: %@", oDict);
         return [NSString stringWithFormat:@"[Action Missing: %@]", [oDict objectForKey:@"actionID"]];
+    }
     return [[self aObject] commandDescriptionWithDirectObject:[self dObject] indirectObject:[self iObject]];
 }
 

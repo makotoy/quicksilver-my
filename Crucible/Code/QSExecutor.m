@@ -348,7 +348,13 @@ QSExecutor *QSExec;
 }
 
 - (QSAction *) actionForIdentifier:(NSString *)identifier {
-    return [actionIdentifiers objectForKey:identifier];   
+    QSAction* resAction = [actionIdentifiers objectForKey:identifier];
+    if (!resAction) {
+        NSLog(@"Could not find action for %@ among %@",
+              identifier,
+              actionIdentifiers);
+    }
+    return resAction;   
 }
 
 - (QSObject *) performAction:(NSString *)action directObject:(QSObject *)dObject indirectObject:(QSObject *)iObject {
