@@ -29,7 +29,7 @@
 {
 	self = [super init];
 	if (self) {
-		info = [[NSMutableDictionary alloc] initWithCapacity:0];
+        info = [[NSMutableDictionary alloc] initWithCapacity:0];
         [info addEntriesFromDictionary:dict];
 	}
 	return self;

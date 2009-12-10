@@ -334,15 +334,15 @@
 //- (void)setTabViewIndex:(int)index {
 //    [drawerTabView selectTabViewItemAtIndex:index];
 //}
-//
-//- (NSArray *)typeMenuItems {
-//	return [[typeMenu itemArray] valueForKey:@"representedObject"];
-//}
-//
-//- (NSArray *)typeMenuNames {
-//	return [[typeMenu itemArray] valueForKey:@"title"];
-//}
-//
+
+- (NSArray *)typeMenuItems {
+	return [[typeMenu itemArray] valueForKey:@"representedObject"];
+}
+
+- (NSArray *)typeMenuNames {
+	return [[typeMenu itemArray] valueForKey:@"title"];
+}
+
 //- (NSArray *)setNames {
 //	NSMutableArray *sets = [[[[NSSet setWithArray:[[[[QSTriggerCenter sharedInstance] triggersDict] allValues] valueForKey:@"triggerSet"]] allObjects] mutableCopy] autorelease];
 //	[sets removeObject:[NSNull null]];
@@ -358,61 +358,61 @@
 //
 //- (void)setCurrentSetIsEnabled:(BOOL)flag {}
 //
-//- (void)populateTypeMenu {
-//	[typeMenu autorelease];
-//	typeMenu = [[NSMenu alloc] initWithTitle:@"Types"];
-//	
-//	NSMenu *addMenu = [[NSMenu alloc] initWithTitle:@"Types"];
-//	
-//	//QSLog(@"add %@ %@",addButton, typeMenu);
-//	id item;
-//	
-//	NSDictionary *managers = [QSReg loadedElementsByIDForPointID:@"QSTriggerManagers"];
-//	
-//	//	QSLog(@"populate %@",managers);
-//	NSEnumerator *e = [managers keyEnumerator];
-//	NSString *key;
-//	id manager = nil;
-//	NSMutableArray *items = [NSMutableArray array];
-//	
-//	id groupItem = nil;
-//	while((key = [e nextObject])) {
-//		manager = [managers objectForKey:key];
-//		item = [[[NSMenuItem alloc] initWithTitle:[manager name]
-//                                           action:NULL
-//                                    keyEquivalent:@""] autorelease];
-//		[item setRepresentedObject:key];
-//		[item setImage:[manager image]];
-//        
-//		if ([key isEqualToString:@"QSGroupTrigger"]) {
-//			groupItem = item;
-//		} else {
-//			[items addObject:item];
-//		}
-//	}
-//	
-//	[items sortUsingDescriptors:[NSSortDescriptor descriptorArrayWithKey:@"title" ascending:YES]];
-//	
-//	[typeMenu performSelector:@selector(addItem:) onObjectsInArray:items returnValues:NO];
-//	
-//	// Make a copy for addMenu
-//	//QSLog(@"items %@",items);
-//	items = [items valueForKeyPath:@"copy.autorelease"];
-//	
-//	[addMenu performSelector:@selector(addItem:) onObjectsInArray:items returnValues:NO];
-//	
-//	if (groupItem) {
-//		[addMenu addItem:[NSMenuItem separatorItem]];
-//		[addMenu addItem:groupItem];	
-//	}
-//	
-//	foreach(menuItem, [addMenu itemArray]) {
-//		[menuItem setTarget:self];	
-//		[menuItem setAction:@selector(addTrigger:)];
-//	}
-//	
-//	[addButton setMenu:addMenu];
-//}
+- (void)populateTypeMenu {
+	[typeMenu autorelease];
+	typeMenu = [[NSMenu alloc] initWithTitle:@"Types"];
+	
+	NSMenu *addMenu = [[NSMenu alloc] initWithTitle:@"Types"];
+	
+	//QSLog(@"add %@ %@",addButton, typeMenu);
+	id item;
+	
+	NSDictionary *managers = [QSReg loadedElementsByIDForPointID:@"QSTriggerManagers"];
+	
+	//	QSLog(@"populate %@",managers);
+	NSEnumerator *e = [managers keyEnumerator];
+	;
+	id manager = nil;
+	NSMutableArray *items = [NSMutableArray array];
+	
+	id groupItem = nil;
+	for (NSString *key in [managers allKeys]) {
+		manager = [managers objectForKey:key];
+		item = [[[NSMenuItem alloc] initWithTitle:[manager name]
+                                           action:NULL
+                                    keyEquivalent:@""] autorelease];
+		[item setRepresentedObject:key];
+		[item setImage:[manager image]];
+        
+		if ([key isEqualToString:@"QSGroupTrigger"]) {
+			groupItem = item;
+		} else {
+			[items addObject:item];
+		}
+	}
+	
+	[items sortUsingDescriptors:[NSSortDescriptor descriptorArrayWithKey:@"title" ascending:YES]];
+	
+	[typeMenu performSelector:@selector(addItem:) onObjectsInArray:items returnValues:NO];
+	
+	// Make a copy for addMenu
+	//QSLog(@"items %@",items);
+	items = [items valueForKeyPath:@"copy.autorelease"];
+	
+	[addMenu performSelector:@selector(addItem:) onObjectsInArray:items returnValues:NO];
+	
+	if (groupItem) {
+		[addMenu addItem:[NSMenuItem separatorItem]];
+		[addMenu addItem:groupItem];	
+	}
+	
+	foreach(menuItem, [addMenu itemArray]) {
+		[menuItem setTarget:self];	
+		[menuItem setAction:@selector(addTrigger:)];
+	}
+	
+	[addButton setMenu:addMenu];
+}
 //
 //- (NSView*) preferencesSplitView {
 //	return [sidebar superview];
@@ -672,7 +672,7 @@
 //	}
 //}
 //
-//- (IBAction) outlineClicked:(id)sender {
+- (IBAction) outlineClicked:(id)sender {
 //	NSTableColumn *col = [[triggerTable tableColumns] objectAtIndex:[triggerTable clickedColumn]];
 //	id item = [triggerTable itemAtRow:[triggerTable clickedRow]];
 //	item = [item observedObject];
@@ -694,7 +694,7 @@
 //	}
 //	
 //	lastRow = [triggerTable clickedRow];
-//}
+}
 //
 //- (IBAction) triggerChanged:(id)sender {
 //	[triggerTable reloadData];

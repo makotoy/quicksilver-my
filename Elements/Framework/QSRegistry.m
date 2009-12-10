@@ -48,9 +48,6 @@
 - (NSMutableArray *)pluginSearchPaths {
 	NSMutableArray *pluginSearchPaths = [NSMutableArray arrayWithCapacity:0];
     
-    [pluginSearchPaths addObject:@"/Users/makotoy/Documents/quicksilver-hack/trunk/build/Debug/Quicksilver.app/Contents/PlugIns"];
-
-    
 	NSString *applicationSupportSubpath = @"Application Support/Alchemy/Elements";
 	// NOTE: above was [NSString stringWithFormat:@"Application Support/Alchemy/Elements", [[NSProcessInfo processInfo] processName]];
 	NSEnumerator *searchPathEnumerator = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES) objectEnumerator];
