@@ -1,3 +1,4 @@
+#define ESS_phrase(x,phrase) ([(phrase) stringByAppendingString:ESS(x)])
 #define ESS(x) (x==1?@"":@"s")
 #define foreach(x,y) for (id x in y) 
 //id x;NSEnumerator *rwEnum=[y objectEnumerator];while(x=[rwEnum nextObject])

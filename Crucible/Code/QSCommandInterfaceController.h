@@ -84,6 +84,4 @@
 - (void)executeCommandAndContinue:(id)sender;
 - (IBAction)executeCommand:(id)sender;
 
-- (IBAction)searchForString:(id)sender;
-  
-  @end
+@end

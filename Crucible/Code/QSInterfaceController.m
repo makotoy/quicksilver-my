@@ -1,3 +1,7 @@
+//  Derived from Blacktree, Inc. codebase
+//  Makoto Yamashita 2009-12-10
+
+// TODO: consider merging with QSCommandInterfaceController
 
 #define KeyShift                0x38
 #define KeyControl              0x3b
@@ -79,7 +83,7 @@ int IsKeyPressed(unsigned short key)
     
 	QSObjectCell *attachmentCell = [[QSObjectCell alloc] initTextCell:@""];
     [attachmentCell setRepresentedObject:[QSObject fileObjectWithPath:@"~"]];
-    [[attachmentCell representedObject] loadIcon];
+    [(QSBasicObject*)[attachmentCell representedObject] loadIcon];
     
     NSTextAttachment *attachment = [[[NSTextAttachment alloc] init] autorelease];
     [attachment setAttachmentCell: attachmentCell];
@@ -297,7 +301,7 @@ int IsKeyPressed(unsigned short key)
     [dSelector reset:self];
 	[self updateActions];  
     [iSelector reset:self];
-    [[dSelector objectValue] loadIcon];
+    [(QSBasicObject*)[dSelector objectValue] loadIcon];
 	[self setPreview:NO];
 	[self showInterface:self];
 	
@@ -329,7 +333,7 @@ int IsKeyPressed(unsigned short key)
 - (void)actionActivate:(id)sender {
 	[self updateActionsNow];  
     [iSelector reset:self];
-    [[dSelector objectValue] loadIcon];
+    [(QSBasicObject*)[dSelector objectValue] loadIcon];
 	[[self window] makeFirstResponder:aSelector]; 	
 	[self showInterface:self];
 }
@@ -356,18 +360,17 @@ int IsKeyPressed(unsigned short key)
     
 }
 
-
-- (void)hideMainWindowWithEffect:(id)effect {
+- (void)hideMainWindowWithEffect:(id)effect
+{
 	[self willHideMainWindow:nil];  
 	hidingWindow = YES;
-	if (effect && [[NSUserDefaults standardUserDefaults] boolForKey:kUseEffects])
-		[(QSWindow *)[self window] hideWithEffect:effect];
-	else
-		[(QSWindow *)[self window] orderOut:nil];
+	[(QSWindow *)[self window] orderOut:nil];
 	hidingWindow = NO;
-	[[NSNotificationCenter defaultCenter] postNotificationName:QSReleaseOldCachesNotification object:self];
-	
+	[[NSNotificationCenter defaultCenter]
+       postNotificationName:QSReleaseOldCachesNotification
+                     object:self];
 }
+
 - (void)hideMainWindow:(id)sender {
 	[self hideMainWindowWithEffect:nil];  
 }

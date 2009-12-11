@@ -17,6 +17,8 @@
 
 #import "QSCommandInterfaceController.h"
 
+#import "QSController.h"
+
 @implementation QSCommandInterfaceController
 - (void) firstResponderChanged:(NSResponder *)aResponder {}
 
@@ -40,7 +42,7 @@
 {
 //  if (context == pSelector) {
     NSLog(@"charge %@ %@ %@", keyPath, object, change);
-    [dSelector setObjectValue:[pSelector objectValue]];
+    [dSelector setObjectValue:[(QSSearchObjectView*)pSelector objectValue]];
 //  }
 }
 
@@ -230,9 +232,9 @@
 	
 	//QSLog(@"actions %@", actions);
     // FIXME: This is incorrect, but the correct one below doesn't work...
-	[self updateControl:sSelector withArray:actions];
-	[self updateControl:aSelector withArray:actions];
-    [self updateControl:sSelector withArray:actions];
+	[self updateControl:(QSSearchObjectView*)sSelector withArray:actions];
+	[self updateControl:(QSSearchObjectView*)aSelector withArray:actions];
+    [self updateControl:(QSSearchObjectView*)sSelector withArray:actions];
     /*[self updateControl:dSelector withArray:actions];
      *[self updateControl:aSelector withArray:actions];
      * [self updateControl:iSelector withArray:actions];*/
@@ -329,7 +331,7 @@
   [dSelector reset:self];
 	[self updateActions];  
   [iSelector reset:self];
-  [[dSelector objectValue] loadIcon];
+  [(QSBasicObject*)[dSelector objectValue] loadIcon];
 	[self setPreview:NO];
 	[self showInterface:self];
 	
@@ -351,7 +353,7 @@
 - (void)actionActivate:(id)sender {
 	[self updateActionsNow];  
   [iSelector reset:self];
-  [[dSelector objectValue] loadIcon];
+  [(QSBasicObject*)[dSelector objectValue] loadIcon];
 	[[self window] makeFirstResponder:aSelector]; 	
 	[self showInterface:self];
 }
@@ -756,18 +758,12 @@
 
 - (QSMenuButton *)menuButton { return [[menuButton retain] autorelease];  }
 
-
-
-
-
 - (BOOL)preview { return preview;  }
+
 - (void)setPreview: (BOOL)flag
 {
   preview = flag;
 }
-
-
-
 
 @end
 

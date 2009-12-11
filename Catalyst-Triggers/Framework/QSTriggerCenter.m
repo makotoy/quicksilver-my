@@ -14,33 +14,32 @@
     return _sharedInstance;
 }
 
-- (id) init {
-	self = [super init];
+- (id)init
+{
+    self = [super init];
     if (self) {
-		triggersDict = [[NSMutableDictionary alloc] initWithCapacity:0];
-		triggers = [[NSMutableArray alloc] initWithCapacity:0];
-		NSDictionary* triggerPresets;
-        [QSReg scanPlugins];
-		triggerPresets = [QSReg elementsByIDForPointID:@"com.blacktree.triggers.presets"];
-		for (BElement* triggerPreset in [triggerPresets allValues]) {
-            QSTrigger* theTrigger = [[QSTrigger alloc] initWithInfo:[triggerPreset plistContent]];
-			[triggersDict setObject:theTrigger
-                             forKey:[[triggerPreset plistContent] objectForKey:kItemID]];
-//			[triggers addObject:[QSTrigger triggerWithInfo:[triggerPreset plistContent]]];
-		}
-		
-        /*
-        for (NSMutableDictionary *triggerDict in triggers) {
-            [triggerDict setObject:[QSCommand commandWithDictionary:[triggerDict objectForKey:@"command"]] forKey:@"command"];
+	triggersDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+	triggers = [[NSMutableArray alloc] initWithCapacity:0];
+	NSDictionary* triggerPresets;
+	[QSReg scanPlugins];
+	triggerPresets = [QSReg elementsByIDForPointID:@"com.blacktree.triggers.presets"];
+	for (BElement* triggerPreset in [triggerPresets allValues]) {
+	    QSTrigger* theTrigger = [QSTrigger triggerWithInfo:[triggerPreset plistContent]];
+	    [triggersDict setObject:theTrigger
+			     forKey:[[triggerPreset plistContent] objectForKey:kItemID]];
+	}
+	/*
+	  for (NSMutableDictionary *triggerDict in triggers) {
+	  [triggerDict setObject:[QSCommand commandWithDictionary:[triggerDict objectForKey:@"command"]] forKey:@"command"];
             
-            [self enableTrigger:triggerDict];
+	  [self enableTrigger:triggerDict];
             
-        }
-         */
-		[[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(appChanged:)
-                                                     name:@"QSActiveApplicationChanged"
-                                                   object:nil];
+	  }
+	*/
+	[[NSNotificationCenter defaultCenter] addObserver:self
+						 selector:@selector(appChanged:)
+						     name:@"QSActiveApplicationChanged"
+						   object:nil];
     }
     return self;
 }

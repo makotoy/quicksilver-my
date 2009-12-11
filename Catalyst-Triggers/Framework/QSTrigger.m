@@ -12,46 +12,49 @@
 
 @implementation QSTrigger
 
-+ (void)initialize {
-	[self setKeys:[NSArray arrayWithObject:@"command"] triggerChangeNotificationsForDependentKey:@"name"];
-	[self setKeys:[NSArray arrayWithObjects:@"name", @"icon",nil] triggerChangeNotificationsForDependentKey:@"imageAndText"];
++ (void)initialize
+{
+    [self setKeys:[NSArray arrayWithObject:@"command"] triggerChangeNotificationsForDependentKey:@"name"];
+    [self setKeys:[NSArray arrayWithObjects:@"name", @"icon",nil] triggerChangeNotificationsForDependentKey:@"imageAndText"];
 }
 
-+ (id)triggerWithInfo:(NSDictionary *)dict {
-	return [[[self alloc] initWithInfo:dict] autorelease];
++ (id)triggerWithInfo:(NSDictionary *)dict
+{
+    return [[[self alloc] initWithInfo:dict] autorelease];
 }
 
-- (NSString *)identifier {
-	return [info objectForKey:kItemID];	
+- (NSString *)identifier
+{
+    return [info objectForKey:kItemID];	
 }
 
 - (id)initWithInfo:(NSDictionary *)dict
 {
-	self = [super init];
-	if (self) {
+    self = [super init];
+    if (self) {
         info = [[NSMutableDictionary alloc] initWithCapacity:0];
         [info addEntriesFromDictionary:dict];
-	}
-	return self;
+    }
+    return self;
 }
 
 - (id) init
 {
-	self = [super init];
-	if (self != nil) {
-		info = [[NSMutableDictionary alloc] init];
-	}
-	return self;
+    self = [super init];
+    if (self) {
+	info = [[NSMutableDictionary alloc] initWithCapacity:0];
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	QSLog(@"dealloc %@",self);
-	[info release];
-	info = nil;
-	[children release];
-	children = nil;
-	[super dealloc];
+    QSLog(@"dealloc %@",self);
+    [info release];
+    info = nil;
+    [children release];
+    children = nil;
+    [super dealloc];
 }
 
 - (id)copyWithZone:(NSZone *)zone
