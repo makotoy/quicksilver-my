@@ -1,11 +1,11 @@
-
+//  Derived from Blacktree, Inc. codebase
+//  Makoto Yamashita 2009-12-15
 
 #import <Foundation/Foundation.h>
-//#import <QSCore/QSCore.h>
-
 
 @interface QSABContactActions : QSObjectSource
 @end
+
 @interface QSAddressBookObjectSource : QSObjectSource{
 	NSTimeInterval addressBookModDate;
 	NSMutableDictionary *contactDictionary;

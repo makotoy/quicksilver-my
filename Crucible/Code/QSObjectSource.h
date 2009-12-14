@@ -1,3 +1,5 @@
+//  Derived from Blacktree, Inc. codebase
+//  Makoto Yamashita 2009-12-15
 
 #import <Foundation/Foundation.h>
 

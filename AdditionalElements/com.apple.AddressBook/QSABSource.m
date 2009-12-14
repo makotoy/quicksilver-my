@@ -1,3 +1,6 @@
+//  Derived from Blacktree, Inc. codebase
+//  Makoto Yamashita 2009-12-15
+
 #import "QSObject_ContactHandling.h"
 #import "ABPerson_Display.h"
 #import "QSABSource.h"
@@ -22,9 +25,7 @@
 
 - (NSView *)settingsView
 {
-//    return nil;
     if (![super settingsView]) {
-        NSLog(@"reading nib from %@", [NSBundle bundleForClass:[self class]]);
         [NSBundle loadNibNamed:@"QSAddressBookObjectSource" owner:self];
 	}
     return [super settingsView];
