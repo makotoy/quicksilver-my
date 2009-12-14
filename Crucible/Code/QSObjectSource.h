@@ -33,11 +33,8 @@
 - (void) updateCurrentEntryModificationDate;
 - (NSMutableDictionary *)currentEntry;
 //- (void)setCurrentEntry:(NSMutableDictionary *)newCurrentEntry;
-- (NSView *)settingsView;
-- (void)setSettingsView:(NSView *)newSettingsView;
-
-- (QSCatalogEntry *)selection;
-- (void)setSelection:(QSCatalogEntry *)newSelection;
+@property (retain) NSView* settingsView;
+@property (retain) QSCatalogEntry* selection;
 
 @end
 

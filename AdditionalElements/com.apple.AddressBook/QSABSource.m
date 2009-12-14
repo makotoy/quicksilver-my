@@ -3,11 +3,16 @@
 #import "QSABSource.h"
 
 @implementation QSAddressBookObjectSource
-- (id)init {
-	if ((self = [super init])) {
+- (id)init
+{
+    self = [super init];
+	if (self) {
 		contactDictionary = [[NSMutableDictionary alloc]init];
 		addressBookModDate = [NSDate timeIntervalSinceReferenceDate];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addressBookChanged:) name:kABDatabaseChangedExternallyNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(addressBookChanged:)
+                                                     name:kABDatabaseChangedExternallyNotification
+                                                   object:nil];
 	}
 	return self;
 }
@@ -15,47 +20,44 @@
 - (BOOL)usesGlobalSettings {return YES;}
 
 
-- (NSView *)settingsView {
-	if ([NSApp featureLevel] < 3)return nil;
-  if (![super settingsView]) {
-    [NSBundle loadNibNamed:NSStringFromClass([self class]) owner:self];
-		
-		
-    //	[self refreshGroupList];
+- (NSView *)settingsView
+{
+//    return nil;
+    if (![super settingsView]) {
+        NSLog(@"reading nib from %@", [NSBundle bundleForClass:[self class]]);
+        [NSBundle loadNibNamed:@"QSAddressBookObjectSource" owner:self];
 	}
-  return [super settingsView];
+    return [super settingsView];
+}
+
+@synthesize groupList;
+@synthesize distributionList;
+
+- (NSArray *)contactGroups
+{
+	NSMutableArray *groups = [NSMutableArray arrayWithCapacity:0];
+	[groups addObjectsFromArray:[[[ABAddressBook sharedAddressBook]
+                                     groups]
+                                    valueForKey:kABGroupNameProperty]];
+	[groups removeObject:@"Me"];
+	[groups sortUsingSelector:@selector(caseInsensitiveCompare:)];
+	[groups insertObject:@"All Contacts" atIndex:0];
+
+	return groups;
 }
 
 
-- (NSArray *)contactGroups {
-	NSMutableArray *array = [NSMutableArray array];
-	[array addObject:@"All Contacts"];
-	
-	ABAddressBook *book = [ABAddressBook sharedAddressBook];
-	NSMutableArray *groups = [[book groups] mutableCopy];
-	groups = [[[groups valueForKey:kABGroupNameProperty]mutableCopy]autorelease];
+- (NSArray *)contactDistributions
+{
+	NSMutableArray *groups = [NSMutableArray arrayWithCapacity:0];
+	[groups addObjectsFromArray:[[[ABAddressBook sharedAddressBook]
+                                  groups]
+                                 valueForKey:kABGroupNameProperty]];
 	[groups removeObject:@"Me"];
 	[groups sortUsingSelector:@selector(caseInsensitiveCompare:)];
-	
-	[array addObjectsFromArray:groups];
-    [groups release];
-	return array;
-}
-
-
-- (NSArray *)contactDistributions {
-	NSMutableArray *array = [NSMutableArray array];
-	[array addObject:@"None"];
-	
-	ABAddressBook *book = [ABAddressBook sharedAddressBook];
-	NSMutableArray *groups = [[book groups] mutableCopy];
-	groups = [[[groups valueForKey:kABGroupNameProperty]mutableCopy]autorelease];
-	[groups removeObject:@"Me"];
-	[groups sortUsingSelector:@selector(caseInsensitiveCompare:)];
-	
-	[array addObjectsFromArray:groups];
-    [groups release];
-	return array;
+	[groups insertObject:@"None" atIndex:0];
+    
+	return groups;
 }
 // - (void)refreshGroupList {
 //	[groupList removeAllItems];

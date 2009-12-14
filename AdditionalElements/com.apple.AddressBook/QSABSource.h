@@ -13,6 +13,9 @@
 	IBOutlet NSPopUpButton *groupList;
 	IBOutlet NSPopUpButton *distributionList;
 }
+@property (retain) NSPopUpButton *groupList;
+@property (retain) NSPopUpButton *distributionList;
+
 @end
 
 @interface QSABMailRecentsObjectSource : QSObjectSource

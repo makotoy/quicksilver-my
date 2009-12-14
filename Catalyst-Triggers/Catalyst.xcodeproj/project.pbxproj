@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		088F583710D607EE00AA289F /* Catalyst.prefPane in CopyFiles */ = {isa = PBXBuildFile; fileRef = 088F582610D6076C00AA289F /* Catalyst.prefPane */; };
 		4DDE6D8B0E01E10E00EEC65F /* Catalyst.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE6D810E01E10E00EEC65F /* Catalyst.xcdatamodel */; };
 		4DDE6D8E0E01E10E00EEC65F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE6D850E01E10E00EEC65F /* InfoPlist.strings */; };
 		4DDE6D8F0E01E10E00EEC65F /* QSCatalystPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE6D870E01E10E00EEC65F /* QSCatalystPref.xib */; };
@@ -29,10 +30,8 @@
 		4DDE6D910E01E10E00EEC65F /* QSTriggersPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE6D8A0E01E10E00EEC65F /* QSTriggersPrefPane.m */; };
 		4DDE6D9C0E01E31200EEC65F /* QSTriggerCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4FD8990D2FE507003266B0 /* QSTriggerCenter.m */; };
 		4DDE6DA70E01E40900EEC65F /* QSTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4FD8970D2FE507003266B0 /* QSTrigger.m */; };
-		7F4FD7140D2FD8DD003266B0 /* Catalyst.prefPane in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D202CF80486D31800D8A456 /* Catalyst.prefPane */; };
 		7F4FD7430D2FDA60003266B0 /* QSCatalystPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F4FD7410D2FDA60003266B0 /* QSCatalystPref.xib */; };
 		7F4FD7530D2FDB30003266B0 /* Catalyst.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7F4FD7520D2FDB30003266B0 /* Catalyst.icns */; };
-		7F4FD7A80D2FDD47003266B0 /* Catalyst Agent.app in Resources */ = {isa = PBXBuildFile; fileRef = 7F4FD78C0D2FDC3E003266B0 /* Catalyst Agent.app */; };
 		7F4FD7C60D2FDE04003266B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F4FD7C00D2FDE04003266B0 /* InfoPlist.strings */; };
 		7F4FD7C80D2FDE04003266B0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F4FD7C40D2FDE04003266B0 /* Info.plist */; };
 		7F4FD7C90D2FDE04003266B0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4FD7C50D2FDE04003266B0 /* main.m */; };
@@ -62,13 +61,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D202CE80486D31800D8A456;
 			remoteInfo = CatalystPref;
-		};
-		7F4FD7A40D2FDD25003266B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7F4FD78B0D2FDC3E003266B0;
-			remoteInfo = CatalystAgent;
 		};
 		7F4FD8050D2FE093003266B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -114,7 +106,7 @@
 			dstPath = "${HOME}/Library/PreferencePanes/";
 			dstSubfolderSpec = 0;
 			files = (
-				7F4FD7140D2FD8DD003266B0 /* Catalyst.prefPane in CopyFiles */,
+				088F583710D607EE00AA289F /* Catalyst.prefPane in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +125,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		088F582610D6076C00AA289F /* Catalyst.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Catalyst.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -169,7 +162,6 @@
 		7F4FD89A0D2FE507003266B0 /* QSTriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSTriggerManager.h; sourceTree = "<group>"; };
 		7F4FD89B0D2FE507003266B0 /* QSTriggerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSTriggerManager.m; sourceTree = "<group>"; };
 		8D202CF70486D31800D8A456 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D202CF80486D31800D8A456 /* Catalyst.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Catalyst.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
 		F506C035013D953901CA16C8 /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = /System/Library/Frameworks/PreferencePanes.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -273,8 +265,8 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D202CF80486D31800D8A456 /* Catalyst.prefPane */,
 				7F4FD78C0D2FDC3E003266B0 /* Catalyst Agent.app */,
+				088F582610D6076C00AA289F /* Catalyst.prefPane */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -399,14 +391,13 @@
 			buildRules = (
 			);
 			dependencies = (
-				7F4FD7A50D2FDD25003266B0 /* PBXTargetDependency */,
 				7F4FD80D0D2FE0A2003266B0 /* PBXTargetDependency */,
 				7F4FD80F0D2FE0A2003266B0 /* PBXTargetDependency */,
 			);
 			name = CatalystPref;
 			productInstallPath = "$(HOME)/Library/PreferencePanes";
 			productName = QSCatalyst;
-			productReference = 8D202CF80486D31800D8A456 /* Catalyst.prefPane */;
+			productReference = 088F582610D6076C00AA289F /* Catalyst.prefPane */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -480,7 +471,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F4FD7A80D2FDD47003266B0 /* Catalyst Agent.app in Resources */,
 				8D202CED0486D31800D8A456 /* InfoPlist.strings in Resources */,
 				7F4FD7430D2FDA60003266B0 /* QSCatalystPref.xib in Resources */,
 				7F4FD7530D2FDB30003266B0 /* Catalyst.icns in Resources */,
@@ -513,7 +503,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n \"@loader_path/../Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n -change \\\n \"@executable_path/../Frameworks/QSCrucible.framework/Versions/A/QSCrucible\" \\\n \"@loader_path/../Frameworks/QSCrucible.framework/Versions/A/QSCrucible\" \\\n \"$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\"\n\n/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n \"@loader_path/QSElements\" \\\n \"$CONFIGURATION_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents/Frameworks/QSElements.framework/Versions/A/QSElements\"\n\n/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n \"$INSTALL_PATH/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents/Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n -change \\\n \"@executable_path/../Frameworks/QSCrucible.framework/Versions/A/QSCrucible\" \\\n \"@loader_path/QSCrucible\" \\\n \"$CONFIGURATION_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents/Frameworks/QSCrucible.framework/Versions/A/QSCrucible\"\n";
+			shellScript = "/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n \"@loader_path/../Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n -change \\\n \"@executable_path/../Frameworks/QSCrucible.framework/Versions/A/QSCrucible\" \\\n \"@loader_path/../Frameworks/QSCrucible.framework/Versions/A/QSCrucible\" \\\n \"$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\"\n\n/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n \"@loader_path/QSElements\" \\\n \"$CONFIGURATION_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents/Frameworks/QSElements.framework/Versions/A/QSElements\"\n\n/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/QSElements.framework/Versions/A/QSElements\" \\\n \"@loader_path/../../../QSElements.framework/Versions/A/QSElements\" \\\n -change \\\n \"@executable_path/../Frameworks/QSCrucible.framework/Versions/A/QSCrucible\" \\\n \"@loader_path/QSCrucible\" \\\n \"$CONFIGURATION_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents/Frameworks/QSCrucible.framework/Versions/A/QSCrucible\"\n";
 		};
 		4DDE6DC40E01E73E00EEC65F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -561,11 +551,6 @@
 			isa = PBXTargetDependency;
 			target = 8D202CE80486D31800D8A456 /* CatalystPref */;
 			targetProxy = 4DDE6DCB0E01E7C400EEC65F /* PBXContainerItemProxy */;
-		};
-		7F4FD7A50D2FDD25003266B0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7F4FD78B0D2FDC3E003266B0 /* Catalyst Agent */;
-			targetProxy = 7F4FD7A40D2FDD25003266B0 /* PBXContainerItemProxy */;
 		};
 		7F4FD80D0D2FE0A2003266B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

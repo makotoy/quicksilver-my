@@ -16,6 +16,15 @@
 + (void)initialize{
 	[self setKeys:[NSArray arrayWithObject:@"selection"] triggerChangeNotificationsForDependentKey:@"currentEntry"];
 }
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        settingsView = nil;
+    }
+    return self;
+}
+
 - (NSImage *) iconForEntry:(NSDictionary *)theEntry{return nil;}
 - (NSString *) nameForEntry:(NSDictionary *)theEntry{return nil;}
 - (NSArray *) objectsForEntry:(NSDictionary *)theEntry{return nil;}
@@ -41,20 +50,9 @@
 	return [[self selection]info];
 }
 
+@synthesize selection;
+@synthesize settingsView;
 
-
-- (QSCatalogEntry *)selection { return [[selection retain] autorelease]; }
-- (void)setSelection:(QSCatalogEntry *)newSelection
-{
-    [selection autorelease];
-    selection = [newSelection retain];
-}
-
-- (NSView *)settingsView { return [[settingsView retain] autorelease]; }
-- (void)setSettingsView:(NSView *)newSettingsView {
-    [settingsView release];
-    settingsView = [newSettingsView retain];
-}
 - (BOOL)shouldScanOnMainThread { return NO; }
 @end
 
