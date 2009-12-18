@@ -52,7 +52,7 @@
 - (NSView *) settingsView
 {
     if (![super settingsView]) {
-        [NSBundle loadNibNamed:NSStringFromClass([self class]) owner:self];
+        [NSBundle loadNibNamed:@"QSWebSearchSource" owner:self];
 	}
     return [super settingsView];
 }
