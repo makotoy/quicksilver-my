@@ -283,12 +283,14 @@
 		[pasteboardHistoryTable reloadData];
     
 		if (recievingSelection) {
-		  [pasteboardHistoryTable selectRow:0 byExtendingSelection:NO];
+		  [pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
+                              byExtendingSelection:NO];
 		} else {
 		  int row = [pasteboardHistoryTable selectedRow];
 		  if (row>0) {
 			if (row+1<[pasteboardHistoryArray count])
-			  [pasteboardHistoryTable selectRow:row+1 byExtendingSelection:NO];
+                [pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row + 1]
+                                    byExtendingSelection:NO];
 			else 
 			  [pasteboardHistoryTable deselectRow:row];
 		}
@@ -379,9 +381,11 @@
 		if (mode == QSPasteboardStoreMode && [theEvent modifierFlags] & NSAlternateKeyMask) {
 			[pasteboardStoreArray replaceObjectAtIndex:row
 											withObject:[QSObject objectWithPasteboard:[NSPasteboard generalPasteboard]]];
-			[pasteboardHistoryTable selectRow:row byExtendingSelection:NO];
+			[pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                                byExtendingSelection:NO];
 		} else {
-			[pasteboardHistoryTable selectRow:row byExtendingSelection:NO];
+			[pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                                byExtendingSelection:NO];
 			[self pasteItem:self];
 			[pasteboardHistoryTable reloadData];
 		}
