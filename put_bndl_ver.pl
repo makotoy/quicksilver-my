@@ -5,7 +5,21 @@
 use strict;
  
 # Get the current git commit hash and use it to set the CFBundleVersion value
-my $REV = `/usr/local/git/bin/git show --abbrev-commit | grep "^commit"`;
+my $GITBIN;
+my @GITPATHS = ("/usr/local/git/bin/git", "/opt/local/bin/git", "/usr/bin/git", "/usr/local/bin/git");
+SEARCHGIT: foreach my $GITCAND(@GITPATHS) {
+	if (-e $GITCAND) {
+		$GITBIN = $GITCAND;
+		last SEARCHGIT;
+	}
+}
+my $REV;
+if ($GITBIN) {
+	$REV = `$GITBIN show --abbrev-commit | grep "^commit"`;
+} else {
+	$REV = "commit dummy-version";
+}
+
 my $INFO = "$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist";
 my $ELEM = "$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Resources/element.xml";
 
