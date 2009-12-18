@@ -23,8 +23,11 @@
 
 - (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry
 {
-    NSLog(@"indexIsValidFromDate:forEntry: called. Catalog Specification is more recent than index, should switch to using it!");    
-    return NO;
+    float timeLapse = [[theEntry objectForKey:kItemModificationDate] floatValue];
+    NSDate *specDate = [NSDate dateWithTimeIntervalSinceReferenceDate:timeLapse];
+    return ([specDate compare:indexDate] == NSOrderedDescending);
+//Catalog Specification is more recent than index
+#warning   * should switch to using this!    
 }
 
 - (void)populateFields { return; }
