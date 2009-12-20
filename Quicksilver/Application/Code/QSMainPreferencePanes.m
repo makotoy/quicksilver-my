@@ -205,7 +205,7 @@
 
 - (BOOL)setValue:(NSString *)newMediator forMediator:(NSString *)mediatorType{
 	[[NSUserDefaults standardUserDefaults] setObject:newMediator forKey:mediatorType];
-	[QSReg removePreferredInstanceOfTable:mediatorType];
+	// [QSReg removePreferredInstanceOfTable:mediatorType];
 	return YES;
 }
 

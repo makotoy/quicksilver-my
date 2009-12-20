@@ -3,6 +3,7 @@
 
 // TODO: consider merging with QSCommandInterfaceController
 
+/*
 #define KeyShift                0x38
 #define KeyControl              0x3b
 #define KeyOption               0x3A
@@ -11,7 +12,7 @@
 #define KeySpace                0x31
 #define KeyTabs                 0x30
 
-//int IsKeyPressed(unsigned short);
+int IsKeyPressed(unsigned short);
 
 int IsKeyPressed(unsigned short key)
 {
@@ -21,11 +22,11 @@ int IsKeyPressed(unsigned short key)
 	km = (unsigned char *)km_dummy;
     return ((km[key >> 3] >> (key & 7) ) & 1) ? 1 : 0;
 }
-
+*/
 @implementation QSInterfaceController
 
-
-+ (void)initialize {
++ (void)initialize
+{
     static BOOL initialized = NO;
     /* Make sure code only gets executed once. */
     if (initialized == YES) return;
@@ -47,17 +48,19 @@ int IsKeyPressed(unsigned short key)
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(objectModified:) name:QSObjectModifiedNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchObjectChanged:) name:QSSearchObjectChangedNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appChanged:) name:QSActiveApplicationChangedNotification object:nil];
-        if (fALPHA)
+        if (fALPHA) {
             [QSHistoryController sharedInstance];
+	}
     }
     return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:progressIndicator];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
+    [super dealloc];
 }
 
 - (NSSize) maxIconSize {
@@ -101,7 +104,7 @@ int IsKeyPressed(unsigned short key)
     [self setClearTimer];
 }
 
-// Menu Actions
+#pragma mark Menu Actions
 
 - (void)selectObject:(QSBasicObject *)object {
     //	QSLog(@"select %@", object);
@@ -151,197 +154,203 @@ int IsKeyPressed(unsigned short key)
     [[self window] makeFirstResponder:iSelector];
 }
 
-- (void)updateActions {
-	[aSelector setResultArray:nil];
-	[aSelector clearObjectValue];
-	[self performSelectorOnMainThread:@selector(setActionUpdateTimer)
-						   withObject:nil
+- (void)updateActions
+{
+    [aSelector setResultArray:nil];
+    [aSelector clearObjectValue];
+    [self performSelectorOnMainThread:@selector(setActionUpdateTimer)
+			   withObject:nil
                         waitUntilDone:YES];
 }
 
-- (void)setActionUpdateTimer {
-	if ([actionsUpdateTimer isValid]) {
-		// *** this was causing actions not to update for the search contents action
-		[actionsUpdateTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:0.30]];
-		//[actionsUpdateTimer fire];
-		//	QSLog(@"action %@", [actionsUpdateTimer fireDate]);
-	} else {
-		[actionsUpdateTimer invalidate];
-		[actionsUpdateTimer release];
-		actionsUpdateTimer = [[NSTimer scheduledTimerWithTimeInterval:0.30 target:self selector:@selector(updateActionsNow) userInfo:nil repeats:NO] retain]; 		
-	}
+- (void)setActionUpdateTimer
+{
+    if ([actionsUpdateTimer isValid]) {
+	// *** this was causing actions not to update for the search contents action
+	[actionsUpdateTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:0.30]];
+	//[actionsUpdateTimer fire];
+	//	QSLog(@"action %@", [actionsUpdateTimer fireDate]);
+    } else {
+	[actionsUpdateTimer invalidate];
+	[actionsUpdateTimer release];
+	actionsUpdateTimer = [[NSTimer scheduledTimerWithTimeInterval:0.30 target:self selector:@selector(updateActionsNow) userInfo:nil repeats:NO] retain]; 		
+    }
 }
 
-- (void)fireActionUpdateTimer {
-	[actionsUpdateTimer fire]; 	
+- (void)fireActionUpdateTimer
+{
+    [actionsUpdateTimer fire]; 	
 }
-- (void)updateControl:(QSSearchObjectView *)control withArray:(NSArray *)array {
-	id defaultSelection = nil;
+
+- (void)updateControl:(QSSearchObjectView *)control withArray:(NSArray *)array
+{
+    id defaultSelection = nil;
     if ([array count]) {
-		if ([[array lastObject] isKindOfClass:[NSArray class]]) {
-			defaultSelection = [array objectAtIndex:0];
-			if ([defaultSelection isKindOfClass:[NSNull class]])
-				defaultSelection = nil;
-			array = [array lastObject];
+	if ([[array lastObject] isKindOfClass:[NSArray class]]) {
+	    defaultSelection = [array objectAtIndex:0];
+	    if ([defaultSelection isKindOfClass:[NSNull class]]) {
+		defaultSelection = nil;
+	    }
+	    array = [array lastObject];
 			
-		} else {
-			defaultSelection = [array objectAtIndex:0];
-		}
 	} else {
-		[control clearObjectValue];
+	    defaultSelection = [array objectAtIndex:0];
 	}
-	[control clearSearch];
-	[control setSourceArray:array];
+    } else {
+	[control clearObjectValue];
+    }
+    [control clearSearch];
+    [control setSourceArray:array];
     [control setResultArray:array];
     [control selectObject:defaultSelection];
 }
 
-- (NSArray *)rankedActions {
-	return [QSExec rankedActionsForDirectObject:[dSelector objectValue] indirectObject:[iSelector objectValue]];
+- (NSArray *)rankedActions
+{
+    return [QSExec rankedActionsForDirectObject:[dSelector objectValue]
+				 indirectObject:[iSelector objectValue]];
 }
 
-- (void)updateActionsNow {
-	[actionsUpdateTimer invalidate]; 	
-	
-	//QSLog(@"act on %@", [dSelector objectValue]);
+- (void)updateActionsNow
+{
+    [actionsUpdateTimer invalidate]; 	
     [aSelector setEnabled:YES];
+
     NSString *type = [NSString stringWithFormat:@"QSActionMnemonic:%@", [[dSelector objectValue] primaryType]];
     NSArray *actions = [self rankedActions];
-    
-	//QSLog(@"actions %@", actions);
-	[self updateControl:aSelector withArray:actions];
-	
+    [self updateControl:aSelector withArray:actions];
+
     [aSelector setMatchedString:type];
-	[aSelector setSearchString:nil];
-	
-	//	[iSelector setSearchMode:SearchFilter];
-	//  if ([actions count])
-	//     [aSelector selectIndex:0];
-	// else
-    //    [aSelector clearObjectValue];
-    //[aSelector setNeedsDisplay:YES];
-    //    [aSelector performSearchFor:nil from:self];
+    [aSelector setSearchString:nil];
 }
 
-- (void)updateIndirectObjects {
-    NSArray *indirects = [[[aSelector objectValue] provider] validIndirectObjectsForAction:[[aSelector objectValue] identifier] directObject:[dSelector objectValue]];  
-	[self updateControl:iSelector withArray:indirects];
-	[iSelector setSearchMode:( indirects ? SearchFilter : SearchFilterAll )];
+- (void)updateIndirectObjects
+{
+    NSArray *indirects = [[[aSelector objectValue] provider]
+			     validIndirectObjectsForAction:[[aSelector objectValue] identifier]
+					      directObject:[dSelector objectValue]];  
+    [self updateControl:iSelector withArray:indirects];
+    [iSelector setSearchMode:(indirects ? SearchFilter : SearchFilterAll)];
 }
 
-- (void)clearObjectView:(QSSearchObjectView *)view {
-	[view setResultArray:nil];  
-	[view setSourceArray:nil];
+- (void)clearObjectView:(QSSearchObjectView *)view
+{
+    [view setResultArray:nil];  
+    [view setSourceArray:nil];
     [view setMatchedString:nil];
     [view setSearchString:nil];
-	[view clearObjectValue]; 	
+    [view clearObjectValue]; 	
 }
 
-- (void)searchArray:(NSMutableArray *)array {
+- (void)searchArray:(NSMutableArray *)array
+{
+    [actionsUpdateTimer invalidate];
+    [self clearObjectView:dSelector];
+    //[self clearObjectView:aSelector];
+    [dSelector setSourceArray:array]; // !!!:nicholas:20040319 
+    [dSelector setResultArray:array]; // !!!:nicholas:20040319 
+    [self updateViewLocations];
+    [self updateActionsNow];
+    [self showMainWindow:self];
+    [[self window] makeFirstResponder:dSelector];
+    [dSelector setSearchMode:SearchFilter];
+}
+
+- (void)showArray:(NSMutableArray *)array
+{
+    [actionsUpdateTimer invalidate];
+    [self clearObjectView:dSelector];
+    //[self clearObjectView:aSelector];
+    [dSelector setSourceArray:array]; // !!!:nicholas:20040319 
+    [dSelector setResultArray:array]; // !!!:nicholas:20040319 
 	
-	[actionsUpdateTimer invalidate];
-	[self clearObjectView:dSelector];
-	//[self clearObjectView:aSelector];
-	[dSelector setSourceArray:array]; // !!!:nicholas:20040319 
-	[dSelector setResultArray:array]; // !!!:nicholas:20040319 
-	[self updateViewLocations];
-	[self updateActionsNow];
-	[self showMainWindow:self];
-	[[self window] makeFirstResponder:dSelector];
-	[dSelector setSearchMode:SearchFilter];
-	
+    [dSelector setSearchMode:SearchFilter];
+    if ([array count]) {
+	[dSelector selectObject:[array objectAtIndex:0]];
+    }
+    [self updateViewLocations];
+    [self updateActionsNow];
+    [self showMainWindow:self];
+    [[self window] makeFirstResponder:dSelector];
     
+    [dSelector showResultView:self];
 }
 
-- (void)showArray:(NSMutableArray *)array {
-	[actionsUpdateTimer invalidate];
-	[self clearObjectView:dSelector];
-	//[self clearObjectView:aSelector];
-	[dSelector setSourceArray:array]; // !!!:nicholas:20040319 
-	[dSelector setResultArray:array]; // !!!:nicholas:20040319 
-	
-	[dSelector setSearchMode:SearchFilter];
-	if ([array count])
-		[dSelector selectObject:[array objectAtIndex:0]];
-	
-	[self updateViewLocations];
-	[self updateActionsNow];
-	[self showMainWindow:self];
-	[[self window] makeFirstResponder:dSelector];
-    
-	[dSelector showResultView:self];
+- (void)showInterface:(id)sender
+{
+    [[NSNotificationCenter defaultCenter]
+	postNotificationName:QSInterfaceActivatedNotification
+		      object:self];
+    [self showMainWindow:self];
 }
 
-- (void)showInterface:(id)sender {
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:QSInterfaceActivatedNotification object:self];
-	[self showMainWindow:self];
+- (id)init
+{
+    self = [super init];
+    if (self) {
+	[self loadWindow];
+    }
+    return self;
 }
 
-- (id)init {
-	if ((self = [super init])) {
-		
-		[self loadWindow];
-	}
-	return self;
-}
 - (void)activate:(id)sender {
-    // QSLog(@"activate");
-	
-	if ([[self window] isVisible] && [[NSUserDefaults standardUserDefaults] boolForKey:@"QSInterfaceReactivationDeactivates"]) {
-		//QSLog(@"hide %f", [[self window] alphaValue]);
-		//logRect([[self window] frame]);
-		[self hideMainWindowFromCancel:sender];
-		return; 	
-	}
+    if ([[self window] isVisible]
+	&& [[NSUserDefaults standardUserDefaults] boolForKey:@"QSInterfaceReactivationDeactivates"]) {
+	[self hideMainWindowFromCancel:sender];
+	return; 	
+    }
 	
     [[NSNotificationCenter defaultCenter] postNotificationName:QSInterfaceActivatedNotification object:self];
     
     [hideTimer invalidate];
     [dSelector reset:self];
-	[self updateActions];  
+    [self updateActions];  
     [iSelector reset:self];
     [(QSBasicObject*)[dSelector objectValue] loadIcon];
-	[self setPreview:NO];
-	[self showInterface:self];
+    [self setPreview:NO];
+    [self showInterface:self];
 	
-	[[self window] makeFirstResponder:dSelector];
+    [[self window] makeFirstResponder:dSelector];
     
-	[dSelector setSearchMode:SearchFilterAll];
+    [dSelector setSearchMode:SearchFilterAll];
     
-    // QSLog(@"time %f", [[NSApp currentEvent] timestamp]);
     NSEvent *theEvent = [NSApp nextEventMatchingMask:NSKeyDownMask
                                            untilDate:[NSDate dateWithTimeIntervalSinceNow:0.075]
-                                              inMode:NSDefaultRunLoopMode dequeue:YES];
+                                              inMode:NSDefaultRunLoopMode
+					     dequeue:YES];
 #warning dont do this unless the character is alphabetic
-	if (theEvent) {
+    if (theEvent) {
         theEvent = [NSEvent keyEventWithType:[theEvent type]
                                     location:[theEvent locationInWindow]
-                               modifierFlags:0 timestamp:[theEvent timestamp]
+                               modifierFlags:0
+				   timestamp:[theEvent timestamp]
                                 windowNumber:[theEvent windowNumber]
                                      context:[theEvent context]
                                   characters:[theEvent charactersIgnoringModifiers]
                  charactersIgnoringModifiers:[theEvent charactersIgnoringModifiers]
                                    isARepeat:[theEvent isARepeat]
                                      keyCode:[theEvent keyCode]];
-        if (VERBOSE) QSLog(@"Ignoring Modifiers for characters: %@", [theEvent characters]);
+        if (VERBOSE) {
+	    QSLog(@"Ignoring Modifiers for characters: %@", [theEvent characters]);
+	}
         [NSApp postEvent:theEvent atStart:YES];
-        //QSLog(@"time2 %f", [theEvent timestamp]);
     }
 }
 
-- (void)actionActivate:(id)sender {
-	[self updateActionsNow];  
+- (void)actionActivate:(id)sender
+{
+    [self updateActionsNow];  
     [iSelector reset:self];
     [(QSBasicObject*)[dSelector objectValue] loadIcon];
-	[[self window] makeFirstResponder:aSelector]; 	
-	[self showInterface:self];
+    [[self window] makeFirstResponder:aSelector]; 	
+    [self showInterface:self];
 }
 
-- (void)activateInTextMode:(id)sender {
-	[dSelector transmogrify:sender];
+- (void)activateInTextMode:(id)sender
+{
+    [dSelector transmogrify:sender];
     [iSelector reset:self];
-	[self showInterface:self];
+    [self showInterface:self];
 }
 
 
@@ -350,14 +359,10 @@ int IsKeyPressed(unsigned short key)
         CGSConnection conn = _CGSDefaultConnection();
         CGSSetGlobalHotKeyOperatingMode(conn, CGSGlobalHotKeyEnable);
     }
-    
     if ([[self window] isVisible] && ![[self window] attachedSheet]) {
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:QSInterfaceDeactivatedNotification object:self];
         [[self window] makeFirstResponder:nil];
-        
     }
-    
 }
 
 - (void)hideMainWindowWithEffect:(id)effect
@@ -371,38 +376,38 @@ int IsKeyPressed(unsigned short key)
                      object:self];
 }
 
-- (void)hideMainWindow:(id)sender {
-	[self hideMainWindowWithEffect:nil];  
-}
-- (void)hideMainWindowFromExecution:(id)sender {
-	[self hideMainWindowWithEffect:
-     [[self window] windowPropertyForKey:kQSWindowExecEffect]];
-}
-- (void)hideMainWindowFromCancel:(id)sender {
-	[self hideMainWindowWithEffect:
-     [[self window] windowPropertyForKey:kQSWindowCancelEffect]];
-}
-- (void)hideMainWindowFromFade:(id)sender {
-	if ([[self window] respondsToSelector:@selector(windowPropertyForKey:)])
-		[self hideMainWindowWithEffect:
-         [[self window] windowPropertyForKey:kQSWindowFadeEffect]];
-	
-	
+- (void)hideMainWindow:(id)sender
+{
+    [self hideMainWindowWithEffect:nil];  
 }
 
+- (void)hideMainWindowFromExecution:(id)sender
+{
+    [self hideMainWindowWithEffect:
+	      [[self window] windowPropertyForKey:kQSWindowExecEffect]];
+}
 
-- (void)showMainWindow:(id)sender {
-	//if ([[self window] isKeyWindow])
-	//	[NSApp activateIgnoringOtherApps:YES];
-	//else
-    
+- (void)hideMainWindowFromCancel:(id)sender
+{
+    [self hideMainWindowWithEffect:
+	      [[self window] windowPropertyForKey:kQSWindowCancelEffect]];
+}
+
+- (void)hideMainWindowFromFade:(id)sender
+{
+    if ([[self window] respondsToSelector:@selector(windowPropertyForKey:)]) {
+	[self hideMainWindowWithEffect:
+		  [[self window] windowPropertyForKey:kQSWindowFadeEffect]];
+    }
+}
+
+- (void)showMainWindow:(id)sender
+{
     [(QSWindow *)[self window] makeKeyAndOrderFront:sender];
 	
-    //  QSLog(@"key %d", [[self window] isKeyWindow]);
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kSuppressHotKeysInCommand]) {
         CGSConnection conn = _CGSDefaultConnection();
         CGSSetGlobalHotKeyOperatingMode(conn, CGSGlobalHotKeyDisable);
-		
     }
 }
 
@@ -417,18 +422,17 @@ int IsKeyPressed(unsigned short key)
     [self activate:self];
 }
 
-- (void)objectModified:(NSNotification*)notif {
+- (void)objectModified:(NSNotification*)notif
+{
     if ([[dSelector objectValue] isEqual:[notif object]]) {
-        
         if (VERBOSE) QSLog(@"Reloading actions for: %@", [notif object]);
         [self updateActions];
     }
-    
 } 
 
 
-- (void)searchObjectChanged:(NSNotification*)notif {
-	
+- (void)searchObjectChanged:(NSNotification*)notif
+{
     [[self window] disableFlushWindow];
     if ([notif object] == dSelector) {
         [iSelector setObjectValue:nil];
@@ -436,25 +440,22 @@ int IsKeyPressed(unsigned short key)
         [self updateViewLocations];
     } else if ([notif object] == aSelector) {
         int argumentCount = [(QSAction *)[aSelector objectValue] argumentCount];
-        if (argumentCount == 2)
-            [self updateIndirectObjects];
+        if (argumentCount == 2) [self updateIndirectObjects];
         [self updateViewLocations];
-    }
-    else if ([notif object] == iSelector) {	
-	    [self updateViewLocations];
+    } else if ([notif object] == iSelector) {	
+	[self updateViewLocations];
     }   
-	[[self window] enableFlushWindow];
+    [[self window] enableFlushWindow];
 }
 
-- (void)updateViewLocations {
+- (void)updateViewLocations
+{
     int argumentCount = [(QSAction *)[aSelector objectValue] argumentCount];
-    //QSLog(@"dualAction:%d", argumentCount);
-	
-    if (argumentCount == 2)
+    if (argumentCount == 2) {
         [self showIndirectSelector:nil];
-    else
+    } else {
         [self hideIndirectSelector:nil];
-    
+    }
 }
 
 
@@ -463,8 +464,8 @@ int IsKeyPressed(unsigned short key)
     [aSelector setNextKeyView:iSelector];
 }
 
-- (void)hideIndirectSelector:(id)sender {
-    //   [aSelector setNextKeyView:dSelector];
+- (void)hideIndirectSelector:(id)sender
+{
     [iSelector removeFromSuperview];
 }
 
@@ -492,41 +493,33 @@ int IsKeyPressed(unsigned short key)
     [hideTimer invalidate];
 }
 
-- (void)timerHide:(NSTimer *)timer {
-	if (preview) return;
-    bool stayOpen = StillDown() ;
+- (void)timerHide:(NSTimer *)timer
+{
+    if (preview) return;
+    bool stayOpen = StillDown();
     if (!stayOpen) {
-        // QSLog(@"Window Closing");
-        if ([[NSApp keyWindow] level] <= [[self window] level])
-			// ***warning   * this needs to be better
+        if ([[NSApp keyWindow] level] <= [[self window] level]) {
+	    // ***warning   * this needs to be better
             [self hideMainWindowFromFade:self];
+	}
         [hideTimer invalidate];
     }
-    else {
-        //    QSLog(@"Window Staying Open");
-    }
-}
-- (void)dragPerformed {
-    // QSLog(@"perform"); [hideTimer invalidate];
 }
 
-- (void)windowDidResignMain:(NSNotification *)aNotification {
-    // if (VERBOSE)   QSLog(@"ResignMain");
-}
-- (BOOL)windowShouldClose:(id)sender {
-	[self hideMainWindowFromCancel:self];
-	return NO; 	
+- (void)dragPerformed { }
+
+- (void)windowDidResignMain:(NSNotification *)aNotification { }
+
+- (BOOL)windowShouldClose:(id)sender
+{
+    [self hideMainWindowFromCancel:self];
+    return NO; 	
 }
 
-- (void)windowDidResignKey:(NSNotification *)aNotification {
-    
+- (void)windowDidResignKey:(NSNotification *)aNotification
+{
     if ([aNotification object] == [self window]) {
         if (hidingWindow) return;
-        // if (VERBOSE)   QSLog(@"ResignKey");
-        // return;
-        //[self timerHide:self];
-        // return;
-        //		QSLog(@"resignhide");
         if ([hideTimer isValid]) {
             [hideTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
         } else {
@@ -540,30 +533,27 @@ int IsKeyPressed(unsigned short key)
 }
 
 
-- (void)windowDidBecomeKey:(NSNotification *)notification {
-	NSWindow *window = [notification object];
-    
-	if ([[self window] attachedSheet] == window)
-		return;
-	if (window == [self window]) {
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+    NSWindow *window = [notification object];
+    if ([[self window] attachedSheet] == window) return;
+    if (window == [self window]) {
      	[clearTimer invalidate];
         [hideTimer invalidate];
-    } else  if ([[notification object] level] <= [[self window] level]) {
-		//QSLog(@"hide! %@", window);
-		// ***warning   * this needs to be better
+    } else if ([[notification object] level] <= [[self window] level]) {
         [self hideWindows:self];
-	}
+    }
 }
 
-- (void)setClearTimer {
-	if ([clearTimer isValid]) {
-		[clearTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:10*MINUTES]];
-	} else {
-		[clearTimer release];
-		clearTimer = [[NSTimer scheduledTimerWithTimeInterval:10*MINUTES target:self selector:@selector(clear:) userInfo:nil repeats:NO] retain];
-	} 	
+- (void)setClearTimer
+{
+    if ([clearTimer isValid]) {
+	[clearTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:10*MINUTES]];
+    } else {
+	[clearTimer release];
+	clearTimer = [[NSTimer scheduledTimerWithTimeInterval:10*MINUTES target:self selector:@selector(clear:) userInfo:nil repeats:NO] retain];
+    } 	
 }
-
 
 - (void)clear:(NSTimer *)timer {
 	[dSelector clearObjectValue];
@@ -571,54 +561,50 @@ int IsKeyPressed(unsigned short key)
 	[self updateActionsNow];
 }
 
-
-
-
-
 - (IBAction)showTasks:(id)sender {
     [[NSClassFromString(@"QSTaskViewer") sharedInstance] showWindow:self];  
 }
 
-- (NSProgressIndicator *)progressIndicator { return [[progressIndicator retain] autorelease];  }
-
-
-
-- (void)setCommandWithArray:(NSArray *)array {
-    [dSelector setObjectValue:[array objectAtIndex:0]];
-	[actionsUpdateTimer invalidate];
-    [aSelector setObjectValue:[array objectAtIndex:1]];
-    if ([array count] >2)
-        [iSelector setObjectValue:[array objectAtIndex:2]];
-    else 
-        [iSelector setObjectValue:nil];
+- (NSProgressIndicator *)progressIndicator
+{
+    return [[progressIndicator retain] autorelease];
 }
-- (void)executePartialCommand:(NSArray *)array {
-	//  QSLog(@"partial %@", array);
-    // [self activate:self];
+
+- (void)setCommandWithArray:(NSArray *)array
+{
     [dSelector setObjectValue:[array objectAtIndex:0]];
-	
+    [actionsUpdateTimer invalidate];
+    [aSelector setObjectValue:[array objectAtIndex:1]];
+    if ([array count] >2) {
+        [iSelector setObjectValue:[array objectAtIndex:2]];
+    } else {
+        [iSelector setObjectValue:nil];
+    }
+}
+
+- (void)executePartialCommand:(NSArray *)array {
+    [dSelector setObjectValue:[array objectAtIndex:0]];
     if ([array count] == 1) {
         [self updateActionsNow];
         [[self window] makeFirstResponder:aSelector];  
     } else {
-		[actionsUpdateTimer invalidate];
+	[actionsUpdateTimer invalidate];
         [aSelector setObjectValue:[array objectAtIndex:1]];
         if ([array count] >2) {
             [iSelector setObjectValue:[array objectAtIndex:2]];
         }
         [[self window] makeFirstResponder:iSelector];  
     }
-    
     [self updateViewLocations];
-	
-	[self showInterface:self];
+    [self showInterface:self];
 }
 
-- (IBAction)executeCommand:(id)sender cont:(BOOL)cont encapsulate:(BOOL)encapsulate {
-	//QSLog(@"execute");
-	if ([actionsUpdateTimer isValid]) {
-		[actionsUpdateTimer fire];
-	}
+- (IBAction)executeCommand:(id)sender cont:(BOOL)cont encapsulate:(BOOL)encapsulate
+{
+    //QSLog(@"execute");
+    if ([actionsUpdateTimer isValid]) {
+	[actionsUpdateTimer fire];
+    }
     if (![aSelector objectValue]) {
         NSBeep();
         return;
@@ -634,44 +620,43 @@ int IsKeyPressed(unsigned short key)
             [[self window] makeFirstResponder:iSelector];
             return;
         }
-		[QSExec noteIndirect:[iSelector objectValue] forAction:[aSelector objectValue]];
+	[QSExec noteIndirect:[iSelector objectValue] forAction:[aSelector objectValue]];
     }
-	if (encapsulate) {
-		[self encapsulateCommand]; 	
-		return;
-	}
+    if (encapsulate) {
+	[self encapsulateCommand]; 	
+	return;
+    }
 	
-	if (!cont) [self hideMainWindowFromExecution:self]; 
+    if (!cont) [self hideMainWindowFromExecution:self]; 
     // *** this should only hide if no result comes in like 2 seconds
     BOOL shouldThread = [[NSUserDefaults standardUserDefaults] boolForKey:kExecuteInThread];
 	
-    if (shouldThread && [[aSelector objectValue] canThread])
+    if (shouldThread && [[aSelector objectValue] canThread]) {
         [NSThread detachNewThreadSelector:@selector(executeCommandThreaded) toTarget:self withObject:nil];
-    else
+    } else {
         [self executeCommandThreaded];
-	
-	if (fALPHA)
-		[QSHist addCommand:[self currentCommand]];
-	[dSelector saveMnemonic];
- 	[aSelector saveMnemonic];
-	if (argumentCount == 2) [iSelector saveMnemonic];
-	if (cont) [[self window] makeFirstResponder:aSelector]; 	
+    }
+    if (fALPHA) [QSHist addCommand:[self currentCommand]];
+    [dSelector saveMnemonic];
+    [aSelector saveMnemonic];
+    if (argumentCount == 2) [iSelector saveMnemonic];
+    if (cont) [[self window] makeFirstResponder:aSelector]; 	
 }
 
-
-- (void)encapsulateCommand:(id)sender {
-	[self executeCommand:(id)sender cont:NO encapsulate:YES];
-}
-- (void)executeCommandAndContinue:(id)sender {
-	[self executeCommand:(id)sender cont:YES encapsulate:NO];
+- (void)encapsulateCommand:(id)sender
+{
+    [self executeCommand:(id)sender cont:NO encapsulate:YES];
 }
 
-- (IBAction)executeCommand:(id)sender {
-	[self executeCommand:(id)sender cont:NO encapsulate:NO];
+- (void)executeCommandAndContinue:(id)sender
+{
+    [self executeCommand:(id)sender cont:YES encapsulate:NO];
 }
 
-
-
+- (IBAction)executeCommand:(id)sender
+{
+    [self executeCommand:(id)sender cont:NO encapsulate:NO];
+}
 
 //- (IBAction)encapsulateCommand:(id)sender {
 //    [[QSTriggerCenter sharedInstance] addTriggerForCommand:[self currentCommand]];
@@ -682,52 +667,52 @@ int IsKeyPressed(unsigned short key)
 - (QSCommand *)currentCommand {
     return [QSCommand commandWithDirectObject:[dSelector objectValue] actionObject:[aSelector objectValue] indirectObject:[iSelector objectValue]];
 }
-- (void)setCommand:(QSCommand *)command {
-	[self window];
+
+- (void)setCommand:(QSCommand *)command
+{
+    [self window];
     [dSelector setObjectValue:[command dObject]];
     [aSelector setObjectValue:[command aObject]];
     [iSelector setObjectValue:[command iObject]];
 }
-- (void)encapsulateCommand {
-	if (VERBOSE) QSLog(@"Encapsulating Command");
-	QSCommand *command = [self currentCommand];
-	QSObject *commandObject = [QSObject objectWithName:[command description]];
-	[commandObject setObject:command forType:QSCommandType];
+
+- (void)encapsulateCommand
+{
+    if (VERBOSE) QSLog(@"Encapsulating Command");
+    QSCommand *command = [self currentCommand];
+    QSObject *commandObject = [QSObject objectWithName:[command description]];
+    [commandObject setObject:command forType:QSCommandType];
 	
-	[commandObject setPrimaryType:QSCommandType];
-	[self selectObject:commandObject];
+    [commandObject setPrimaryType:QSCommandType];
+    [self selectObject:commandObject];
 	
-	[self actionActivate:commandObject];
-	return;
+    [self actionActivate:commandObject];
+    return;
 }
 
 - (void)executeCommandThreaded {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];    
     NSDate *startDate = [NSDate date];
-	
-	QSAction *action = [aSelector objectValue];
-	if ([[NSApp currentEvent] modifierFlags] &NSCommandKeyMask && !([[NSApp currentEvent] modifierFlags] &NSShiftKeyMask) ) {
-		action = [action alternate];
-		//QSLog(@"alternate! %@", action);
-		
-		if (VERBOSE) QSLog(@"Using Alternate: %@", action);
+    QSAction *action = [aSelector objectValue];
+    if (([[NSApp currentEvent] modifierFlags] & NSCommandKeyMask)
+	&& !([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask)) {
+	action = [action alternate];
+	if (VERBOSE) QSLog(@"Using Alternate: %@", action);
+    }
+    QSObject *returnValue = [action performOnDirectObject:[dSelector objectValue]
+					   indirectObject:[iSelector objectValue]];
+    if (returnValue) {
+	if ([returnValue isKindOfClass:[QSNullObject class]]) {
+	    [self clearObjectView:dSelector];
+	} else {
+	    BOOL display = [[[action actionDict] objectForKey:kActionDisplaysResult] boolValue];
+	    [dSelector performSelectorOnMainThread:@selector(selectObjectValue:) withObject:returnValue waitUntilDone:YES]; 		
+	    if (display) [self showMainWindow:self];
 	}
-	
-    QSObject *returnValue = [action performOnDirectObject:[dSelector objectValue] indirectObject:[iSelector objectValue]];
-	if (returnValue) {
-		if ([returnValue isKindOfClass:[QSNullObject class]]) {
-			[self clearObjectView:dSelector];
-		} else {
-			BOOL display = [[[action actionDict] objectForKey:kActionDisplaysResult] boolValue];
-			[dSelector performSelectorOnMainThread:@selector(selectObjectValue:) withObject:returnValue waitUntilDone:YES]; 		
-			if (display) [self showMainWindow:self];
-		}
-	}
+    }
     if (VERBOSE) QSLog(@"Command executed (%dms) ", (int)(-[startDate timeIntervalSinceNow] *1000));
     [pool release];  
 }
-
 
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent {
     if ([theEvent modifierFlags] &NSCommandKeyMask  
@@ -748,18 +733,12 @@ int IsKeyPressed(unsigned short key)
 
 - (QSMenuButton *)menuButton { return [[menuButton retain] autorelease];  }
 
-
-
-
-
 - (BOOL)preview { return preview;  }
+
 - (void)setPreview: (BOOL)flag
 {
     preview = flag;
 }
-
-
-
 
 @end
 

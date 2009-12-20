@@ -145,7 +145,7 @@
 		if (![anObject isEqual:[[NSUserDefaults standardUserDefaults] objectForKey:mediatorType]]) {
 			//QSLog(@"%@ %@", anObject, mediatorType);
 			[[NSUserDefaults standardUserDefaults] setObject:anObject forKey:mediatorType];
-			[QSReg removePreferredInstanceOfTable:mediatorType];
+			// [QSReg removePreferredInstanceOfTable:mediatorType];
 			
 			if ([settings objectForKey:@"requiresRelaunch"])
                 [NSApp requestRelaunch:self];

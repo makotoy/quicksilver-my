@@ -1,20 +1,24 @@
-/* QSController */
+/*
+ * Derived from Blacktree, Inc. codebase
+ * Makoto Yamashita 2009-12-20
+ */
+
 
 #import <Cocoa/Cocoa.h>
 
 @interface QSInterfaceController : NSWindowController {
-    IBOutlet QSSearchObjectView *		dSelector;
-    IBOutlet QSSearchObjectView *		aSelector;
-    IBOutlet QSSearchObjectView *		iSelector;
+    IBOutlet QSSearchObjectView *dSelector;
+    IBOutlet QSSearchObjectView *aSelector;
+    IBOutlet QSSearchObjectView *iSelector;
 
     IBOutlet NSProgressIndicator *progressIndicator;
     IBOutlet id commandView;
     IBOutlet QSMenuButton *menuButton;
     NSTimer *hideTimer;
-	NSTimer *actionsUpdateTimer;
-	NSTimer *clearTimer;
-	BOOL hidingWindow;
-	BOOL preview;
+    NSTimer *actionsUpdateTimer;
+    NSTimer *clearTimer;
+    BOOL hidingWindow;
+    BOOL preview;
 }
 
 - (BOOL)preview;
