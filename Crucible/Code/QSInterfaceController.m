@@ -725,21 +725,11 @@ int IsKeyPressed(unsigned short key)
     return NO;
 }
 
-- (QSSearchObjectView *)dSelector { return [[dSelector retain] autorelease];  }
-
-- (QSSearchObjectView *)aSelector { return [[aSelector retain] autorelease];  }
-
-- (QSSearchObjectView *)iSelector { return [[iSelector retain] autorelease];  }
-
-- (QSMenuButton *)menuButton { return [[menuButton retain] autorelease];  }
-
-- (BOOL)preview { return preview;  }
-
-- (void)setPreview: (BOOL)flag
-{
-    preview = flag;
-}
-
+@synthesize dSelector;
+@synthesize aSelector;
+@synthesize iSelector;
+@synthesize menuButton;
+@synthesize preview;
 @end
 
 

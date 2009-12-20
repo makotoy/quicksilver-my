@@ -21,8 +21,7 @@
     BOOL preview;
 }
 
-- (BOOL)preview;
-- (void)setPreview: (BOOL)flag;
+@property (assign) BOOL preview;
 
 - (NSSize) maxIconSize;
 - (IBAction)hideWindows:(id)sender;
@@ -56,10 +55,12 @@
 - (void)showIndirectSelector:(id)sender;
 
 - (void)hideIndirectSelector:(id)sender;
-- (QSSearchObjectView *)dSelector;
-- (QSSearchObjectView *)aSelector;
-- (QSSearchObjectView *)iSelector;
-- (QSMenuButton *)menuButton;
+
+@property (readonly) QSSearchObjectView* dSelector;
+@property (readonly) QSSearchObjectView* aSelector;
+@property (readonly) QSSearchObjectView* iSelector;
+@property (readonly) QSMenuButton* menuButton;
+
 - (void)fireActionUpdateTimer;
 - (void)searchArray:(NSMutableArray *)array;
 - (void)hideMainWindowFromExecution:(id)sender;
