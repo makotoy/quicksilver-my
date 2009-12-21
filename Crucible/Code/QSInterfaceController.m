@@ -1,28 +1,6 @@
 //  Derived from Blacktree, Inc. codebase
 //  Makoto Yamashita 2009-12-10
 
-// TODO: consider merging with QSCommandInterfaceController
-
-/*
-#define KeyShift                0x38
-#define KeyControl              0x3b
-#define KeyOption               0x3A
-#define KeyCommand              0x37
-#define KeyCapsLock             0x39
-#define KeySpace                0x31
-#define KeyTabs                 0x30
-
-int IsKeyPressed(unsigned short);
-
-int IsKeyPressed(unsigned short key)
-{
-    unsigned char *km;
-    KeyMap km_dummy;
-    GetKeys(km_dummy);
-	km = (unsigned char *)km_dummy;
-    return ((km[key >> 3] >> (key & 7) ) & 1) ? 1 : 0;
-}
-*/
 @implementation QSInterfaceController
 
 + (void)initialize
@@ -31,23 +9,42 @@ int IsKeyPressed(unsigned short key)
     /* Make sure code only gets executed once. */
     if (initialized == YES) return;
     initialized = YES;
-    [NSApp registerServicesMenuSendTypes:[NSArray arrayWithObjects:NSStringPboardType, NSRTFPboardType, nil]
-                             returnTypes:[NSArray arrayWithObjects:NSStringPboardType, NSRTFPboardType, nil]];
+    NSArray* acceptedTypes = [NSArray arrayWithObjects:NSStringPboardType, NSRTFPboardType, nil];
+    [NSApp registerServicesMenuSendTypes:acceptedTypes
+                             returnTypes:acceptedTypes];
     return;
 }
 
-+ (NSString *)name {
-	return @"DefaultInterface";
++ (NSString *)name
+{
+    return @"DefaultInterface";
 }
 
-- (id)initWithWindow:(NSWindow *)window {
+- (id)initWithWindow:(NSWindow *)window
+{
     self = [super initWithWindow:window];
-    if ( self ) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResignKey:) name:NSWindowDidResignKeyNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(objectModified:) name:QSObjectModifiedNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchObjectChanged:) name:QSSearchObjectChangedNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appChanged:) name:QSActiveApplicationChangedNotification object:nil];
+    if (self) {
+	NSNotificationCenter* notCenter = [NSNotificationCenter defaultCenter];
+        [notCenter addObserver:self
+		      selector:@selector(windowDidBecomeKey:)
+			  name:NSWindowDidBecomeKeyNotification
+			object:nil];
+        [notCenter addObserver:self
+		      selector:@selector(windowDidResignKey:)
+			  name:NSWindowDidResignKeyNotification
+			object:nil];
+        [notCenter addObserver:self
+		      selector:@selector(objectModified:)
+			  name:QSObjectModifiedNotification
+			object:nil];
+        [notCenter addObserver:self
+		      selector:@selector(searchObjectChanged:)
+			  name:QSSearchObjectChangedNotification
+			object:nil];
+        [notCenter addObserver:self
+		      selector:@selector(appChanged:)
+			  name:QSActiveApplicationChangedNotification
+			object:nil];
         if (fALPHA) {
             [QSHistoryController sharedInstance];
 	}
@@ -63,11 +60,13 @@ int IsKeyPressed(unsigned short key)
     [super dealloc];
 }
 
-- (NSSize) maxIconSize {
+- (NSSize) maxIconSize
+{
     return NSMakeSize(128, 128);
 }
 
-- (void)windowDidLoad {
+- (void)windowDidLoad
+{
     [progressIndicator stopAnimation:self];
     [progressIndicator setDisplayedWhenStopped:NO];
     
@@ -75,16 +74,16 @@ int IsKeyPressed(unsigned short key)
     [aSelector setAllowText:NO];
     [aSelector setDropMode:QSRejectDropMode];
     [aSelector setSearchMode:SearchFilter];
-	[aSelector setAllowNonActions:NO];
+    [aSelector setAllowNonActions:NO];
     
-	[iSelector retain];
-	[self hideIndirectSelector:nil];
+    [iSelector retain];
+    [self hideIndirectSelector:nil];
 	
-	[[self window] setHidesOnDeactivate:NO];
+    [[self window] setHidesOnDeactivate:NO];
     
     [[self menuButton] setMenu:[[NSApp delegate] statusMenuWithQuit]];
     
-	QSObjectCell *attachmentCell = [[QSObjectCell alloc] initTextCell:@""];
+    QSObjectCell *attachmentCell = [[QSObjectCell alloc] initTextCell:@""];
     [attachmentCell setRepresentedObject:[QSObject fileObjectWithPath:@"~"]];
     [(QSBasicObject*)[attachmentCell representedObject] loadIcon];
     
@@ -93,33 +92,41 @@ int IsKeyPressed(unsigned short key)
     
     [self searchObjectChanged:nil];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:progressIndicator selector:@selector(startAnimation:) name:QSTasksStartedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:progressIndicator selector:@selector(stopAnimation:) name:QSTasksEndedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:progressIndicator
+					     selector:@selector(startAnimation:)
+						 name:QSTasksStartedNotification
+					       object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:progressIndicator
+					     selector:@selector(stopAnimation:)
+						 name:QSTasksEndedNotification
+					       object:nil];
 }
 
-- (IBAction)hideWindows:(id)sender {
+- (IBAction)hideWindows:(id)sender
+{
     [self hideMainWindow:self];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:QSReleaseOldCachesNotification object:self];
+    [[NSNotificationCenter defaultCenter]
+	postNotificationName:QSReleaseOldCachesNotification
+		      object:self];
     [self setClearTimer];
 }
 
 #pragma mark Menu Actions
 
-- (void)selectObject:(QSBasicObject *)object {
-    //	QSLog(@"select %@", object);
+- (void)selectObject:(QSBasicObject *)object
+{
     [dSelector setObjectValue:object];
 }
 
-- (QSBasicObject *)selection {
-	return [dSelector objectValue];
+- (QSBasicObject *)selection
+{
+    return [dSelector objectValue];
 }
 
-- (void)shortCircuit:(id)sender {
-    //QSLog(@"scirr");
-	[self fireActionUpdateTimer];
+- (void)shortCircuit:(id)sender
+{
+    [self fireActionUpdateTimer];
     NSArray *array = [aSelector resultArray];
-	
     int argumentCount = [(QSAction *)[aSelector objectValue] argumentCount];
 	
     if (sender == iSelector) {
@@ -134,7 +141,6 @@ int IsKeyPressed(unsigned short key)
         argumentCount = 0;
         [[self window] makeFirstResponder:nil];
     }
-    
     if (argumentCount != 2) {
         QSAction *action = nil;
         QSAction *bestAction = nil;
@@ -186,15 +192,12 @@ int IsKeyPressed(unsigned short key)
 {
     id defaultSelection = nil;
     if ([array count]) {
+	defaultSelection = [array objectAtIndex:0];
+	if ([defaultSelection isKindOfClass:[NSNull class]]) {
+	    defaultSelection = nil;
+	}
 	if ([[array lastObject] isKindOfClass:[NSArray class]]) {
-	    defaultSelection = [array objectAtIndex:0];
-	    if ([defaultSelection isKindOfClass:[NSNull class]]) {
-		defaultSelection = nil;
-	    }
 	    array = [array lastObject];
-			
-	} else {
-	    defaultSelection = [array objectAtIndex:0];
 	}
     } else {
 	[control clearObjectValue];
@@ -293,7 +296,8 @@ int IsKeyPressed(unsigned short key)
     return self;
 }
 
-- (void)activate:(id)sender {
+- (void)activate:(id)sender
+{
     if ([[self window] isVisible]
 	&& [[NSUserDefaults standardUserDefaults] boolForKey:@"QSInterfaceReactivationDeactivates"]) {
 	[self hideMainWindowFromCancel:sender];
@@ -354,7 +358,8 @@ int IsKeyPressed(unsigned short key)
 }
 
 
-- (void)willHideMainWindow:(id)sender {
+- (void)willHideMainWindow:(id)sender
+{
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kSuppressHotKeysInCommand]) {
         CGSConnection conn = _CGSDefaultConnection();
         CGSSetGlobalHotKeyOperatingMode(conn, CGSGlobalHotKeyEnable);
@@ -459,7 +464,8 @@ int IsKeyPressed(unsigned short key)
 }
 
 
-- (void)showIndirectSelector:(id)sender {
+- (void)showIndirectSelector:(id)sender
+{
     [[[self window] contentView] addSubview:iSelector];
     [aSelector setNextKeyView:iSelector];
 }
@@ -474,24 +480,17 @@ int IsKeyPressed(unsigned short key)
 #pragma mark Notifications
 
 
-- (void)appChanged:(NSNotification *)aNotification {
-    //NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    //QSLog(@"appchanged");
+- (void)appChanged:(NSNotification *)aNotification
+{
     NSString *currentApp = [[[NSWorkspace sharedWorkspace] activeApplication] objectForKey:@"NSApplicationBundleIdentifier"];
-    if (![currentApp isEqualToString:@"com.blacktree.Quicksilver"])
+    if (![currentApp isEqualToString:@"com.blacktree.Quicksilver"]) {
         [self hideWindows:self];
+    }
 }
 
+- (IBAction)showAbout:(id)sender { [[NSApp delegate] showAbout:sender]; }
 
-
-- (IBAction)showAbout:(id)sender {
-    // QSLog(@"indirectabout");
-    [[NSApp delegate] showAbout:sender];
-}
-
-- (void)invalidateHide {
-    [hideTimer invalidate];
-}
+- (void)invalidateHide { [hideTimer invalidate]; }
 
 - (void)timerHide:(NSTimer *)timer
 {
@@ -555,13 +554,14 @@ int IsKeyPressed(unsigned short key)
     } 	
 }
 
-- (void)clear:(NSTimer *)timer {
-	[dSelector clearObjectValue];
-	//[view clearObjectValue]; 	
-	[self updateActionsNow];
+- (void)clear:(NSTimer *)timer
+{
+    [dSelector clearObjectValue];
+    [self updateActionsNow];
 }
 
-- (IBAction)showTasks:(id)sender {
+- (IBAction)showTasks:(id)sender
+{
     [[NSClassFromString(@"QSTaskViewer") sharedInstance] showWindow:self];  
 }
 
@@ -582,7 +582,8 @@ int IsKeyPressed(unsigned short key)
     }
 }
 
-- (void)executePartialCommand:(NSArray *)array {
+- (void)executePartialCommand:(NSArray *)array
+{
     [dSelector setObjectValue:[array objectAtIndex:0]];
     if ([array count] == 1) {
         [self updateActionsNow];
@@ -664,7 +665,8 @@ int IsKeyPressed(unsigned short key)
 //- (IBAction)addTrigger:(id)sender {
 //    [[QSTriggerCenter sharedInstance] addTriggerForCommand:[self currentCommand]];
 //}
-- (QSCommand *)currentCommand {
+- (QSCommand *)currentCommand
+{
     return [QSCommand commandWithDirectObject:[dSelector objectValue] actionObject:[aSelector objectValue] indirectObject:[iSelector objectValue]];
 }
 
@@ -690,7 +692,8 @@ int IsKeyPressed(unsigned short key)
     return;
 }
 
-- (void)executeCommandThreaded {
+- (void)executeCommandThreaded
+{
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];    
     NSDate *startDate = [NSDate date];
     QSAction *action = [aSelector objectValue];
@@ -714,12 +717,12 @@ int IsKeyPressed(unsigned short key)
     [pool release];  
 }
 
-- (BOOL)performKeyEquivalent:(NSEvent *)theEvent {
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent
+{
     if ([theEvent modifierFlags] &NSCommandKeyMask  
         && [theEvent modifierFlags] & NSShiftKeyMask
         && [[theEvent characters] length]
-        && [[NSCharacterSet letterCharacterSet] characterIsMember:[[theEvent characters] characterAtIndex:0]]
-		) {
+        && [[NSCharacterSet letterCharacterSet] characterIsMember:[[theEvent characters] characterAtIndex:0]]) {
         return [[self aSelector] executeText:(NSEvent *)theEvent];
     }
     return NO;
