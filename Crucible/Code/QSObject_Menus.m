@@ -55,9 +55,11 @@
 //    return menu;
 //    
 //}
-- (void)performActionFromMenuItem:(id)sender {
+- (void)performActionFromMenuItem:(id)sender
+{
 	QSLog(@"sender %@",sender);
-	NSArray *actions = [QSExec rankedActionsForDirectObject:self indirectObject:nil];
+	NSArray *actions = [QSExec rankedActionsForDirectObject:(QSObject*)self
+                                             indirectObject:nil];
 	
 	QSCommand *command = [QSCommand commandWithDirectObject:self
                                                actionObject:[actions objectAtIndex:0]
@@ -65,11 +67,13 @@
 	[command execute];
 }
 
-- (NSMenuItem *)menuItem {
+- (NSMenuItem *)menuItem
+{
 	return [self menuItemWithChildren:NO];
 }
 
-- (BOOL)applyIconToMenuItem:(NSMenuItem *)item {
+- (BOOL)applyIconToMenuItem:(NSMenuItem *)item
+{
 	NSImage *iconCopy = [[[self icon] copy] autorelease];
 	[iconCopy setSize:NSMakeSize(16,16)];
 	[iconCopy setFlipped:NO];
@@ -77,7 +81,8 @@
 	return YES;
 }
 
-- (BOOL)configureMenuItem:(NSMenuItem *)item includeChildren:(BOOL)includeChildren {
+- (BOOL)configureMenuItem:(NSMenuItem *)item includeChildren:(BOOL)includeChildren
+{
 	NSString *title = [self name];
 	if (!title)
         title = @"";
@@ -85,11 +90,6 @@
 	[self applyIconToMenuItem:item];
 	[item setRepresentedObject:self];
 	
-	if (0) {
-		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:12], NSFontAttributeName, nil];
-		NSAttributedString *attrTitle = [[[NSAttributedString alloc] initWithString:[self name] attributes:attrs] autorelease];
-		[item setAttributedTitle:attrTitle];
-	}
 	if (includeChildren) {
 		NSMenu *submenu = [self fullMenu];
 		NSTimer *timer = [NSTimer timerWithTimeInterval:0.0
@@ -168,7 +168,6 @@
 
 - (BOOL)addActionsInArray:(NSArray *)actions count:(int)count toMenu:(NSMenu *)menu indent:(int)indent {
 	count = MIN(count, [actions count]);
-	int i;
 	NSMenuItem *item;
 	NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                            [NSFont menuBarFontOfSize:0],NSFontAttributeName,
@@ -228,7 +227,7 @@
 		
 		NSMenuItem *item;
 		
-		NSArray *actions = [QSExec validActionsForDirectObject:self indirectObject:nil];
+		NSArray *actions = [QSExec validActionsForDirectObject:(QSObject*)self indirectObject:nil];
 		[actions sortedArrayUsingDescriptors:[NSSortDescriptor descriptorArrayWithKey:@"rank" ascending:YES selector:@selector(compare:)]];
 		
 		item = [menu addItemWithTitle:[NSString stringWithFormat:@"Actions (...All%C)",0x25B8] action:(SEL)0 keyEquivalent:@""];
@@ -256,7 +255,7 @@
 		
 		
 	} else if ([[menu title] isEqualToString:kQSObjectActionsMenu]) {
-	    NSArray *actions = [QSExec validActionsForDirectObject:self indirectObject:nil];
+	    NSArray *actions = [QSExec validActionsForDirectObject:(QSObject*)self indirectObject:nil];
 		
 		[actions sortedArrayUsingDescriptors:[NSSortDescriptor descriptorArrayWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
 

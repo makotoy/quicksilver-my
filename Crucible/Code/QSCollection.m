@@ -74,9 +74,9 @@
 {
 	[array addObject:object];
 }
-- (void)addObjectsFromArray:(NSArray *)array
+- (void)addObjectsFromArray:(NSArray *)newArray
 {
-	[array addObjectsFromArray:array];
+	[array addObjectsFromArray:newArray];
 }
 - (void)removeObject:(id <QSObject>)object
 {

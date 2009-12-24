@@ -66,6 +66,7 @@
 - (void)hideMainWindowFromExecution:(id)sender;
 - (void)hideMainWindowFromCancel:(id)sender;
 - (void)hideMainWindowFromFade:(id)sender; 	
+- (void)hideMainWindowWithEffect:(id)effect;
 - (void)setClearTimer;
 - (void)executePartialCommand:(NSArray *)array;
 - (void)actionActivate:(id)sender;
@@ -75,4 +76,6 @@
 - (void)encapsulateCommand:(id)sender;
 - (void)executeCommandAndContinue:(id)sender;
 - (IBAction)executeCommand:(id)sender;
+- (void)updateControl:(QSSearchObjectView *)control withArray:(NSArray *)array;
+- (NSArray *)rankedActions;
 @end

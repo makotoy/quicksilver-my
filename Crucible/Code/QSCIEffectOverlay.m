@@ -7,6 +7,7 @@
 //
 
 #import "QSCIEffectOverlay.h"
+
 #define CGSWindowFilterRef fid;
 CGSConnection cid;
 //typedef int		CGSConnection;
@@ -122,9 +123,8 @@ CGRect QSCGRectFromScreenFrame(NSRect rect){
 		CGSSetWindowLevel(cid, wid, CGWindowLevelForKey(kCGFloatingWindowLevelKey));
 		DXSetWindowIgnoresMouse(wid,TRUE);
 		CGContextRef cgContext = CGWindowContextCreate(cid, wid, NULL);
-		if ( cgContext )
-		{
-			CGContextSetCompositeOperation(cgContext, 1);
+		if (cgContext) {
+            CGContextSetCompositeOperation(cgContext, 1);
             CGContextSetRGBFillColor(cgContext, 1.0, 1.0, 1.0, 0.0);
 			CGContextFillRect(cgContext, sWindowRgn);
 			CFRelease(cgContext);

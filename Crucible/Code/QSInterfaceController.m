@@ -173,13 +173,15 @@
 {
     if ([actionsUpdateTimer isValid]) {
 	// *** this was causing actions not to update for the search contents action
-	[actionsUpdateTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:0.30]];
-	//[actionsUpdateTimer fire];
-	//	QSLog(@"action %@", [actionsUpdateTimer fireDate]);
+        [actionsUpdateTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:0.30]];
     } else {
 	[actionsUpdateTimer invalidate];
 	[actionsUpdateTimer release];
-	actionsUpdateTimer = [[NSTimer scheduledTimerWithTimeInterval:0.30 target:self selector:@selector(updateActionsNow) userInfo:nil repeats:NO] retain]; 		
+	actionsUpdateTimer = [[NSTimer scheduledTimerWithTimeInterval:0.30
+                                                           target:self
+                                                         selector:@selector(updateActionsNow)
+                                                         userInfo:nil
+                                                          repeats:NO] retain]; 		
     }
 }
 
@@ -356,7 +358,6 @@
     [iSelector reset:self];
     [self showInterface:self];
 }
-
 
 - (void)willHideMainWindow:(id)sender
 {

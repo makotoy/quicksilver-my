@@ -266,14 +266,15 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString) {
 }
 
 - (NSString *)decodedHexString {
-	char s[5] = {0,0,0,0,0};
 	unsigned x;
 	int i;
+    NSMutableString* resStr = [NSMutableString stringWithCapacity:0];
 	for (i = 0; i<((int) [self length] /2); i++) {
-		[[NSScanner scannerWithString:[self substringWithRange:NSMakeRange(i*2, 2)]]scanHexInt:&x];
-		s[i] = (char) x;
+		[[NSScanner scannerWithString:[self substringWithRange:NSMakeRange(i*2, 2)]]
+            scanHexInt:&x];
+        [resStr appendFormat:@"%c", x];
 	}
-	return [NSString stringWithCString:s length:4];  
+	return resStr;
 }
 - (unsigned) hexIntValue {
 	unsigned x;

@@ -41,7 +41,7 @@
 	if (slashRange.location==NSNotFound || NSMaxRange(slashRange) == [path length]){
 		// if ([[path stringByDeletingLastPathComponent] isEqualToString:@"/"]){
 		QSLog(@"hidden?");
-        NSArray *hiddenFiles=[[NSString stringWithContentsOfFile:@"/.hidden"]componentsSeparatedByString:@"\n"];
+        NSArray *hiddenFiles = [[NSString stringWithContentsOfFile:@"/.hidden" encoding:NSASCIIStringEncoding error:NULL]componentsSeparatedByString:@"\n"];
         if ([hiddenFiles containsObject:[path lastPathComponent]]) return YES;
 		}
 	if ([[path lastPathComponent]hasPrefix:@"."])return YES;
@@ -197,7 +197,7 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
     if ([hfsType isEqualToString:@"''"]) hfsType=nil;
     
     if (!hfsType && isDirectory && isPackage){
-        NSString *packageType=[NSString stringWithContentsOfFile:[path stringByAppendingPathComponent:@"Contents/PkgInfo"]];
+        NSString *packageType=[NSString stringWithContentsOfFile:[path stringByAppendingPathComponent:@"Contents/PkgInfo"] encoding:NSASCIIStringEncoding error:NULL];
         if ([packageType length]>=4)
             packageType=[packageType substringToIndex:4];
         if (packageType) packageType=[NSString stringWithFormat:@"'%@'",packageType];

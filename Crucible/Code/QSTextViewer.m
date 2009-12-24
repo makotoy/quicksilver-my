@@ -17,11 +17,14 @@ QSTextViewer * QSShowTextViewerWithString(NSString *string){
 	return tv;
 }
 
-QSTextViewer * QSShowTextViewerWithFile(NSString *path){
-	NSString *string=[NSString stringWithContentsOfFile:path];
-	QSTextViewer *tv=[[QSTextViewer alloc]initWithWindow:nil];
-		[tv setString:string];
-		return tv;
+QSTextViewer * QSShowTextViewerWithFile(NSString *path)
+{
+	NSString *string = [NSString stringWithContentsOfFile:path
+                                                 encoding:NSASCIIStringEncoding
+                                                    error:NULL];
+	QSTextViewer *tv = [[QSTextViewer alloc] initWithWindow:nil];
+    [tv setString:string];
+    return tv;
 }
 
 

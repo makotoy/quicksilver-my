@@ -226,15 +226,16 @@ static BOOL gModifiersAreIgnored;
 - (id)userData { return [self objectForMeta:kUserDataMeta]; }
 - (void)setUserData:(id)someData{[self setObject:someData forMeta:kUserDataMeta];}
 
-- (NSBundle *)bundle { 
-	NSBundle *bundle=[self objectForMeta:kSourceBundleMeta]; 
-	if (!bundle){
+- (NSBundle *)bundle
+{ 
+	NSBundle *theBundle=[self objectForMeta:kSourceBundleMeta]; 
+	if (!theBundle){
 //		if (VERBOSE)QSLog(@"bundle not found %@");
 		NSDictionary *dict=[self objectForType:QSActionType];
 		id provider=[dict objectForKey:kActionProvider];
-		bundle=[QSReg bundleForClassName:provider];
+		theBundle = [QSReg bundleForClassName:provider];
 	}
-	return bundle;
+	return theBundle;
 }
 
 - (id)provider {
@@ -348,55 +349,54 @@ static BOOL gModifiersAreIgnored;
 	return NO;
 }
 
-
 @end
 
 
 
 @implementation QSObject (ActionHandling)
 
-+ (QSAction *)actionWithDictionary:(NSDictionary *)dict identifier:(NSString *)ident bundle:(NSBundle *)bundle{
-	return [[[self alloc]initWithActionDictionary:(NSDictionary *)dict identifier:(NSString *)ident bundle:(NSBundle *)bundle]autorelease];
++ (QSAction *)actionWithDictionary:(NSDictionary *)dict identifier:(NSString *)ident bundle:(NSBundle *)aBundle
+{
+	return [[[self alloc] initWithActionDictionary:dict identifier:ident bundle:aBundle]autorelease];
 }
 
 
-- (id)initWithActionDictionary:(NSDictionary *)dict identifier:(NSString *)ident bundle:(NSBundle *)bundle{    
-	//	QSLog(@"ident:%@",ident);
+- (id)initWithActionDictionary:(NSDictionary *)dict identifier:(NSString *)ident bundle:(NSBundle *)newBundle
+{
     if (!dict){
 		[self release];
 		return nil;
 	}
-	if ((self = [self init])){
-		dict=[[dict mutableCopy]autorelease];
-		//[self setName:[dict object];
-		[self setObject:dict forType:QSActionType];
+    self = [self init];
+	if (self){
+		[self setObject:[[dict mutableCopy] autorelease] forType:QSActionType];
 		[self setPrimaryType:QSActionType];
-		//NSString *identifierString=[dict objectForKey:kActionIdentifier];
-		if (ident)
-			[self setIdentifier:ident];
+
+		if (ident) [self setIdentifier:ident];
 		
-		NSString *newName=[bundle safeLocalizedStringForKey:ident value:ident table:@"QSAction.name"];
+		NSString *newName = [newBundle safeLocalizedStringForKey:ident value:ident table:@"QSAction.name"];
 		
-		//				QSLog(@"newName:%@",newName);
-		if ([newName isEqualToString:ident] || !newName)
+		if ([newName isEqualToString:ident] || !newName) {
 			newName=[dict objectForKey:@"name"];	
-		
-		//		QSLog(@"newName:%@",newName);
-		if (!newName)
-			newName=ident;
+		}
+		if (!newName) newName=ident;
 		
         [self setName:newName];
 		
-		if (bundle)
-			[self setObject:bundle forMeta:kSourceBundleMeta];
+		if (newBundle) [self setObject:newBundle forMeta:kSourceBundleMeta];
 	}
     return self;
 }
-- (NSMutableDictionary *)actionDict{
+
+- (NSMutableDictionary *)actionDict
+{
 	return [self objectForType:QSActionType];
 }
-- (int)argumentCount {return [[[[self actionDict]objectForKey:kActionSelector]componentsSeparatedByString:@":"]count]-1; }
 
+- (int)argumentCount
+{
+    return [[[[self actionDict] objectForKey:kActionSelector]componentsSeparatedByString:@":"] count] - 1;
+}
 
 - (QSObject *) performOnDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject
 {
@@ -406,10 +406,9 @@ static BOOL gModifiersAreIgnored;
 	QSActionProvider *provider = [dict objectForKey:kActionProvider];
 	//	QSLog(@"provider %@",self);
 	if (class || provider) {
-		if (!provider)
+		if (!provider) {
 			provider = (QSActionProvider*)[QSReg instanceForPointID:kQSActionProviders withID:class];
-		
-		
+		}
 		BOOL reverseArgs = [[dict objectForKey:kActionReverseArguments] boolValue];
 		
 		BOOL splitPlural = [[dict objectForKey:kActionSplitPluralArguments] boolValue];
@@ -418,62 +417,56 @@ static BOOL gModifiersAreIgnored;
 			NSArray *objects = [dObject splitObjects];
 			id object;
 			id result;
-			//QSLog(@"split %@",objects);
 			for (object in objects) {
-				//	QSLog(@"split %@",object);
 				result = [self performOnDirectObject:object indirectObject:iObject];
 			}
 			return nil;
 		}
-		
 		SEL selector = NSSelectorFromString([dict objectForKey:kActionSelector]);
-		if (!selector)
+		if (!selector) {
 			return [provider performAction:(QSAction *)self directObject:dObject indirectObject:iObject];
-		else if ([self argumentCount] == 2)
+		} else if ([self argumentCount] == 2) {
 			return [provider performSelector:selector withObject:(reverseArgs ? iObject : dObject) withObject:(reverseArgs ? dObject : iObject)];
-		else if ([self argumentCount] == 1)
+		} else if ([self argumentCount] == 1) {
 			return [provider performSelector:selector withObject:dObject];
-		else
+		} else {
 			return [provider performSelector:selector];
-	} else {
-		
+        }
 	}
-	
 	return nil;
 }
-- (NSString *) commandDescriptionWithDirectObject:(QSBasicObject *)dObject indirectObject:(QSBasicObject *)iObject{
-	NSString *format=nil;
+
+- (NSString *) commandDescriptionWithDirectObject:(QSBasicObject *)dObject indirectObject:(QSBasicObject *)iObject
+{
+	NSString *format = nil;
 	
 	//check class bundle
 	format=[[(QSAction *)self bundle]safeLocalizedStringForKey:[self identifier] value:nil table:@"QSAction. commandFormat"];
 	
 	//Check the action dictionary
-	if ([format isEqualToString:[self identifier]])
-		format=[[self actionDict]objectForKey:@"commandFormat"];
-
-//	
+	if ([format isEqualToString:[self identifier]]) {
+		format = [[self actionDict] objectForKey:@"commandFormat"];
+    }
 	// Check the main bundle
-	if ([format isEqualToString:[self identifier]])
-		format=[[NSBundle mainBundle]safeLocalizedStringForKey:[self identifier] value:nil table:@"QSAction.commandFormat"];	
-	
+	if ([format isEqualToString:[self identifier]]) {
+		format = [[NSBundle mainBundle] safeLocalizedStringForKey:[self identifier]
+                                                            value:nil
+                                                            table:@"QSAction.commandFormat"];	
+    }
 	//Fallback format
-    if (!format||[format isEqualToString:[self identifier]])
-		format= [NSString stringWithFormat:@"%%@ (%@)%@",[self displayName],[self argumentCount]>1?@" %@":@""];
-//	if (!format || [format isEqualToString:[self identifier]])return nil;
-	
-//	QSLog(@"format %@ %@",[(QSAction *)self bundle],format);
-	
-	
+    if (!format||[format isEqualToString:[self identifier]]) {
+		format = [NSString stringWithFormat:@"%%@ (%@)%@",[self displayName],[self argumentCount]>1?@" %@":@""];
+    }
     return [NSString stringWithFormat:format,
-        [dObject displayName],
-        iObject?[iObject displayName]:@"<?>"
-        ];    
+            [dObject displayName],
+            iObject?[iObject displayName]:@"<?>"];    
 }
 
-//Accessors
-- (NSBundle *)bundle { 
-	NSBundle *bundle=[self objectForMeta:kSourceBundleMeta]; 
-	return bundle;
+#pragma mark Accessors
+
+- (NSBundle *)bundle
+{ 
+	return [self objectForMeta:kSourceBundleMeta];
 }
 
 - (void)setBundle:(NSBundle *)aBundle

@@ -288,7 +288,8 @@ extern "C" {
   //CGSSetWindowTransformsAtPlacement
   //CGSSetWindowListGlobalClipShape
   //extern CGError CGSWindowAddRectToDirtyShape(const CGSConnection cid, const CGSWindow wid, CGRect *rect);
-  
+  extern void CGContextSetCompositeOperation(CGContextRef context, int unknown);
+
 #ifdef __cplusplus
 }
 #endif

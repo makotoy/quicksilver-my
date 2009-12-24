@@ -27,7 +27,8 @@
 
 #pragma mark Menu Actions
 
-- (void)updateActionsNow {
+- (void)updateActionsNow
+{
     [actionsUpdateTimer invalidate]; 	
     [aSelector setEnabled:YES];
     NSString *type = [NSString stringWithFormat:@"QSActionMnemonic:%@",

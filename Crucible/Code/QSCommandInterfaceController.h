@@ -16,5 +16,4 @@
     QSCommand *command;
     IBOutlet NSTextField *searchField;
 }
-- (void)hideMainWindowWithEffect:(id)effect;
 @end

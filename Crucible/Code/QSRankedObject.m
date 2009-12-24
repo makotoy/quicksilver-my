@@ -93,7 +93,7 @@
 - (NSString *)description {return [NSString stringWithFormat:@"[%@ %f] ", object, score];}
 
 - (BOOL)enabled {
-	return [object enabled]; 	
+	return [(QSBasicObject*)object enabled]; 	
 }
 
 @synthesize object;

@@ -16,7 +16,7 @@
 - (NSString *)name{return @"Computer";}
 
 - (NSImage *)icon{return [QSResourceManager imageNamed:@"ComputerIcon"];}
-- (bool)hasChildren{return YES;}
+- (BOOL)hasChildren{return YES;}
 - (NSArray *)children {
     QSCatalogEntry *theEntry=[QSLib entryForID:@"QSPresetVolumes"];
     return [theEntry contents];
