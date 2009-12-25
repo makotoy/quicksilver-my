@@ -41,15 +41,25 @@
 	}
 				return array;
 }
-- (NSArray *)linesFromString:(NSString *)string atPath:(NSString *)path{
+
+- (NSArray *)linesFromString:(NSString *)string atPath:(NSString *)path
+{
 	return [self linesFromString:(NSString *)string atPath:(NSString *)path lineType:nil];
 }
-- (NSArray *)objectsFromPath:(NSString *)path withSettings:(NSDictionary *)settings{
-    NSString *string=[NSString stringWithContentsOfFile: [path stringByStandardizingPath]];
+
+- (NSArray *)objectsFromPath:(NSString *)path withSettings:(NSDictionary *)settings
+{
+    NSString *string=[NSString stringWithContentsOfFile:[path stringByStandardizingPath]
+                                               encoding:NSASCIIStringEncoding
+                                                  error:NULL];
     return [self linesFromString:string atPath:path lineType:[settings objectForKey:@"lineContentType"]];
 }
-- (NSArray *)objectsFromURL:(NSURL *)url withSettings:(NSDictionary *)settings{
-    NSString *string=[NSString stringWithContentsOfURL:url];
+
+- (NSArray *)objectsFromURL:(NSURL *)url withSettings:(NSDictionary *)settings
+{
+    NSString *string=[NSString stringWithContentsOfURL:url
+                                              encoding:NSASCIIStringEncoding
+                                                 error:NULL];
     return [self linesFromString:string atPath:nil lineType:[settings objectForKey:@"lineContentType"]];
 }
 @end

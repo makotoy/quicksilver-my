@@ -159,9 +159,8 @@ NSMutableDictionary *plugInBundlePaths = nil;
     if ([self isLoaded])
         return [NSString stringWithFormat:@"%C", ([bundle isLoaded] ? 0x25C6 : 0x25C7)];
         
-#warning FIXME: return "" or "*" ?
+// FIXME: return "" or "*" ?
     return @"";
-	return @"*";
 }
 
 - (BOOL) isUniversal {
@@ -470,9 +469,10 @@ NSMutableDictionary *plugInBundlePaths = nil;
 		if (flag) {
 			[[QSPlugInManager sharedInstance] liveLoadPlugIn:self];
 			[[QSPlugInManager sharedInstance] checkForUnmetDependencies];
-		} else {
-#warning TODO: Unloading !
-        }
+		}
+// TODO: Unloading !
+        // else {
+        // }
 	}
 }
 
@@ -576,7 +576,7 @@ NSMutableDictionary *plugInBundlePaths = nil;
                         *error = [NSString stringWithFormat:@"Requires Bundle '%@'", (name ? name : identifier)];
 					return NO;
 				}
-#warning add support for version checking
+//TODO: add support for version checking
 			}
             
 			NSArray *frameworks = [requirementsDict objectForKey:@"frameworks"];
@@ -714,7 +714,7 @@ NSMutableDictionary *plugInBundlePaths = nil;
 				[currPrincipalClass loadPlugIn];
 		}
 	}
-#warning FIXME: We are saying we are loaded even if we are not ?
+// FIXME: We are saying we are loaded even if we are not ?
 	[[NSNotificationCenter defaultCenter] postNotificationName:QSPlugInLoadedNotification object:self];
 	loaded = YES;
 	return YES;

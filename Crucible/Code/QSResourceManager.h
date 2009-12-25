@@ -21,6 +21,7 @@
 
 - (void)addResourcesFromDictionary:(NSDictionary *)dict;
 -(NSString *)pathWithLocatorInformation:(id)locator;
+- (NSString *)pathForImageNamed:(NSString *)name;
 - (NSImage *)imageWithExactName:(NSString *)name;
 - (NSImage *)daedalusImage;
 @end

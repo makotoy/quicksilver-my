@@ -248,9 +248,7 @@
 	[knownPlugIns removeObjectsForKeys:webPlugIns];
 	[plugInWebData removeAllObjects];
 	[[knownPlugIns allValues] makeObjectsPerformSelector:@selector(clearWebData)];
-	
-	
-#warning allow remote invalidation of installed web plugin data
+// TODO: allow remote invalidation of installed web plugin data
 }
 
 - (void) loadNewWebData:(NSData *)data {
@@ -536,7 +534,7 @@
 	QSPlugIn *dupPlugIn = nil;
 	//NSString *error;
 	
-#warning should detect installation of a disabled plugin	
+//TODO: should detect installation of a disabled plugin	
 	if ( ( dupPlugIn = [loadedPlugIns objectForKey:ident] ) ) {// check if the bundle is already loaded. if so need to restart.
 													  //QSLog(@"Bundle already loaded: %@",dupPlugIn);
 		return NO;

@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on 2/8/05.
 
-//
+//  Makoto Yamashita 2009-12-25.
 
 #import "QSCatalogEntry.h"
 
@@ -344,8 +344,8 @@ NSDictionary *enabledPresetDictionary;
 	return p;
 }
 
-- (NSIndexPath *)catalogSetIndexPath {
-	
+- (NSIndexPath *)catalogSetIndexPath
+{	
 	NSArray *anc = [self ancestors];
 	int i;
 	int index;

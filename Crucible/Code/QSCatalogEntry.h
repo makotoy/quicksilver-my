@@ -70,7 +70,7 @@
 - (QSCatalogEntry *)uniqueCopy;
 - (NSString *)indexLocation;
 - (void)setName:(NSString *)newName;
-
+- (NSIndexPath *)catalogSetIndexPath;
 - (NSDate *)indexDate;
 - (void)setIndexDate:(NSDate *)anIndexDate;
 - (NSArray *)_contents;

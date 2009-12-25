@@ -41,7 +41,6 @@ NSMutableDictionary *bindingsDict = nil;
 	searchMode = SearchFilterAll;
 	moreComing = NO;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideResultView:) name:NSWindowDidResignKeyNotification object:[self window]];
-#warning FIXME: No QSSourceArrayUpdated notification
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sourceArrayChanged:) name:@"QSSourceArrayUpdated" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearAll) name:QSReleaseAllNotification object:nil];
 	

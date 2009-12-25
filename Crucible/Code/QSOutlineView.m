@@ -1,12 +1,10 @@
-
+/*
+ * Derived from Blacktree, Inc. codebase
+ * Makoto Yamashita 2009-12-25
+ */
 
 #import "QSOutlineView.h"
 #import "QSTableView.h"
-
-
-
-
-
 
 @implementation QSOutlineView
 - (id)_highlightColorForCell:(NSCell *)cell{
@@ -15,8 +13,8 @@
 	//return [super _highlightColorForCell:(NSCell *)cell];
 	return [NSColor alternateSelectedControlColor];
 }
-- (NSColor *)highlightColor { return [[highlightColor retain] autorelease]; }
 
+@synthesize highlightColor;
 - (void)setHighlightColor:(NSColor *)aHighlightColor
 {
     if (highlightColor != aHighlightColor) {
@@ -26,7 +24,6 @@
 		[self setNeedsDisplay:YES];
     }
 }
-
 
 - (BOOL)shouldCollapseAutoExpandedItemsForDeposited:(BOOL)deposited{
     return NO;

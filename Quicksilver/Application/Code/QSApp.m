@@ -244,4 +244,6 @@ BOOL QSApplicationCompletedLaunch = NO;
 	return releaseLevel > 0;
 }
 
+@synthesize globalKeyEquivalentTarget;
+
 @end

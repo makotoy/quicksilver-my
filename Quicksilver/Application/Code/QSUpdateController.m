@@ -98,11 +98,13 @@ UInt64 QSGetPrimaryMACAddressInt();
 }
 
 - (BOOL)networkIsReachable {
-	BOOL success = NO;
 	SCNetworkConnectionFlags reachabilityStatus;
-	success = SCNetworkCheckReachabilityByName( [kDownloadUpdateURL cString], &reachabilityStatus );
-	success = ( ( reachabilityStatus & kSCNetworkFlagsReachable ) && success );
-	return success;
+    SCNetworkReachabilityRef target;
+    Boolean success;
+    target = SCNetworkReachabilityCreateWithName(NULL, [kDownloadUpdateURL cStringUsingEncoding:NSASCIIStringEncoding]);
+    success = SCNetworkReachabilityGetFlags(target, &reachabilityStatus);
+    CFRelease(target);
+	return success && (reachabilityStatus & kSCNetworkFlagsReachable);
 }
 
 - (IBAction)checkForUpdate:(id)sender {

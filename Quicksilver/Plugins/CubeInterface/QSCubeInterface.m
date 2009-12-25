@@ -3,8 +3,9 @@
 //  QSCubeInterfacePlugIn
 //
 //  Created by Nicholas Jitkoff on 6/14/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+//  Copyright 2006 Blacktree, Inc.. All rights reserved.
 //
+//  Makoto Yamashita 2009-12-25
 
 #import "QSCubeInterface.h"
 #import "QSShadowView.h"
@@ -16,9 +17,7 @@
     return [self initWithWindowNibName:@"QSCubeInterface"];
 }
 
-- (void)loadPreferences {
-    
-}
+- (void)loadPreferences { }
 
 - (IBAction)searchForString:(id)sender {
     NSString *string = [sender stringValue];
@@ -114,12 +113,13 @@
     }
 }
 
-
-- (IBAction)customize:(id)sender {
+- (IBAction)customize:(id)sender
+{
 	[QSPreferencesController showPaneWithIdentifier:@"QSCubeInterfacePrefPane"];
 }
-- (void)windowDidLoad {
-	
+
+- (void)windowDidLoad
+{	
 	if (![[self window] setFrameUsingName:@"CubeInterfaceWindow"])
 		[[self window] center];
     [[self window] setFrameAutosaveName:@"CubeInterfaceWindow"];
@@ -273,7 +273,7 @@
 	//	[[self window] setFrame:[self rectForState:[self expanded]]  display:YES];
 	if ([[self window] isVisible]) [[self window] pulse:self];
 	
-	[[[self shadowWindow] contentView] updatePosition];
+	[(QSShadowView*)[[self shadowWindow] contentView] updatePosition];
 	//		[[self shadowWindow] setFrame:frame display:YES];
     
 	[[self shadowWindow] setAlphaValue:0.0];
@@ -361,7 +361,8 @@
 
 
 
-- (void)firstResponderChanged:(NSResponder *)aResponder {
+- (void)firstResponderChanged:(NSResponder *)aResponder
+{
 	//	logRect([[self window] frame]);
 	[super firstResponderChanged:aResponder];
 	[self updateDetailsString];
@@ -411,8 +412,7 @@
             //	NSLog(@"else!");
 			[self updateSearchViewsForTarget:aResponder];
 		}
-		//usleep(200000); 	
-		lastSearchField = aResponder;
+		lastSearchField = (NSView*)aResponder;
 	}
 	
 	if (!aResponder)
@@ -455,20 +455,20 @@
 	
 }
 
-
-- (void)searchObjectChanged:(NSNotification*)notif {
+- (void)searchObjectChanged:(NSNotification*)notif
+{
 	[super searchObjectChanged:notif]; 	
 	[self updateDetailsString];
 }
 
-- (NSAttributedString *)fancyStringForView:()view {
+- (NSAttributedString *)fancyStringForView:(id)view
+{
 	QSObject *object = [[view cell] objectValue]; // Ignore collections
-	
 	NSString *matchedString = [view matchedString];
 	NSIndexSet *hitMask = nil; ;
-	int stringIndex = [[object ranker] matchedStringForAbbreviation:matchedString hitmask:&hitMask inContext:nil];
-	NSLog(@"%d %@ %@", stringIndex, matchedString, hitMask);
-	
+    [[object ranker] matchedStringForAbbreviation:matchedString hitmask:&hitMask inContext:nil];
+	int stringIndex = [hitMask firstIndex];
+	NSLog(@"fancyStringForView: %d %@ %@", stringIndex, matchedString, hitMask);
 	
 	NSString *nameString = nil;
 	if (stringIndex == 0) nameString = [object name];
@@ -480,7 +480,6 @@
 	
 	NSColor *fadedColor = [[NSColor blackColor] colorWithAlphaComponent:0.30];
 	
-	
 	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSColor blackColor] , NSForegroundColorAttributeName,
                                 nil];
@@ -488,29 +487,20 @@
                                             fadedColor, NSForegroundColorAttributeName,
                                             nil];
 	
-	
 	NSMutableAttributedString *titleString = [[[NSMutableAttributedString alloc] initWithString:nameString?nameString:@"???"] autorelease];
 	[titleString setAttributes:autocompleteAttributes range:NSMakeRange(0, [titleString length])];
-	
 	
 	int i = 0;
 	int j = 0;
 	unsigned int hits[[titleString length]];
 	int count = [hitMask getIndexes:(unsigned int *)&hits maxCount:[titleString length] inIndexRange:nil];
 	
-    
-	
-	//       NSLog(@"hit %@ %@", [titleString string] , hitMask);
 	for(i = 0; i<count; i += j) {
 		for (j = 1; i+j<count && hits[i+j-1] +1 == hits[i+j]; j++);
 		//     NSLog(@"hit (%d, %d) ", hits[i] , j);
 		[titleString addAttributes:attributes range:NSMakeRange(hits[i] , j)];
 		//                 NSLog(@"5");
 	}
-	
-	
-	
-	
 	return titleString;
 }
 

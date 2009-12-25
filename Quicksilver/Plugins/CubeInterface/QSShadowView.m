@@ -23,7 +23,8 @@
     return self;
 }
 
-- (void)updatePosition{
+- (void)updatePosition
+{
 	NSRect newFrame=[[targetView window]frame];
 	newFrame=[self paddedFrameForFrame:newFrame];
 	[[self window]setFrame:newFrame display:YES];
@@ -56,8 +57,7 @@
 	[theShadow release]; 
 }
 
-
-- (NSView *) targetView { return [[targetView retain] autorelease]; }
+@synthesize targetView;
 - (void) setTargetView: (NSView *) newTargetView
 {
     if (targetView != newTargetView) {
@@ -67,62 +67,49 @@
 	[self updatePosition];
 }
 
-
-- (NSColor *) color { return [[color retain] autorelease]; }
+@synthesize color;
 - (void) setColor: (NSColor *) newColor
 {
     if (color != newColor) {
         [color release];
         color = [newColor copy];
     }
-
 	[self setNeedsDisplay:YES];
 	[self updatePosition];
-
 }
 
-
-
-- (float) blur { return blur; }
+@synthesize blur;
 - (void) setBlur: (float) newBlur
 {
     blur = newBlur;
 	[self setNeedsDisplay:YES];
 	[self updatePosition];
-
 }
 
 
-- (float) distance { return distance; }
+@synthesize distance;
 - (void) setDistance: (float) newDistance
 {
     distance = newDistance;
 	[self setNeedsDisplay:YES];
 	[self updatePosition];
-
 }
 
-
-- (float) angle { return angle; }
+@synthesize angle;
 - (void) setAngle: (float) newAngle
 {
     angle = newAngle;
 	[self setNeedsDisplay:YES];
 	[self updatePosition];
-
 }
 
-
-- (float) expand { return expand; }
+@synthesize expand;
 - (void) setExpand: (float) newExpand
 {
     expand = newExpand;
 	[self setNeedsDisplay:YES];
 	[self updatePosition];
-
 }
-
-
 
 - (void) dealloc
 {
@@ -130,6 +117,5 @@
     [self setColor: nil];
     [super dealloc];
 }
-
 
 @end

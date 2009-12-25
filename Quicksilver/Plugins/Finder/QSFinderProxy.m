@@ -194,11 +194,12 @@ target:
                                                      nil]
 										 identifier:@"FinderEmptyTrashAction"
                                              bundle:[NSBundle bundleForClass:[self class]]]];
-    
+/*
 	id handler = [self handlerForObject:dObject];
 	if ([handler respondsToSelector:@selector(actionsForDirectObject:indirectObject:)])
 		return [handler actionsForDirectObject:dObject indirectObject:nil];
-	return [NSMutableArray array];
+ */
+	return array;
 }
 
 @end

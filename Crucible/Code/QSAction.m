@@ -110,10 +110,11 @@ static BOOL gModifiersAreIgnored;
 //- (float)rankModification { return 0; }
 
 
-- (float)precedence{
+- (float)precedence
+{
 	NSNumber *num = [[self actionDict] objectForKey:kActionPrecedence];
 	if (!num) num = [[self actionDict] objectForKey:@"rankModification"];
-#warning remove
+//TODO: remove
 	return num ? [num floatValue] : 0.0;
 }
 - (float)rankModification{

@@ -136,12 +136,13 @@
 
 
 @implementation QSAppearancePrefPane
-- (IBAction)customize:(id)sender{
-	
+- (IBAction)customize:(id)sender
+{	
 	[[QSReg preferredCommandInterface] customize:sender];
 }
-- (IBAction)preview:(id)sender{
-//	[[QSReg preferredCommandInterface]setPreview:[sender state]];
+
+- (IBAction)preview:(id)sender
+{
 	if ([[[QSReg preferredCommandInterface] window]isVisible]){
 		[[[QSReg preferredCommandInterface] window] orderOut:sender];
 	}else{
@@ -167,20 +168,23 @@
 	
 }
 
-- (void)updateInterfacePopUp{
-	NSMenuItem *item;
+- (void)updateInterfacePopUp
+{
 	[interfacePopUp removeAllItems];
 	
-	NSMutableDictionary *interfaces=[QSReg elementsByIDForPointID:kQSCommandInterfaceControllers];
-	NSEnumerator *keyEnum=[interfaces keyEnumerator];
-	NSString *key, *title;
-	while((key=[keyEnum nextObject])){
+	NSDictionary *interfaces = [QSReg elementsByIDForPointID:kQSCommandInterfaceControllers];
+	for (NSString* key in [interfaces allKeys]) {
 		id interface = [interfaces objectForKey:key];
-		title=[[[interface plugin] bundle] safeLocalizedStringForKey:key value:key table:nil];
-		item=(NSMenuItem *)[[interfacePopUp menu] addItemWithTitle:title action:nil keyEquivalent:@""];
+        NSString *title;
+		title = [[[interface plugin] bundle] safeLocalizedStringForKey:key
+                                                                 value:key
+                                                                 table:nil];
+        NSMenuItem *item;
+        item = (NSMenuItem *)[[interfacePopUp menu] addItemWithTitle:title
+                                                              action:nil
+                                                       keyEquivalent:@""];
 		[item setRepresentedObject:key];
-	}
-	
+	}	
 	[self selectItemInPopUp:interfacePopUp representedObject:[QSReg preferredCommandInterfaceID]];
 }
 

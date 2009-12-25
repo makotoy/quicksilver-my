@@ -12,6 +12,7 @@
 #define psMainPlugInsLocation QSApplicationSupportSubPath(@"PlugIns/",NO)
 #define psMainPlugInsToInstallLocation QSApplicationSupportSubPath(@"PlugIns/Incoming/",NO)
 
+// TODO: review these URLs
 #define kCurrentVersionURL		@"http://quicksilver.blacktree.com/versioncheck.php?type=rel"
 #define kCurrentDevVersionURL	@"http://quicksilver.blacktree.com/versioncheck.php?type=dev"
 #define kCurrentPreVersionURL	@"http://quicksilver.blacktree.com/versioncheck.php?type=pre"

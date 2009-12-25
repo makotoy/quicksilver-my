@@ -102,6 +102,10 @@
 					       object:nil];
 }
 
+- (IBAction)customize:(id)sender
+{ // subclasses should override this method.
+}
+
 - (IBAction)hideWindows:(id)sender
 {
     [self hideMainWindow:self];
@@ -324,8 +328,8 @@
                                            untilDate:[NSDate dateWithTimeIntervalSinceNow:0.075]
                                               inMode:NSDefaultRunLoopMode
 					     dequeue:YES];
-#warning dont do this unless the character is alphabetic
-    if (theEvent) {
+    unichar eventChar = [QSKeyCodeTranslator unicharForKeyCode:[theEvent keyCode]];
+    if (theEvent && isalpha(eventChar)) {
         theEvent = [NSEvent keyEventWithType:[theEvent type]
                                     location:[theEvent locationInWindow]
                                modifierFlags:0
@@ -337,8 +341,8 @@
                                    isARepeat:[theEvent isARepeat]
                                      keyCode:[theEvent keyCode]];
         if (VERBOSE) {
-	    QSLog(@"Ignoring Modifiers for characters: %@", [theEvent characters]);
-	}
+            QSLog(@"Ignoring Modifiers for characters: %@", [theEvent characters]);
+        }
         [NSApp postEvent:theEvent atStart:YES];
     }
 }

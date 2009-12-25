@@ -1,13 +1,11 @@
 //  Derived from Blacktree codebase
 //  2009-11-30 Makoto Yamashita
 
-#import <QSCrucible/QSHandledSplitView.h>
-
 #import "QSApp.h"
 #import "QSController.h"
 #import "QSPreferencesController.h"
 #import "QSCatalogSwitchButtonCell.h"
-
+#import "QSFileSystemObjectSource.h"
 #import "QSCatalogPrefPane.h"
 
 #define COLUMNID_NAME		@"name"
@@ -17,9 +15,7 @@
 #define UNSTABLE_STRING		@"(Unstable Entry) "
 
 @interface QSObject (NSTreeNodePrivate)
-- (NSIndexPath *)indexPath;
 - (id)representedObject;
-- (id)objectAtIndexPath:(NSIndexPath *)path;
 @end
 
 @implementation QSObject (NSTreeNodePrivate)
@@ -28,25 +24,22 @@
 
 @implementation QSCatalogPrefPane
 
-+ (void)initialize {
-	// [self setKeys:[NSArray arrayWithObject:@"currentItem"] triggerChangeNotificationsForDependentKey:@"selectedCatalogEntryIsEditable"];
-    
-}
-
++ (void)initialize { }
 
 static id _sharedInstance;
-+ (id)sharedInstance {
++ (id)sharedInstance
+{
     if (!_sharedInstance) _sharedInstance = [[[self class] allocWithZone:[self zone]] init];
     return _sharedInstance;
 }
-- (NSView*)preferencesSplitView {
+
+- (NSView*)preferencesSplitView
+{
 	return [sidebar superview];
 }
 
-
-- (id)init {
-	//	self = [self initWithWindowNibName:@"Triggers"];
-	
+- (id)init
+{
     self = [super initWithBundle:[NSBundle bundleForClass:[self class]]];
 	if (!_sharedInstance) _sharedInstance = [self retain];
 	if (self) {        
@@ -54,12 +47,12 @@ static id _sharedInstance;
         librarian = QSLib;
         [self setCurrentItem:nil];
         currentItemContents = nil;
-		
-		
 	}
 	return self;
 }
-- (NSView *)loadMainView {
+
+- (NSView *)loadMainView
+{
 	NSView *oldMainView = [super loadMainView]; 	
 	
 	NSSplitView *splitView = [[QSHandledSplitView alloc]init];
@@ -71,11 +64,13 @@ static id _sharedInstance;
 	return _mainView;
 }
 
-- (NSString *)mainNibName {
+- (NSString *)mainNibName
+{
 	return @"QSCatalog";
 }
 
-- (void)paneLoadedByController:(id)controller {
+- (void)paneLoadedByController:(id)controller
+{
 	[itemContentsDrawer setParentWindow:[controller window]];
 	[itemContentsDrawer setLeadingOffset:48];
 	[itemContentsDrawer setTrailingOffset:24];
@@ -83,63 +78,31 @@ static id _sharedInstance;
 	
 }
 
-
-- (void)willUnselect {
+- (void)willUnselect
+{
 	[itemContentsDrawer close];
 }
 
-
-
-
-- (void)awakeFromNib {
-	
-//		  NSColor *color = [catalogSetsTable backgroundColor];
-//	float hue, saturation, brightness, alpha;
-//	[color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
-//	QSLog(@"hu %f %f %f %f", hue, saturation, brightness, alpha);
-
-	   [catalogSetsTable setBackgroundColor:[NSColor colorWithCalibratedHue:.60277777777777777777f
+- (void)awakeFromNib
+{
+    [catalogSetsTable setBackgroundColor:[NSColor colorWithCalibratedHue:.60277777777777777777f
 																 saturation:0.070000f
 																 brightness:0.970000f
 																	  alpha:1.000000f]];
-	 NSColor *highlightColor = [NSColor colorWithCalibratedHue:.60277777777777777777f
+    NSColor *highlightColor = [NSColor colorWithCalibratedHue:.60277777777777777777f
 																saturation:0.740000f
 																brightness:0.84f
 																	 alpha:1.000000f];
 	   
-	
-	   
-   [catalogSetsTable setHighlightColor:highlightColor];
+		   
+    [catalogSetsTable setHighlightColor:highlightColor];
     [itemTable setHighlightColor:highlightColor];
     [itemContentsTable setHighlightColor:highlightColor];
-	   
-	   
-	   
-	//  [[self window] center];
-	//  [[self window] setFrameAutosaveName: @"catalog"];
-	// [[self window]addDocumentIconButton];
-	
-    //[[self window] setRepresentedFilename:[pCatalogSettings stringByStandardizingPath]];
-    //[[[self window]standardWindowButton:NSWindowDocumentIconButton]setImage:[NSImage imageNamed:@"DocCatalog"]];
     
-#warning FIXME: There's no CatalogCacheChanged notification
+// FIXME: There's no CatalogCacheChanged notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(catalogCacheChanged:) name:@"CatalogCacheChanged" object:nil];
 	
-	//  [[itemViewSwitcher cell]setControlSize:NSSmallControlSize];
     NSArray *sourceElements = [QSReg elementsForPointID:kQSObjectSources];
-    
-	
-    // [NSArray arrayWithObjects:@"QSFileSystemObjectSource", kRecentAppsPreset, kRecentDocsPreset, kDockAppsPreset, kDockOthersPreset, kAddressBookPreset, kAllApplicationsPreset, nil];
-    
-	/// [sourcePopUp removeAllItems];
-	//  [sourcePopUp addItemWithTitle:@"+"];
-    
-    //if (0) {
-	//  sources = [NSArray arrayWithObjects:@"QSFileSystemObjectSource", @"QSGroupObjectSource", nil];
-	//   [itemOptionsTabView removeTabViewItem:[itemOptionsTabView tabViewItemAtIndex:2]];
-	//   [itemContentsTable removeTableColumn:[itemContentsTable tableColumnWithIdentifier:kItemEnabled]];
-    //}
-	//QSLog(@"sources %@", sources);
     NSMenuItem *item;
     NSImage *icon;
 
@@ -170,9 +133,7 @@ static id _sharedInstance;
             [[itemAddButton menu]insertItem:[NSMenuItem separatorItem] atIndex:1];  
         } else {
             [[itemAddButton menu]addItem:item];
-        }
-        
-		
+        }		
     }
 
     [itemTable setAutoresizesOutlineColumn:NO];
@@ -183,32 +144,11 @@ static id _sharedInstance;
 		   byExtendingSelection:NO];
 
     [self updateCurrentItemContents];
-
-    /*
-     [librarian catalog] = [[NSMutableArray alloc] initWithContentsOfFile:[p stringByStandardizingPath]];
-     if (![librarian catalog]) {
-         [librarian catalog] = [[NSMutableArray alloc]initWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"Items" ofType:@"plist"]];
-     }
-     if (![librarian catalog])
-     [librarian catalog] = [[NSMutableArray alloc]initWithCapacity:1];
-     */
-    // NSTableColumn *tableColumn = nil;
-
-
-    //NSImageCell *imageCell = nil;
     [itemTable reloadData];
     [itemTable setVerticalMotionCanBeginDrag: TRUE];
     [itemTable setAction:@selector(tableViewAction:)];
     [itemTable setDoubleAction:@selector(tableViewDoubleAction:)];
-    // [itemTable setGridStyleMask:NSTableViewSolidHorizontalGridLineMask];
     [itemTable setRowHeight:17];
-
- //   QSImageAndTextCell *imageAndTextCell = [[[QSImageAndTextCell alloc]initTextCell:@""]autorelease];
-//	[imageAndTextCell setEditable: YES];
-//    [imageAndTextCell setWraps:NO];
-//
-//    [[itemTable tableColumnWithIdentifier: kItemName] setDataCell:imageAndTextCell];
-
     [itemTable registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, QSCodedCatalogEntryPasteboardType, nil]];
     [[[itemTable tableColumnWithIdentifier: kItemName]dataCell] setFont:[NSFont systemFontOfSize:11]];
     [[[itemTable tableColumnWithIdentifier: kItemPath]dataCell] setFont:[NSFont systemFontOfSize:11]];
@@ -223,27 +163,20 @@ static id _sharedInstance;
     [[itemTable tableColumnWithIdentifier: kItemEnabled]setDataCell:buttonCell];
     [[itemTable tableColumnWithIdentifier: @"searched"]setDataCell:buttonCell];
 
-    // [[[itemTable tableColumnWithIdentifier: kItemEnabled]dataCell]setAllowsMixedState:YES];
-
 	[itemContentsTable setTarget:self];
 	[itemContentsTable setDoubleAction:@selector(selectContentsItem:)];
     [itemContentsTable setRowHeight:34];
 
     QSObjectCell *objectCell = [[[QSObjectCell alloc] init] autorelease];
 
-    //imageAndTextCell = [[[QSImageAndTextCell alloc] init] autorelease];
-	//  [imageAndTextCell setWraps:NO];
     [[itemContentsTable tableColumnWithIdentifier: kItemName] setDataCell:objectCell];
     [[[itemContentsTable tableColumnWithIdentifier: kItemName]dataCell] setFont:[NSFont systemFontOfSize:11]];
     [[[itemContentsTable tableColumnWithIdentifier: kItemPath]dataCell] setFont:[NSFont labelFontOfSize:9]];
     [[[itemContentsTable tableColumnWithIdentifier: kItemPath]dataCell] setWraps:NO];
 
-
-	//  if (0) [self hideCatalogOptions];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(catalogChanged:) name:QSCatalogEntryChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(catalogIndexed:) name:QSCatalogEntryIndexed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateEntrySelection) name:NSOutlineViewSelectionDidChangeNotification object:nil];
-
 
     [itemTable reloadData];
 
@@ -251,10 +184,8 @@ static id _sharedInstance;
     [self updateEntrySelection];
 }
 
-
-
-
-- (IBAction)restoreDefaultCatalog:(id)sender {
+- (IBAction)restoreDefaultCatalog:(id)sender
+{
     if (NSRunAlertPanel(@"Restore Defaults?", @"This will replace your current catalog setup with the default items", @"Replace", @"Cancel", nil) ) {
         [librarian loadDefaultCatalog];
         [itemTable reloadData];
@@ -262,17 +193,20 @@ static id _sharedInstance;
     }
 }
 
-- (void)showOptionsDrawer {
+- (void)showOptionsDrawer
+{
     [itemOptionsTabView selectTabViewItemWithIdentifier:@"sourceoptions"];
     
     [itemContentsDrawer open:self];
 }
 
-- (void)handleURL:(NSURL *)url {
+- (void)handleURL:(NSURL *)url
+{
 	[[self class] showEntryInCatalog:[QSLib entryForID:[url fragment]]];
 }
 
-+ (void)showEntryInCatalog:(QSCatalogEntry *)entry {
++ (void)showEntryInCatalog:(QSCatalogEntry *)entry
+{
     [NSApp activateIgnoringOtherApps:YES];
 	[QSPreferencesController showPaneWithIdentifier:@"QSCatalogPrefPane"];
 	[[self sharedInstance]selectEntry:entry];
@@ -352,7 +286,7 @@ static id _sharedInstance;
 	[self selectEntry:childEntry];
 
     if ([sourceString isEqualToString:@"QSFileSystemObjectSource"]) {
-        if (![[QSReg sourceNamed:sourceString] chooseFile]) {
+        if (![(QSFileSystemObjectSource*)[QSReg sourceNamed:sourceString] chooseFile]) {
             [[parentEntry children]removeObject:childEntry];  
 			
 			[treeController rearrangeObjects];
@@ -447,13 +381,13 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
     // [currentItemContentsButton setEnabled:count];
     //[currentItemContentsButton setTitle:[NSString stringWithFormat:@"%d object%@", count, ESS(count)]];
 }
+
 - (IBAction)selectContentsItem:(id)sender {
 	int row = [itemContentsTable clickedRow];
 	id object = [[contentsController arrangedObjects]objectAtIndex:row];
 	[QSCon receiveObject:object];
 }
 
-//
 - (BOOL)selectedCatalogEntryIsEditable {
 	id source = [currentItem source];
 	if ([source respondsToSelector:@selector(usesGlobalSettings)] && [source performSelector:@selector(usesGlobalSettings)])
@@ -462,49 +396,10 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	//  QSLog(@"isPreset? %d %d", DEBUG, [librarian entryIsPreset:currentItem]);
     return (![currentItem isPreset] || DEBUG);
 }
-- (void)updateEntrySelection {
-    
-    if ([itemTable numberOfSelectedRows] == 1) {
-        id newItem = nil;
-        
-        if ([itemTable selectedRow] >= 0)
-            newItem = [[treeController selectedObjects]lastObject]; //[itemTable itemAtRow:[itemTable selectedRow]];
-			
-			if (currentItem != newItem) {
-				[librarian writeCatalog:self];
-				[self setCurrentItem:newItem];
-				// NSString *name = [currentItem objectForKey:kItemName];
-				
-				[self updateCurrentItemContents];
-				[self populateCatalogEntryFields];
-				
-				//    NSString *theID = [currentItem objectForKey:kItemID];
-				//   BOOL isPreset = theID && [theID hasPrefix:@"QSPreset"];
-				
-				id source = [currentItem source];
-				
-				NSView *settingsView = nil;
-				currentItemHasSettings = NO;
-				if ([source respondsToSelector:@selector(settingsView)])
-					currentItemHasSettings = nil != (settingsView = [source settingsView]);
-				if ([source respondsToSelector:@selector(setCurrentEntry:)])
-					[source setCurrentEntry:[currentItem info]];
-				if ([source respondsToSelector:@selector(setSelection:)])
-					[source setSelection:currentItem];
-				if ([source respondsToSelector:@selector(populateFields)])
-					[source populateFields];
-				
-				
-				if (settingsView) {
-					[itemOptionsView setContentView:settingsView];
-				} else {
-					[messageTextField setStringValue:@"No Options"]  ;  
-					[itemOptionsView setContentView:messageView];
-				}
-				//   [self populateItemFields];
-			}
-    }            
-    else {
+
+- (void)updateEntrySelection
+{
+    if ([itemTable numberOfSelectedRows] != 1) {
         [self setCurrentItem:nil];
         if ([itemTable numberOfSelectedRows] > 1)
             [messageTextField setStringValue:@"Multiple Items Selected"]   ;  
@@ -515,53 +410,71 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
         [self populateCatalogEntryFields];
         
         [itemOptionsView setContentView:messageView];
-    }  
-    
-    
-	
-    
-    // [itemNameField setEnabled:!isPreset || DEBUG];
-    //[itemIconField setEnabled:!isPreset || DEBUG];
-    
-    //[currentItemAddButton setEnabled:!isPreset || DEBUG];
-    
-    //  [currentItemDeleteButton setEnabled:(!isPreset || DEBUG) && [itemTable numberOfSelectedRows]];
-    
-    
+    } else {
+        id newItem = nil;
+        
+        if ([itemTable selectedRow] >= 0) {
+            newItem = [[treeController selectedObjects]lastObject];
+        }
+        if (currentItem != newItem) {
+            [librarian writeCatalog:self];
+            [self setCurrentItem:newItem];
+            // NSString *name = [currentItem objectForKey:kItemName];
+            
+            [self updateCurrentItemContents];
+            [self populateCatalogEntryFields];
+            
+            //    NSString *theID = [currentItem objectForKey:kItemID];
+            //   BOOL isPreset = theID && [theID hasPrefix:@"QSPreset"];
+            
+            id source = [currentItem source];
+            
+            NSView *settingsView = nil;
+            currentItemHasSettings = NO;
+            if ([source respondsToSelector:@selector(settingsView)])
+                currentItemHasSettings = nil != (settingsView = [source settingsView]);
+            if ([source respondsToSelector:@selector(setCurrentEntry:)])
+                [source setCurrentEntry:[currentItem info]];
+            if ([source respondsToSelector:@selector(setSelection:)])
+                [source setSelection:currentItem];
+            if ([source respondsToSelector:@selector(populateFields)])
+                [source populateFields];
+            
+            
+            if (settingsView) {
+                [itemOptionsView setContentView:settingsView];
+            } else {
+                [messageTextField setStringValue:@"No Options"]  ;  
+                [itemOptionsView setContentView:messageView];
+            }
+            //   [self populateItemFields];
+        }
+    }
 }
 
-
-
-
-- (int) outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
+- (int) outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+{
 	return 0;
 }
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(id)item {
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(id)item
+{
     if ([[NSApp currentEvent]type] == NSLeftMouseDragged) {
         return (![[item representedObject] isPreset]);
     }
-    
     return YES;
 }
-//- (BOOL)xoutlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item {
-//	
-//    return  ![self outlineView:outlineView itemIsSeparator:item];  
-//}
-- (BOOL)outlineView:(NSOutlineView *)aTableView itemIsSeparator:(id)item {
-	//int row = [aTableView rowForItem:item];
-	//QSLog(@"%@", item);
-	//QSLog(@"%@", [item indexPath]);
-	//QSLog(@"%@", [[treeController arrangedObjects]objectAtIndexPath:[item indexPath]]);
-	return NO;
-    return [[[treeController arrangedObjects]objectAtIndexPath:[item indexPath]]isSeparator]; //[item valueForKey:@"isSeparator"];
+
+- (BOOL)outlineView:(NSOutlineView *)aTableView itemIsSeparator:(id)item
+{
+    return [(QSCatalogEntry*)[item representedObject] isSeparator];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {return NO;}
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item {return nil;}
-- (QSCatalogEntry *)catalog {
-	return [librarian catalog];
-}
+
+- (QSCatalogEntry *)catalog { return [librarian catalog]; }
 
 //- (BOOL)xoutlineView:(NSOutlineView *)outlineView addChild:(id)childItem toItem:(id)item atIndex:(int)index {
 //    if (![outlineView isItemExpanded:item]) {

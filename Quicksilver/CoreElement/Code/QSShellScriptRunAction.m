@@ -11,7 +11,7 @@
 #define SCRIPT_EXT [NSArray arrayWithObjects:@"sh",@"pl",@"command",@"php",@"py",@"rb",nil]
 NSString *QSGetShebangPathForScript(NSString *path){	
 	   NSString *taskPath=nil;
-	NSString *contents=[NSString stringWithContentsOfFile:path];
+	NSString *contents=[NSString stringWithContentsOfFile:path encoding:NSASCIIStringEncoding error:NULL];
 	NSScanner *scanner=[NSScanner scannerWithString:contents];
 	[scanner scanString:@"#!" intoString:nil];
 	[scanner scanUpToCharactersFromSet:[NSCharacterSet characterSetWithCharactersInString:@"\r\n"] intoString:&taskPath];
@@ -26,7 +26,7 @@ BOOL QSPathCanBeExecuted(NSString *path,BOOL allowApps){
 		return NO;
 	BOOL executable=[[NSFileManager defaultManager] isExecutableFileAtPath:path];
 	if (!executable) {
-		NSString *contents=[NSString stringWithContentsOfFile:path];
+		NSString *contents=[NSString stringWithContentsOfFile:path encoding:NSASCIIStringEncoding error:NULL];
 		if ([contents hasPrefix:@"#!"]) executable=YES;
 		else if (VERBOSE) QSLog(@"No Shebang found");
 	} else if (!allowApps) {
@@ -43,7 +43,7 @@ BOOL QSPathCanBeExecuted(NSString *path,BOOL allowApps){
 @implementation QSShellScriptRunAction
 - (QSAction *)scriptActionForPath:(NSString *)path{
 	
-	NSString *script=[NSString stringWithContentsOfFile:path];
+	NSString *script=[NSString stringWithContentsOfFile:path encoding:NSASCIIStringEncoding error:NULL];
 	
 	NSMutableDictionary *scriptDict=[NSMutableDictionary dictionary];
 	foreach(component,[script componentsSeparatedByString: @"%%%"]){
@@ -175,20 +175,15 @@ BOOL QSPathCanBeExecuted(NSString *path,BOOL allowApps){
 	return string;
 }
 
-
-
-
-
-
-
-- (NSString *)runExecutable:(NSString *)path withArguments:(NSArray *)arguments{
+- (NSString *)runExecutable:(NSString *)path withArguments:(NSArray *)arguments
+{
     BOOL executable=[[NSFileManager defaultManager] isExecutableFileAtPath:path];
     
     NSString *taskPath=path;
     NSMutableArray *argArray=[NSMutableArray array]; 
     
-    if (!executable){
-        NSString *contents=[NSString stringWithContentsOfFile:path];
+    if (!executable) {
+        NSString *contents=[NSString stringWithContentsOfFile:path encoding:NSASCIIStringEncoding error:NULL];
         NSScanner *scanner=[NSScanner scannerWithString:contents];
         [argArray addObject:taskPath];
         [scanner scanString:@"#!" intoString:nil];

@@ -3,8 +3,9 @@
 //  QSCubeInterfacePlugIn
 //
 //  Created by Nicholas Jitkoff on 6/26/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+//  Copyright 2006 Blacktree, Inc. All rights reserved.
 //
+//  Makoto Yamashita 2009-12-25
 
 #import <Cocoa/Cocoa.h>
 
@@ -19,22 +20,12 @@
 }
 
 - (NSRect)paddedFrameForFrame:(NSRect)frame;
+- (void)updatePosition;
 
-
-- (NSView *) targetView;
-- (void) setTargetView: (NSView *) newTargetView;
-- (NSColor *) color;
-- (void) setColor: (NSColor *) newColor;
-- (float) blur;
-- (void) setBlur: (float) newBlur;
-- (float) distance;
-- (void) setDistance: (float) newDistance;
-- (float) angle;
-- (void) setAngle: (float) newAngle;
-- (float) expand;
-- (void) setExpand: (float) newExpand;
-
-
-
-
+@property (retain) NSView* targetView;
+@property (copy) NSColor* color;
+@property (assign) float blur;
+@property (assign) float distance;
+@property (assign) float angle;
+@property (assign) float expand;
 @end

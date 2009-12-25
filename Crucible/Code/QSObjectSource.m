@@ -26,8 +26,7 @@
     float timeLapse = [[theEntry objectForKey:kItemModificationDate] floatValue];
     NSDate *specDate = [NSDate dateWithTimeIntervalSinceReferenceDate:timeLapse];
     return ([specDate compare:indexDate] == NSOrderedDescending);
-//Catalog Specification is more recent than index
-#warning   * should switch to using this!    
+//Catalog Specification is more recent than index, should switch to using this!    
 }
 
 - (void)populateFields { return; }

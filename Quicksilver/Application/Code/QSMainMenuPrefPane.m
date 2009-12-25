@@ -4,9 +4,10 @@
 //
 //  Created by Nicholas Jitkoff on 6/11/06.
 
-//
+//  Makoto Yamashita 2009-12-25
 
 #import "QSMainMenuPrefPane.h"
+#import "QSController.h"
 
 @implementation QSMainMenuPrefPane
 - (NSString *)mainNibName {
@@ -50,7 +51,7 @@
 	}
 	
 	if ([[[request URL] scheme] hasPrefix:@"qs"]) {
-		[[NSApp delegate] openURL:[request URL]];
+		[(QSController*)[NSApp delegate] openURL:[request URL]];
 	} else if (external) {
 		[[NSWorkspace sharedWorkspace] openURL:[request URL]];
 		[listener ignore];
@@ -91,15 +92,8 @@
 - (IBAction)goHome:(id)sender {
 	NSString *path = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents/SharedSupport/Guide.html"];
 	NSURL *guideURL = [NSURL fileURLWithPath:path];
-	NSString *content = [NSString stringWithContentsOfFile:path];
-	
-	//content = [NSString stringWithFormat:content, [NSApp versionString]];
-//	QSLog(@"content %@", content);
 		
-	[[guideView mainFrame] loadRequest:[NSURLRequest requestWithURL:guideURL]];
-//	[[guideView mainFrame] loadHTMLString:@"test" baseURL:guideURL];
-	
-	
+	[[guideView mainFrame] loadRequest:[NSURLRequest requestWithURL:guideURL]];	
 }
 
 - (IBAction)showInBrowser:(id)sender {
@@ -110,7 +104,7 @@
 #define SEARCH_URL @"http://docs.blacktree.com/?do = search&id = %@"
 - (IBAction)search:(id)sender {
 	NSString *urlString = [NSString stringWithFormat:SEARCH_URL, [sender stringValue]];
-	NSString *searchURL = [NSURL URLWithString:urlString];
+	NSURL *searchURL = [NSURL URLWithString:urlString];
 	[[guideView mainFrame] loadRequest:[NSURLRequest requestWithURL:searchURL]];
 }
 

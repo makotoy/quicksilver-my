@@ -1,22 +1,13 @@
-
-
+/*
+ * Derived from Blacktree, Inc. codebase
+ * Makoto Yamashita 2009-12-25
+ */
 #import <Cocoa/Cocoa.h>
-//#import "QSLibrarian.h"
-
-
-//#import "QSPreferencePane.h"
 
 #define QSCodedCatalogEntryPasteboardType @"QSCatalogEntry"
 
-//
-//@interface NSSegmentedControl (SelectedIndex)
-//- (int)indexOfSelectedItem;
-//@end;
-//@class QSPrefsController;
 @interface QSCatalogPrefPane : QSPreferencePane {
-	
     IBOutlet QSTableView *catalogSetsTable;
-    //NSMutableArray *itemArray;
 	
     IBOutlet NSArrayController *catalogSetsController;
 
@@ -26,7 +17,6 @@
     IBOutlet NSTabViewItem *itemTabView;
     IBOutlet NSDrawer *itemContentsDrawer;
     IBOutlet NSSplitView *catalogSplitView;
-    
     
     //Item
     IBOutlet NSPopUpButton *sourcePopUp;
@@ -39,7 +29,6 @@
     IBOutlet NSButton *itemAddGroupButton;
     IBOutlet NSButton *itemDeleteButton;
     IBOutlet NSBox *itemOptionsView;
-    
     
     IBOutlet NSPopUpButton *itemViewSwitcher;
     

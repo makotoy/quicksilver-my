@@ -54,7 +54,7 @@
 	int i;
 	BOOL upper;
 	for (i=0;i<strlen(s);i++){
-		CGKeyCode code = [QSKeyCodeTranslator AsciiToKeyCode:s[i]];
+		CGKeyCode code = [QSKeyCodeTranslator keyCodeForCharacter:s[i]];
 		// QSLog(@"%d",code);   
 		upper=isupper(s[i]);
 		if (upper) CGPostKeyboardEvent( (CGCharCode)0, (CGKeyCode)56, true ); // shift down

@@ -1,4 +1,7 @@
-
+/*
+ * Derived from Blacktree, Inc. codebase
+ * Makoto Yamashita 2009-12-25
+ */
 
 #import <AppKit/AppKit.h>
 
@@ -25,10 +28,8 @@
 	BOOL opaque;
 	BOOL drawsBackground;
 }
-- (NSColor *)highlightColor;
-- (void)setHighlightColor:(NSColor *)aHighlightColor;
-- (id)draggingDelegate;
-- (void)setDraggingDelegate:(id)aDraggingDelegate;
+@property (copy) NSColor* highlightColor;
+@property (retain) id draggingDelegate;
 - (void)setOpaque:(BOOL)flag;
 @end
 

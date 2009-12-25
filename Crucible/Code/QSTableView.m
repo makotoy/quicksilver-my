@@ -1,4 +1,7 @@
-
+/*
+ * Derived from Blacktree, Inc. codebase
+ * Makoto Yamashita 2009-12-25
+ */
 
 #import "QSTableView.h"
 
@@ -11,10 +14,6 @@
 
 
 @implementation QSTableView
-//- (void)awakeFromNib{
-//    //[self setHeaderView:[[[ABPropertyHeaderView alloc]initWithFrame:[[self headerView]frame]]autorelease]];
-//}
-//
 
 - (BOOL)canDragRowsWithIndexes:(NSIndexSet *)rowIndexes atPoint:(NSPoint)mouseDownPoint{
 	return YES;	
@@ -108,8 +107,8 @@
 	//return [super _highlightColorForCell:(NSCell *)cell];
 	return [NSColor alternateSelectedControlColor];
 }
-- (NSColor *)highlightColor { return [[highlightColor retain] autorelease]; }
 
+@synthesize highlightColor;
 - (void)setHighlightColor:(NSColor *)aHighlightColor
 {
     if (highlightColor != aHighlightColor) {
@@ -149,16 +148,7 @@
         [[self dataSource] tableView:self dropEndedWithOperation:operation]; 
 }
 
-
-- (id)draggingDelegate { return [[draggingDelegate retain] autorelease]; }
-
-- (void)setDraggingDelegate:(id)aDraggingDelegate{
-    if (draggingDelegate != aDraggingDelegate) {
-        [draggingDelegate release];
-        draggingDelegate = [aDraggingDelegate retain];
-    }
-}
-
+@synthesize draggingDelegate;
 
 @end
 

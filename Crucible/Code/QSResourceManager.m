@@ -114,7 +114,9 @@ static QSResourceManager *sharedResourceManager = nil;
 - (NSString *)resourceNamed:(NSString *)name inBundle:(NSBundle *)bundle {
 	return nil;
 }
-- (NSString *)pathForImageNamed:(NSString *)name {
+
+- (NSString *)pathForImageNamed:(NSString *)name
+{
 	id locator = [resourceDict objectForKey:name];
 	return [self pathWithLocatorInformation:locator];
 }
