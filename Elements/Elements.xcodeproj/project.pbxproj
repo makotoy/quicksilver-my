@@ -329,7 +329,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 43CBA82A0854FD520077C2AE /* Build configuration list for PBXNativeTarget "QSElements" */;
 			buildPhases = (
-				4327AAE30A79B2B100491009 /* ShellScript */,
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF520486A6940098B216 /* Resources */,
 				8DC2EF540486A6940098B216 /* Sources */,
@@ -383,22 +382,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		4327AAE30A79B2B100491009 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION != 'Release' ]; then\n\texit\nfi\n\n#genstrings -s BKLocalizedString -o Resources/English.lproj/ Sources/*.[mch] Sources/*/*.[mch]";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7FD8298F0B670EBD001934E0 /* Sources */ = {

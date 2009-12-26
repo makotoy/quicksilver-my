@@ -1307,7 +1307,6 @@
 				7FA7DB2F0C5CF13E00A27607 /* Copy Quick Look Generator */,
 				7F9A7A610C49595900B5912D /* Sources */,
 				7F9A7A620C49595900B5912D /* Frameworks */,
-				7FC847990D159A08005E1C6B /* Sign Code */,
 			);
 			buildRules = (
 			);
@@ -1629,20 +1628,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "Plugins/get-plugins.sh";
-		};
-		7FC847990D159A08005E1C6B /* Sign Code */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Sign Code";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "codesign -f -s Blacktree,\\ Inc. $CONFIGURATION_BUILD_DIR/$FULL_PRODUCT_NAME\ncodesign -v $CONFIGURATION_BUILD_DIR/$FULL_PRODUCT_NAME;\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
