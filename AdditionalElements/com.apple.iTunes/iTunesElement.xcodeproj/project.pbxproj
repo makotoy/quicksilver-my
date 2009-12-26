@@ -40,9 +40,9 @@
 		084A9FF61094D18900E2CB93 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Configuration/Release.xcconfig; sourceTree = QS_SOURCE_ROOT; };
 		084A9FFD1094D1D200E2CB93 /* iTunes Module.element */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iTunes Module.element"; sourceTree = BUILT_PRODUCTS_DIR; };
 		084A9FFF1094D1D200E2CB93 /* iTunes Module-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iTunes Module-Info.plist"; sourceTree = "<group>"; };
-		084AA0211094D33400E2CB93 /* element.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = element.xml; path = "../blacktree-elements/com.apple.iTunes/element.xml"; sourceTree = QS_SOURCE_ROOT; };
-		084AA0661094D5E700E2CB93 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "../blacktree-elements/com.apple.iTunes/Scripts"; sourceTree = QS_SOURCE_ROOT; };
-		084AA0FE1094DCDC00E2CB93 /* Next Song.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Next Song.icns"; path = "../blacktree-elements/com.apple.iTunes/Next Song.icns"; sourceTree = QS_SOURCE_ROOT; };
+		084AA0211094D33400E2CB93 /* element.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
+		084AA0661094D5E700E2CB93 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
+		084AA0FE1094DCDC00E2CB93 /* Next Song.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Next Song.icns"; sourceTree = "<group>"; };
 		08656BD1109DFC740048486A /* QSiTunesTrackSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSiTunesTrackSource.h; sourceTree = "<group>"; };
 		08656BD2109DFC740048486A /* QSiTunesTrackSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSiTunesTrackSource.m; sourceTree = "<group>"; };
 		08656BD6109DFD2B0048486A /* iTunesLibraryPlaylistIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iTunesLibraryPlaylistIcon.icns; sourceTree = "<group>"; };
