@@ -1,27 +1,25 @@
+/* Derived from Blacktree, Inc. codebase
+ * Makoto Yamashita, 2009-12-28
+ */
+
 /* QSController */
-
-
-//#import <Cocoa/Cocoa.h>
 
 @class QSObjectView;
 @class QSActionMatrix;
 
 @class QSWindow;
 @class QSMenuWindow;
-//@class QSPrefsController;
+
 @class QSObject;
 
 @class QSInterfaceController;
 @class QSCatalogController;
-//@class QSProcessSwitcher;
 
-extern NSString * QSWindowsShouldHideNotification;
-
+// This is referenced from subprojects, so the value cannot be externed
+#define QSWindowsShouldHideNotification @"QSWindowsShouldHide"
 
 @interface QSController : NSWindowController {
     QSInterfaceController *interfaceController;
-   // QSProcessSwitcher *switcherController;
-    //QSPrefsController *prefsController;
     QSCatalogController *catalogController;
     NSWindowController *aboutWindowController;
     NSWindowController *quitWindowController;
@@ -57,31 +55,23 @@ extern NSString * QSWindowsShouldHideNotification;
 
 - (NSImage *)daedalusImage;
 
-- (void)activateDebugMenu;
-
 - (NSMenu *)statusMenu;
 - (NSMenu *)statusMenuWithQuit;
 
 - (void) activateInterface:(id)sender;
+- (void)activateDebugMenu;
+
 - (void) checkForFirstRun;
 
-
 - (void) receiveObject:(QSObject *)object;
-- (QSInterfaceController *) interfaceController;
-- (void)setInterfaceController:(QSInterfaceController *) newInterfaceController;
-
-
-- (NSMenu *)statusMenu;
-- (NSColor *)iconColor;
-- (void)setIconColor:(NSColor *)newIconColor;
 
 - (void)setupAssistantCompleted:(id)sender;
-- (NSImage *)activatedImage;
-- (void)setActivatedImage:(NSImage *)newActivatedImage;
-- (NSImage *)runningImage;
-- (void)setRunningImage:(NSImage *)newRunningImage;
-- (NSObject *)dropletProxy;
-- (void)setDropletProxy:(NSObject *)newDropletProxy;
+
+@property (retain) QSInterfaceController* interfaceController;
+@property (copy) NSColor* iconColor;
+@property (retain) NSImage* activatedImage;
+@property (copy) NSImage* runningImage;
+@property (retain) NSObject* dropletProxy;
 
 @end
 

@@ -2005,6 +2005,7 @@
 		};
 		7F5D224C0C49C18500812049 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D7094F30D102708008498FD /* QSElement.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "CoreElement/QSCoreElement-Info.plist";
 				PRODUCT_NAME = Core;

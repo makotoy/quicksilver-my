@@ -1,9 +1,6 @@
 //  Derived from Blacktree codebase
 //  2009-11-30 Makoto Yamashita
 
-//#import "NSString_CompletionExtensions.h"
-//#import "QSObject_ContactHandling.h"
-//#import "AppKitPrivate.h"
 #include <stdio.h>
 #include <unistd.h>
 
@@ -13,12 +10,6 @@
 #import <IOKit/IOCFBundle.h> 
 #import <Quartz/Quartz.h>
 #import <QuartzCore/QuartzCore.h>
-
-#import <QSCrucible/NDHotKeyEvent_QSMods.h>
-#import <QSCrucible/NSStatusItem_BLTRExtensions.h>
-#import <QSCrucible/QSPlugInManager.h>
-#import <QSCrucible/QSWindowAnimation.h>
-#import <QSCrucible/QSProxyObject.h>
 
 #import "QSAboutWindowController.h"
 #import "QSAgreementController.h"
@@ -45,9 +36,6 @@
 extern char** environ;
 
 #define OneIn(i) ((int) (i*(double)random()/(double)0x7fffffff) == 0)
-
-#pragma mark Notifications
-NSString * QSWindowsShouldHideNotification = @"QSWindowsShouldHide";
 
 #pragma mark Events
 NSString * QSQuicksilverWillQuitEvent = @"QSQuicksilverWillQuitEvent";
@@ -197,21 +185,17 @@ static id _sharedInstance;
 	}
 }
 
-- (NSImage *)activatedImage {
-    return [[activatedImage retain] autorelease];  
-}
-
-- (void)setActivatedImage:(NSImage *)newActivatedImage {
+@synthesize activatedImage;
+- (void)setActivatedImage:(NSImage *)newActivatedImage
+{
 	[activatedImage release];
     activatedImage = [newActivatedImage retain];
 	[activatedImage setName:@"Quicksilver-Activated"];
 }
 
-- (NSImage *)runningImage {
-    return [[runningImage retain] autorelease];  
-}
-
-- (void)setRunningImage:(NSImage *)newRunningImage {
+@synthesize runningImage;
+- (void)setRunningImage:(NSImage *)newRunningImage
+{
 	[runningImage release];
 	runningImage = [newRunningImage retain];
 	[runningImage setName:@"Quicksilver-Running"];
@@ -741,17 +725,15 @@ static id _sharedInstance;
 	[command execute];
 }
 
-- (void)handlePasteboardDrop:(NSPasteboard *)pb commandPath:(NSString *)path {
+- (void)handlePasteboardDrop:(NSPasteboard *)pb commandPath:(NSString *)path
+{
 	QSObject *drop = [QSObject objectWithPasteboard:pb];
-	//QSLog(@"pb %@ %@", drop, path);
 	[self setDropletProxy:drop];
 	[self executeCommandAtPath:path];
 	[self setDropletProxy:nil];
 }
 
-- (void)searchGoogle:(NSPasteboard *)pboard
-			  userData:(NSString *)userData
-				 error:(NSString **)error
+- (void)searchGoogle:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {    
 	if (VERBOSE) QSLog(@"Search Google: %@ %d", userData, [userData characterAtIndex:0]);
 	NSWorkspace* sharedSpace = [NSWorkspace sharedWorkspace];
@@ -760,9 +742,7 @@ static id _sharedInstance;
 	[sharedSpace openURL:[NSURL URLWithString:queryStr]];
 }
 
-- (void)getSelection:(NSPasteboard *)pboard
-			userData:(NSString *)userData
-			   error:(NSString **)error
+- (void)getSelection:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error
 {    
 	if (VERBOSE) QSLog(@"GetSel Service: %@ %d", userData, [userData characterAtIndex:0]);
 	[self receiveObject:[[[QSObject alloc] initWithPasteboard:pboard] autorelease]];
@@ -784,16 +764,7 @@ static id _sharedInstance;
 	[self activateInterface:self];
 }
 
-- (NSObject *)dropletProxy { return [[dropletProxy retain] autorelease];  }
-- (void)setDropletProxy:(NSObject *)newDropletProxy
-{
-    if (dropletProxy != newDropletProxy) {
-        [dropletProxy release];
-        dropletProxy = [newDropletProxy retain];
-    }
-}
-
-
+@synthesize dropletProxy;
 
 - (void)dealloc
 {
@@ -802,7 +773,6 @@ static id _sharedInstance;
     dropletProxy = nil;
     [super dealloc];
 }
-
 
 - (id)resolveProxyObject:(id)proxy {	
 	if ([[proxy identifier] isEqualToString:@"QSDropletItemProxy"]) {
@@ -970,14 +940,7 @@ static id _sharedInstance;
 	
 }
 
-- (NSColor *)iconColor {
-	return iconColor;  
-}
-
-- (void)setIconColor:(NSColor *)newIconColor {
-	[iconColor release];
-	iconColor = [newIconColor retain];
-}
+@synthesize iconColor;
 
 - (NSImage *)daedalusImage {
 	return [QSResourceManager imageNamed:@"daedalus"];
