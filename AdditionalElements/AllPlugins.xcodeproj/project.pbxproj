@@ -1,0 +1,597 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		084BB02F10E9A77B003D2539 /* Build All Plugins */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 084BB03210E9A799003D2539 /* Build configuration list for PBXAggregateTarget "Build All Plugins" */;
+			buildPhases = (
+			);
+			dependencies = (
+				084BB03410E9A7BF003D2539 /* PBXTargetDependency */,
+				084BB09210E9A842003D2539 /* PBXTargetDependency */,
+				084BB09410E9A842003D2539 /* PBXTargetDependency */,
+				084BB09610E9A842003D2539 /* PBXTargetDependency */,
+				084BB09810E9A842003D2539 /* PBXTargetDependency */,
+				084BB09A10E9A842003D2539 /* PBXTargetDependency */,
+				084BB09C10E9A842003D2539 /* PBXTargetDependency */,
+				084BB09E10E9A842003D2539 /* PBXTargetDependency */,
+				084BB0A010E9A842003D2539 /* PBXTargetDependency */,
+				084BB0A210E9A842003D2539 /* PBXTargetDependency */,
+				084BB0A410E9A842003D2539 /* PBXTargetDependency */,
+			);
+			name = "Build All Plugins";
+			productName = "Build All Plugins";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXContainerItemProxy section */
+		084BB02D10E9A753003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Bezel Interface.element */;
+			remoteInfo = "Bezel Interface";
+		};
+		084BB03310E9A7BF003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Bezel Interface */;
+			remoteInfo = "Bezel Interface";
+		};
+		084BB03E10E9A7D3003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB03710E9A7D3003D2539 /* QSAddressBookElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Apple Address Book.element */;
+			remoteInfo = "Apple Address Book";
+		};
+		084BB04710E9A7E1003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB04010E9A7E1003D2539 /* iTunesElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 084A9FFD1094D1D200E2CB93 /* iTunes Module.element */;
+			remoteInfo = "iTunes Module";
+		};
+		084BB05010E9A7EA003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB04910E9A7EA003D2539 /* AppleMailElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Apple Mail.element */;
+			remoteInfo = "Apple Mail";
+		};
+		084BB05910E9A7F6003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Social Bookmarks Module.element */;
+			remoteInfo = "Social Bookmarks Module";
+		};
+		084BB06210E9A803003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB05B10E9A803003D2539 /* ClipboardElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Clipboard.element */;
+			remoteInfo = Clipboard;
+		};
+		084BB06B10E9A80D003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB06410E9A80D003D2539 /* MailSupportElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Email Support.element */;
+			remoteInfo = "Email Support";
+		};
+		084BB07410E9A817003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB06D10E9A817003D2539 /* WebSearchElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7F7EB2E90BFEB69300AFDF2C /* Web Search.element */;
+			remoteInfo = "Web Search";
+		};
+		084BB07D10E9A820003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB07610E9A820003D2539 /* QSFirefoxPlugIn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Firefox Module.element */;
+			remoteInfo = "Firefox Module";
+		};
+		084BB08610E9A827003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB07F10E9A827003D2539 /* QSPrimerInterfacePlugIn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 08E8F58010CA88BA000CB4D9 /* Primer Interface.element */;
+			remoteInfo = "Primer Interface";
+		};
+		084BB08F10E9A82E003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Terminal Module.element */;
+			remoteInfo = "Terminal Module";
+		};
+		084BB09110E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Terminal Module */;
+			remoteInfo = "Terminal Module";
+		};
+		084BB09310E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB05B10E9A803003D2539 /* ClipboardElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Clipboard */;
+			remoteInfo = Clipboard;
+		};
+		084BB09510E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB04010E9A7E1003D2539 /* iTunesElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 084A9FFC1094D1D200E2CB93 /* iTunes Module */;
+			remoteInfo = "iTunes Module";
+		};
+		084BB09710E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Social Bookmarks Module */;
+			remoteInfo = "Social Bookmarks Module";
+		};
+		084BB09910E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB06410E9A80D003D2539 /* MailSupportElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Email Support */;
+			remoteInfo = "Email Support";
+		};
+		084BB09B10E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB07610E9A820003D2539 /* QSFirefoxPlugIn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Firefox Module */;
+			remoteInfo = "Firefox Module";
+		};
+		084BB09D10E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB03710E9A7D3003D2539 /* QSAddressBookElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Apple Address Book */;
+			remoteInfo = "Apple Address Book";
+		};
+		084BB09F10E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB06D10E9A817003D2539 /* WebSearchElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F7EB2D50BFEB69300AFDF2C /* Web Search */;
+			remoteInfo = "Web Search";
+		};
+		084BB0A110E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB07F10E9A827003D2539 /* QSPrimerInterfacePlugIn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Primer Interface */;
+			remoteInfo = "Primer Interface";
+		};
+		084BB0A310E9A842003D2539 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB04910E9A7EA003D2539 /* AppleMailElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Apple Mail */;
+			remoteInfo = "Apple Mail";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSBezelInterfacePlugIn.xcodeproj; path = Bezel/QSBezelInterfacePlugIn.xcodeproj; sourceTree = "<group>"; };
+		084BB03710E9A7D3003D2539 /* QSAddressBookElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSAddressBookElement.xcodeproj; path = com.apple.AddressBook/QSAddressBookElement.xcodeproj; sourceTree = "<group>"; };
+		084BB04010E9A7E1003D2539 /* iTunesElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iTunesElement.xcodeproj; path = com.apple.iTunes/iTunesElement.xcodeproj; sourceTree = "<group>"; };
+		084BB04910E9A7EA003D2539 /* AppleMailElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AppleMailElement.xcodeproj; path = com.apple.Mail/AppleMailElement.xcodeproj; sourceTree = "<group>"; };
+		084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSDeliciousPlugIn.xcodeproj; path = del.icio.us/QSDeliciousPlugIn.xcodeproj; sourceTree = "<group>"; };
+		084BB05B10E9A803003D2539 /* ClipboardElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ClipboardElement.xcodeproj; path = elements.clipboard/ClipboardElement.xcodeproj; sourceTree = "<group>"; };
+		084BB06410E9A80D003D2539 /* MailSupportElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MailSupportElement.xcodeproj; path = elements.support.mail/MailSupportElement.xcodeproj; sourceTree = "<group>"; };
+		084BB06D10E9A817003D2539 /* WebSearchElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WebSearchElement.xcodeproj; path = elements.websearch/WebSearchElement.xcodeproj; sourceTree = "<group>"; };
+		084BB07610E9A820003D2539 /* QSFirefoxPlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSFirefoxPlugIn.xcodeproj; path = Firefox/QSFirefoxPlugIn.xcodeproj; sourceTree = "<group>"; };
+		084BB07F10E9A827003D2539 /* QSPrimerInterfacePlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSPrimerInterfacePlugIn.xcodeproj; path = PrimerInterface/QSPrimerInterfacePlugIn.xcodeproj; sourceTree = "<group>"; };
+		084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSTerminalPlugIn.xcodeproj; path = Terminal/QSTerminalPlugIn.xcodeproj; sourceTree = "<group>"; };
+		084BB0A610E9A88B003D2539 /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = Configuration/Common.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084BB0A710E9A88B003D2539 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Configuration/Debug.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084BB0A810E9A88B003D2539 /* Developer.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Developer.xcconfig; path = Configuration/Developer.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084BB0A910E9A88B003D2539 /* QSElement.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = QSElement.xcconfig; path = Configuration/QSElement.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084BB0AA10E9A88B003D2539 /* QSElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSElement_Prefix.pch; path = Configuration/QSElement_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
+		084BB0AB10E9A88B003D2539 /* QSPlugIn.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = QSPlugIn.xcconfig; path = Configuration/QSPlugIn.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084BB0AC10E9A88B003D2539 /* QSPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSPlugIn_Prefix.pch; path = Configuration/QSPlugIn_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
+		084BB0AD10E9A88B003D2539 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Configuration/Release.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		084BB01310E9A722003D2539 = {
+			isa = PBXGroup;
+			children = (
+				084BB0A510E9A88B003D2539 /* Configuration */,
+				084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */,
+				084BB07F10E9A827003D2539 /* QSPrimerInterfacePlugIn.xcodeproj */,
+				084BB07610E9A820003D2539 /* QSFirefoxPlugIn.xcodeproj */,
+				084BB06D10E9A817003D2539 /* WebSearchElement.xcodeproj */,
+				084BB06410E9A80D003D2539 /* MailSupportElement.xcodeproj */,
+				084BB05B10E9A803003D2539 /* ClipboardElement.xcodeproj */,
+				084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */,
+				084BB04910E9A7EA003D2539 /* AppleMailElement.xcodeproj */,
+				084BB04010E9A7E1003D2539 /* iTunesElement.xcodeproj */,
+				084BB03710E9A7D3003D2539 /* QSAddressBookElement.xcodeproj */,
+				084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		084BB02710E9A753003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB02E10E9A753003D2539 /* Bezel Interface.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB03810E9A7D3003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB03F10E9A7D3003D2539 /* Apple Address Book.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB04110E9A7E1003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB04810E9A7E1003D2539 /* iTunes Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB04A10E9A7EA003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB05110E9A7EA003D2539 /* Apple Mail.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB05310E9A7F6003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB05A10E9A7F6003D2539 /* Social Bookmarks Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB05C10E9A803003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB06310E9A803003D2539 /* Clipboard.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB06510E9A80D003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB06C10E9A80D003D2539 /* Email Support.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB06E10E9A817003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB07510E9A817003D2539 /* Web Search.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB07710E9A820003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB07E10E9A820003D2539 /* Firefox Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB08010E9A827003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB08710E9A827003D2539 /* Primer Interface.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB08910E9A82E003D2539 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				084BB09010E9A82E003D2539 /* Terminal Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		084BB0A510E9A88B003D2539 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				084BB0A610E9A88B003D2539 /* Common.xcconfig */,
+				084BB0A710E9A88B003D2539 /* Debug.xcconfig */,
+				084BB0A810E9A88B003D2539 /* Developer.xcconfig */,
+				084BB0A910E9A88B003D2539 /* QSElement.xcconfig */,
+				084BB0AA10E9A88B003D2539 /* QSElement_Prefix.pch */,
+				084BB0AB10E9A88B003D2539 /* QSPlugIn.xcconfig */,
+				084BB0AC10E9A88B003D2539 /* QSPlugIn_Prefix.pch */,
+				084BB0AD10E9A88B003D2539 /* Release.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = QS_SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		084BB01510E9A722003D2539 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 084BB01810E9A722003D2539 /* Build configuration list for PBXProject "AllPlugins" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 084BB01310E9A722003D2539;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 084BB04A10E9A7EA003D2539 /* Products */;
+					ProjectRef = 084BB04910E9A7EA003D2539 /* AppleMailElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB05C10E9A803003D2539 /* Products */;
+					ProjectRef = 084BB05B10E9A803003D2539 /* ClipboardElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB04110E9A7E1003D2539 /* Products */;
+					ProjectRef = 084BB04010E9A7E1003D2539 /* iTunesElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB06510E9A80D003D2539 /* Products */;
+					ProjectRef = 084BB06410E9A80D003D2539 /* MailSupportElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB03810E9A7D3003D2539 /* Products */;
+					ProjectRef = 084BB03710E9A7D3003D2539 /* QSAddressBookElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB02710E9A753003D2539 /* Products */;
+					ProjectRef = 084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB05310E9A7F6003D2539 /* Products */;
+					ProjectRef = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB07710E9A820003D2539 /* Products */;
+					ProjectRef = 084BB07610E9A820003D2539 /* QSFirefoxPlugIn.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB08010E9A827003D2539 /* Products */;
+					ProjectRef = 084BB07F10E9A827003D2539 /* QSPrimerInterfacePlugIn.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB08910E9A82E003D2539 /* Products */;
+					ProjectRef = 084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */;
+				},
+				{
+					ProductGroup = 084BB06E10E9A817003D2539 /* Products */;
+					ProjectRef = 084BB06D10E9A817003D2539 /* WebSearchElement.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				084BB02F10E9A77B003D2539 /* Build All Plugins */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		084BB02E10E9A753003D2539 /* Bezel Interface.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Bezel Interface.element";
+			remoteRef = 084BB02D10E9A753003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB03F10E9A7D3003D2539 /* Apple Address Book.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Apple Address Book.element";
+			remoteRef = 084BB03E10E9A7D3003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB04810E9A7E1003D2539 /* iTunes Module.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "iTunes Module.element";
+			remoteRef = 084BB04710E9A7E1003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB05110E9A7EA003D2539 /* Apple Mail.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Apple Mail.element";
+			remoteRef = 084BB05010E9A7EA003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB05A10E9A7F6003D2539 /* Social Bookmarks Module.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Social Bookmarks Module.element";
+			remoteRef = 084BB05910E9A7F6003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB06310E9A803003D2539 /* Clipboard.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Clipboard.element;
+			remoteRef = 084BB06210E9A803003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB06C10E9A80D003D2539 /* Email Support.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Email Support.element";
+			remoteRef = 084BB06B10E9A80D003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB07510E9A817003D2539 /* Web Search.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Web Search.element";
+			remoteRef = 084BB07410E9A817003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB07E10E9A820003D2539 /* Firefox Module.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Firefox Module.element";
+			remoteRef = 084BB07D10E9A820003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB08710E9A827003D2539 /* Primer Interface.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Primer Interface.element";
+			remoteRef = 084BB08610E9A827003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		084BB09010E9A82E003D2539 /* Terminal Module.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Terminal Module.element";
+			remoteRef = 084BB08F10E9A82E003D2539 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXTargetDependency section */
+		084BB03410E9A7BF003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Bezel Interface";
+			targetProxy = 084BB03310E9A7BF003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB09210E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Terminal Module";
+			targetProxy = 084BB09110E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB09410E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Clipboard;
+			targetProxy = 084BB09310E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB09610E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "iTunes Module";
+			targetProxy = 084BB09510E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB09810E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Social Bookmarks Module";
+			targetProxy = 084BB09710E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB09A10E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Email Support";
+			targetProxy = 084BB09910E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB09C10E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Firefox Module";
+			targetProxy = 084BB09B10E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB09E10E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Apple Address Book";
+			targetProxy = 084BB09D10E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB0A010E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Web Search";
+			targetProxy = 084BB09F10E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB0A210E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Primer Interface";
+			targetProxy = 084BB0A110E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		084BB0A410E9A842003D2539 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Apple Mail";
+			targetProxy = 084BB0A310E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		084BB01610E9A722003D2539 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084BB0A710E9A88B003D2539 /* Debug.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		084BB01710E9A722003D2539 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084BB0AD10E9A88B003D2539 /* Release.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		084BB03010E9A77B003D2539 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Build All Plugins";
+			};
+			name = Debug;
+		};
+		084BB03110E9A77B003D2539 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Build All Plugins";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		084BB01810E9A722003D2539 /* Build configuration list for PBXProject "AllPlugins" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				084BB01610E9A722003D2539 /* Debug */,
+				084BB01710E9A722003D2539 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		084BB03210E9A799003D2539 /* Build configuration list for PBXAggregateTarget "Build All Plugins" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				084BB03010E9A77B003D2539 /* Debug */,
+				084BB03110E9A77B003D2539 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 084BB01510E9A722003D2539 /* Project object */;
+}

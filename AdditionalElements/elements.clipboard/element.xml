@@ -1,4 +1,4 @@
-<element name="Clipboard Module" id="com.blacktree.Quicksilver.QSClipboardPlugIn" version="CD">
+<element name="Clipboard" id="com.blacktree.Quicksilver.QSClipboardPlugIn" version="CD">
     <info>
         <category>Text</category>
         <category>System</category>
@@ -10,7 +10,7 @@
             <QSPasteboardController class="QSPasteboardController"/>
         </extension>
         <extension point="com.blacktree.resources.images">
-            <image-resource name="" id="Clipboard">
+            <image-resource id="QSPasteboardPrefPane">
                 <plist version="1.0">
                     <dict>
                         <key>bundle</key>

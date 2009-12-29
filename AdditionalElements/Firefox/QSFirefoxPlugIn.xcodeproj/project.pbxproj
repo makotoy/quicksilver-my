@@ -220,6 +220,7 @@
 /* Begin XCBuildConfiguration section */
 		0815F38B1090BA780020793E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0815F37B1090BA190020793E /* Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
@@ -236,59 +237,17 @@
 		};
 		7F07AFFC085E433100E2AFC4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0815F37E1090BA190020793E /* QSElement.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = /Applications/Quicksilver.app/Contents/Frameworks;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = QSFirefoxPlugIn_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "Firefox Module";
-				WRAPPER_EXTENSION = qsplugin;
-				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		7F07AFFD085E433100E2AFC4 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_DIR = "$(SYMROOT)/PlugIns/";
-				FRAMEWORK_SEARCH_PATHS = /Applications/Quicksilver.app/Contents/Frameworks;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = QSFirefoxPlugIn_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "Firefox Module";
-				WRAPPER_EXTENSION = qsplugin;
-			};
-			name = Default;
 		};
 		7F07B000085E433100E2AFC4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0815F3811090BA190020793E /* Release.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
-		};
-		7F07B001085E433100E2AFC4 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-			};
-			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
@@ -298,20 +257,18 @@
 			buildConfigurations = (
 				0815F38C1090BA780020793E /* Debug */,
 				7F07AFFC085E433100E2AFC4 /* Release */,
-				7F07AFFD085E433100E2AFC4 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		7F07AFFE085E433100E2AFC4 /* Build configuration list for PBXProject "QSFirefoxPlugIn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0815F38B1090BA780020793E /* Debug */,
 				7F07B000085E433100E2AFC4 /* Release */,
-				7F07B001085E433100E2AFC4 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

@@ -6,7 +6,7 @@
     <requirements></requirements>
     <extensions xmlns:qs="com.blacktree">
         <extension point="com.blacktree.resources.images">
-            <image-resource id="del.icio.us" class="[com.blacktree.Quicksilver.QSDeliciousPlugIn]:del.icio.us.png"></image-resource>
+            <image-resource id="del.icio.us" class="[com.blacktree.Quicksilver.QSDeliciousPlugIn]:del.icio.us.png"/>
         </extension>
         <extension point="QSObjectSources">
             <object-source id="QSDeliciousPlugIn_Source" class="QSDeliciousPlugIn_Source"></object-source>

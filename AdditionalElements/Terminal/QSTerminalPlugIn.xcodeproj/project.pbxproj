@@ -254,71 +254,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 08CE108D108CE0CB0033FFBC /* QSElement.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = "Terminal Module";
 			};
 			name = Debug;
 		};
 		7FFF2577085E488700266176 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08CE108D108CE0CB0033FFBC /* QSElement.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Applications/Quicksilver.app/Contents/Frameworks,
-					/Volumes/Lore/Forge/Build,
-				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = QSTerminalPlugIn_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "Terminal Module";
-				WRAPPER_EXTENSION = qsplugin;
-				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		7FFF2578085E488700266176 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					/Applications/Quicksilver.app/Contents/Frameworks,
-					/Volumes/Lore/Forge/Build,
-				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = QSTerminalPlugIn_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "Terminal Module";
-				WRAPPER_EXTENSION = qsplugin;
-			};
-			name = Default;
 		};
 		7FFF257B085E488700266176 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08CE1090108CE0CB0033FFBC /* Release.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
-		};
-		7FFF257C085E488700266176 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-			};
-			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
@@ -327,21 +278,19 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FFF2577085E488700266176 /* Release */,
-				7FFF2578085E488700266176 /* Default */,
 				0898104B108CF4DF007A1C01 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Release;
 		};
 		7FFF2579085E488700266176 /* Build configuration list for PBXProject "QSTerminalPlugIn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FFF257B085E488700266176 /* Release */,
-				7FFF257C085E488700266176 /* Default */,
 				0898104A108CF4DF007A1C01 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

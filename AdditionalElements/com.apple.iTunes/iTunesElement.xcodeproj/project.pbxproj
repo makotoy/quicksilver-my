@@ -97,7 +97,6 @@
 				084AA0061094D26300E2CB93 /* Resources */,
 				0830C2071095860E005BD39F /* Frameworks */,
 				084A9FFE1094D1D200E2CB93 /* Products */,
-				084A9FFF1094D1D200E2CB93 /* iTunes Module-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +126,7 @@
 		084AA0061094D26300E2CB93 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				084A9FFF1094D1D200E2CB93 /* iTunes Module-Info.plist */,
 				08656BD6109DFD2B0048486A /* iTunesLibraryPlaylistIcon.icns */,
 				081091EA10963F2C00945ECD /* iTunesAlbumBrowserIcon.png */,
 				0830C29D10958A8C005BD39F /* iTunesPlaylistIcon.icns */,
@@ -241,7 +241,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 084A9FF61094D18900E2CB93 /* Release.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 			};
 			name = Release;
 		};
@@ -249,13 +248,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 084A9FF31094D18900E2CB93 /* QSElement.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "iTunes Module-Info.plist";
-				PRODUCT_NAME = "iTunes Module";
 			};
 			name = Debug;
 		};
@@ -263,16 +256,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 084A9FF31094D18900E2CB93 /* QSElement.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "iTunes Module-Info.plist";
-				PREBINDING = NO;
-				PRODUCT_NAME = "iTunes Module";
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};

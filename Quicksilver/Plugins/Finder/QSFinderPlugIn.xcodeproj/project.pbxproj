@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		084BAFF810E9A679003D2539 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 084BAFF610E9A679003D2539 /* Debug.xcconfig */; };
+		084BAFF910E9A679003D2539 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 084BAFF710E9A679003D2539 /* Release.xcconfig */; };
 		332EA8F20B99E76900614E3D /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 332EA7DF0B99E3B700614E3D /* element.xml */; };
 		7F2817B207B6F4EB007D4010 /* QSFinderProxy.h in Resources */ = {isa = PBXBuildFile; fileRef = 7F2817B007B6F4EB007D4010 /* QSFinderProxy.h */; };
 		7F2817B307B6F4EB007D4010 /* QSFinderProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2817B107B6F4EB007D4010 /* QSFinderProxy.m */; };
@@ -39,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		084BAFF610E9A679003D2539 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		084BAFF710E9A679003D2539 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		332EA7DF0B99E3B700614E3D /* element.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
 		4D508A1F0D133E8600A9B360 /* QSElement.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = QSElement.xcconfig; sourceTree = "<group>"; };
 		4D508A210D133E8600A9B360 /* QSElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSElement_Prefix.pch; sourceTree = "<group>"; };
@@ -124,12 +128,13 @@
 		4D508A1B0D133E8600A9B360 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				084BAFF610E9A679003D2539 /* Debug.xcconfig */,
+				084BAFF710E9A679003D2539 /* Release.xcconfig */,
 				4D508A1F0D133E8600A9B360 /* QSElement.xcconfig */,
 				4D508A210D133E8600A9B360 /* QSElement_Prefix.pch */,
 			);
-			name = Configuration;
-			path = ../../../Configuration;
-			sourceTree = SOURCE_ROOT;
+			path = Configuration;
+			sourceTree = QS_SOURCE_ROOT;
 		};
 		4D508B670D134CC200A9B360 /* Products */ = {
 			isa = PBXGroup;
@@ -211,6 +216,8 @@
 				7F2817B207B6F4EB007D4010 /* QSFinderProxy.h in Resources */,
 				7F2817B707B6F4FC007D4010 /* Finder.scpt in Resources */,
 				332EA8F20B99E76900614E3D /* element.xml in Resources */,
+				084BAFF810E9A679003D2539 /* Debug.xcconfig in Resources */,
+				084BAFF910E9A679003D2539 /* Release.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,12 +279,14 @@
 		};
 		7FE89561085D305D0016C421 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084BAFF610E9A679003D2539 /* Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
 		};
 		7FE89562085D305D0016C421 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084BAFF710E9A679003D2539 /* Release.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;

@@ -7,17 +7,6 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		4D508AD20D13468000A9B360 /* Get Plugins */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 4D508ADC0D1346BE00A9B360 /* Build configuration list for PBXAggregateTarget "Get Plugins" */;
-			buildPhases = (
-				4D508AD60D13468A00A9B360 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "Get Plugins";
-			productName = "Get Plugins";
-		};
 		4DC820DD0D12EA180039BD1B /* Build Quicksilver */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 4DC820EC0D12EA4D0039BD1B /* Build configuration list for PBXAggregateTarget "Build Quicksilver" */;
@@ -32,19 +21,6 @@
 			);
 			name = "Build Quicksilver";
 			productName = "Build Quicksilver";
-		};
-		4DF635410D10685700910FC0 /* Build All */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 4DF6354A0D10689000910FC0 /* Build configuration list for PBXAggregateTarget "Build All" */;
-			buildPhases = (
-				4DF635490D10689000910FC0 /* CopyFiles */,
-			);
-			dependencies = (
-				4DC820E50D12EA330039BD1B /* PBXTargetDependency */,
-				4D508AD80D13469E00A9B360 /* PBXTargetDependency */,
-			);
-			name = "Build All";
-			productName = "Build All";
 		};
 /* End PBXAggregateTarget section */
 
@@ -310,13 +286,6 @@
 			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
 			remoteInfo = "Finder Module";
 		};
-		4D508AD70D13469E00A9B360 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D508AD20D13468000A9B360;
-			remoteInfo = "Get Plugins";
-		};
 		4D7093B20D101CCE008498FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4D7093AE0D101CCE008498FD /* Crucible.xcodeproj */;
@@ -351,13 +320,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7F5D22460C49C18400812049;
 			remoteInfo = Core;
-		};
-		4DC820E40D12EA330039BD1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4DC820DD0D12EA180039BD1B;
-			remoteInfo = "Build Quicksilver";
 		};
 		4DF635320D10682700910FC0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -431,15 +393,6 @@
 			name = "Copy Main Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4DF635490D10689000910FC0 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(QS_APP_CONTENTS_FOLDER)/PlugIns";
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7F2BF3C70C5BAF3600E80ABF /* Copy Spotlight Importer */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -480,7 +433,6 @@
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		4D508A020D133E6A00A9B360 /* QSFinderPlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSFinderPlugIn.xcodeproj; path = Plugins/Finder/QSFinderPlugIn.xcodeproj; sourceTree = "<group>"; };
-		4D6CD3FB0D38012400512D9E /* Find Module.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Find Module.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D7093AE0D101CCE008498FD /* Crucible.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Crucible.xcodeproj; path = ../Crucible/Crucible.xcodeproj; sourceTree = SOURCE_ROOT; };
 		4D7094910D101E5E008498FD /* Quicksilver-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Quicksilver-Info.plist"; sourceTree = "<group>"; };
 		4D7094E90D102638008498FD /* QSElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSElement_Prefix.pch; sourceTree = "<group>"; };
@@ -820,7 +772,6 @@
 			children = (
 				7F9A7A640C49595900B5912D /* Quicksilver.app */,
 				7F5D22470C49C18400812049 /* Core.element */,
-				4D6CD3FB0D38012400512D9E /* Find Module.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1387,8 +1338,6 @@
 				4DC820DD0D12EA180039BD1B /* Build Quicksilver */,
 				7F9A7A630C49595900B5912D /* Quicksilver */,
 				7F5D22460C49C18400812049 /* Core */,
-				4DF635410D10685700910FC0 /* Build All */,
-				4D508AD20D13468000A9B360 /* Get Plugins */,
 			);
 		};
 /* End PBXProject section */
@@ -1614,23 +1563,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		4D508AD60D13468A00A9B360 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-				"$(QS_PLUGINS_FOLDER)/com.apple.AddressBook/QSAddressBookElement.xcodeproj",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "Plugins/get-plugins.sh";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		7F5D22440C49C18400812049 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1717,11 +1649,6 @@
 			name = "Finder Module";
 			targetProxy = 4D508A730D13421300A9B360 /* PBXContainerItemProxy */;
 		};
-		4D508AD80D13469E00A9B360 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4D508AD20D13468000A9B360 /* Get Plugins */;
-			targetProxy = 4D508AD70D13469E00A9B360 /* PBXContainerItemProxy */;
-		};
 		4D7094D30D10223E008498FD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = QSBase;
@@ -1741,11 +1668,6 @@
 			isa = PBXTargetDependency;
 			target = 7F5D22460C49C18400812049 /* Core */;
 			targetProxy = 4DC820E20D12EA2A0039BD1B /* PBXContainerItemProxy */;
-		};
-		4DC820E50D12EA330039BD1B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4DC820DD0D12EA180039BD1B /* Build Quicksilver */;
-			targetProxy = 4DC820E40D12EA330039BD1B /* PBXContainerItemProxy */;
 		};
 		7FA7DB240C5CF12B00A27607 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1938,27 +1860,6 @@
 			};
 			name = Release;
 		};
-		4D508AD30D13468000A9B360 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = "Get Plugins";
-			};
-			name = Debug;
-		};
-		4D508AD40D13468000A9B360 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = "Get Plugins";
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		4DC820DE0D12EA180039BD1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1977,20 +1878,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = "Build Quicksilver";
 				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		4DF635420D10685700910FC0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "Build All";
-			};
-			name = Debug;
-		};
-		4DF635430D10685700910FC0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "Build All";
 			};
 			name = Release;
 		};
@@ -2046,29 +1933,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		4D508ADC0D1346BE00A9B360 /* Build configuration list for PBXAggregateTarget "Get Plugins" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4D508AD30D13468000A9B360 /* Debug */,
-				4D508AD40D13468000A9B360 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		4DC820EC0D12EA4D0039BD1B /* Build configuration list for PBXAggregateTarget "Build Quicksilver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4DC820DE0D12EA180039BD1B /* Debug */,
 				4DC820DF0D12EA180039BD1B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		4DF6354A0D10689000910FC0 /* Build configuration list for PBXAggregateTarget "Build All" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4DF635420D10685700910FC0 /* Debug */,
-				4DF635430D10685700910FC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

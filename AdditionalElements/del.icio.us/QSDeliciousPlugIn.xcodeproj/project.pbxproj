@@ -296,77 +296,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 087D59B7108F571A001FF05F /* QSElement.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Info.plist;
 			};
 			name = Debug;
 		};
 		7F07AFAC085E432E00E2AFC4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 087D59B7108F571A001FF05F /* QSElement.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Volumes/Lore/Forge/Development/Quicksilver/build/Quicksilver.app/Contents/Frameworks,
-					/Volumes/Lore/Forge/Build,
-					"$(SRCROOT)",
-					"$(SRCROOT)/../../../Build/Release",
-				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = QSDeliciousPlugIn_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "Social Bookmarks";
-				WRAPPER_EXTENSION = qsplugin;
-				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		7F07AFAD085E432E00E2AFC4 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_DIR = "$(SYMROOT)/PlugIns/";
-				FRAMEWORK_SEARCH_PATHS = (
-					/Volumes/Lore/Forge/Development/Quicksilver/build/Quicksilver.app/Contents/Frameworks,
-					/Volumes/Lore/Forge/Build,
-					"$(SRCROOT)",
-					"$(SRCROOT)/../../../Build/Release",
-				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = QSDeliciousPlugIn_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Developer/Palettes";
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "del.icio.us Bookmarks";
-				WRAPPER_EXTENSION = qsplugin;
-			};
-			name = Default;
 		};
 		7F07AFB0085E432E00E2AFC4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 087D59BA108F571A001FF05F /* Release.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
-		};
-		7F07AFB1085E432E00E2AFC4 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-			};
-			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
@@ -376,20 +321,18 @@
 			buildConfigurations = (
 				087D59CF108F5757001FF05F /* Debug */,
 				7F07AFAC085E432E00E2AFC4 /* Release */,
-				7F07AFAD085E432E00E2AFC4 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		7F07AFAE085E432E00E2AFC4 /* Build configuration list for PBXProject "QSDeliciousPlugIn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				087D59CE108F5757001FF05F /* Debug */,
 				7F07AFB0085E432E00E2AFC4 /* Release */,
-				7F07AFB1085E432E00E2AFC4 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

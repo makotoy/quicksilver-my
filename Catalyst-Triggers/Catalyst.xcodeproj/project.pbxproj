@@ -22,7 +22,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		088F583710D607EE00AA289F /* Catalyst.prefPane in CopyFiles */ = {isa = PBXBuildFile; fileRef = 088F582610D6076C00AA289F /* Catalyst.prefPane */; };
 		4DDE6D8B0E01E10E00EEC65F /* Catalyst.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE6D810E01E10E00EEC65F /* Catalyst.xcdatamodel */; };
 		4DDE6D8E0E01E10E00EEC65F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE6D850E01E10E00EEC65F /* InfoPlist.strings */; };
 		4DDE6D8F0E01E10E00EEC65F /* QSCatalystPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE6D870E01E10E00EEC65F /* QSCatalystPref.xib */; };
@@ -100,16 +99,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7F4FD7030D2FD8AA003266B0 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "${HOME}/Library/PreferencePanes/";
-			dstSubfolderSpec = 0;
-			files = (
-				088F583710D607EE00AA289F /* Catalyst.prefPane in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7F4FD85A0D2FE275003266B0 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,7 +375,6 @@
 				7F4FD85A0D2FE275003266B0 /* Copy Frameworks */,
 				8D202CF50486D31800D8A456 /* Rez */,
 				08B103161093A29B006B816B /* ShellScript */,
-				7F4FD7030D2FD8AA003266B0 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -624,7 +612,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Catalyst_Prefix.pch;
 				INFOPLIST_FILE = PrefPane/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
 				PRODUCT_NAME = Catalyst;
 				WRAPPER_EXTENSION = prefPane;
 			};

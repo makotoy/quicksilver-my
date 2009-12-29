@@ -247,63 +247,19 @@
 		};
 		7FE899BF085D4ADF0016C421 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08C2244F10BD482C00AD42EB /* QSElement.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../Developer/Build/Release\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = QSBezelInterfacePlugIn_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "Bezel Interface";
-				WRAPPER_EXTENSION = qsplugin;
 			};
 			name = Release;
-		};
-		7FE899C0085D4ADF0016C421 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../Developer/Build/Release\"";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = QSBezelInterfacePlugIn_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-bundle";
-				PRODUCT_NAME = "Bezel Interface";
-				WRAPPER_EXTENSION = qsplugin;
-			};
-			name = Default;
 		};
 		7FE899C3085D4ADF0016C421 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08C2245310BD482C00AD42EB /* Release.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				FRAMEWORK_SEARCH_PATHS = "$(QSFrameworks)";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
-		};
-		7FE899C4085D4ADF0016C421 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-			};
-			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
@@ -313,7 +269,6 @@
 			buildConfigurations = (
 				08C2244A10BD47EE00AD42EB /* Debug */,
 				7FE899BF085D4ADF0016C421 /* Release */,
-				7FE899C0085D4ADF0016C421 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -323,7 +278,6 @@
 			buildConfigurations = (
 				08C2244910BD47EE00AD42EB /* Debug */,
 				7FE899C3085D4ADF0016C421 /* Release */,
-				7FE899C4085D4ADF0016C421 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
