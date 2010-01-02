@@ -27,7 +27,7 @@
 	
 	
 	if ([[controlView window]firstResponder]==controlView && opacity==1.0){
-		const float components[] = { 0.0,1.0,0.0,1.0 };
+		const CGFloat components[] = { 0.0,1.0,0.0,1.0 };
 		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 		CGColorRef color = CGColorCreate(colorSpace, components);
 		CGColorSpaceRelease(colorSpace);

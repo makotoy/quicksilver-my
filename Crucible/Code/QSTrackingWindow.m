@@ -57,7 +57,8 @@
 	[[self delegate]mouseExited:theEvent];	
 }
 
-- (unsigned int)draggingEntered:(id <NSDraggingInfo>)theEvent{
+- (NSUInteger)draggingEntered:(id <NSDraggingInfo>)theEvent
+{
     
 	QSLog(@"dragging tracking");
 	[[self delegate]mouseEntered:nil];	

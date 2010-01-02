@@ -331,7 +331,7 @@ NSDictionary *enabledPresetDictionary;
 	
 	NSArray *anc = [self ancestors];
 	int i;
-	int index;
+	NSInteger index;
 	NSIndexPath *p = nil;
 	for (i = 0; i<([anc count] -1); i++) {
 		index = [[[anc objectAtIndex:i] children] indexOfObject:[anc objectAtIndex:i+1]];
@@ -348,7 +348,7 @@ NSDictionary *enabledPresetDictionary;
 {	
 	NSArray *anc = [self ancestors];
 	int i;
-	int index;
+	NSInteger index;
 	NSIndexPath *p = nil;
 	for (i = 1; i<([anc count] -1); i++) {
 		index = [[[anc objectAtIndex:i] children] indexOfObject:[anc objectAtIndex:i+1]];
@@ -440,7 +440,7 @@ NSDictionary *enabledPresetDictionary;
 	return image;
 }
 
-- (int) count {
+- (NSInteger) count {
 	return [self deepObjectCount]; 	
 }
 

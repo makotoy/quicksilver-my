@@ -25,6 +25,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0851517210EEFBE300830EC7 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0851516F10EEFBD800830EC7 /* QTKit.framework */; };
 		4D4361160D2D74090043B92D /* Cube Interface.element in Copy Main Plugins */ = {isa = PBXBuildFile; fileRef = 4DF635330D10682700910FC0 /* Cube Interface.element */; };
 		4D5088E00D132B6200A9B360 /* Core.element in Copy Main Plugins */ = {isa = PBXBuildFile; fileRef = 7F5D22470C49C18400812049 /* Core.element */; };
 		4D508A850D13424500A9B360 /* Finder Module.element in Copy Main Plugins */ = {isa = PBXBuildFile; fileRef = 4D508A0A0D133E6A00A9B360 /* Finder Module.element */; };
@@ -430,6 +431,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0851516F10EEFBD800830EC7 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		4D508A020D133E6A00A9B360 /* QSFinderPlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSFinderPlugIn.xcodeproj; path = Plugins/Finder/QSFinderPlugIn.xcodeproj; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 				7F5D24E70C49C48600812049 /* Carbon.framework in Frameworks */,
 				4D9A1DAE0D0EA6600072DE55 /* Cocoa.framework in Frameworks */,
 				4D7093B70D101CED008498FD /* QSCrucible.framework in Frameworks */,
+				0851517210EEFBE300830EC7 /* QTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -823,6 +826,7 @@
 				7F9A89940C497DD400B5912D /* IOKit.framework */,
 				7F9A89950C497DD400B5912D /* Cocoa.framework */,
 				7F9A89960C497DD400B5912D /* SecurityFoundation.framework */,
+				0851516F10EEFBD800830EC7 /* QTKit.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";

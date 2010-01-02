@@ -83,7 +83,7 @@ static int presetSort(id item1, id item2, QSLibrarian *librarian) {
 			[NSMutableArray array] , kItemChildren,
 			[NSNumber numberWithBool:YES] , kItemEnabled, nil];
 
-		if ((int) getenv("QSDisableCatalog") || GetCurrentKeyModifiers() & shiftKey) {
+		if ((getenv("QSDisableCatalog") != NULL) || GetCurrentKeyModifiers() & shiftKey) {
 			QSLog(@"Disabling Catalog");
 		} else {
 			[self setCatalog:[QSCatalogEntry entryWithDictionary:

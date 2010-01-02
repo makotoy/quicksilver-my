@@ -134,7 +134,7 @@
     int argumentCount = [(QSAction *)[aSelector objectValue] argumentCount];
 	
     if (sender == iSelector) {
-        int index = [array indexOfObject:[aSelector objectValue]];
+        NSInteger index = [array indexOfObject:[aSelector objectValue]];
         int count = [array count];
         
         if (index != count - 1) {
@@ -500,8 +500,7 @@
 - (void)timerHide:(NSTimer *)timer
 {
     if (preview) return;
-    bool stayOpen = StillDown();
-    if (!stayOpen) {
+    if ([NSEvent pressedMouseButtons] == 0) {
         if ([[NSApp keyWindow] level] <= [[self window] level]) {
 	    // ***warning   * this needs to be better
             [self hideMainWindowFromFade:self];

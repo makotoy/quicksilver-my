@@ -31,7 +31,7 @@
     [[NSBezierPath bezierPathWithOvalInRect:NSInsetRect(drawRect,-1,-1)] fill]; 
     
     
-    if (order!=NSNotFound){ // defined mnemonic
+    if (order != NSNotFound){ // defined mnemonic
 		[path setLineWidth:3];
 		if (order==0){
 			[[[NSColor blackColor]colorWithAlphaComponent:0.667]set];
@@ -56,19 +56,7 @@
 	//   QSLog(@"val %@",[self objectValue]);
 }
 
+@synthesize score;
+@synthesize order;
 
-
-
-- (float)score { return score; }
-- (void)setScore:(float)newScore
-{
-    score = newScore;
-}
-
-
-- (int)order { return order; }
-- (void)setOrder:(int)newOrder
-{
-    order = newOrder;
-}
 @end

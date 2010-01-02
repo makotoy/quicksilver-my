@@ -118,7 +118,7 @@
 
 - (float)score { return 0.0; }
 
-- (int)order { return NSNotFound; }
+- (NSInteger)order { return NSNotFound; }
 
 - (float)rankModification { return 0; }
 

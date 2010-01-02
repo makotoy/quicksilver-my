@@ -7,12 +7,12 @@
  *
  */
 
-#define VERBOSE (int)getenv("verbose")
+#define VERBOSE (getenv("verbose") != NULL)
 #define DEBUG (bool)getenv("NSDebugEnabled")
 
-#define DEBUG_RANKING (int)getenv("QSDebugRanking")
-#define DEBUG_MNEMONICS (int)getenv("QSDebugMnemonics")
-#define DEBUG_PLUGINS (int)getenv("QSDebugPlugIns")
-#define DEBUG_MEMORY (int)getenv("QSDebugMemory")
-#define DEBUG_STARTUP (int)getenv("QSDebugStartup")
-#define DEBUG_CATALOG (int)getenv("QSDebugCatalog")
+#define DEBUG_RANKING (getenv("QSDebugRanking") != NULL)
+#define DEBUG_MNEMONICS (getenv("QSDebugMnemonics") != NULL)
+#define DEBUG_PLUGINS (getenv("QSDebugPlugIns") != NULL)
+#define DEBUG_MEMORY (getenv("QSDebugMemory") != NULL)
+#define DEBUG_STARTUP (getenv("QSDebugStartup") != NULL)
+#define DEBUG_CATALOG (getenv("QSDebugCatalog") != NULL)

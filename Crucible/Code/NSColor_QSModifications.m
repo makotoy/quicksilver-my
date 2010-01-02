@@ -40,21 +40,24 @@
 
 
 @implementation NSColor (Contrast)
-+ (id)toolTipColor{
++ (id)toolTipColor
+{
 	return [NSColor grayColor];	
 }
 
 
 
--(NSColor *)colorWithLighting:(float)light{
+-(NSColor *)colorWithLighting:(float)light
+{
 	return [self colorWithLighting:light plasticity:0];
 }
 	
--(NSColor *)colorWithLighting:(float)light plasticity:(float)plastic{
+-(NSColor *)colorWithLighting:(float)light plasticity:(float)plastic
+{
 	if (plastic>1)plastic=1.0;
 	if (plastic<0)plastic=0.0;
 	NSColor *color=[self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	float h,s,b,a;
+	CGFloat h,s,b,a;
 	
 	[color getHue:&h
 	   saturation:&s brightness:&b alpha:&a];

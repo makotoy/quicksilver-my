@@ -923,7 +923,8 @@
 	[self setInstallProgress:progress];	
 }
 
-- (void) download:(NSURLDownload *)download didReceiveDataOfLength:(unsigned)length {
+- (void) download:(NSURLDownload *)download didReceiveDataOfLength:(NSUInteger)length
+{
 	[self updateDownloadProgressInfo];
 }
 

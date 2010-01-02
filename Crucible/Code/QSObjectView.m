@@ -95,13 +95,8 @@
 	[springTimer invalidate];
 }
 - (void)spring:(NSTimer *)timer {
-	QSLog(@"spring!");
-	Point currentMouseLocation;
 	CGPoint currentMouseLocation2;
-	
-	GetGlobalMouse(&currentMouseLocation);
-	currentMouseLocation2.x = currentMouseLocation.h;
-	currentMouseLocation2.y = currentMouseLocation.v;
+	currentMouseLocation2 = [NSEvent mouseLocation];
 	shouldSpring = YES;
 	CGPostMouseEvent (currentMouseLocation2, NO, 1, NO);
 	
@@ -341,7 +336,7 @@
 
 
 
-- (unsigned int) draggingSourceOperationMaskForLocal:(BOOL)isLocal {
+- (NSUInteger) draggingSourceOperationMaskForLocal:(BOOL)isLocal {
 	//QSLog(@"source");
 	if ([[NSApp currentEvent] modifierFlags] & NSCommandKeyMask) {
 		if (isLocal) return NSDragOperationMove;

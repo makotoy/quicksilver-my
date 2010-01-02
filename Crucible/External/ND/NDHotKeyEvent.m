@@ -34,16 +34,16 @@ static OSStatus	switchHotKey( NDHotKeyEvent * self, BOOL aFlag );
 @implementation NDHotKeyEvent
 
 #ifdef NDHotKeyEventThreadSafe
-	static NSLock				* hotKeysLock = NULL;
 	#warning Thread safety has been enabled for NDHotKeyEvent class methods
-	#define	NDHotKeyEventLock [hotKeysLock lock]
-	#define	NDHotKeyEventUnlock [hotKeysLock unlock]
+	#define	NDHotKeyEventLock  NSLock* theLock = [[NSLock alloc] init];[theLock lock]
+	#define	NDHotKeyEventUnlock [theLock unlock]
 #else
 	#warning The NDHotKeyEvent class methods are NOT thread safe
 	#define	NDHotKeyEventLock // lock
 	#define	NDHotKeyEventUnlock // unlock
 #endif
 
+static NSMutableDictionary* hotKeyIDDict = nil;
 static NSHashTable		* allHotKeyEvents = NULL;
 static BOOL					isInstalled = NO;
 static OSType				signature = 0;
@@ -52,7 +52,7 @@ unsigned int cocoaModifierFlagsToCarbonModifierFlags( unsigned int aModifierFlag
 
 pascal OSErr eventHandlerCallback( EventHandlerCallRef anInHandlerCallRef, EventRef anInEvent, void * self );
 
-unsigned hashValueHashFunction( NSHashTable * aTable, const void * aHotKeyEvent );
+NSUInteger hashValueHashFunction( NSHashTable * aTable, const void * aHotKeyEvent );
 BOOL isEqualHashFunction( NSHashTable * aTable, const void * aFirstHotKeyEvent, const void * aSecondHotKeyEvent);
 NSString * describeHashFunction( NSHashTable * aTable, const void * aHotKeyEvent );
 
@@ -95,21 +95,13 @@ struct HotKeyMappingEntry
 	return isInstalled;
 }
 
-#ifdef NDHotKeyEventThreadSafe
 /*
  * +initialize:
  */
 + (void)initialize
 {
-	while( hotKeysLock == nil )
-	{
-		NSLock		* theInstance = [[NSLock alloc] init];
-
-		if( !CompareAndSwap( 0, (unsigned long int)theInstance, (unsigned long int*)&hotKeysLock) )
-			[theInstance release];			// did not use instance
-	}
+	hotKeyIDDict = [[NSMutableDictionary alloc] initWithCapacity:0];
 }
-#endif
 
 /*
  * +setSignature:
@@ -588,7 +580,7 @@ struct HotKeyMappingEntry
 /*
  * -modifierFlags
  */
-- (unsigned int)modifierFlags
+- (NSUInteger)modifierFlags
 {
 	return modifierFlags;
 }
@@ -618,7 +610,7 @@ struct HotKeyMappingEntry
 /*
  * -hash
  */
-- (unsigned int)hash
+- (NSUInteger)hash
 {
 	return ((unsigned int)keyCode & ~modifierFlags) | (modifierFlags & ~((unsigned int)keyCode));		// xor
 }
@@ -676,7 +668,8 @@ pascal OSErr eventHandlerCallback( EventHandlerCallRef anInHandlerCallRef, Event
 		
 		NSCAssert( [NDHotKeyEvent signature] == theHotKeyID.signature, @"Got hot key event with wrong signature" );
 
-		theHotKeyEvent = (NDHotKeyEvent*)theHotKeyID.id;
+		NSNumber* keyID = [NSNumber numberWithInt:theHotKeyID.id];
+ 		theHotKeyEvent = (NDHotKeyEvent*)[hotKeyIDDict objectForKey:keyID];;
 
 		theEventKind = GetEventKind( anInEvent );
 		if( kEventHotKeyPressed == theEventKind )
@@ -695,7 +688,7 @@ pascal OSErr eventHandlerCallback( EventHandlerCallRef anInHandlerCallRef, Event
 /*
  * hashValueHashFunction()
  */
-unsigned hashValueHashFunction( NSHashTable * aTable, const void * aHotKeyEntry )
+NSUInteger hashValueHashFunction( NSHashTable * aTable, const void * aHotKeyEntry )
 {
 	struct HotKeyMappingEntry		* theHotKeyEntry;
 	unsigned int		theKeyCode,
@@ -862,10 +855,13 @@ static OSStatus switchHotKey( NDHotKeyEvent * self, BOOL aFlag )
 		EventHotKeyID 		theHotKeyID;
 
 		theHotKeyID.signature = [NDHotKeyEvent signature];
-		theHotKeyID.id = (unsigned int)self;
+ 		theHotKeyID.id = (UInt32)self;
+		NSNumber* idKey = [NSNumber numberWithInt:theHotKeyID.id];
+		if (![hotKeyIDDict objectForKey:idKey]) {
+			[hotKeyIDDict setObject:self forKey:idKey];
+		}
 
 		NSCAssert( theHotKeyID.signature, @"HotKeyEvent signature has not been set yet" );
-		NSCParameterAssert(sizeof(unsigned long) >= sizeof(id) );
 
 		theError = RegisterEventHotKey( self->keyCode, cocoaModifierFlagsToCarbonModifierFlags(self->modifierFlags), theHotKeyID, GetEventDispatcherTarget(), 0, &self->reference );
 	}

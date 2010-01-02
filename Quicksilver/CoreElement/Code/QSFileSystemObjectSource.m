@@ -1,5 +1,10 @@
-#import <QSCrucible/QSLocalization.h>
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-02 Makoto Yamashita
+ */
 
+#import <QSCrucible/QSLocalization.h>
+#import <QTKit/QTKit.h>
 #import "QSFileSystemObjectSource.h"
 
 @implementation QSEncapsulatedTextCell
@@ -49,7 +54,7 @@ static NSMutableDictionary *typeSets;
     
 	typeSets=[[NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"FileTypeGroups" ofType:@"plist"]]retain];
 	[typeSets setObject:[NSImage imageUnfilteredFileTypes] forKey:@"QSImageFileTypes"];
-	[typeSets setObject:[NSMovie movieUnfilteredFileTypes] forKey:@"QSMovieFileTypes"];
+	[typeSets setObject:[QTMovie movieUnfilteredFileTypes] forKey:@"QSMovieFileTypes"];
 	[typeSets setObject:[NSSound soundUnfilteredFileTypes] forKey:@"QSSoundFileTypes"];
 }
 

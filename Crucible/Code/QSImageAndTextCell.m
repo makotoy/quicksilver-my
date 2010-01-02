@@ -101,9 +101,10 @@
 //	return textObj;
 //	
 //}
-- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(int)selStart length:(int)selLength {
+- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
+{
 	NSRect textFrame = [self textRectForFrame:aRect];
-  [super selectWithFrame: textFrame inView: controlView editor:textObj delegate:anObject start:selStart length:selLength];
+	[super selectWithFrame: textFrame inView: controlView editor:textObj delegate:anObject start:selStart length:selLength];
 }
 
 - (void)drawImage:(NSImage*)image withFrame:(NSRect)frame inView:(NSView*)controlView {  

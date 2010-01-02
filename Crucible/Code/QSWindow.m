@@ -11,7 +11,8 @@
 
 @implementation NSWindow (Effects)
 
-- (void)pulse:(id)sender{
+- (void)pulse:(id)sender
+{
 	CGSConnection conn = _CGSDefaultConnection();
 	CGAffineTransform transform;
 	CGSGetWindowTransform(conn,[self windowNumber], &transform); 
@@ -135,7 +136,7 @@
 @end
 
 @implementation QSWindow
-- (id)initWithContentRect:(NSRect)contentRect styleMask:(unsigned int)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag{
+- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag{
 	
 	
 	
@@ -578,7 +579,7 @@
 @end
 
 @implementation QSBorderlessWindow
-- (id)initWithContentRect:(NSRect)contentRect styleMask:(unsigned int)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag{
+- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag{
     if ((self = [super initWithContentRect:contentRect styleMask:NSNonactivatingPanelMask|NSBorderlessWindowMask | NSClosableWindowMask backing:bufferingType defer:YES])){
    
 		[self setBackgroundColor: [NSColor clearColor]];

@@ -1,5 +1,10 @@
-@class QLAnimationWindowEffect;
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-02 Makoto Yamashita
+ */
 
+@class QLAnimationWindowEffect;
+/*
 @interface QLPreviewPanelReserved : NSObject
 {
   BOOL ignoreOpenAndClose;
@@ -105,3 +110,5 @@
 - (void)setShowsFullscreen:(BOOL)fp8;
 
 @end
+
+*/

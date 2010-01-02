@@ -71,7 +71,7 @@
         [abbrevMnemonics setObject:objectEntry forKey:mnem];
     }
 	//QSLog(@"recent %@ %@",[recentMnemonics objectForKey:mnem],key);
-	int index=[objectEntry indexOfObject:above];
+	NSInteger index = [objectEntry indexOfObject:above];
 	
 	
 //	if (VERBOSE)  QSLog(@"%@",[objectEntry description]);

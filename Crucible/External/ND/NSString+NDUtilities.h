@@ -127,7 +127,7 @@
 	@param range The range to limit the search to.
 	@result Returns the index of the character or <tt>NSNotFound</tt> if not found.
  */
-- (unsigned int)indexOfCharacter:(unichar)character range:(NSRange)range;
+- (NSUInteger)indexOfCharacter:(unichar)character range:(NSRange)range;
 
 
 /*!
@@ -137,7 +137,7 @@
 	@param character The character to look for.
 	@result Returns the index of the character or <tt>NSNotFound</tt> if not found.
  */
-- (unsigned int)indexOfCharacter:(unichar)character;
+- (NSUInteger)indexOfCharacter:(unichar)character;
 
 /*!
 	@method containsCharacter:

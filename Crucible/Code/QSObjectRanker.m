@@ -134,7 +134,7 @@ QSScoreForAbbrevIMP scoreForAbbrevIMP;
 	}
 	float newScore = 1.0;
 	//float modifier=0.0;
-	int newOrder = NSNotFound;
+	NSInteger newOrder = NSNotFound;
 	
 	if (!nameRanker) {
 		//QSLog(@"No Name!");	

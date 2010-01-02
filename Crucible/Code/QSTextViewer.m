@@ -37,7 +37,7 @@ QSTextViewer * QSShowTextViewerWithFile(NSString *path)
 	[window setBackgroundColor: [NSColor colorWithDeviceWhite:1.0 alpha:0.9]];
 	[window setOpaque:NO];
 	[window setAlphaValue:1.0];
-	[window setLevel:kCGFloatingWindowLevel];
+	[(NSWindow*)window setLevel:kCGFloatingWindowLevel];
 	[window setHidesOnDeactivate:NO];
 	[window setCanHide:NO];
 	[window setDelegate:self];

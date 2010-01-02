@@ -140,7 +140,7 @@ NSNib *taskEntryNib = nil;
 	int i;
 	for (i = 0; i<[[self tasks] count]; i++) {
 		QSTask *task = [[self tasks] objectAtIndex:i];
-		int index = [oldTasks indexOfObject:task];
+		NSInteger index = [oldTasks indexOfObject:task];
 		NSView *view = nil;
 		BOOL exists = index != NSNotFound;
 		if (exists) {

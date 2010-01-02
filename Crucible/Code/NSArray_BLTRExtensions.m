@@ -29,7 +29,7 @@
 @implementation NSArray (IndexSet)
 - (NSArray *)objectsAtIndexes:(NSIndexSet *)indexes{
 	NSMutableArray *array=[NSMutableArray array];
-	unsigned int index;
+	NSUInteger index;
 	for (index=[indexes firstIndex];index!=NSNotFound;index=[indexes indexGreaterThanIndex:index]){
 		[array addObject:[self objectAtIndex:index]];	
 	}

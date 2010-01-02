@@ -7,16 +7,17 @@
 //
 
 #import "NSScreen_BLTRExtensions.h"
+#import <objc/objc-runtime.h>
+#import <IOKit/IOKitLib.h>
+#import <IOKit/graphics/IOFramebufferShared.h>
+#import <IOKit/graphics/IOGraphicsInterface.h>
 
-#include <IOKit/IOKitLib.h>
-#include <IOKit/graphics/IOFramebufferShared.h>
-#include <IOKit/graphics/IOGraphicsInterface.h>
+#import <IOKit/graphics/IOGraphicsLib.h>
+#import <IOKit/graphics/IOGraphicsTypes.h>
+#import <Carbon/Carbon.h>
 
-#include <IOKit/graphics/IOGraphicsLib.h>
-#include <IOKit/graphics/IOGraphicsTypes.h>
-#include <Carbon/Carbon.h>
+#import <ApplicationServices/ApplicationServices.h>
 
-#include <ApplicationServices/ApplicationServices.h>
 static void KeyArrayCallback(const void *key, const void *value, void *context) { CFArrayAppendValue(context, key);  }
 
 CFStringRef QSGetLocalDisplayName(CGDirectDisplayID display)
@@ -65,21 +66,27 @@ CFStringRef QSGetLocalDisplayName(CGDirectDisplayID display)
 
 
 @implementation NSScreen (BLTRExtensions)
--(int)screenNumber{
-	return _screenNumber;//[[[self deviceDescription]objectForKey:@"NSScreenNumber"]intValue]; 
+-(int)screenNumber
+{
+	id sNumObj = [[self deviceDescription]objectForKey:@"NSScreenNumber"];
+	if (sNumObj) return [sNumObj intValue];
+     
+	int screenNumber;
+	object_getInstanceVariable(self, "_screenNumber", (void*)&screenNumber);
+ 	return screenNumber;
 } 
 -(BOOL)usesOpenGLAcceleration{
 	return (BOOL)CGDisplayUsesOpenGLAcceleration((CGDirectDisplayID)[self screenNumber]);
 }
 -(NSString *)deviceName{
-	NSString *name=(NSString *)QSGetLocalDisplayName((CGDirectDisplayID)_screenNumber);
+	NSString *name = (NSString *)QSGetLocalDisplayName((CGDirectDisplayID)[self screenNumber]);
 	//QSLog(@"Display: %@",name);
 	if (!name){
-		uint32_t model=CGDisplayModelNumber((CGDirectDisplayID)_screenNumber);
-		uint32_t vendor=CGDisplayVendorNumber((CGDirectDisplayID)_screenNumber);
+		uint32_t model = CGDisplayModelNumber((CGDirectDisplayID)[self screenNumber]);
+		uint32_t vendor = CGDisplayVendorNumber((CGDirectDisplayID)[self screenNumber]);
 		
-		NSString *infoPath=[NSString stringWithFormat:@"/System/Library/Displays/Overrides/DisplayVendorID-%x/DisplayProductID-%x",vendor, model];
-		NSDictionary *info=[NSDictionary dictionaryWithContentsOfFile:infoPath];
+		NSString *infoPath = [NSString stringWithFormat:@"/System/Library/Displays/Overrides/DisplayVendorID-%x/DisplayProductID-%x",vendor, model];
+		NSDictionary *info = [NSDictionary dictionaryWithContentsOfFile:infoPath];
 		name=[info objectForKey:@"DisplayProductName"];
 		
 		if (!name)name=[NSString stringWithFormat:@"Unknown Display (%x:%x)",vendor, model];
@@ -89,7 +96,7 @@ CFStringRef QSGetLocalDisplayName(CGDirectDisplayID display)
 }
 
 -(BOOL)supportsQE{
-	NSNumber* screenNum = [[self deviceDescription] objectForKey: @"NSScreenNumber"];
+	NSNumber* screenNum = [NSNumber numberWithInt:[self screenNumber]];
 	BOOL supportsQuartzExtreme = CGDisplayUsesOpenGLAcceleration( (CGDirectDisplayID) [screenNum pointerValue] );
 	return supportsQuartzExtreme;
 }

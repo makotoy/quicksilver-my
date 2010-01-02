@@ -563,7 +563,11 @@ NSDictionary*       UKDictionaryFromFSCatInfo( FSCatalogInfo* currInfo, FSCatalo
 	}
 	if( UK_BTST(whichInfo, kFSCatInfoPermissions) )
 	{
+#ifdef __LP64__
+		FSPermissionInfo*		pInfo = (FSPermissionInfo*)&(currInfo->permissions);
+#else
 		FSPermissionInfo*		pInfo = (FSPermissionInfo*) currInfo->permissions;
+#endif
 		
 		[dict setObject: [NSNumber numberWithUnsignedLong: pInfo->userID] forKey: NSFileOwnerAccountID];
 		[dict setObject: [NSNumber numberWithUnsignedLong: pInfo->groupID] forKey: NSFileGroupOwnerAccountID];
@@ -718,8 +722,11 @@ void    UKFSCatInfoFromDictionary( NSDictionary* attrs, FSCatalogInfo* currInfo,
     }
 
     // Permissions:
-    FSPermissionInfo*		pInfo = (FSPermissionInfo*) currInfo->permissions;
-    
+#ifdef __LP64__
+    FSPermissionInfo* pInfo = (FSPermissionInfo*)&(currInfo->permissions);
+#else
+	FSPermissionInfo* pInfo = (FSPermissionInfo*) currInfo->permissions;
+#endif    
     val = [attrs objectForKey: NSFileOwnerAccountID];
     if( val )
     {

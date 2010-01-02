@@ -27,21 +27,24 @@ OSStatus GetPSNForAppInfo(ProcessSerialNumber *psn,NSDictionary *theApp){
     NSMutableArray *resultsArray=[NSMutableArray array];
     OSErr resultCode=noErr;
     ProcessSerialNumber serialNumber;
-    ProcessInfoRec             procInfo;
-    FSSpec              appFSSpec;
     
     Str255                             procName;
     serialNumber.highLongOfPSN = kNoProcess;
     serialNumber.lowLongOfPSN  = kNoProcess;
+
+    ProcessInfoRec             procInfo;
+#ifdef __LP64__
+	FSRef appFSRef;
+	procInfo.processAppRef = &appFSRef;
+#else
+    FSSpec appFSSpec;
+    procInfo.processAppSpec = &appFSSpec;
+#endif
     
     procInfo.processInfoLength              = sizeof(ProcessInfoRec);
     procInfo.processName                    = procName;
-    procInfo.processAppSpec             = &appFSSpec;
-    procInfo.processAppSpec             = &appFSSpec;
     
-    
-    while (procNotFound != (resultCode = GetNextProcess(&serialNumber)))
-    {
+    while (procNotFound != (resultCode = GetNextProcess(&serialNumber))) {
         if (noErr == (resultCode = 
                       GetProcessInformation(&serialNumber, &procInfo)))
         {

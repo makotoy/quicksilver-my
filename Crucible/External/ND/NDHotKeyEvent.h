@@ -376,7 +376,7 @@ extern const OSType			NDHotKeyDefaultSignature;
 	@discussion The <tt>modifierFlags</tt> can be a bitwise and combination of <tt>NSControlKeyMask</tt>, <tt>NSAlternateKeyMask</tt>, <tt>NSShiftKeyMask</tt>, and <tt>NSCommandKeyMask</tt>.
 	@result The modifer key flags.
  */
-- (unsigned int)modifierFlags;
+- (NSUInteger)modifierFlags;
 
 /*!
 	@method stringValue

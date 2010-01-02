@@ -2,13 +2,16 @@
 	FILE:		UKKQueue.m
 	PROJECT:	Filie
     
-    COPYRIGHT:  (c) 2003 M. Uli Kusterer, all rights reserved.
+    COPYRIGHT:  (c) 2003 M. Uli Kusterer, 2009 M. Makoto Yamashita,
+	            all rights reserved.
     
 	AUTHORS:	M. Uli Kusterer - UK
-    
+                M. Makoto Yamashita - MY
+
     LICENSES:   MIT License
 
 	REVISIONS:
+	    2010-01-02  MY  64-bit
 		2006-03-13	UK	Clarified license, streamlined UKFileWatcher stuff,
 						Changed notifications to be useful and turned off by
 						default some deprecated stuff.
@@ -269,7 +272,7 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 
 -(void) removePathFromQueue: (NSString*)path
 {
-    int		index = 0;
+    NSUInteger index = 0;
     int		fd = -1;
     
     AT_SYNCHRONIZED( self )

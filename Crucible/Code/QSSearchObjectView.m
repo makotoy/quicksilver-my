@@ -1422,7 +1422,7 @@ indexOfObject:[[self objectValue] identifier]] != NSNotFound;
 }
 
 - (void)selectObject:(QSBasicObject *)obj {	
-	int index = 0;
+	NSInteger index = 0;
 	//[self updateHistory];
 	if (obj) {
 		index = [resultArray indexOfObject:obj];

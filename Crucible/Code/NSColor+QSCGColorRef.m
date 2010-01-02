@@ -10,9 +10,10 @@
 
 
 @implementation NSColor (createCGColorRef)
-- (CGColorRef) createCGColorRef {
+- (CGColorRef) createCGColorRef
+{
   NSColor *rgbColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	float components[4];
+	CGFloat components[4];
   
 	[rgbColor getRed: &components[0]
              green: &components[1]

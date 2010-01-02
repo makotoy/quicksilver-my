@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		083A463B1090ADA500234013 /* QSEmailActions.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F839CD107CCD6CF003F2874 /* QSEmailActions.h */; };
 		083A463C1090ADA700234013 /* QSDirectMailMediator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F839CCF07CCD6CF003F2874 /* QSDirectMailMediator.h */; };
+		0851520010EEFFB800830EC7 /* EDCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085151FF10EEFFB800830EC7 /* EDCommon.framework */; };
+		0851520210EEFFB800830EC7 /* EDMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0851520110EEFFB800830EC7 /* EDMessage.framework */; };
 		7F6E34020C10F58F00303BFE /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7F6E34010C10F58F00303BFE /* element.xml */; };
 		7F839CD407CCD6CF003F2874 /* QSEmailActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F839CCE07CCD6CF003F2874 /* QSEmailActions.m */; };
 		7F839CD607CCD6CF003F2874 /* QSDirectMailMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F839CD007CCD6CF003F2874 /* QSDirectMailMediator.m */; };
 		7F839CD807CCD6CF003F2874 /* QSMailMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F839CD207CCD6CF003F2874 /* QSMailMediator.m */; };
 		7F839CD907CCD6E5003F2874 /* QSMailMediator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F839CCD07CCD6CF003F2874 /* QSMailMediator.h */; };
-		7F839D0807CCD7CB003F2874 /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F839D0707CCD7CB003F2874 /* Message.framework */; };
 		7FB39972083FDEA60053AB86 /* QSMailSupportPrefPane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7FB39971083FDEA60053AB86 /* QSMailSupportPrefPane.nib */; };
 		7FE7D3430D1EFF990043A815 /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7D33B0D1EFF990043A815 /* Common.xcconfig */; };
 		7FE7D3440D1EFF990043A815 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7D33C0D1EFF990043A815 /* Debug.xcconfig */; };
@@ -28,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		085151FF10EEFFB800830EC7 /* EDCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EDCommon.framework; sourceTree = "<group>"; };
+		0851520110EEFFB800830EC7 /* EDMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EDMessage.framework; sourceTree = "<group>"; };
 		7F6E34010C10F58F00303BFE /* element.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
 		7F839CCD07CCD6CF003F2874 /* QSMailMediator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QSMailMediator.h; sourceTree = "<group>"; };
 		7F839CCE07CCD6CF003F2874 /* QSEmailActions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QSEmailActions.m; sourceTree = "<group>"; };
@@ -35,7 +38,6 @@
 		7F839CD007CCD6CF003F2874 /* QSDirectMailMediator.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QSDirectMailMediator.m; sourceTree = "<group>"; };
 		7F839CD107CCD6CF003F2874 /* QSEmailActions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QSEmailActions.h; sourceTree = "<group>"; };
 		7F839CD207CCD6CF003F2874 /* QSMailMediator.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QSMailMediator.m; sourceTree = "<group>"; };
-		7F839D0707CCD7CB003F2874 /* Message.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Message.framework; path = /System/Library/Frameworks/Message.framework; sourceTree = "<absolute>"; };
 		7FB39971083FDEA60053AB86 /* QSMailSupportPrefPane.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = QSMailSupportPrefPane.nib; sourceTree = "<group>"; };
 		7FE7D33B0D1EFF990043A815 /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = Configuration/Common.xcconfig; sourceTree = QS_SOURCE_ROOT; };
 		7FE7D33C0D1EFF990043A815 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Configuration/Debug.xcconfig; sourceTree = QS_SOURCE_ROOT; };
@@ -56,7 +58,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */,
-				7F839D0807CCD7CB003F2874 /* Message.framework in Frameworks */,
+				0851520010EEFFB800830EC7 /* EDCommon.framework in Frameworks */,
+				0851520210EEFFB800830EC7 /* EDMessage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,8 +99,9 @@
 		2E58F364FFB232C311CA0CBA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7F839D0707CCD7CB003F2874 /* Message.framework */,
 				DD92D38A0106425D02CA0E72 /* Cocoa.framework */,
+				085151FF10EEFFB800830EC7 /* EDCommon.framework */,
+				0851520110EEFFB800830EC7 /* EDMessage.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -244,6 +248,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D33E0D1EFF990043A815 /* QSElement.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 			};
 			name = Debug;
 		};
@@ -251,6 +259,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D33E0D1EFF990043A815 /* QSElement.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 			};
 			name = Release;
 		};

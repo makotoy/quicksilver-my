@@ -18,7 +18,8 @@
 
 
 @implementation NSAppleScript (QSSubroutineDiscovery)
-+ (NSArray *)validHandlersFromArray:(NSArray *)array inScriptFile:(NSString *)path;{
++ (NSArray *)validHandlersFromArray:(NSArray *)array inScriptFile:(NSString *)path
+{
 	NSData *scriptData=[NSData dataWithContentsOfMappedFile:path];
 	if (![scriptData length]){
 		NDResourceFork *resource=[NDResourceFork resourceForkForReadingAtPath:path];

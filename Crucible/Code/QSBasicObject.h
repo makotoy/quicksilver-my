@@ -28,7 +28,7 @@
 - (void)updateMnemonics;
 
 - (float)score;
-- (int)order;
+- (NSInteger)order;
 - (float)rankModification;
 @end
 

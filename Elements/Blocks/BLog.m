@@ -4,7 +4,7 @@
 //
 //
 //  Copyright 2006 Blocks. All rights reserved.
-//
+//  2010-01-02 Makoto Yamashita
 
 #import "BLog.h"
 
@@ -45,7 +45,7 @@ static BLoggingLevel LoggingLevel = BLoggingWarn;
 	
 	va_list args;
 	va_start(args, message);
-	[self logWithLevel:level lineNumber:lineNumber fileName:fileName function:functionName format:message arguments:(va_list)args];
+	[self logWithLevel:level lineNumber:lineNumber fileName:fileName function:functionName format:message arguments:args];
 	va_end(args);
 }
 
@@ -54,7 +54,7 @@ static BLoggingLevel LoggingLevel = BLoggingWarn;
 	
 	va_list args;
 	va_start(args, message);
-	[self logWithLevel:BLoggingError lineNumber:lineNumber fileName:fileName function:functionName format:message arguments:(va_list)args];
+	[self logWithLevel:BLoggingError lineNumber:lineNumber fileName:fileName function:functionName format:message arguments:args];
 	va_end(args);	
 }
 
@@ -65,7 +65,7 @@ static BLoggingLevel LoggingLevel = BLoggingWarn;
 	va_list args;
 	va_start(args, message);
 	message = [@"ASSERT " stringByAppendingString:message];
-	[self logWithLevel:BLoggingError lineNumber:lineNumber fileName:fileName function:functionName format:message arguments:(va_list)args];
+	[self logWithLevel:BLoggingError lineNumber:lineNumber fileName:fileName function:functionName format:message arguments:args];
 	va_end(args);	
 	
 }

@@ -105,7 +105,7 @@ static int BPluginLoadSequenceNumbers = 0;
   // Find our bundle, if possible
 	if (!bundle) {
 		NSString *path = [[self pluginURL] path];
-		int location = [path rangeOfString:@"Contents/" options:NSBackwardsSearch|NSLiteralSearch].location;
+		NSInteger location = [path rangeOfString:@"Contents/" options:NSBackwardsSearch|NSLiteralSearch].location;
 		if (location != NSNotFound) {
 			path = [path substringToIndex:location];
 			[self setBundle:[NSBundle bundleWithPath:path]];

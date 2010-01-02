@@ -114,7 +114,7 @@
 	
     NSMenuItem *item;
 	
-	int myOrder = [self order];
+	NSInteger myOrder = [self order];
 	NSString *title = [NSString stringWithFormat:@"Score: %.0f", [self score] * 100];
 	if (myOrder != NSNotFound)
 		title = [NSString stringWithFormat:@"Rank: %d, %@", myOrder+1, title];

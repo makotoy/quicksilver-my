@@ -90,11 +90,9 @@
 /*
  * -indexOfCharacter:range:
  */
-- (unsigned int)indexOfCharacter:(unichar)aCharacter range:(NSRange)aRange
+- (NSUInteger)indexOfCharacter:(unichar)aCharacter range:(NSRange)aRange
 {
-	unsigned int	theIndex,
-						theCount = [self length],
-						theFoundIndex = NSNotFound;
+	NSUInteger theIndex, theCount = [self length], theFoundIndex = NSNotFound;
 
 	if( aRange.length + aRange.location > theCount )
 		[NSException raise:NSRangeException format:@"[%@ %@]: Range or index out of bounds", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
@@ -111,7 +109,7 @@
 /*
  * -indexOfCharacter:
  */
-- (unsigned int)indexOfCharacter:(unichar)aCharacter
+- (NSUInteger)indexOfCharacter:(unichar)aCharacter
 {
 	return [self indexOfCharacter:aCharacter range:NSMakeRange( 0, [self length] )];
 }

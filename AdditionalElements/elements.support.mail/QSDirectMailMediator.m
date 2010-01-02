@@ -1,8 +1,10 @@
-
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-02 Makoto Yamashita
+ */
 
 #import "QSDirectMailMediator.h"
-
-#import <Message/NSMailDelivery.h>
+#import <EDMessage/EDMessage.h>
 
 @implementation QSDirectMailMediator
 
@@ -41,11 +43,9 @@ if (sender)  [headers setObject:sender forKey:@"From"];
 [headers setObject:@"Quicksilver" forKey:@"X-Mailer"];
 [headers setObject:@"multipart/mixed" forKey:@"Content-Type"];
 [headers setObject:@"1.0" forKey:@"Mime-Version"];
-sent = [NSMailDelivery deliverMessage: msg
-							  headers: headers
-							   format: NSMIMEMailFormat
-							 protocol: nil];
-
+    EDMailAgent* mailAgent = [EDMailAgent mailAgentForRelayHostWithName:@""];
+    [mailAgent sendMailWithHeaders:headers andBody:body];
+    sent = YES;
 //NSLog(@"headers %@",headers);
 if ( !sent )
 {

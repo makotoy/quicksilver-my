@@ -25,7 +25,7 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString) {
 	// NSString *remainingString;
 	NSString *characterString;
 	NSRange currentRange = NSMakeRange(0, [testString length]);
-	int index;
+	NSInteger index;
 	for (i = 0; i<(int) [self length]; i++) {
 		
 		characterString = [self substringWithRange:NSMakeRange(i, 1)];
@@ -382,7 +382,7 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString) {
 	NSMutableArray *components = [[[[self stringByStandardizingPath] pathComponents] mutableCopy] autorelease];
 	NSFileManager *manager = [NSFileManager defaultManager];
 	
-	int index = [components indexOfObject:@"*"];
+	NSUInteger index = [components indexOfObject:@"*"];
 	if (index == NSNotFound) return [self stringByStandardizingPath];
 	NSString *basePath = nil;
 	NSArray *contents = nil;

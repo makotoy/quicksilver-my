@@ -3,7 +3,8 @@
 #import "QSDockingWindow.h"
 
 @implementation QSDockingWindow
-- (id)initWithContentRect:(NSRect)contentRect styleMask:(unsigned int)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag{
+- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+{
     NSWindow *result = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag];
     [self setOpaque:NO];
     [self center];
@@ -32,7 +33,8 @@
 - (void)lock{locked=YES;}
 - (void)unlock{locked=NO;}
 
-- (unsigned int)draggingEntered:(id <NSDraggingInfo>)theEvent{
+- (NSUInteger)draggingEntered:(id <NSDraggingInfo>)theEvent
+{
     [self show:self];
     return [super draggingEntered:theEvent];
 }
@@ -73,15 +75,12 @@
 }
 
 - (void)timerHide:(NSTimer *)timer{
-	// bool stayOpen=StillDown();
-    //if (!stayOpen){
-	// if (![self mouseLocationOutsideOfEventStream])
-	
-	if(NSMouseInRect([NSEvent mouseLocation],NSInsetRect([self frame],-10,-10),NO)){ //Mouse is outside window
-																					 // [hideTimer invalidate];
-	}else{
+	if(NSMouseInRect([NSEvent mouseLocation],NSInsetRect([self frame],-10,-10),NO)) {
+//Mouse is outside window
+// [hideTimer invalidate];
+	} else {
 		BOOL shouldHide=[NSDate timeIntervalSinceReferenceDate]-lastTime>0.5;
-		if (shouldHide){
+		if (shouldHide) {
 			[self hide:self];
 			[hideTimer invalidate];
 		}
@@ -106,7 +105,7 @@
 	
     if ([reentry windowNumber]!=[self windowNumber])reentry=nil;
 	
-    if (!reentry && !StillDown()){
+    if (!reentry && [NSEvent pressedMouseButtons] == 0) {
         [self hide:self];
     }
 	
