@@ -23,10 +23,9 @@
 	[super dealloc];
 }
 
-
 // NSView
 
-- (void)viewWillMoveToWindow:(NSWindow *)newWindow;
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:NSWindowDidResignKeyNotification object:nil];
@@ -40,10 +39,8 @@
 												 name:NSWindowDidBecomeKeyNotification object:newWindow];
 }
 
-
-
-
-- (void)drawBackgroundInClipRect:(NSRect)clipRect{
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
 	
 	NSColor *backgroundColor = [self backgroundColor];
 	CGFloat hue, saturation, brightness, alpha;
@@ -66,13 +63,12 @@
 	
 }
 
-
-
-- (void)highlightSelectionInClipRect:(NSRect)rect{
+- (void)highlightSelectionInClipRect:(NSRect)rect
+{
 	[self highlightSelectionInClipRect:rect withGradientColor:[self highlightColor]];
 }
 
-- (void)selectRowIndexes:(NSIndexSet*)rows byExtendingSelection:(BOOL)extend;
+- (void)selectRowIndexes:(NSIndexSet*)rows byExtendingSelection:(BOOL)extend
 {
 	[super selectRowIndexes:rows byExtendingSelection:extend];
 	[self setNeedsDisplay:YES]; // we display extra because we draw
@@ -80,7 +76,7 @@
 								//	one row's selection can change how others draw.
 }
 
-- (void)deselectRow:(NSInteger)row;
+- (void)deselectRow:(NSInteger)row
 {
 	[super deselectRow:row];
 	[self setNeedsDisplay:YES]; // we display extra because we draw
@@ -88,26 +84,19 @@
 								//	one row's selection can change how others draw.
 }
 
-
 // NSTableView (Private)
 
-- (id)_highlightColorForCell:(NSCell *)cell;
+- (id)_highlightColorForCell:(NSCell *)cell
 {
 	return nil;
 }
 
-- (void)_windowDidChangeKeyNotification:(NSNotification
-										 *)notification;
+- (void)_windowDidChangeKeyNotification:(NSNotification*)notification
 {
 	[self setNeedsDisplay:YES];
 }
 
 @end
-
-
-
-
-
 
 @implementation QSFancyOutlineView
 
@@ -122,7 +111,7 @@
 
 // NSView
 
-- (void)viewWillMoveToWindow:(NSWindow *)newWindow;
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:NSWindowDidResignKeyNotification object:nil];
@@ -138,7 +127,8 @@
 
 
 
-- (void)drawBackgroundInClipRect:(NSRect)clipRect{
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
 	
 	NSColor *backgroundColor = [self backgroundColor];
 	CGFloat hue, saturation, brightness, alpha;
@@ -162,7 +152,8 @@
 }
 
 
-- (void)highlightSelectionInClipRect:(NSRect)rect{
+- (void)highlightSelectionInClipRect:(NSRect)rect
+{
 	[self highlightSelectionInClipRect:rect withGradientColor:[self highlightColor]];
 }
 
@@ -174,7 +165,7 @@
 								//	one row's selection can change how others draw.
 }
 
-- (void)deselectRow:(NSInteger)row;
+- (void)deselectRow:(NSInteger)row
 {
 	[super deselectRow:row];
 	[self setNeedsDisplay:YES]; // we display extra because we draw
@@ -185,13 +176,12 @@
 
 // NSTableView (Private)
 
-- (id)_highlightColorForCell:(NSCell *)cell;
+- (id)_highlightColorForCell:(NSCell *)cell
 {
 	return nil;
 }
 
-- (void)_windowDidChangeKeyNotification:(NSNotification
-										 *)notification;
+- (void)_windowDidChangeKeyNotification:(NSNotification*)notification
 {
 	[self setNeedsDisplay:YES];
 }

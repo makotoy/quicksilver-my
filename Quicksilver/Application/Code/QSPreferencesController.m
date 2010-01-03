@@ -3,9 +3,6 @@
 
 #include <unistd.h>
 
-#import <QSCrucible/QSTableView.h>
-#import <QSCrucible/QSTitleToolbarItem.h>
-
 #import "QSController.h"
 #import "QSPreferencesController.h"
 
@@ -63,14 +60,15 @@ id QSPrefs;
     }
     return self;
 }
-- (void)applicationWillRelaunch:(NSNotification *)notif {
+
+- (void)applicationWillRelaunch:(NSNotification *)notif
+{
 	id object = [[moduleController selectedObjects] lastObject];
-	//QSLog(@"willQuit %s", [[object objectForKey:kItemID] UTF8String]); 	
 	setenv("QSVisiblePrefPane", [[object objectForKey:kItemID] UTF8String] , YES);
 }
 
-
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
 	[[self window] setDelegate:self];
 	[loadingProgress setUsesThreadedAnimation:YES]; 	
 	
@@ -87,7 +85,9 @@ id QSPrefs;
 	[self setShowSettings:YES];
 
 }
-- (void)preventEmptySelection {
+
+- (void)preventEmptySelection
+{
 //	QSLog(@"avoid %d", 	[moduleController selectionIndex]);
 	[externalPrefsTable setAllowsEmptySelection:NO];
 	[moduleController setAvoidsEmptySelection:YES];
@@ -105,15 +105,6 @@ id QSPrefs;
 	[NSApp activateIgnoringOtherApps:YES];
 	[self showWindow:nil];
 	[self selectPaneWithIdentifier:identifier];
-//	int index = [[modules valueForKey:kItemID] indexOfObject:identifier];
-//	if (index == NSNotFound) {
-//		QSLog(@"%@ not found", identifier);
-//	} else {
-//		[moduleController setSelectionIndex:index];
-//		return [self currentPane];
-//	}
-	//	[internalPrefsTable selectRow:index byExtendingSelection:NO];
-	//[win makeKeyAndOrderFront:win];
 	return nil;
 }
 
@@ -124,20 +115,12 @@ id QSPrefs;
 	[self loadPlugInInfo:notif];
 	reloading = NO;
 }
-- (void)loadPlugInInfo:(NSNotification *)notif {
-	//	NSString *currentPaneID = nil;
-	//	if ([modules count] && [internalPrefsTable selectedRow] >= 0)
-	//		currentPaneID = [[modules objectAtIndex:[internalPrefsTable selectedRow]]objectForKey:kItemID];
-	
-	
-	//	NSArray *loadedPanes = [modules valueForKey:kItemID];
-//	[QSReg printRegistry:nil];
+
+- (void)loadPlugInInfo:(NSNotification *)notif
+{
 	NSDictionary *plugInPanes = [QSReg elementsByIDForPointID:kQSPreferencePanes];
-//	QSLog(@"plug %@", plugInPanes);
-	NSEnumerator *e = [plugInPanes objectEnumerator];
 	NSString *paneKey = nil;
-	id pane;
-	while((pane = [e nextObject])) {
+	for (id pane in [plugInPanes allValues]) {
 		paneKey = [pane valueForKey:@"id"];
 		if ([modulesByID objectForKey:paneKey]) continue;
 		//if ([loadedPanes containsObject:paneKey]) continue;
@@ -167,9 +150,6 @@ id QSPrefs;
 			//[newModules addObject:paneInfo];
 		}
 	}
-	
-	
-//	QSLog(@"modules: %@", modulesByID);
     NSSortDescriptor *nameDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)] autorelease];
     NSSortDescriptor *orderDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"priority" ascending:NO] autorelease];
 	
@@ -185,21 +165,7 @@ id QSPrefs;
 	[sidebarModules addObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"separator"]];
 	[sidebarModules addObjectsFromArray:plugInModules];
 	
-	[self setModules:[[sidebarModules mutableCopy] autorelease]];
-	//	int index = [[modules valueForKey:kItemID] indexOfObject:currentPaneID];
-	//	if (index != NSNotFound) [internalPrefsTable selectRow:index byExtendingSelection:NO];
-	//	
-	//	[internalPrefsTable reloadData];
-	//	[self selectModule:self];
-	//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectModule:) name:NSTableViewSelectionDidChangeNotification object:internalPrefsTable];
-	//	NSCell *imageAndTextCell;
-	//	[internalPrefsTable setRowHeight:17];
-	//    imageAndTextCell = [[[QSImageAndTextCell alloc] init] autorelease];
-	//    [[internalPrefsTable tableColumnWithIdentifier: kItemName] setDataCell:imageAndTextCell];
-	//    [[[internalPrefsTable tableColumnWithIdentifier: kItemName] dataCell] setFont:[NSFont systemFontOfSize:11]];
-	//	
-	//[self mainViewDidLoad];
-	
+	[self setModules:sidebarModules];
 }
 
 - (BOOL)windowShouldClose:(id)sender {
@@ -310,10 +276,11 @@ id QSPrefs;
 //    }
 //    return nil;  
 //}
-	- (float) tableView:(NSTableView *)tableView heightOfRow:(int)row {
+- (CGFloat) tableView:(NSTableView *)tableView heightOfRow:(int)row {
 	if ([[modules objectAtIndex:row] objectForKey:@"separator"]) return 8;
-	return 16; //return [[[modules objectAtIndex:row] objectForKey:@"type"] isEqualToString:@"Main"] ?32:16;
-	}
+
+	return 16.0;
+}
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(int)rowIndex {
     if (aTableView == internalPrefsTable) {
         return ![self tableView:aTableView rowIsSeparator:rowIndex];
@@ -373,14 +340,8 @@ id QSPrefs;
 	return nil;
 	
 }
-- (NSMutableArray *)modules { return [[modules retain] autorelease];  }
-- (void)setModules:(NSMutableArray *)newModules
-{
-    [modules autorelease];
-    modules = [newModules retain];
-}
 
-
+@synthesize modules;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	NSArray *selection = [object selectedObjects];

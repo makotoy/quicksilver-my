@@ -271,7 +271,7 @@ static BOOL gModifiersAreIgnored;
 
 
 
--(int)order{return [self rank];}
+-(NSInteger)order{return [self rank];}
 - (IBAction)editActions:(id)sender{
 	   [NSApp activateIgnoringOtherApps:YES];
 	[NSClassFromString(@"QSPreferencesController") performSelector:@selector(showPaneWithIdentifier:) withObject:@"QSActionsPrefPane"];

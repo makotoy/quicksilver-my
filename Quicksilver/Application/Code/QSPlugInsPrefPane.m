@@ -239,7 +239,7 @@
 	NSIndexSet *indexes = [plugInTable selectedRowIndexes];
 	if (!indexes) return nil;
 	NSMutableArray *bundles = [NSMutableArray array];
-	int index;
+	NSInteger index;
 	for (index = [indexes firstIndex]; index != NSNotFound; index = [indexes indexGreaterThanIndex:index]) {
 		[bundles addObject:[[arrayController arrangedObjects] objectAtIndex:index]];
 		if (index == [indexes lastIndex]) break;

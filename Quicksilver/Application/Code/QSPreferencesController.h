@@ -49,8 +49,7 @@
 - (IBAction)selectModule:(id)sender;
 + (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier;
 + (void)showPrefs;
-- (NSMutableArray *)modules;
-- (void)setModules:(NSMutableArray *)newModules;
+@property (retain) NSMutableArray* modules;
 - (QSPreferencePane *)currentPane;
 - (void)setCurrentPane:(QSPreferencePane *)newCurrentPane;
 - (BOOL)relaunchRequested;

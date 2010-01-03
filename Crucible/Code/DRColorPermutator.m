@@ -589,12 +589,13 @@ float rot;
 }
 
 // Added by JNJ
-- (void) applyToRepsOfImage:(NSImage*)image{
-    NSBitmapImageRep *rep;
-    NSEnumerator *reps=[[image representations]objectEnumerator];
-    while (rep=[reps nextObject])
-        if ([rep isKindOfClass:[NSBitmapImageRep class]])
+- (void) applyToRepsOfImage:(NSImage*)image
+{
+    for (NSBitmapImageRep *rep in [image representations]) {
+        if ([rep isKindOfClass:[NSBitmapImageRep class]]) {
             [self applyToBitmapImageRep:rep];
+        }
+    }
 }
 
 

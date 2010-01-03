@@ -9,7 +9,8 @@
 #import "QSAdvancedPrefPane.h"
 
 @implementation QSAdvancedPrefPane
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     
 	[prefSetsTable setSortDescriptors:[NSSortDescriptor descriptorArrayWithKey:@"title"
 																	 ascending:YES]];

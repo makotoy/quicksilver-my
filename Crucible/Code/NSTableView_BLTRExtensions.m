@@ -19,7 +19,7 @@ typedef struct {
 	CGFloat red2, green2, blue2, alpha2;
 } _twoColorsType;
 
-void _linearColorBlendFunction(void *info, const CGFloat *in, float *out)
+void _linearColorBlendFunction(void *info, const CGFloat *in, CGFloat *out)
 {
 	_twoColorsType *twoColors = info;
 	

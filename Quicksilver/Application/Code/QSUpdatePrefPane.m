@@ -5,7 +5,7 @@
 
 #import "QSUpdateController.h"
 
-static int bundleNameSort(id item1, id item2, void *self) {
+static NSInteger bundleNameSort(id item1, id item2, void *self) {
 	return [[item1 objectForInfoDictionaryKey:@"CFBundleName"] caseInsensitiveCompare:[item2 objectForInfoDictionaryKey:@"CFBundleName"]];
 }
 
@@ -16,7 +16,7 @@ static int bundleNameSort(id item1, id item2, void *self) {
 		
 		plugInArray = [[[QSReg identifierBundles] allValues] mutableCopy];
 		[plugInArray removeObject:[NSBundle mainBundle]];
-		[plugInArray sortUsingFunction:(int (*)(id, id, void *))bundleNameSort context:(void *)self];
+		[plugInArray sortUsingFunction:(NSInteger (*)(id, id, void *))bundleNameSort context:(void *)self];
 		
     }
     return self;

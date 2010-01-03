@@ -115,7 +115,9 @@
 
 - (IBAction)customize:(id)sender
 {
-	[QSPreferencesController showPaneWithIdentifier:@"QSCubeInterfacePrefPane"];
+	[NSClassFromString(@"QSPreferencesController")
+     performSelector:@selector(showPaneWithIdentifier:)
+     withObject:@"QSCubeInterfacePrefPane"];
 }
 
 - (void)windowDidLoad

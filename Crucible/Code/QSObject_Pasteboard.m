@@ -62,7 +62,7 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
     if (!theObject && [[pasteboard types] containsObject:@"QSObjectAddress"]) {
         NSArray *objectIdentifier = [[pasteboard stringForType:@"QSObjectAddress"] componentsSeparatedByString:@":"];
         if ([[objectIdentifier objectAtIndex:0] intValue] == [[NSProcessInfo processInfo] processIdentifier])
-            return (QSObject *)[[objectIdentifier lastObject] intValue];
+            return (QSObject *)[objectIdentifier lastObject];
         else if (VERBOSE)
             QSLog(@"Ignored old object: %@", objectIdentifier);
     }

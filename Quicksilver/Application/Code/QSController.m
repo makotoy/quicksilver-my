@@ -1673,12 +1673,14 @@ void QSSignalHandler(int i) {
 	}
 }
 
-- (BOOL)exceptionHandler:(NSExceptionHandler *)sender shouldLogException:(NSException *)exception mask:(unsigned int)aMask {
+- (BOOL)exceptionHandler:(NSExceptionHandler *)sender shouldLogException:(NSException *)exception mask:(NSUInteger)aMask
+{
 	[exception printStackTrace];
 	return NO; 	
 } // mask is QSLog < exception type > Mask, exception's userInfo has stack trace for key NSStackTraceKey
 
-- (BOOL)exceptionHandler:(NSExceptionHandler *)sender shouldHandleException:(NSException *)exception mask:(unsigned int)aMask {
+- (BOOL)exceptionHandler:(NSExceptionHandler *)sender shouldHandleException:(NSException *)exception mask:(NSUInteger)aMask
+{
 	
 	return YES;
 }

@@ -11,6 +11,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 084BB03210E9A799003D2539 /* Build configuration list for PBXAggregateTarget "Build All Plugins" */;
 			buildPhases = (
+				08B2FF4510F0168800C3175C /* CopyFiles */,
 			);
 			dependencies = (
 				084BB03410E9A7BF003D2539 /* PBXTargetDependency */,
@@ -29,6 +30,20 @@
 			productName = "Build All Plugins";
 		};
 /* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		08B2FF5A10F017C700C3175C /* Terminal Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB09010E9A82E003D2539 /* Terminal Module.element */; };
+		08B2FF5B10F017DC00C3175C /* Primer Interface.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB08710E9A827003D2539 /* Primer Interface.element */; };
+		08B2FF5C10F017DC00C3175C /* Firefox Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB07E10E9A820003D2539 /* Firefox Module.element */; };
+		08B2FF5D10F017DC00C3175C /* Web Search.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB07510E9A817003D2539 /* Web Search.element */; };
+		08B2FF5E10F017F000C3175C /* Email Support.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB06C10E9A80D003D2539 /* Email Support.element */; };
+		08B2FF5F10F017F000C3175C /* Clipboard.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB06310E9A803003D2539 /* Clipboard.element */; };
+		08B2FF6010F017F000C3175C /* Social Bookmarks Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB05A10E9A7F6003D2539 /* Social Bookmarks Module.element */; };
+		08B2FF6110F017F000C3175C /* Apple Mail.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB05110E9A7EA003D2539 /* Apple Mail.element */; };
+		08B2FF6210F017FB00C3175C /* iTunes Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB04810E9A7E1003D2539 /* iTunes Module.element */; };
+		08B2FF6310F017FB00C3175C /* Apple Address Book.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB03F10E9A7D3003D2539 /* Apple Address Book.element */; };
+		08B2FF6410F017FB00C3175C /* Bezel Interface.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB02E10E9A753003D2539 /* Bezel Interface.element */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		084BB02D10E9A753003D2539 /* PBXContainerItemProxy */ = {
@@ -186,6 +201,29 @@
 			remoteInfo = "Apple Mail";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		08B2FF4510F0168800C3175C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Quicksilver.app/Contents/PlugIns;
+			dstSubfolderSpec = 16;
+			files = (
+				08B2FF6210F017FB00C3175C /* iTunes Module.element in CopyFiles */,
+				08B2FF6310F017FB00C3175C /* Apple Address Book.element in CopyFiles */,
+				08B2FF6410F017FB00C3175C /* Bezel Interface.element in CopyFiles */,
+				08B2FF5E10F017F000C3175C /* Email Support.element in CopyFiles */,
+				08B2FF5F10F017F000C3175C /* Clipboard.element in CopyFiles */,
+				08B2FF6010F017F000C3175C /* Social Bookmarks Module.element in CopyFiles */,
+				08B2FF6110F017F000C3175C /* Apple Mail.element in CopyFiles */,
+				08B2FF5B10F017DC00C3175C /* Primer Interface.element in CopyFiles */,
+				08B2FF5C10F017DC00C3175C /* Firefox Module.element in CopyFiles */,
+				08B2FF5D10F017DC00C3175C /* Web Search.element in CopyFiles */,
+				08B2FF5A10F017C700C3175C /* Terminal Module.element in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSBezelInterfacePlugIn.xcodeproj; path = Bezel/QSBezelInterfacePlugIn.xcodeproj; sourceTree = "<group>"; };

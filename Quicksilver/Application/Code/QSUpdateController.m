@@ -326,7 +326,8 @@ UInt64 QSGetPrimaryMACAddressInt();
 	}
 }
 
-- (void)download:(QSURLDownload *)download didReceiveDataOfLength:(unsigned)length {
+- (void)download:(QSURLDownload *)download didReceiveDataOfLength:(NSUInteger)length
+{
 	//[[QSTaskController sharedInstance] updateTask:@"QSAppUpdateInstalling" status: progress:-1];
 				[updateTask setStatus:
 					[NSString stringWithFormat:@"%.0fk of %.0fk", (double) [download currentContentLength] /1024, (double)[download expectedContentLength] /1024]];

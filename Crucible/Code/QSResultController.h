@@ -79,5 +79,5 @@
 
 - (void)setupResultTable;
 - (IBAction)tableViewDoubleAction:(id)sender;
-
+- (int)numberOfRowsInTableView:(NSTableView *)tableView;
 @end

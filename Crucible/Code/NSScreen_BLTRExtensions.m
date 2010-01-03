@@ -96,8 +96,7 @@ CFStringRef QSGetLocalDisplayName(CGDirectDisplayID display)
 }
 
 -(BOOL)supportsQE{
-	NSNumber* screenNum = [NSNumber numberWithInt:[self screenNumber]];
-	BOOL supportsQuartzExtreme = CGDisplayUsesOpenGLAcceleration( (CGDirectDisplayID) [screenNum pointerValue] );
+	BOOL supportsQuartzExtreme = CGDisplayUsesOpenGLAcceleration( (CGDirectDisplayID) [self screenNumber] );
 	return supportsQuartzExtreme;
 }
 

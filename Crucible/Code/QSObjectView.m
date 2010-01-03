@@ -95,8 +95,11 @@
 	[springTimer invalidate];
 }
 - (void)spring:(NSTimer *)timer {
+    NSPoint dummyPt;
 	CGPoint currentMouseLocation2;
-	currentMouseLocation2 = [NSEvent mouseLocation];
+	dummyPt = [NSEvent mouseLocation];
+    currentMouseLocation2.x = dummyPt.x;
+    currentMouseLocation2.y = dummyPt.y;
 	shouldSpring = YES;
 	CGPostMouseEvent (currentMouseLocation2, NO, 1, NO);
 	

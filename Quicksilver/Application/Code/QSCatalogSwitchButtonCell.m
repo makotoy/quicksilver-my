@@ -11,7 +11,7 @@
 //	return [NSNumber numberWithInt:state];
 //}
 
-- (int) nextState {
+- (NSInteger) nextState {
    // QSLog(@"state?");
     if ([self state] == NSMixedState) return NSOffState;
     if ([self state] == NSOffState) return NSMixedState;

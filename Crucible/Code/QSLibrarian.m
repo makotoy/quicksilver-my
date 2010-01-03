@@ -26,7 +26,7 @@ QSLibrarian* QSLib = nil;
 
 static float searchSpeed = 0.0;
 
-static int presetSort(id item1, id item2, QSLibrarian *librarian) {
+static NSInteger presetSort(id item1, id item2, QSLibrarian *librarian) {
 	return [[item1 name] caseInsensitiveCompare:[item2 name]];
 }
 
@@ -155,7 +155,7 @@ static int presetSort(id item1, id item2, QSLibrarian *librarian) {
 	}
 	NSMutableArray *children = [parent getChildren];
 	[children addObject:entry];
-	[children sortUsingFunction:(int (*)(id, id, void *))presetSort context:(void *)self];
+	[children sortUsingFunction:(NSInteger (*)(id, id, void *))presetSort context:(void *)self];
 	
 	if (scan) [entry scanForced:YES];
 }

@@ -12,6 +12,21 @@
 - (void)_setNeedsDisplayInRow:(int)fp8;
 @end 
 
+@interface NSTableView (MYPrivate)
+- (BOOL)isOpaque;
+- (void)setOpaque:(BOOL)flag;
+@end
+
+@implementation NSTableView (MYPrivate)
+- (BOOL)isOpaque { return YES; }
+- (void)setOpaque:(BOOL)flag { return; }
+
+- (void)setHighlightColor:(NSColor*)newColor { return; }
+- (NSColor*)highlightColor { return [NSColor grayColor]; }
+- (id)draggingDelegate { return nil; }
+- (void)setDraggingDelegate:(id)newDelg { return; }
+@end
+
 
 @implementation QSTableView
 
@@ -38,12 +53,9 @@
     if (isLocal) return NSDragOperationEvery;
     else return NSDragOperationEvery;
 }
-- (BOOL)isOpaque{
-	return opaque;
-}
-- (void)setOpaque:(BOOL)flag{
-	opaque=flag;
-}
+
+@synthesize opaque;
+
 - (void)drawRow:(NSInteger)rowIndex clipRect:(NSRect)clipRect{
 	//  drawingRow=rowIndex;
     

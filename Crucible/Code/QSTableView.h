@@ -30,7 +30,7 @@
 }
 @property (copy) NSColor* highlightColor;
 @property (retain) id draggingDelegate;
-- (void)setOpaque:(BOOL)flag;
+@property (assign) BOOL opaque;
 @end
 
 @interface NSTableView (MenuExtensions) 

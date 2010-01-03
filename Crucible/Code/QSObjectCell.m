@@ -526,8 +526,8 @@ NSRect alignRectInRect(NSRect innerRect, NSRect outerRect, int quadrant);
             //   QSLog(@"4");
 			int i = 0;
             int j = 0;
-            unsigned int hits[[titleString length]];
-            int count = [hitMask getIndexes:(unsigned int *)&hits maxCount:[titleString length] inIndexRange:nil];
+            NSUInteger hits[[titleString length]];
+            int count = [hitMask getIndexes:(NSUInteger*)&hits maxCount:[titleString length] inIndexRange:nil];
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                         mainColor, NSForegroundColorAttributeName,
                                         mainColor, NSUnderlineColorAttributeName,
@@ -768,6 +768,6 @@ NSRect alignRectInRect(NSRect innerRect, NSRect outerRect, int quadrant);
 {
 	return;
 }
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView characterIndex:(unsigned)charIndex layoutManager:(NSLayoutManager *)layoutManager {return;}
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView characterIndex:(NSUInteger)charIndex layoutManager:(NSLayoutManager *)layoutManager {return;}
 - (BOOL)trackMouse:(NSEvent *)theEvent inRect:(NSRect)cellFrame ofView:(NSView *)aTextView untilMouseUp:(BOOL)flag {return NO;}
 @end

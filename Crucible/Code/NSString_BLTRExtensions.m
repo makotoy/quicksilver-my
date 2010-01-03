@@ -134,7 +134,7 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString) {
 	int i;
 	NSString *characterString;
 	NSRange currentRange = NSMakeRange(0, [testString length]);
-	int index;
+	NSInteger index;
 	for (i = 0; i<(int) [self length]; i++) {
 		characterString = [self substringWithRange:NSMakeRange(i, 1)];
 		index = [testString rangeOfString:characterString options:NSCaseInsensitiveSearch range:currentRange] .location;
