@@ -56,49 +56,29 @@
 }
 
 - (IBAction) addSource:(id)sender;
-//- (IBAction) addSourcePreset:(id)sender;
-//- (IBAction) removeItem:(id)sender;
-
 - (IBAction) saveItem:(id)sender;
-//- (IBAction)tableViewAction:(id)sender;
 - (IBAction)copyPreset:(id)sender;
-
-//-(IBAction) toggleCatalogOptions:(id)sender;
 - (IBAction)restoreDefaultCatalog:(id)sender;
-    //- (void)populateItemFields;
-
-- (void)populateCatalogEntryFields;
-
 - (IBAction)setValueForSenderForCatalogEntry:(id)sender;
-               //- (IBAction)restoreDefaults:(id)sender;
 - (IBAction)applySettings:(id)sender;
 - (IBAction)rescanCurrentItem:(id)sender;
 
-//-(IBAction) toggleCatalogOptions:(id)sender;
-//-(void) hideCatalogOptions;
-//-(void) showCatalogOptions;
-//- (void)convertPreset:(NSMutableDictionary *)presetDict;
-//- (void)convertPresetArray:(NSArray *)array;
-- (NSArray *)currentItemContents;
-- (void)setCurrentItemContents:(NSArray *)newCurrentItemContents;
-
-
-//- (BOOL)outlineView:(NSOutlineView *)outlineView removeChild:(int)index ofItem:(id)item;
-//- (BOOL)outlineView:(NSOutlineView *)outlineView addChild:(id)childItem toItem:(id)item atIndex:(int)index;
-//- (BOOL)outlineView:(NSOutlineView *)outlineView removeRows:(NSIndexSet *)rows;
+- (void)populateCatalogEntryFields;
 
 - (BOOL)outlineView:(NSOutlineView *)aTableView itemIsSeparator:(id)item;
+
+- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(NSInteger)rowIndex;
+
 - (void) updateCurrentItemContents;
 
--(void)updateEntrySelection;
+- (void)updateEntrySelection;
 
-- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(int)rowIndex;
+@property (retain) NSArray* currentItemContents;
+@property (retain) QSCatalogEntry* currentItem;
 
-- (QSCatalogEntry *)currentItem;
-- (void)setCurrentItem:(QSCatalogEntry *)newCurrentItem;
 + (void) addEntryForCatFile:(NSString *)path;
 + (void) showEntryInCatalog:(QSCatalogEntry *)entry;
 
 - (void) selectEntry:(QSCatalogEntry *)entry;
--(QSCatalogEntry *)entryForCatFile:(NSString *)path;
+- (QSCatalogEntry *)entryForCatFile:(NSString *)path;
 @end

@@ -12,67 +12,55 @@
 - (void)_setNeedsDisplayInRow:(int)fp8;
 @end 
 
-@interface NSTableView (MYPrivate)
-- (BOOL)isOpaque;
-- (void)setOpaque:(BOOL)flag;
-@end
-
-@implementation NSTableView (MYPrivate)
-- (BOOL)isOpaque { return YES; }
-- (void)setOpaque:(BOOL)flag { return; }
-
-- (void)setHighlightColor:(NSColor*)newColor { return; }
-- (NSColor*)highlightColor { return [NSColor grayColor]; }
-- (id)draggingDelegate { return nil; }
-- (void)setDraggingDelegate:(id)newDelg { return; }
-@end
-
-
 @implementation QSTableView
 
-- (BOOL)canDragRowsWithIndexes:(NSIndexSet *)rowIndexes atPoint:(NSPoint)mouseDownPoint{
+- (BOOL)canDragRowsWithIndexes:(NSIndexSet *)rowIndexes atPoint:(NSPoint)mouseDownPoint
+{
 	return YES;	
 }
-- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender{
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
+{
 	[draggingDelegate draggingEntered:sender];
 	return [super draggingEntered:sender];
 }
-- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender{
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+{
 	[draggingDelegate draggingUpdated:sender];
 	return [super draggingUpdated:sender];
 }
-- (void)draggingExited:(id <NSDraggingInfo>)sender{
+
+- (void)draggingExited:(id <NSDraggingInfo>)sender
+{
 	[draggingDelegate draggingExited:sender];
 	[super draggingExited:sender];
 	return;
 }
 
-
-- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal {
-	//QSLog(@"source");
-    if (isLocal) return NSDragOperationEvery;
-    else return NSDragOperationEvery;
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
+{
+    return NSDragOperationEvery;
 }
 
 @synthesize opaque;
 
-- (void)drawRow:(NSInteger)rowIndex clipRect:(NSRect)clipRect{
-	//  drawingRow=rowIndex;
-    
+- (void)drawRow:(NSInteger)rowIndex clipRect:(NSRect)clipRect
+{
     if ([[self delegate] respondsToSelector:@selector(tableView:rowIsSeparator:)]
-        && [[self delegate]tableView:self rowIsSeparator:rowIndex]){
-		
-		if (![[self delegate] respondsToSelector:@selector(tableView:shouldDrawRow:inClipRect:)]
-			|| [[self delegate]tableView:self shouldDrawRow:rowIndex inClipRect:clipRect]){
+        && [(id<QSTableViewSeparatorDelegate>)[self delegate] tableView:self rowIsSeparator:rowIndex]) {
+        if (![[self delegate] respondsToSelector:@selector(tableView:shouldDrawRow:inClipRect:)]
+			|| [(id<QSTableViewSeparatorDelegate>)[self delegate] tableView:self shouldDrawRow:rowIndex inClipRect:clipRect]){
 			[self drawSeparatorForRow:rowIndex clipRect:clipRect];
 		}
-	}else{
+	} else {
 		[super drawRow:rowIndex clipRect:clipRect];
 	}
 }
 
 
-- (id) initWithFrame:(NSRect)rect {
+- (id)initWithFrame:(NSRect)rect
+{
 	self = [super initWithFrame:rect];
 	if (self != nil) {
 		opaque=YES;
@@ -80,43 +68,38 @@
 	}
 	return self;
 }
-- (void)awakeFromNib{
-	
+
+- (void)awakeFromNib
+{
 	opaque=YES;
 	drawsBackground=YES;
 }
-- (void)drawBackgroundInClipRect:(NSRect)clipRect{
-	if (!drawsBackground){
-		return;
-	}else if ([self backgroundColor]){
+
+- (void)drawBackgroundInClipRect:(NSRect)clipRect
+{
+	if (!drawsBackground) return;
+
+    if ([self backgroundColor]) {
 		[[self backgroundColor]set];
 		NSRectFillUsingOperation(clipRect,NSCompositeCopy);
 	} else {
 		[super drawBackgroundInClipRect:clipRect];
 	}
-	
 }
 
-- (BOOL)drawsBackground {
-    return drawsBackground;
+@synthesize drawsBackground;
+
+- (void)setHighlightColorForBackgroundColor:(NSColor *)color
+{
+	[self setHighlightColor:
+     [[self backgroundColor]blendedColorWithFraction:0.25
+                                             ofColor:[[self backgroundColor] readableTextColor]]];
 }
 
-- (void)setDrawsBackground:(BOOL)value {
-    if (drawsBackground != value) {
-        drawsBackground = value;
-    }
-}
+- (id)_highlightColorForCell:(NSCell *)cell
+{
+	if (highlightColor) return highlightColor;
 
-
-
-- (void)setHighlightColorForBackgroundColor:(NSColor *)color{
-	[self setHighlightColor:[[self backgroundColor]blendedColorWithFraction:0.25 ofColor:[[self backgroundColor]readableTextColor]]];
-}
-
-- (id)_highlightColorForCell:(NSCell *)cell{
-	if (highlightColor)
-		return highlightColor;
-	//return [super _highlightColorForCell:(NSCell *)cell];
 	return [NSColor alternateSelectedControlColor];
 }
 
@@ -131,19 +114,24 @@
     }
 }
 
-- (void)setBackgroundColor:(NSColor *)color{
+- (void)setBackgroundColor:(NSColor *)color
+{
 	[super setBackgroundColor:color];
 	[self setNeedsDisplay:YES];
 }
 
-
-- (void)redisplayRows:(NSIndexSet *)indexes{
-    if ([self respondsToSelector:@selector(_setNeedsDisplayInRow:)])
-        [self _setNeedsDisplayInRow:[indexes firstIndex]]; 
+- (void)redisplayRows:(NSIndexSet *)indexes
+{
+    if ([self respondsToSelector:@selector(_setNeedsDisplayInRow:)]) {
+        [self _setNeedsDisplayInRow:[indexes firstIndex]];
 	// ***warning   * incomplete
-    else [self setNeedsDisplay:YES];
+    } else {
+        [self setNeedsDisplay:YES];
+    }
 }
--(NSMenu*)menuForEvent:(NSEvent*)evt { 
+
+-(NSMenu*)menuForEvent:(NSEvent*)evt
+{
 	//  QSLog (@"event");
     NSPoint point = [self convertPoint:[evt locationInWindow] fromView:NULL]; 
     int column = [self columnAtPoint:point]; 
@@ -153,7 +141,8 @@
     return [super menuForEvent:evt]; 
 } 
 
-- (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation{
+- (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
+{
     [super draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation]; 
 	
     if ([[self dataSource] respondsToSelector:@selector(tableView:dropEndedWithOperation:)] ) 
@@ -166,7 +155,8 @@
 
 @implementation NSTableView (MenuExtensions) 
 
--(NSMenu*)menuForEvent:(NSEvent*)evt { 
+-(NSMenu*)menuForEvent:(NSEvent*)evt
+{ 
     NSPoint point = [self convertPoint:[evt locationInWindow] fromView:NULL]; 
     int column = [self columnAtPoint:point]; 
     int row = [self rowAtPoint:point]; 

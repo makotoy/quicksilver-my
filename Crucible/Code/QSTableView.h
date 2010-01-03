@@ -6,19 +6,26 @@
 #import <AppKit/AppKit.h>
 
 
-@interface NSObject (QSTableViewSeparator)
-- (BOOL)tableView:(NSTableView *)aTableView shouldDrawRow:(int)rowIndex inClipRect:(NSRect)clipRect;
-- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(int)rowIndex;
+@protocol QSTableViewSeparatorDelegate
+- (BOOL)tableView:(NSTableView *)aTableView shouldDrawRow:(NSInteger)rowIndex inClipRect:(NSRect)clipRect;
+- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(NSInteger)rowIndex;
 @end
-@interface NSObject (QSTableViewMenu)
-- (NSMenu *)tableView:(NSTableView*)tableView menuForTableColumn:(NSTableColumn *)column row:(int)row;
+
+@protocol QSTableViewMenu
+- (NSMenu *)tableView:(NSTableView*)tableView menuForTableColumn:(NSTableColumn *)column row:(NSInteger)row;
 @end
-@interface NSObject (QSTableDropEnded)
+
+@protocol QSTableDropEnded
 - (void)tableView:(NSTableView *)tv dropEndedWithOperation:(NSDragOperation)operation;
 @end
 
 @interface NSTableView (Separator)
-- (void)drawSeparatorForRow:(int)rowIndex clipRect:(NSRect)clipRect;
+- (void)drawSeparatorForRow:(NSInteger)rowIndex clipRect:(NSRect)clipRect;
+@end
+
+
+@interface NSTableView (MenuExtensions)
+-(NSMenu*)menuForEvent:(NSEvent*)evt;
 @end
 
 @interface QSTableView : NSTableView {
@@ -31,9 +38,6 @@
 @property (copy) NSColor* highlightColor;
 @property (retain) id draggingDelegate;
 @property (assign) BOOL opaque;
-@end
+@property (assign) BOOL drawsBackground;
 
-@interface NSTableView (MenuExtensions) 
-
--(NSMenu*)menuForEvent:(NSEvent*)evt;
 @end

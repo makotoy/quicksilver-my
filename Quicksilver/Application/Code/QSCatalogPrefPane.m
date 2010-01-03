@@ -246,11 +246,8 @@ static id _sharedInstance;
 	[self selectIndexPath:[entry catalogSetIndexPath]];
 }
 
-
-
-
-
-- (IBAction)addSource:(id)sender {
+- (IBAction)addSource:(id)sender
+{
     
     NSString *sourceString = nil;
     if (sender == itemAddButton)
@@ -342,12 +339,14 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 	}        
     return nil;  
 }
-- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(int)rowIndex {
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+{
 	//    QSLog(@"select?");
 	//    return NO;  
 	return YES;
 }
-- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(int)rowIndex {
+- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(NSInteger)rowIndex
+{
     return NO;
 }
 
@@ -973,22 +972,8 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn
 
 //- (NSArray *)currentItemContents { return [currentItemContents count]?[NSArray arrayWithObject:[NSArray arrayWithObject:[currentItemContents lastObject]]]:nil;  }
 
-- (NSArray *)currentItemContents { return [[currentItemContents retain] autorelease];  }
-
-- (void)setCurrentItemContents:(NSArray *)newCurrentItemContents {
-	//	QSLog(@"netcont %@", newCurrentItemContents);
-    [currentItemContents release];
-    currentItemContents = [newCurrentItemContents retain];
-}
-
-
-- (QSCatalogEntry *)currentItem { return currentItem;  }
-
-- (void)setCurrentItem:(QSCatalogEntry *)newCurrentItem {
-    [currentItem release];
-    currentItem = [newCurrentItem retain];
-}
-
+@synthesize currentItemContents;
+@synthesize currentItem;
 
 //- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
 //	[itemViewSwitcher selectItemAtIndex: [tabView indexOfTabViewItem:tabViewItem]];

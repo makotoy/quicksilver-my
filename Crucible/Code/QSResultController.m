@@ -712,7 +712,7 @@ valueForKeyPath:@"values.QSAppearance3B"];
 	}
     return;
 }
-- (NSMenu *)tableView:(NSTableView*)tableView menuForTableColumn:(NSTableColumn *)column row:(int)row
+- (NSMenu *)tableView:(NSTableView*)tableView menuForTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
     [tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row]
 		   byExtendingSelection:NO];

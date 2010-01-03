@@ -96,12 +96,13 @@ id QSPrefs;
 		[moduleController setSelectionIndex:0];
 }
 
-+ (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier {
-	return [[self sharedInstance] showPaneWithIdentifier:identifier]; 	
++ (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier
+{
+	return [[self sharedInstance] showPaneWithIdentifier:identifier];
 }
 
-- (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier {
-	
+- (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier
+{
 	[NSApp activateIgnoringOtherApps:YES];
 	[self showWindow:nil];
 	[self selectPaneWithIdentifier:identifier];
@@ -241,53 +242,25 @@ id QSPrefs;
 	}
 }
 
+@synthesize relaunchRequested;
 
-
-
-
-- (BOOL)relaunchRequested {
-    return relaunchRequested;
-}
-- (void)setRelaunchRequested:(BOOL)flag {
-    relaunchRequested = flag;
-}
-
-
-
-
-
-
-//Outline Methods
-
-//- (int) numberOfRowsInTableView:(NSTableView *)tableView {
-//    if (tableView == internalPrefsTable) {
-//        return [modules count];
-//    }
-//    return 0;
-//}
-//
-//- (id)tableView:(NSTableView *)aTableView
-//objectValueForTableColumn:(NSTableColumn *)aTableColumn
-//            row:(int) rowIndex
-// {
-//    if (aTableView == internalPrefsTable) {
-//        return [[modules objectAtIndex:rowIndex] objectForKey:kItemName];
-//        
-//    }
-//    return nil;  
-//}
-- (CGFloat) tableView:(NSTableView *)tableView heightOfRow:(int)row {
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
 	if ([[modules objectAtIndex:row] objectForKey:@"separator"]) return 8;
 
 	return 16.0;
 }
-- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(int)rowIndex {
+
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+{
     if (aTableView == internalPrefsTable) {
         return ![self tableView:aTableView rowIsSeparator:rowIndex];
     }
     return NO;  
 }
-- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(int)rowIndex {
+
+- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(NSInteger)rowIndex
+{
 
     if (aTableView == internalPrefsTable) {
 		return nil != [[modules objectAtIndex:rowIndex] objectForKey:@"separator"];
@@ -554,45 +527,33 @@ id QSPrefs;
 	//QSLog(@"frag %@", [url fragment]);
 }
 
-- (QSPreferencePane *)currentPane { return [[currentPane retain] autorelease];  }
-- (void)setCurrentPane:(QSPreferencePane *)newCurrentPane {
-	[currentPane autorelease];
-	currentPane = [newCurrentPane retain];
-}
+@synthesize currentPane;
 
 - (BOOL)respondsToSelector:(SEL)aSelector { 
     if ([super respondsToSelector:aSelector]) return YES;
-	//QSLog(@"selector %@", NSStringFromSelector(aSelector) );
+
     return [currentPane respondsToSelector:aSelector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
-	//  QSLog(@"forward %@", invocation);
-    if ([currentPane respondsToSelector:[invocation selector]])
+    if ([currentPane respondsToSelector:[invocation selector]]) {
         [invocation invokeWithTarget:currentPane];
-    else
+    } else {
         [self doesNotRecognizeSelector:[invocation selector]];
+    }
 }
-//
+
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)sel {
     NSMethodSignature *sig = [[self class] instanceMethodSignatureForSelector:sel];
     if (sig) return sig;
     return [currentPane methodSignatureForSelector:sel];
 }
 
+@synthesize currentPaneInfo;
 
-- (NSMutableDictionary *)currentPaneInfo { return [[currentPaneInfo retain] autorelease];  }
-- (void)setCurrentPaneInfo:(NSMutableDictionary *)newCurrentPaneInfo
+- (void)setShowSettings:(BOOL)flag
 {
-    if (newCurrentPaneInfo && currentPaneInfo != newCurrentPaneInfo) {
-        [currentPaneInfo release];
-        currentPaneInfo = [newCurrentPaneInfo retain];
-		//QSLog(@"info %@", newCurrentPaneInfo);
-    }
-}
-
-- (void)setShowSettings:(BOOL)flag {
 	if (showingSettings == flag) return;
 	if (!showingSettings) { // show them
 		//QSLog(@"show %d", flag);

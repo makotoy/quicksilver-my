@@ -44,20 +44,21 @@
 	BOOL showingSettings;
 	BOOL reloading;
 }
++ (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier;
++ (void)showPrefs;
+
 - (IBAction)back:(id)sender;
 - (IBAction)next:(id)sender;
 - (IBAction)selectModule:(id)sender;
-+ (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier;
-+ (void)showPrefs;
+
 @property (retain) NSMutableArray* modules;
-- (QSPreferencePane *)currentPane;
-- (void)setCurrentPane:(QSPreferencePane *)newCurrentPane;
-- (BOOL)relaunchRequested;
+@property (assign) BOOL relaunchRequested;
+@property (retain) QSPreferencePane *currentPane;
+@property (retain) NSMutableDictionary *currentPaneInfo;
+
 - (void)setPaneForInfo:(NSMutableDictionary *)info switchSection:(BOOL)switchSection;
-- (void)setRelaunchRequested:(BOOL)flag;
 - (void)preventEmptySelection;
-- (NSMutableDictionary *)currentPaneInfo;
-- (void)setCurrentPaneInfo:(NSMutableDictionary *)newCurrentPaneInfo;
 - (void)selectPaneWithIdentifier:(NSString *)identifier;
+- (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier;
 
 @end

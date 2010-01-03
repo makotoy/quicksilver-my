@@ -493,7 +493,8 @@
     }
 }
 
-- (float) tableView:(NSTableView *)tableView heightOfRow:(int)row {
+- (CGFloat) tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
 	return 16;
 }
 
