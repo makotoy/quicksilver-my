@@ -1,4 +1,7 @@
-
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-09 Makoto Yamashita
+ */
 
 NSString * stringForModifiers( unsigned int aModifierFlags );
 
@@ -8,15 +11,18 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 #import "NDHotKeyEvent_QSMods.h"
 
 @implementation QSHotKeyCell
-- (NSText *)setUpFieldEditorAttributes:(NSText *)textObj{
+- (NSText *)setUpFieldEditorAttributes:(NSText *)textObj
+{
 	QSLog(@"set up editor %@",textObj);
 	id instance=[QSHotKeyFieldEditor sharedInstance];
 	[super setUpFieldEditorAttributes:instance];
 	return instance;
 }
-- (id) init {
+
+- (id)init
+{
 	self = [super init];
-	if (self != nil) {
+	if (self) {
 		[self setEditable:YES];
 		[self setSelectable:YES];
 		[self setBezeled:YES];
@@ -24,82 +30,71 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 	return self;
 }
 
-- (void)validateEditing{
-	QSLog(@"validate");
-}
-
-
+- (void)validateEditing{ QSLog(@"validate"); }
 
 @end
 
 @implementation QSHotKeyControl
-+ (Class)cellClass{
-	return [QSHotKeyCell class];
-}
-- (void)awakeFromNib{
++ (Class)cellClass{	return [QSHotKeyCell class]; }
+
+- (void)awakeFromNib
+{
 	[self setCell:[[[QSHotKeyCell alloc]init]autorelease]];
 }
-- (void)textDidEndEditing:(NSNotification*)aNotification{
+
+- (void)textDidEndEditing:(NSNotification*)aNotification
+{
 	QSLog(@"notif %@",aNotification);
 }
-- (void)setStringValue:(NSString *)string{
+
+- (void)setStringValue:(NSString *)string
+{
 	QSLog(@"string %@",string);
-	//if ([thisTrigger objectForKey:@"keyCode"] &&[thisTrigger objectForKey:@"modifiers"]){
-	//		QSHotKeyEvent *activationKey=(QSHotKeyEvent *)[QSHotKeyEvent getHotKeyForKeyCode:[[thisTrigger objectForKey:@"keyCode"] shortValue]
-	//																			   character:0
-	//																	   safeModifierFlags:[[thisTrigger objectForKey:@"modifiers"] intValue]];
-	//		return [activationKey stringValue];
-	//		return @"nil";
-	
-	
-	
-	//	return [ KeyCombo keyComboWithKeyCode:[[thisTrigger objectForKey:@"keyCode"]shortValue]
-	//							 andModifiers:[[thisTrigger objectForKey:@"modifiers"]longValue]];
 	[super setStringValue:string];
-	
-	
-	}
+}
 @end
 
-
-
-
-//#import "KeyCombo.h"
 @implementation QSHotKeyFieldEditor
-+ (id)sharedInstance{
++ (id)sharedInstance
+{
 	static NSWindowController *_sharedInstance = nil;
     if (!_sharedInstance)
         _sharedInstance = [[[self class] allocWithZone:[self zone]] init];
     return _sharedInstance;
 }
 
-- (void)_disableHotKeyOperationMode{
+- (void)_disableHotKeyOperationMode
+{
     CGSConnection conn = _CGSDefaultConnection();
     CGSSetGlobalHotKeyOperatingMode(conn, CGSGlobalHotKeyDisable);
 	[NSApp setGlobalKeyEquivalentTarget:self];
 }
-- (void)_restoreHotKeyOperationMode{
+
+- (void)_restoreHotKeyOperationMode
+{
     CGSConnection conn = _CGSDefaultConnection();
     CGSSetGlobalHotKeyOperatingMode(conn, CGSGlobalHotKeyEnable);
 	[NSApp setGlobalKeyEquivalentTarget:nil];
 }
 
-- (void)_windowDidBecomeKeyNotification:(id)fp8{
+- (void)_windowDidBecomeKeyNotification:(id)fp8
+{
 	[self _disableHotKeyOperationMode];
 }
-- (void)_windowDidResignKeyNotification:(id)fp8{
+
+- (void)_windowDidResignKeyNotification:(id)fp8
+{
     [self _restoreHotKeyOperationMode];
 }
 
-- (id)init{
+- (id)init
+{
     if ((self=[super init])){
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancel) name:NSApplicationWillResignActiveNotification object:nil];
-		//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancel) name:NSWindowDidResignKeyNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancel)
+                                                     name:NSApplicationWillResignActiveNotification
+                                                   object:nil];
 		[self setFieldEditor:YES];
 		[self alignCenter:nil];
-		//NSButton *cancelButton=[[NSButton alloc]initWithFrame:NSMakeRect(0,0,16,16)];
-		
-		//[self addSubview:cancelButton];
 		[self setSelectable:NO];
 		[cancelButton setAutoresizingMask:NSViewMinXMargin];
 		[cancelButton setTarget:self];
@@ -108,31 +103,27 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 	}
     return self;
 }
-- (void)viewDidMoveToWindow{
-	//	[cancelButton setBounds:NSMakeRect(NSWidth([self bounds])-16,0,16,16)];
-}
 
-- (void)clear:(id)sender{
-}
-- (void)dealloc{
-    [super dealloc];
-}
-- (BOOL)shouldSendEvent:(NSEvent *)event{
+- (void)viewDidMoveToWindow { }
+
+- (void)clear:(id)sender{ }
+
+- (BOOL)shouldSendEvent:(NSEvent *)event
+{
 	if([event type]==NSKeyDown){
 		[self keyDown:event];
 		return NO;
 	}
 	return YES;
 }
-//- (void)setString:(NSString *)string{
-//	[super setString:string];
-//	[self setSelectedRange:NSMakeRange(0,[string length])];
-//}
-- (void)setSelectedRange:(NSRange)charRange{
-	//QSLog(@"select %d %d '%@'",charRange.location,charRange.length,[self string]);	
+
+- (void)setSelectedRange:(NSRange)charRange
+{
 	[super setSelectedRange:charRange];
 }
-- (BOOL)becomeFirstResponder{
+
+- (BOOL)becomeFirstResponder
+{
 	defaultString=[[self string]copy];
 	
 	BOOL status=[super becomeFirstResponder];
@@ -143,24 +134,28 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 	[self setSelectedRange:NSMakeRange(0,[[self string] length])];
 	return status;
 }
-- (NSRange)selectionRangeForProposedRange:(NSRange)proposedSelRange granularity:(NSSelectionGranularity)granularity{
+
+- (NSRange)selectionRangeForProposedRange:(NSRange)proposedSelRange granularity:(NSSelectionGranularity)granularity
+{
 	return NSMakeRange(0,[[super string]length]);
 }
 
-- (BOOL)resignFirstResponder{
+- (BOOL)resignFirstResponder
+{
 	[defaultString release];
 	defaultString=nil;
 	[NSApp removeEventDelegate:self];
     [self _restoreHotKeyOperationMode];
     return [super resignFirstResponder];
 }
-- (void)cancel{
-	if ([[self window]firstResponder]==self){
+
+- (void)cancel
+{
+	if ([[self window]firstResponder]==self) {
 		if(VERBOSE)QSLog(@"Cancel");
 		[[self window] makeFirstResponder:[self delegate]];   
 	}
 }
-
 
 - (void)flagsChanged:(NSEvent *)theEvent{
 	NSString *newString=stringForModifiers([theEvent modifierFlags]);

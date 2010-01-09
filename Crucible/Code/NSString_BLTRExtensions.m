@@ -388,7 +388,7 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString) {
 	NSArray *contents = nil;
 	while((index = [components indexOfObject:@"*"]) != NSNotFound) {
 		basePath = [NSString pathWithComponents:[components subarrayWithRange:NSMakeRange(0, index)]];
-		contents = [manager directoryContentsAtPath:basePath];
+		contents = [manager contentsOfDirectoryAtPath:basePath error:NULL];
 		if (![contents count]) return self;
 		[components replaceObjectAtIndex:index withObject:[contents lastObject]];
 		

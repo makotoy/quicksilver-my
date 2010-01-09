@@ -9,7 +9,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface QSCubeInterface : QSResizingInterfaceController {
+@interface QSCubeInterface : QSResizingInterfaceController <NSWindowDelegate> {
 	NSRect standardRect;
 	IBOutlet NSTextField *detailsTextField;
 	IBOutlet NSTextField *searchTextField;

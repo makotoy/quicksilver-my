@@ -17,38 +17,46 @@
 - (void)_hideAllDrawers;
 @end
 
-id QSPrefs;
-
 @interface QSPreferencesController (Private)
 - (void)setWindowTitleWithInfo:(NSDictionary *)info;
 - (void)setShowSettings:(BOOL)flag;
 - (void)loadPlugInInfo:(NSNotification *)notif;
-
 @end
 
 @implementation QSPreferencesController
-+ (id)sharedInstance {
+
+static id QSPrefs;
+
++ (id)sharedInstance
+{
     if (!QSPrefs) QSPrefs = [[[self class] allocWithZone:[self zone]] init];
     return QSPrefs;
 }
 
-
-+ (void)initialize {
-    [self setKeys:[NSArray arrayWithObject:@"currentItem"] triggerChangeNotificationsForDependentKey:@"selectedCatalogEntryIsEditable"];
-    
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
+{
+    NSSet* resPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    if ([key isEqualToString:@"selectedCatalogEntryIsEditable"]) {
+        resPaths = [resPaths setByAddingObject:@"currentItem"];
+    }
+    return resPaths;
 }
-+ (void)showPrefs {
+
++ (void)showPrefs
+{
 	[NSApp activateIgnoringOtherApps:YES];
 	[[self sharedInstance] showWindow:nil]; 	
 }
-- (void)splitViewDidResizeSubviews:(NSNotification *)aNotification {
+
+- (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
+{
 	float width = NSWidth([[[[aNotification object] subviews] objectAtIndex:0] frame]);
-	//QSLog(@"width %f", width);
 	[[NSUserDefaults standardUserDefaults] setFloat:width forKey:kQSPreferencesSplitWidth];
 }
 
 
-- (id)init {
+- (id)init
+{
     self = [super initWithWindowNibName:@"QSPreferences"];
     if (self) {
 		modulesByID = [[NSMutableDictionary alloc] init];
@@ -307,9 +315,13 @@ id QSPrefs;
 }
 
 
-- (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)anObject {
-	if ([currentPane respondsToSelector:@selector(windowWillReturnFieldEditor:toObject:)])
-		return [currentPane windowWillReturnFieldEditor:sender toObject:anObject];
+- (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)anObject
+{
+	if ([currentPane respondsToSelector:@selector(windowWillReturnFieldEditor:toObject:)]) {
+		return [currentPane performSelector:@selector(windowWillReturnFieldEditor:toObject:)
+                                 withObject:sender
+                                 withObject:anObject];
+    }
 	return nil;
 	
 }
@@ -623,23 +635,26 @@ id QSPrefs;
 }
 
 
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar {
+- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)aToolbar
+{
 	return [NSArray arrayWithObjects:@"QSToolbarTitleView", @"QSMainMenuPrefPane", NSToolbarSeparatorItemIdentifier, @"QSSettingsPanePlaceholder", @"QSCatalogPrefPane", nil];
 // NOTE: @"QSTriggersPrefPane", @"QSPlugInPrefPane" were there
 //	return [self toolbarAllowedItemIdentifiers:toolbar]; 	
 }
-- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)aToolbar {
+
+- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)aToolbar
+{
 	return [self toolbarAllowedItemIdentifiers:aToolbar];
 }
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar {
+
+- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)aToolbar
+{
 	NSMutableArray *array = [NSMutableArray array]; 	
 	NSArray *someModules = [[modulesByID allValues] filteredArrayUsingPredicate:
 	[NSPredicate predicateWithFormat:@"type like[cd] 'toolbar'"]];
-	//[array addObject:@"QSToolbarHistoryView"];
 	[array addObject:@"QSSettingsPanePlaceholder"];
 	[array addObject:@"QSToolbarTitleView"];
-	[array addObjectsFromArray:[someModules valueForKey:kItemID]];
-	
+	[array addObjectsFromArray:[someModules valueForKey:kItemID]];	
 	[array addObject:NSToolbarFlexibleSpaceItemIdentifier];
 	[array addObject:NSToolbarSeparatorItemIdentifier];
 	[array addObject:NSToolbarSpaceItemIdentifier];

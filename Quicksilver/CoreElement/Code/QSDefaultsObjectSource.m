@@ -1,3 +1,8 @@
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-09 Makoto Yamashita
+ */
+
 #import <QSCrucible/NDAlias.h>
 
 #import "QSDefaultsObjectSource.h"
@@ -66,15 +71,18 @@
     return [[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Preferences/"]stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist",bundleID]];
 }
 
-- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry{
+- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry
+{
     NSMutableDictionary *settings=[theEntry objectForKey:kItemSettings];
     if (![settings objectForKey:kDefaultsObjectSourceBundleID]) return YES;
     NSFileManager *manager=[NSFileManager defaultManager];
     NSString *itemPath=[self prefFileForBundle:[settings objectForKey:kDefaultsObjectSourceBundleID]];
     if (![manager fileExistsAtPath:itemPath isDirectory:nil]) return YES;
-    NSDate *modDate=[[manager fileAttributesAtPath:itemPath traverseLink:NO]fileModificationDate];
-    if ([modDate compare:indexDate]==NSOrderedDescending)return NO; //FS item modification is more recent than index
-    return YES;
+    NSDate *modDate = [[manager attributesOfItemAtPath:itemPath error:NULL]
+                         fileModificationDate];
+    if ([modDate compare:indexDate]==NSOrderedDescending) {
+        return NO; //FS item modification is more recent than index
+    }
     return [super indexIsValidFromDate:indexDate forEntry:theEntry];
 }
 

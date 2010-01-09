@@ -4,14 +4,17 @@
 //
 //  Created by Nicholas Jitkoff on 6/29/05.
 
-//
+//  2010-01-09 Makoto Yamashita
 
 #import <Cocoa/Cocoa.h>
 #import "QSObject.h"
+
 @class QSTask;
+
 @interface NSObject (QSTaskDelegate)
 - (NSImage *)iconForTask:(QSTask *)task;
 @end
+
 @interface QSTask : NSObject {
 	NSString *identifier;
 	NSString *name;
@@ -35,36 +38,16 @@
 
 - (IBAction)cancel:(id)sender;
 
-- (NSString *)identifier;
-- (void)setIdentifier:(NSString *)value;
-
-- (NSString *)name;
-- (void)setName:(NSString *)value;
-
-- (NSString *)status;
-- (void)setStatus:(NSString *)value;
-
-- (float)progress;
-- (void)setProgress:(float)value;
-
-- (QSObject *)result;
-- (void)setResult:(QSObject *)value;
-
-- (SEL)cancelAction;
-- (void)setCancelAction:(SEL)value;
-
-- (id)cancelTarget;
-- (void)setCancelTarget:(id)value;
-
-- (BOOL)showProgress;
-- (void)setShowProgress:(BOOL)value;
-
-- (NSArray *)subtasks ;
-- (void)setSubtasks:(NSArray *)value ;
-
-- (NSImage *)icon;
-- (void)setIcon:(NSImage *)newIcon;
-- (id)delegate;
-- (void)setDelegate:(id)newDelegate;
+@property (retain) NSString* identifier;
+@property (copy) NSString* name;
+@property (copy) NSString* status;
+@property (assign) float progress;
+@property (assign) BOOL showProgress;
+@property (copy) QSObject* result;
+@property (assign) SEL cancelAction;
+@property (retain) id cancelTarget;
+@property (retain) NSArray* subtasks;
+@property (retain) NSImage* icon;
+@property (retain) id delegate;
 
 @end

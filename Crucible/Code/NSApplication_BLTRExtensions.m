@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on Thu May 01 2003.
 
-//
+//  2010-01-09 Makoto Yamashita
 
 #import "NSApplication_BLTRExtensions.h"
 #import "NSFileManager_BLTRExtensions.h"
@@ -14,15 +14,18 @@
 
 #import "QSBuildOptions.h"
 @implementation NSApplication (Info)
-- (BOOL)wasLaunchedAtLogin {
+- (BOOL)wasLaunchedAtLogin
+{
 	return [[[NSApp parentProcessInformation] objectForKey:@"CFBundleIdentifier"] isEqualToString:@"com.apple.loginwindow"];
 }
 
-- (NSString *)buildVersion {
+- (NSString *)buildVersion
+{
 	return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
 }
 
-- (NSString *)versionString {
+- (NSString *)versionString
+{
     NSDictionary *infoDict = [[NSBundle mainBundle]infoDictionary];
     
     NSString * shortVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
@@ -32,9 +35,10 @@
     return version;
 }
 
-- (int)featureLevel{return 0;}
+- (int)featureLevel { return 0; }
 
-- (NSDictionary *)processInformation {
+- (NSDictionary *)processInformation
+{
 	ProcessSerialNumber currPSN;
 	OSStatus err = GetCurrentProcess (&currPSN);
 	if (!err) {
@@ -44,7 +48,8 @@
 	return nil;
 }
 
-- (NSDictionary *)parentProcessInformation {
+- (NSDictionary *)parentProcessInformation
+{
 	// Get the PSN of the app that *launched* us.  Its not really the parent app, in the unix sense.
 	long long temp = [[[self processInformation] objectForKey:@"ParentPSN"] longLongValue];
 	ProcessSerialNumber   parentPSN = {(temp >> 32) & 0x00000000FFFFFFFFLL, (temp >> 0) & 0x00000000FFFFFFFFLL};
@@ -54,7 +59,8 @@
 	return [parentDict autorelease];
 }
 
-- (NSString *)applicationSupportFolder {
+- (NSString *)applicationSupportFolder
+{
     FSRef foundRef;
     unsigned char path[1024];
     
@@ -70,78 +76,76 @@
 @end
 
 @implementation NSApplication (Focus)
-- (BOOL) stealKeyFocus {
+- (BOOL) stealKeyFocus
+{
     CPSProcessSerNum psn;
 	
-    if((CPSGetCurrentProcess(&psn) == noErr) && (CPSStealKeyFocus(&psn) == noErr))
+    if((CPSGetCurrentProcess(&psn) == noErr) && (CPSStealKeyFocus(&psn) == noErr)) {
 		return YES;
-    
+    }
     return NO;
 }
 
-- (BOOL) releaseKeyFocus {
+- (BOOL) releaseKeyFocus
+{
     CPSProcessSerNum psn;
 	
-    if((CPSGetCurrentProcess(&psn) == noErr) && (CPSReleaseKeyFocus(&psn) == noErr))
+    if((CPSGetCurrentProcess(&psn) == noErr) && (CPSReleaseKeyFocus(&psn) == noErr)) {
 		return YES;
-    
+    }
     return NO;
 }
 @end
 
 @implementation NSApplication (Relaunching)
-- (void)requestRelaunch:(id)sender {
-    if (NSRunAlertPanel(@"Relaunch required", @"Quicksilver needs to be relaunched for some changes to take effect", @"Relaunch", @"Later", nil))
-        [self relaunch:self];
+- (void)requestRelaunch:(id)sender
+{
+    NSInteger res;
+    res = NSRunAlertPanel(@"Relaunch required",
+                          @"Quicksilver needs to be relaunched for some changes to take effect",
+                          @"Relaunch",
+                          @"Later",
+                          nil);
+    if (res) [self relaunch:self];
 }
 
-
-- (void)relaunchAfterMovingFromPath:(NSString *)newPath {
+- (void)relaunchAfterMovingFromPath:(NSString *)newPath
+{
 	[self relaunchAtPath:[[NSBundle mainBundle] bundlePath] movedFromPath:newPath];
 }
 
-- (int)moveToPath:(NSString *)launchPath fromPath:(NSString *)newPath {
+- (int)moveToPath:(NSString *)launchPath fromPath:(NSString *)newPath
+{
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSString *tempPath = [[launchPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Quicksilver.old.app"];
-	//QSLog(@"temp %@ new %@",tempPath,newPath);
 	BOOL status;
-	//[manager movePathWithAuthentication:launchPath toPath:newPath];
-	status = [manager movePath:launchPath toPath:tempPath handler:nil];
+	status = [manager moveItemAtPath:launchPath toPath:tempPath error:NULL];
 	if (VERBOSE) QSLog(@"Move Old %d",status);
-	status = [manager movePath:newPath toPath:launchPath handler:nil];
+	status = [manager moveItemAtPath:newPath toPath:launchPath error:NULL];
 	if (VERBOSE) QSLog(@"Copy New %d",status);
 	status = [manager movePathToTrash:tempPath];
 	if (VERBOSE) QSLog(@"Trash Old %d",status);
 	return status;
 }
 
-- (void)replaceWithUpdateFromPath:(NSString *)newPath {
+- (void)replaceWithUpdateFromPath:(NSString *)newPath
+{
 	[self moveToPath:[[NSBundle mainBundle] bundlePath] fromPath:newPath];
 }
 
-- (void)relaunchAtPath:(NSString *)launchPath movedFromPath:(NSString *)newPath {
+- (void)relaunchAtPath:(NSString *)launchPath movedFromPath:(NSString *)newPath
+{
 	[self moveToPath:launchPath fromPath:newPath];
 	[self relaunchFromPath:launchPath];
-	return;
-//	
-//	NSString *relauncherPath=[[NSBundle mainBundle]pathForResource:@"Relauncher" ofType:@""];
-//	NSArray *arguments=[NSArray arrayWithObjects:
-//		[NSString stringWithFormat:@"%d",[[NSProcessInfo processInfo]processIdentifier]],
-//		launchPath,
-//		newPath,
-//		nil];
-//	[NSTask launchedTaskWithLaunchPath:relauncherPath arguments:arguments];
-//	
-//	[self terminate:self];
-//	
-//	
 }
 
-- (void)relaunchFromPath:(NSString *)path {
-	if (!path)
+- (void)relaunchFromPath:(NSString *)path
+{
+	if (!path) {
 		path = [[NSBundle mainBundle] executablePath];
-	else 
+	} else {
 		path = [[NSBundle bundleWithPath:path] executablePath];
+    }
 	QSLog(@"Relaunch from path %@",path);
 	char pidstr[10]; 
 	sprintf(pidstr,"%d",getpid());
@@ -152,19 +156,19 @@
 	[self terminate:self];
 }
 
-- (IBAction)relaunch:(id)sender {
-	[self relaunchFromPath:nil];
-}
+- (IBAction)relaunch:(id)sender { [self relaunchFromPath:nil]; }
 
 @end
 
 @implementation NSApplication (LSUIElementManipulation)
 
-- (BOOL)shouldBeUIElement {
+- (BOOL)shouldBeUIElement
+{
 	return [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"LSUIElement"] boolValue];
 }
 
-- (BOOL)setShouldBeUIElement:(BOOL)hidden {
+- (BOOL)setShouldBeUIElement:(BOOL)hidden
+{
 	NSString * plistPath = nil;
     NSFileManager *manager = [NSFileManager defaultManager];
 	if( ( plistPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents/Info.plist"] ) ) {
@@ -172,8 +176,11 @@
 			NSMutableDictionary *infoDict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
 			[infoDict setObject:[NSNumber numberWithInt:hidden] forKey:@"LSUIElement"];
 			[infoDict writeToFile:plistPath atomically:NO];
-			[manager changeFileAttributes:[NSDictionary dictionaryWithObject:[NSDate date] forKey:NSFileModificationDate]
-                                   atPath:[[NSBundle mainBundle] bundlePath]];
+            NSDictionary* newAttr = [NSDictionary dictionaryWithObject:[NSDate date]
+                                                                forKey:NSFileModificationDate];
+			[manager setAttributes:newAttr
+                      ofItemAtPath:[[NSBundle mainBundle] bundlePath]
+                             error:NULL];
 			return YES;
 		}
 	}

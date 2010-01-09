@@ -4,21 +4,21 @@
 //
 //  Created by Alcor on 5/27/05.
 
-//
-
-#import "QSSimpleWebWindowController.h"
-
+//  2010-01-09 Makoto Yamashita
 
 #import <WebKit/WebKit.h>
+#import "QSSimpleWebWindowController.h"
+
 @implementation QSSimpleWebWindowController
 
-- (id)initWithWindow:(id)window {
+- (id)initWithWindow:(id)window
+{
 	NSRect windowRect = NSMakeRect(100, 100, 300, 300);
 	window = [[QSWindow alloc] initWithContentRect:windowRect styleMask:NSTitledWindowMask | NSUtilityWindowMask | NSNonactivatingPanelMask | NSClosableWindowMask | NSResizableWindowMask | NSMiniaturizableWindowMask backing:NSBackingStoreBuffered defer:NO];
 	[window setBackgroundColor: [NSColor colorWithDeviceWhite:1.0 alpha:0.9]];
 	[window setOpaque:NO];
 	[window setAlphaValue:1.0];
-	[window setLevel:kCGNormalWindowLevel];
+	[(NSWindow*)window setLevel:kCGNormalWindowLevel];
 	[window setHidesOnDeactivate:NO]; [window setCanHide:NO];
 	[window setDelegate:self];
 	[window setReleasedWhenClosed:YES];

@@ -1,4 +1,6 @@
-
+/* Derived from Blacktree, Inc. codebase
+ * 2010-01-03 Makoto Yamashita.
+ */
 
 #import "QSObject_Pasteboard.h"
 #import "QSTypes.h"
@@ -178,8 +180,6 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
             newName = @"PDF Image";
         else if ([self objectForType:[@"'icns'" encodedPasteboardType]])
             newName = @"Finder Icon";
-        else if ([self objectForType:NSPICTPboardType])
-            newName = @"PICT Image";
         else if ([self objectForType:NSPostScriptPboardType])
             newName = @"PostScript Image";
         else if ([self objectForType:NSTIFFPboardType])

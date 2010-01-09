@@ -1,3 +1,6 @@
+/* Derived from Blacktree, Inc. codebase
+ * 2010-01-03 Makoto Yamashita.
+ */
 
 // Standard Quicksilver data types
 
@@ -25,7 +28,7 @@ extern NSString *QSHandledType;			//NSDictionary
 #define QSPrivatePboardType @"QSPrivatePboardType" // This pasteboard type prevents recording by the Clip History
 
 
-#define standardPasteboardTypes [NSArray arrayWithObjects:@"Apple URL pasteboard type",NSColorPboardType, NSFileContentsPboardType, NSFilenamesPboardType, NSFontPboardType, NSHTMLPboardType, NSPDFPboardType, NSPICTPboardType, NSPostScriptPboardType, NSRulerPboardType, NSRTFPboardType, NSRTFDPboardType, NSStringPboardType, NSTabularTextPboardType, NSTIFFPboardType, NSURLPboardType, NSVCardPboardType, NSFilesPromisePboardType, nil]
+#define standardPasteboardTypes [NSArray arrayWithObjects:@"Apple URL pasteboard type",NSColorPboardType, NSFileContentsPboardType, NSFilenamesPboardType, NSFontPboardType, NSHTMLPboardType, NSPDFPboardType, NSPostScriptPboardType, NSRulerPboardType, NSRTFPboardType, NSRTFDPboardType, NSStringPboardType, NSTabularTextPboardType, NSTIFFPboardType, NSURLPboardType, NSVCardPboardType, NSFilesPromisePboardType, nil]
 
 #define clippingTypes [NSSet setWithObjects:@"textClipping",@"pictClipping", @"'clpp'",@"textClipping", @"'clpt'",@"webloc", @"inetloc", @"'ilht'",@"'ilaf'",nil]
 #define PLISTTYPES [NSArray arrayWithObjects:NSFilenamesPboardType,@"ABPeopleUIDsPboardType",@"WebURLsWithTitlesPboardType",@"AddressesPboardType",nil]

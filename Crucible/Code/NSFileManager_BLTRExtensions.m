@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on Thu Apr 03 2003.
 
-//
+//  2010-01-09 Makoto Yamashita
 
 #import "NSFileManager_BLTRExtensions.h"
 
@@ -18,50 +18,53 @@
 #define HIDDENROOT [NSArray arrayWithObjects:@"home", @"net", @"automount",@"bin",@"cores",@"dev",@"etc",@"mach",@"mach.sym",@"mach_kernel",@"private",@"sbin",@"sbin",@"tmp",@"usr",@"var",nil]
 @implementation NSFileManager (Carbon)
 
-- (bool) isVisible:(NSString *)path{
+- (bool) isVisible:(NSString *)path
+{
     LSItemInfoRecord infoRec;
     OSStatus status=LSCopyItemInfoForURL((CFURLRef)[NSURL fileURLWithPath:path],kLSRequestBasicFlagsOnly, &infoRec);
+    
     if (infoRec.flags & kLSItemInfoIsInvisible) return NO;
     
-    if ([[path stringByDeletingLastPathComponent] isEqualToString:@"/"]){
-	
-       // NSArray *hiddenFiles=[[NSString stringWithContentsOfFile:@"/.hidden"]componentsSeparatedByString:@"\n"];
-      //  if ([hiddenFiles containsObject:[path lastPathComponent]]) return NO;
-		if ([HIDDENROOT containsObject:[path lastPathComponent]]) return NO;
+    if ([[path stringByDeletingLastPathComponent] isEqualToString:@"/"]
+        && [HIDDENROOT containsObject:[path lastPathComponent]]) {
+        return NO;
     }
-    if (status){
-        if ([[path lastPathComponent]hasPrefix:@"."])return NO;
-        //QSLog(@"%d",status);
-    }
+    if (status && [[path lastPathComponent]hasPrefix:@"."]) return NO;
+
     return YES;
 }
 
-- (BOOL)isHiddenFile:(NSString *)path{
+- (BOOL)isHiddenFile:(NSString *)path
+{
   	NSRange slashRange=[path rangeOfString:@"/" options:0 range:NSMakeRange(1,[path length]-1)];
-	if (slashRange.location==NSNotFound || NSMaxRange(slashRange) == [path length]){
-		// if ([[path stringByDeletingLastPathComponent] isEqualToString:@"/"]){
+	if (slashRange.location==NSNotFound || NSMaxRange(slashRange) == [path length]) {
 		QSLog(@"hidden?");
         NSArray *hiddenFiles = [[NSString stringWithContentsOfFile:@"/.hidden" encoding:NSASCIIStringEncoding error:NULL]componentsSeparatedByString:@"\n"];
         if ([hiddenFiles containsObject:[path lastPathComponent]]) return YES;
-		}
+    }
 	if ([[path lastPathComponent]hasPrefix:@"."])return YES;
+    
 	return NO;
-	}
+}
 
-- (NSString *)humanReadableFiletype:(NSString *)path{
+- (NSString *)humanReadableFiletype:(NSString *)path
+{
     NSString *res;
     LSCopyKindStringForURL((CFURLRef)[NSURL fileURLWithPath:path],(CFStringRef *)&res );
     return [res autorelease];
 }
 
-- (BOOL)movePathToTrash:(NSString *)filepath{
-	NSString *trashfilepath=[[@"~/.Trash/" stringByStandardizingPath]stringByAppendingPathComponent:[filepath lastPathComponent]];
-	trashfilepath=[trashfilepath firstUnusedFilePath];
+- (BOOL)movePathToTrash:(NSString *)filepath
+{
+	NSString *trashfilepath = [[@"~/.Trash/" stringByStandardizingPath]
+                                 stringByAppendingPathComponent:[filepath lastPathComponent]];
+	trashfilepath = [trashfilepath firstUnusedFilePath];
 	
-	return [self movePath:filepath toPath:trashfilepath handler:nil];
+	return [self moveItemAtPath:filepath toPath:trashfilepath error:NULL];
 }
 
-- (BOOL)movePathToTrashUsingFinder:(NSString *)filepath{
+- (BOOL)movePathToTrashUsingFinder:(NSString *)filepath
+{
 	AppleEvent        event, reply;
 	OSErr            err;
 	OSType            adrFinder = 'MACS';
@@ -86,8 +89,7 @@
 	AEDisposeDesc(&event);
 	AEDisposeDesc(&reply);
     
-    if (fileAlias)
-        DisposeHandle((Handle)fileAlias);
+    if (fileAlias) DisposeHandle((Handle)fileAlias);
 	
 	return YES;
 	
@@ -97,83 +99,57 @@
 
 NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec);
 
-NSString *QSUTIOfFile(NSString *path){
+NSString *QSUTIOfFile(NSString *path)
+{
 	LSItemInfoRecord infoRec;
 	// OSStatus status=
 	LSCopyItemInfoForURL((CFURLRef)[NSURL fileURLWithPath:path],
 						 kLSRequestTypeCreator|kLSRequestBasicFlagsOnly, &infoRec);
 	
-	
 	return QSUTIWithLSInfoRec(path,&infoRec);
 }
 
-NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
+NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec)
+{
     NSString *extension=[path pathExtension];
 	
-    if (![extension length])
-		extension=nil; 
-	BOOL isDirectory;//, isPackage;
-		if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory]) return nil;
-		
-		NSString *extensionUTI = [(NSString *)UTTypeCreatePreferredIdentifierForTag (kUTTagClassFilenameExtension,(CFStringRef)extension, NULL) autorelease];
-		NSString *hfsType=[(NSString *)UTCreateStringForOSType(infoRec->filetype) autorelease];
-		
-		
-		
-		if (infoRec->flags & kLSItemInfoIsAliasFile)
-			return (NSString *)kUTTypeAliasFile;
-		if (infoRec->flags & kLSItemInfoIsVolume)
-			return (NSString *)kUTTypeVolume;
-		
-		//BOOL executable=;
-		
-		//if ([hfsType isEqualToString:@"APPL"]) return kUTTypeApplication;
-		
-		//	if ([hfsType isEqualToString:@"''"]) hfsType=nil;
-		//	QSLog(@"hfs %@> %@<",hfsType,extensionUTI);
-		//	isPackage=infoRec->flags & kLSItemInfoIsPackage;
-		//	if (![hfsType length] && isDirectory && isPackage){
-		//        NSString *packageType=[NSString stringWithContentsOfFile:[path stringByAppendingPathComponent:@"Contents/PkgInfo"]];
-		//        if ([packageType length]>=4)
-		//            packageType=[packageType substringToIndex:4];
-		//        if (packageType) packageType=[NSString stringWithFormat:@"%@",packageType];
-		//        if (packageType && ![packageType isEqualToString:@"BNDL"])
-		//            hfsType=packageType;
-		//		//  if ([hfsType isEqualToString:@"'APPL'"]) 
-		//		//	return kUTTypeApplication;
-		//    }
-		
-		NSString *hfsUTI=[(NSString *)UTTypeCreatePreferredIdentifierForTag (kUTTagClassOSType,(CFStringRef)hfsType, NULL) autorelease];
-		
-		
-		
-		if (extensionUTI && ![extensionUTI hasPrefix:@"dyn"])
-			return extensionUTI;
-		
-		if (![hfsType length] && isDirectory)
-			return (NSString *)kUTTypeFolder;
-		//	if ([hfsType length]){
-		//hfsUTI=[UTTypeCreatePreferredIdentifierForTag (kUTTagClassOSType,[hfsType substringWithRange:NSMakeRange(1,4)], NULL) autorelease];
-		
-		
-		if (![hfsUTI hasPrefix:@"dyn"]){
-			return hfsUTI;		
-		}
-		
-		if([[NSFileManager defaultManager] isExecutableFileAtPath:path]){
-			return @"public.executable";
-		}
-		return (extensionUTI?extensionUTI:hfsUTI);
-		
-		}
+    if (![extension length]) extension = nil; 
+
+    BOOL isDirectory;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory]) {
+        return nil;
+    }    
+    NSString *extensionUTI = [(NSString *)UTTypeCreatePreferredIdentifierForTag (kUTTagClassFilenameExtension,(CFStringRef)extension, NULL) autorelease];
+    NSString *hfsType=[(NSString *)UTCreateStringForOSType(infoRec->filetype) autorelease];
+    
+    if (infoRec->flags & kLSItemInfoIsAliasFile) {
+        return (NSString *)kUTTypeAliasFile;
+    }
+    if (infoRec->flags & kLSItemInfoIsVolume) {
+        return (NSString *)kUTTypeVolume;
+    }
+    NSString *hfsUTI=[(NSString *)UTTypeCreatePreferredIdentifierForTag (kUTTagClassOSType,(CFStringRef)hfsType, NULL) autorelease];
+    
+    if (extensionUTI && ![extensionUTI hasPrefix:@"dyn"]) {
+        return extensionUTI;
+    }
+    if (![hfsType length] && isDirectory) return (NSString *)kUTTypeFolder;
+    
+    if (![hfsUTI hasPrefix:@"dyn"]){
+        return hfsUTI;		
+    }    
+    if([[NSFileManager defaultManager] isExecutableFileAtPath:path]){
+        return @"public.executable";
+    }
+    return (extensionUTI?extensionUTI:hfsUTI);
+}
 
 
 @implementation NSFileManager (Scanning)
-- (NSString *)UTIOfFile:(NSString *)path{
-	return QSUTIOfFile(path);
-}
+- (NSString *)UTIOfFile:(NSString *)path { return QSUTIOfFile(path); }
 
-- (NSString *)typeOfFile:(NSString *)path{
+- (NSString *)typeOfFile:(NSString *)path
+{
     BOOL isDirectory, isPackage;
     
     if (![self fileExistsAtPath:path isDirectory:&isDirectory]) return nil;
@@ -181,9 +157,7 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
     LSItemInfoRecord infoRec;
     OSStatus status=LSCopyItemInfoForURL((CFURLRef)[NSURL fileURLWithPath:path],
                                          kLSRequestTypeCreator|kLSRequestBasicFlagsOnly, &infoRec);
-    if (status){
-		return @"";
-    }
+    if (status)	return @"";
 	
     NSString *extension=[path pathExtension];
     if (![extension length]) extension=nil; 
@@ -196,7 +170,7 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
     NSString *hfsType=NSFileTypeForHFSTypeCode(fileType);
     if ([hfsType isEqualToString:@"''"]) hfsType=nil;
     
-    if (!hfsType && isDirectory && isPackage){
+    if (!hfsType && isDirectory && isPackage) {
         NSString *packageType=[NSString stringWithContentsOfFile:[path stringByAppendingPathComponent:@"Contents/PkgInfo"] encoding:NSASCIIStringEncoding error:NULL];
         if ([packageType length]>=4)
             packageType=[packageType substringToIndex:4];
@@ -208,53 +182,76 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
     
     if (![hfsType length] && isDirectory)hfsType=@"'fold'";
     
-    if (extension)
+    if (extension) {
         return extension;
-    else if  (hfsType)
+    } else if  (hfsType) {
         return hfsType;
-    else return @"";
+    }
+    return @"";
 }
 
-- (NSString *)fullyResolvedPathForPath:(NSString *)sourcePath{
+- (NSString *)fullyResolvedPathForPath:(NSString *)sourcePath
+{
     NSEnumerator *enumer=[[[[sourcePath stringByStandardizingPath]stringByResolvingSymlinksInPath] pathComponents]objectEnumerator];
     NSString *thisComponent;
     NSString *path=@"";
     while((thisComponent=[enumer nextObject])){
         path=[path stringByAppendingPathComponent:thisComponent];
         
-        if (![self fileExistsAtPath:path])continue;
+        if (![self fileExistsAtPath:path]) continue;
         
         LSItemInfoRecord infoRec;
         LSCopyItemInfoForURL((CFURLRef)[NSURL fileURLWithPath:path],
 							 kLSRequestBasicFlagsOnly, &infoRec);
         
-        if (infoRec.flags & kLSItemInfoIsAliasFile)
+        if (infoRec.flags & kLSItemInfoIsAliasFile) {
             path=[[self resolveAliasAtPath:path]stringByResolvingSymlinksInPath];
-        
-        
-		// QSLog(path);
+        }
     }
     return path;
 }
 
-
-
-- (NSString *)resolveAliasAtPath:(NSString *)aliasFullPath{
+- (NSString *)resolveAliasAtPath:(NSString *)aliasFullPath
+{
     NSString *outString = nil;
-    //  Boolean success = false;
     NSURL *url;
     FSRef aliasRef;
-    //  OSErr anErr = noErr;
     Boolean targetIsFolder;
     Boolean wasAliased;
     
-    if (!CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:aliasFullPath], &aliasRef))
+    if (!CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:aliasFullPath], &aliasRef)) {
         return nil;
+    }
+    OSStatus result;
+    result = FSResolveAliasFileWithMountFlags(&aliasRef,
+                                              true,
+                                              &targetIsFolder,
+                                              &wasAliased,
+                                              kResolveAliasFileNoUI);
+    if (result != noErr) return nil;
     
+    if ((url = (NSURL*)CFURLCreateFromFSRef(kCFAllocatorDefault, &aliasRef))) {
+        outString = [url path];
+        CFRelease(url);
+        return outString;
+    }
+    return nil;
+}
+
+- (NSString *)resolveAliasAtPathWithUI:(NSString *)aliasFullPath
+{
+    NSString *outString = nil;
+    NSURL *url;
+    FSRef aliasRef;
+    Boolean targetIsFolder;
+    Boolean wasAliased;
     
-    if (FSResolveAliasFileWithMountFlags(&aliasRef, true, &targetIsFolder, &wasAliased,kResolveAliasFileNoUI) != noErr)
+    if (!CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:aliasFullPath], &aliasRef)) {
         return nil;
-    
+    }    
+    if (FSResolveAliasFileWithMountFlags(&aliasRef, true, &targetIsFolder, &wasAliased,0) != noErr) {
+        return nil;
+    }
     if ((url = (NSURL *) CFURLCreateFromFSRef(kCFAllocatorDefault, &aliasRef))) {
         outString = [url path];
         CFRelease(url);
@@ -263,55 +260,24 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
     return nil;
 }
 
-- (NSString *)resolveAliasAtPathWithUI:(NSString *)aliasFullPath{
-    NSString *outString = nil;
-    //  Boolean success = false;
-    NSURL *url;
-    FSRef aliasRef;
-    //  OSErr anErr = noErr;
-    Boolean targetIsFolder;
-    Boolean wasAliased;
-    
-    if (!CFURLGetFSRef((CFURLRef)[NSURL fileURLWithPath:aliasFullPath], &aliasRef))
-        return nil;
-    
-    
-    if (FSResolveAliasFileWithMountFlags(&aliasRef, true, &targetIsFolder, &wasAliased,0) != noErr)
-        return nil;
-    
-    if ((url = (NSURL *) CFURLCreateFromFSRef(kCFAllocatorDefault, &aliasRef))) {
-        outString = [url path];
-        CFRelease(url);
-        return outString;
-    }
-    return nil;
-}
 
-
-- (NSArray *) itemsForPath:(NSString *)path depth:(int)depth types:(NSArray *)types{
+- (NSArray *) itemsForPath:(NSString *)path depth:(int)depth types:(NSArray *)types
+{
     NSFileManager *manager=[NSFileManager defaultManager];
-    // NSWorkspace *workspace=[NSWorkspace sharedWorkspace];
     BOOL isDirectory;
     if (![manager fileExistsAtPath:path isDirectory:&isDirectory]) return nil;
     
     NSMutableArray *array=[NSMutableArray arrayWithCapacity:1];
-    
-    //QSLog(@"Scanning %@\rDepth:%d\tTypes: [%@]",path,depth,[types componentsJoinedByString:@", "]);
+
     if (depth) depth--;
-    if (depth==-10){
-        //if (VERBOSE)QSLog(@"Scan Depth Exceeded 10 Levels with: %@",path);
-        return array;
-    }
+    if (depth==-10) return array;
     
-    NSString *file;
     NSString *type;
     LSItemInfoRecord infoRec;
     OSStatus status;
-    NSEnumerator *enumerator = [[manager directoryContentsAtPath:path] objectEnumerator];
-    while ((file = [enumerator nextObject])){
-        file=[path stringByAppendingPathComponent:file];
-        type=[self typeOfFile:file];
-        
+    for (NSString* file in [manager contentsOfDirectoryAtPath:path error:NULL]) {
+        file = [path stringByAppendingPathComponent:file];
+        type = [self typeOfFile:file];
         status=LSCopyItemInfoForURL((CFURLRef)[NSURL fileURLWithPath:file],
                                     kLSRequestBasicFlagsOnly, &infoRec);
         
@@ -322,8 +288,6 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
                 LSCopyItemInfoForURL((CFURLRef)[NSURL fileURLWithPath:file], kLSRequestBasicFlagsOnly, &infoRec);
             }
         }
-        
-        
         if (![manager fileExistsAtPath:file isDirectory:&isDirectory]) continue;
         if ([manager isVisible:file]){
             if ((!types) || [types containsObject:type]){
@@ -333,17 +297,20 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
         if (depth && isDirectory && !(infoRec.flags & kLSItemInfoIsPackage))
             [array addObjectsFromArray:[self itemsForPath:file depth:depth types:types]];
     }
-    //   QSLog(@"%@",array);
     return array;
 }
 
-- (BOOL)touchPath:(NSString *)path{
-	return [self changeFileAttributes:[NSDictionary dictionaryWithObject:[NSDate date] forKey:NSFileModificationDate]
-							   atPath:path];
-	
+- (BOOL)touchPath:(NSString *)path
+{
+    NSDictionary* newAttr = [NSDictionary dictionaryWithObject:[NSDate date]
+                                                        forKey:NSFileModificationDate];
+	return [self setAttributes:newAttr
+                  ofItemAtPath:path
+                         error:NULL];
 }
 
-- (NSDate *)bulkPath:(NSString *)path wasModifiedAfter:(NSDate *)date depth:(int)depth{
+- (NSDate *)bulkPath:(NSString *)path wasModifiedAfter:(NSDate *)date depth:(int)depth
+{
 	if (depth) depth--;
 	UKDirectoryEnumerator *enumerator = [[UKDirectoryEnumerator alloc]initWithPath:path];
    	NSDate *fileDate;
@@ -384,15 +351,13 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
     
     if (depth) depth--;
     
-    NSString *file;
-    NSDate *moddate=[[self fileAttributesAtPath:path traverseLink:NO]fileModificationDate];
+    NSDate *moddate = [[self attributesOfItemAtPath:path error:NULL] fileModificationDate];
 	
 	if ([date compare:moddate]==NSOrderedAscending && [moddate timeIntervalSinceNow]<0){
 		return moddate;
 	}
     if (isDirectory){
-        NSEnumerator *enumerator = [[self directoryContentsAtPath:path] objectEnumerator];
-        while ((file = [enumerator nextObject])){
+        for (NSString* file in [self contentsOfDirectoryAtPath:path error:NULL]) {
             file=[path stringByAppendingPathComponent:file];
             if (![self fileExistsAtPath:file isDirectory:&isDirectory]) continue;
             
@@ -402,49 +367,40 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
 				[moddate retain];
 				[pool release];
 				[moddate autorelease];
-                if (moddate)
-					return moddate;
+                if (moddate) return moddate;
             }
         }
     }
-    
     return nil;
 }
 
-- (NSDate *) modifiedDate:(NSString *)path depth:(int)depth{
+- (NSDate *) modifiedDate:(NSString *)path depth:(int)depth
+{
     NSWorkspace *workspace=[NSWorkspace sharedWorkspace];
     BOOL isDirectory;
     if (![self fileExistsAtPath:path isDirectory:&isDirectory]) return nil;
     
     if (depth) depth--;
     
-    NSString *file;
     NSDate *moddate=[self pastOnlyModifiedDate:path];
-    //NSDictionary *fattrs;
-    if ([moddate timeIntervalSinceNow]>0)
-        moddate=[NSDate distantPast];
+    if ([moddate timeIntervalSinceNow]>0) moddate = [NSDate distantPast];
     if (isDirectory){
-        NSEnumerator *enumerator = [[self directoryContentsAtPath:path] objectEnumerator];
-        while ((file = [enumerator nextObject])){
+        for (NSString* file in [self contentsOfDirectoryAtPath:path error:NULL]) {
             file=[path stringByAppendingPathComponent:file];
             if (![self fileExistsAtPath:file isDirectory:&isDirectory]) continue;
             
             if (depth && isDirectory && ![workspace isFilePackageAtPath:file]){
-                // moddate=[moddate laterDate:[self pastOnlyModifiedDate:file]];
                 moddate=[moddate laterDate:[self modifiedDate:file depth:depth]];
             }
         }
     }
-    
     return moddate;
 }
 
-
-
-- (NSDate *)pastOnlyModifiedDate:(NSString *)path{
-    NSDate *moddate=[[self fileAttributesAtPath:path traverseLink:NO]fileModificationDate];
-    if ([moddate timeIntervalSinceNow]>0){
-        //QSLog(@"File has future date: %@\r%@",path,[moddate description]);
+- (NSDate *)pastOnlyModifiedDate:(NSString *)path
+{
+    NSDate *moddate = [[self attributesOfItemAtPath:path error:NULL] fileModificationDate];
+    if ([moddate timeIntervalSinceNow] > 0) {
         moddate=[NSDate distantPast];
     }
     return moddate;
@@ -455,53 +411,56 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec){
 
 @implementation NSFileManager (BLTRExtensions)
 
-- (BOOL)createDirectoriesForPath:(NSString *)path{
-    //  QSLog(@"creating folder: (%@)",path);
+- (BOOL)createDirectoriesForPath:(NSString *)path
+{
     if (![path length]) return NO;
-    if (![self fileExistsAtPath:[path stringByDeletingLastPathComponent] isDirectory:nil])
+    if (![self fileExistsAtPath:[path stringByDeletingLastPathComponent] isDirectory:nil]) {
         [self createDirectoriesForPath:[path stringByDeletingLastPathComponent]];
-    
-    return [self createDirectoryAtPath:path attributes:nil];
-}
-- (int)defaultDragOperationForMovingPaths:(NSArray *)sources toDestination:(NSString *)destination{
-	
-    NSDictionary *dAttr=[self fileAttributesAtPath:destination traverseLink:NO];
-    int i;
-    for (i=0;i<[sources count];i++){
-		if ([[sources objectAtIndex:0] isEqualToString:destination]) return NSDragOperationNone;
-        NSDictionary *sAttr=[self fileAttributesAtPath:[sources objectAtIndex:0] traverseLink:NO];
-        
-        if (![[sAttr objectForKey:NSFileSystemNumber] isEqualTo: [dAttr objectForKey:NSFileSystemNumber]])
-            return NSDragOperationCopy;
     }
-    
+    return [self createDirectoryAtPath:path
+           withIntermediateDirectories:NO
+                            attributes:nil
+                                 error:NULL];
+}
+- (int)defaultDragOperationForMovingPaths:(NSArray *)sources toDestination:(NSString *)destination
+{	
+    NSDictionary *dAttr = [self attributesOfItemAtPath:destination error:NULL];
+    for (id source in sources) {
+		if ([source isEqualToString:destination]) return NSDragOperationNone;
+        
+        NSDictionary *sAttr = [self attributesOfItemAtPath:source error:NULL];
+
+        if (![[sAttr objectForKey:NSFileSystemNumber] isEqualTo:[dAttr objectForKey:NSFileSystemNumber]]) {
+            return NSDragOperationCopy;
+        }
+    }    
     return NSDragOperationMove;
-    
 }   
 
-- (BOOL)filesExistAtPaths:(NSArray *)paths{
-    
-    NSString *thisFile;
-    for(thisFile in paths)
-        if (![self fileExistsAtPath:thisFile])return NO;
+- (BOOL)filesExistAtPaths:(NSArray *)paths
+{
+    for (NSString* thisFile in paths) {
+        if (![self fileExistsAtPath:thisFile]) return NO;
+    }
     return YES;
 }
 
-- (NSDictionary *)conflictsForFiles:(NSArray *)files inDestination:(NSString *)destination{
+- (NSDictionary *)conflictsForFiles:(NSArray *)files inDestination:(NSString *)destination
+{
 	NSMutableDictionary *conflicts=[NSMutableDictionary dictionaryWithCapacity:0];
-	
 	NSFileManager *manager=[NSFileManager defaultManager];    
 	NSString *file;
 	NSString *destinationPath;
 	
-	for(file in files){
+	for(file in files) {
 		destinationPath=[destination stringByAppendingPathComponent:[file lastPathComponent]];
-		//file=[destination stringByAppendingPathComponent:[file lastPathComponent]];
-		if ([manager fileExistsAtPath:destinationPath])
+		if ([manager fileExistsAtPath:destinationPath]) {
 			[conflicts setObject:destinationPath forKey:file];
+        }
 	}
-	if (![conflicts count])
-		return nil;
+	if (![conflicts count]) return nil;
+    
 	return conflicts;
 }
+
 @end

@@ -4,17 +4,16 @@
 //
 //  Created by Alcor on Thu Apr 24 2003.
 
-//
+//  Makoto Yamashita 2010-01-04
 
+#import <QuartzCore/QuartzCore.h>
 #import "NSImage_BLTRExtensions.h"
 #import "NSGeometry_BLTRExtensions.h"
 
 static inline int get_bit(unsigned char *arr, unsigned long bit_num)
 {
-  return ( arr[(bit_num/8)] & (1 << (bit_num%8)) );
+    return ( arr[(bit_num/8)] & (1 << (bit_num%8)) );
 }
-
-
 
 @implementation NSBitmapImageRep (Stego)
 /*
@@ -49,88 +48,106 @@ static inline int get_bit(unsigned char *arr, unsigned long bit_num)
 
 @implementation NSImage (Dragging)
 
-
-
 // ***warning   * this needs to fade all representations
-- (NSImage *)imageWithAlphaComponent:(float)alpha {
-  // BOOL wasFlipped = [self isFlipped];
-  
-  NSImage *fadedImage = [[[NSImage alloc] initWithData:[self TIFFRepresentation]]autorelease];
-  [fadedImage setCacheMode:NSImageCacheNever];
-  
-  NSEnumerator *repEnum = [[fadedImage representations] objectEnumerator];
-  NSImageRep *rep = nil;
-  while((rep = [repEnum nextObject]) ) {
-    [fadedImage lockFocusOnRepresentation:rep];
-		
-		[[NSColor colorWithDeviceWhite:0.0 alpha:0.5] set];
-    NSRectFillUsingOperation(rectFromSize([rep size]), NSCompositeDestinationIn);
-    
-    [fadedImage unlockFocus];
-  }
-	//    [self setFlipped:NO]; w
-	//    [fadedImage lockFocus];
-	//    [self drawInRect:rectFromSize([self size]) fromRect:rectFromSize([self size]) operation:NSCompositeSourceOver fraction:alpha];
-	//    [fadedImage unlockFocus];
-  return fadedImage;
-  
+- (NSImage *)imageWithAlphaComponent:(float)alpha
+{
+    // BOOL wasFlipped = [self isFlipped];
+    NSImage *fadedImage = [[[NSImage alloc] initWithData:[self TIFFRepresentation]]autorelease];
+    [fadedImage setCacheMode:NSImageCacheNever];
+
+    NSEnumerator *repEnum = [[fadedImage representations] objectEnumerator];
+    NSImageRep *rep = nil;
+    while((rep = [repEnum nextObject]) ) {
+        [fadedImage lockFocusOnRepresentation:rep];
+            
+        [[NSColor colorWithDeviceWhite:0.0 alpha:0.5] set];
+        NSRectFillUsingOperation(rectFromSize([rep size]), NSCompositeDestinationIn);
+
+        [fadedImage unlockFocus];
+    }
+    return fadedImage;
 }
 
 @end
 
 @implementation NSImage (Scaling)
 
-//FIXME
-- (NSImage *)imageByAdjustingHue:(float)hue {
-	return self;
+- (NSImage *)imageByAdjustingHue:(CGFloat)hue
+{
+    return [self imageByAdjustingHue:hue saturation:1.0];
 }
-- (NSImage *)imageByAdjustingHue:(float)hue saturation:(float)saturation {
-	return self; 	
+
+- (NSImage *)imageByAdjustingHue:(CGFloat)hue saturation:(CGFloat)saturation
+{
+    CGImageRef imgRef = [self CGImageForProposedRect:NULL
+                                             context:nil
+                                               hints:nil];
+    CIImage* sourceImg = [CIImage imageWithCGImage:imgRef];
+    
+    if (!sourceImg) {
+        NSLog(@"could not create an sounce image");
+        return self;
+    }
+    CIFilter* hueAdjust = [CIFilter filterWithName:@"CIHueAdjust"];
+    [hueAdjust setDefaults];
+    [hueAdjust setValue:sourceImg forKey: @"inputImage"];
+    [hueAdjust setValue:[NSNumber numberWithFloat:hue]
+                 forKey:@"inputAngle"];
+    CIFilter* satAdjust = [CIFilter filterWithName:@"CIColorControls"];
+    [satAdjust setDefaults];
+    [satAdjust setValue:[hueAdjust valueForKey: @"outputImage"]
+                 forKey:@"inputImage"];
+    [satAdjust setValue:[NSNumber numberWithFloat:saturation]
+                 forKey:@"inputSaturation"];
+    CIImage* outImg = [satAdjust valueForKey: @"outputImage"];
+    NSImage* newImage = [[NSImage alloc] initWithSize:[self size]];
+    [newImage lockFocus];
+    [outImg drawAtPoint:NSZeroPoint
+               fromRect:NSMakeRect(0, 0, CGRectGetHeight([outImg extent]), CGRectGetWidth([outImg extent]))
+              operation:NSCompositeCopy
+               fraction:1.0];
+    [newImage unlockFocus];
+    return newImage;
 }
-- (NSSize) adjustSizeToDrawAtSize:(NSSize)theSize {
+
+- (NSSize) adjustSizeToDrawAtSize:(NSSize)theSize
+{
   NSImageRep *bestRep = [self bestRepresentationForSize:theSize];
   [self setSize:[bestRep size]];
   return [bestRep size];
 }
-- (NSImageRep *)bestRepresentationForSize:(NSSize)theSize {
+
+- (NSImageRep *)bestRepresentationForSize:(NSSize)theSize
+{
 	NSImageRep *bestRep = [self representationOfSize:theSize];
-  //[self setCacheMode:NSImageCacheNever];
-  if (bestRep) {
-		
-		//	QSLog(@"getRep? %f", theSize.width);
-		return bestRep;
-		
-	} else {
-		//	QSLog(@"getRex? %f", theSize.width);
-	}
-  NSArray *reps = [self representations];
-  // if (theSize.width == theSize.height) { 
-	// ***warning   * handle other sizes
-  float repDistance = 65536.0;  
-	// ***warning   * this is totally not the highest, but hey...
-  NSImageRep *thisRep;
-  float thisDistance;
-  int i;
-  for (i = 0; i<(int) [reps count]; i++) {
-    thisRep = [reps objectAtIndex:i];
-    thisDistance = MIN(theSize.width-[thisRep size] .width, theSize.height-[thisRep size] .height);  
-		
+
+    if (bestRep) return bestRep;
+    
+    NSArray *reps = [self representations];
+    // ***warning   * handle other sizes
+    float repDistance = 65536.0;  
+    // ***warning   * this is totally not the highest, but hey...
+    float thisDistance;
+    for (id thisRep in reps) {
+        thisDistance = MIN(theSize.width - [thisRep size].width,
+                           theSize.height - [thisRep size].height);  
+
 		if (repDistance<0 && thisDistance>0) continue;
-    if (ABS(thisDistance) <ABS(repDistance) || (thisDistance<0 && repDistance>0)) {
-      repDistance = thisDistance;
-      bestRep = thisRep;
+
+        if (ABS(thisDistance) <ABS(repDistance) || (thisDistance<0 && repDistance>0)) {
+            repDistance = thisDistance;
+            bestRep = thisRep;
+        }
     }
-  }
-	///QSLog(@"   Rex? %@", bestRep);
-	
-  if (bestRep) return bestRep;
-  bestRep = [self bestRepresentationForDevice:nil];
-	//   QSLog(@"unable to find reps %@", reps);
-  
-  return bestRep;
-  return nil;
+    if (bestRep) return bestRep;
+    bestRep = [self bestRepresentationForRect:NSMakeRect(0, 0, theSize.width, theSize.height)
+                                      context:nil
+                                        hints:nil];
+    return bestRep;
 }
-- (NSImageRep *)representationOfSize:(NSSize)theSize {
+
+- (NSImageRep *)representationOfSize:(NSSize)theSize
+{
   NSArray *reps = [self representations];
   int i;
   for (i = 0; i<(int) [reps count]; i++)
@@ -324,27 +341,31 @@ static inline int get_bit(unsigned char *arr, unsigned long bit_num)
 @end
 
 @implementation NSImage (Average)
-- (NSColor *)averageColor {
-	NSBitmapImageRep *rep = (NSBitmapImageRep *)[self bestRepresentationForDevice:nil]; 	
-	if (![rep isKindOfClass:[NSBitmapImageRep class]]) return nil;
-	unsigned char *pixels = [rep bitmapData];
-	
-	int red = 0, blue = 0, green = 0; //, alpha = 0;
-	int n = [rep size] .width*[rep size] .height;
-	int i = 0;
-	for (i = 0; i < n; i++) {
-		//	pixels[(j*imageWidthInPixels+i) *bitsPerPixel+channel]
-		//QSLog(@"%d %d %d %d", pixels[0] , pixels[1] , pixels[2] , pixels[3]);
-		red += *pixels++;
-		green += *pixels++;
-		blue += *pixels++;
-		//alpha += *pixels++;
-	}
-  
-	//QSLog(@"%d %f %d", blue, (float) blue/n/256, n);
-	NSColor *color = [NSColor colorWithDeviceRed:(float) red/n/256 green:(float)green/n/256 blue:(float)blue/n/256 alpha:1.0];
-  //		QSLog(@"color %@", color);
-  return color;
+- (NSColor *)averageColor
+{
+    for (id rep in [self representations]) {
+        if (![rep isKindOfClass:[NSBitmapImageRep class]]) continue;
+
+        CGFloat redMean, blueMean, greenMean, redContrib, blueContrib, greenContrib;
+        NSUInteger x, y, area = [rep size].width * [rep size].height;
+        for (x = 0; x < [rep size].width; x++) {
+            for (y = 0; y < [rep size].height; y++) {
+                [[rep colorAtX:x y:y] getRed:&redContrib
+                                       green:&greenContrib
+                                        blue:&blueContrib
+                                       alpha:NULL];
+                redMean += redContrib / area;
+                greenMean += greenContrib / area;
+                blueMean += blueContrib / area;
+            }
+        }
+        NSColor *color = [NSColor colorWithDeviceRed:redMean
+                                               green:greenMean
+                                                blue:blueMean
+                                               alpha:1.0];
+        return color;
+    }
+    return nil;
 }
 
 @end

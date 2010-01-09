@@ -94,7 +94,7 @@ NSTimeInterval QSTimeIntervalForString(NSString *intervalString) {
 	if (asDroplet) {
 		NSString *dropletTemplate = [[NSBundle mainBundle] pathForResource:@"QSDroplet" ofType:@"app"];
 		NSFileManager *fm = [NSFileManager defaultManager];
-		[fm copyPath:dropletTemplate toPath:destination handler:nil];
+		[fm copyItemAtPath:dropletTemplate toPath:destination error:NULL];
 		
 		NSString *commandFile = [destination stringByAppendingPathComponent:@"Contents/Command.qscommand"];
 		[command writeToFile:commandFile];

@@ -1,7 +1,8 @@
-
+/* Derived from Blacktree, Inc. codebase
+ * 2010-01-03 Makoto Yamashita.
+ */
 
 #import <AppKit/AppKit.h>
-
 
 @class QSInterfaceController;
 
@@ -10,8 +11,7 @@ typedef enum {
 	QSSelectDropMode = 1, // Selects Dropped objects
 	QSActionDropMode = 2, // Can perform actions, but not change selection
 	QSFullDropMode = 3 // Actions as well as change selection
-} QSObjectDropMode;
-	
+} QSObjectDropMode;	
 
 @interface QSObjectView : NSControl {
         
@@ -39,7 +39,7 @@ typedef enum {
     BOOL shouldSpring;
 	NSEvent *springDrag;
 	NSImage *draggedImage;
-    }
+}
 - (QSObject *)draggedObject;
 - (void)setDraggedObject:(QSObject *)newDraggedObject;
 
@@ -56,8 +56,8 @@ typedef enum {
 
 - (BOOL)initiatesDrags;
 - (void)setInitiatesDrags:(BOOL)flag;
-- (NSString *)dragAction;
-- (void)setDragAction:(NSString *)aDragAction;
+
+@property (copy) NSString* dragAction;
 
 - (QSInterfaceController *)controller;
 - (NSSize)cellSize;

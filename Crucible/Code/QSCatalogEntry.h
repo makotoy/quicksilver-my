@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on 2/8/05.
 
-//
+//  2010-01-03 Makoto Yamashita
 
 #import <Cocoa/Cocoa.h>
 
@@ -37,7 +37,7 @@
 - (BOOL)isPreset;
 - (BOOL)isSeparator;
 - (BOOL)isGroup;
-- (int)state;
+- (NSInteger)state;
 - (int)hasEnabledChildren;
 - (BOOL)isEnabled;
 - (void)setEnabled:(BOOL)enabled;
@@ -60,7 +60,7 @@
 - (NSArray *)scannedObjects;
 - (NSArray *)scanAndCache;
 - (NSArray *)scanForced:(BOOL)force;
-- (NSMutableArray *)children;
+@property (retain) NSMutableArray *children;
 - (NSMutableArray *)getChildren;
 - (NSArray *)contents;
 - (NSArray *)contentsScanIfNeeded:(BOOL)canScan;
@@ -71,11 +71,9 @@
 - (NSString *)indexLocation;
 - (void)setName:(NSString *)newName;
 - (NSIndexPath *)catalogSetIndexPath;
-- (NSDate *)indexDate;
-- (void)setIndexDate:(NSDate *)anIndexDate;
+@property (retain) NSDate *indexDate;
+@property (assign) BOOL isScanning;
 - (NSArray *)_contents;
 - (NSMutableDictionary *)info;
-- (BOOL)isScanning;
-- (void)setIsScanning:(BOOL)flag;
 - (NSString *)countString;
 @end

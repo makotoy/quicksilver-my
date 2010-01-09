@@ -13,29 +13,34 @@
 
 @implementation QSCubeInterface
 
-- (id)init {
+- (id)init
+{
     return [self initWithWindowNibName:@"QSCubeInterface"];
 }
 
 - (void)loadPreferences { }
 
-- (IBAction)searchForString:(id)sender {
+- (IBAction)searchForString:(id)sender
+{
     NSString *string = [sender stringValue];
     NSLog(@"strings %@", string);
 }
 
-- (void)resignKeyWindow {
+- (void)resignKeyWindow
+{
 	NSLog(@"resign"); 	
     [[self shadowWindow] orderOut:nil];
     [[self backdropWindow] orderOut:nil];
     [[self window] resignKeyWindow];
 }
 
-- (void)windowDidExpose:(NSNotification *)aNotification {
+- (void)windowDidExpose:(NSNotification *)aNotification
+{
 	NSLog(@"expose"); 	
 }
 
-- (NSWindow *)shadowWindow {
+- (NSWindow *)shadowWindow
+{
 	if (!shadowWindow) {
 		NSRect windowRect = NSMakeRect(0, 0, 300, 300);
 		NSWindow *window = [[NSWindow alloc] initWithContentRect:windowRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
@@ -494,8 +499,8 @@
 	
 	int i = 0;
 	int j = 0;
-	unsigned int hits[[titleString length]];
-	int count = [hitMask getIndexes:(unsigned int *)&hits maxCount:[titleString length] inIndexRange:nil];
+	NSUInteger hits[[titleString length]];
+	int count = [hitMask getIndexes:(NSUInteger *)&hits maxCount:[titleString length] inIndexRange:nil];
 	
 	for(i = 0; i<count; i += j) {
 		for (j = 1; i+j<count && hits[i+j-1] +1 == hits[i+j]; j++);

@@ -29,13 +29,20 @@
 #pragma mark Class Methods
 
 NSTimeInterval ti;
-+ (void)initialize {
++ (void)initialize
+{
 	ti = [NSDate timeIntervalSinceReferenceDate];
-	//BLog(@"init ");
-	
-	[self setKeys:[NSArray arrayWithObject:@"plugins"] triggerChangeNotificationsForDependentKey:@"extensions"];
-	[self setKeys:[NSArray arrayWithObject:@"plugins"] triggerChangeNotificationsForDependentKey:@"elements"];
-	[self setKeys:[NSArray arrayWithObject:@"plugins"] triggerChangeNotificationsForDependentKey:@"extensionPoints"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
+{
+    NSSet* resPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    if ([key isEqualToString:@"extensions"]
+          || [key isEqualToString:@"elements"]
+          || [key isEqualToString:@"extensionPoints"]) {
+        resPaths = [resPaths setByAddingObject:@"plugins"];
+    }
+    return resPaths;
 }
 
 static id sharedInstance = nil;
@@ -118,7 +125,8 @@ static id sharedInstance = nil;
 //    NSString *version = [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]; // plain plugins won't check version?
     
     if (plugin) {
-        NSDate *modDate = [[fileManager fileAttributesAtPath:[url path] traverseLink:YES] fileModificationDate];
+        NSDate *modDate = [[fileManager attributesOfItemAtPath:[url path]
+                                                         error:NULL] fileModificationDate];
         BOOL isValid = [(NSDate *)[plugin valueForKey:@"registrationDate"] compare: modDate] != NSOrderedAscending;	
 
         if (isValid) {
@@ -202,7 +210,7 @@ static id sharedInstance = nil;
     while ((eachSearchPath = [pluginSearchPaths lastObject])) {
 		[pluginSearchPaths removeLastObject];
 		
-        NSArray *pathContents = [fileManager directoryContentsAtPath:eachSearchPath];
+        NSArray *pathContents = [fileManager contentsOfDirectoryAtPath:eachSearchPath error:NULL];
         pathContents = [pathContents pathsMatchingExtensions:[self pluginPathExtensions]];
 		for (NSString *thisPath in pathContents) {            
             thisPath = [eachSearchPath stringByAppendingPathComponent:thisPath];
@@ -482,7 +490,10 @@ static id sharedInstance = nil;
     fileManager = [NSFileManager defaultManager];
     applicationSupportFolder = [self applicationSupportFolder];
     if ( ![fileManager fileExistsAtPath:applicationSupportFolder isDirectory:NULL] ) {
-        [fileManager createDirectoryAtPath:applicationSupportFolder attributes:nil];
+        [fileManager createDirectoryAtPath:applicationSupportFolder
+               withIntermediateDirectories:NO
+                                attributes:nil
+                                     error:NULL];
     }
     
     NSString *path = [applicationSupportFolder stringByAppendingPathComponent: @"registry.cache"];
@@ -492,7 +503,7 @@ static id sharedInstance = nil;
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]){
         // If an error occurs, try to destroy the store.
         NSLog(@"Removing store: %@", error);
-        [fileManager removeFileAtPath:path handler:nil];
+        [fileManager removeItemAtPath:path error:NULL];
         if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]){
             [[NSApplication sharedApplication] presentError:error];
         }

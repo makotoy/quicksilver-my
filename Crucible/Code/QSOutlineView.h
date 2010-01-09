@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (OutlineViewSeparator)
+@protocol OutlineViewSeparator
 - (BOOL)outlineView:(NSTableView *)aTableView itemIsSeparator:(id)item;
 @end
 

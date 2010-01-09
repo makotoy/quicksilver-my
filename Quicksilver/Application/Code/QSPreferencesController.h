@@ -1,11 +1,15 @@
-/* QSPreferencesController */
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-09 Makoto Yamashita
+ *
+ * QSPreferencesController
+ */
 
 #import <Cocoa/Cocoa.h>
 
 #define kQSPreferencesSplitWidth @"QSPreferencesSplitWidth"
 
-@interface QSPreferencesController : NSWindowController
-{
+@interface QSPreferencesController : NSWindowController <NSWindowDelegate> {
     IBOutlet NSTextField *descView;
     IBOutlet NSTableView *externalPrefsTable;
     IBOutlet NSButton *helpButton;
@@ -60,5 +64,6 @@
 - (void)preventEmptySelection;
 - (void)selectPaneWithIdentifier:(NSString *)identifier;
 - (QSPreferencePane *)showPaneWithIdentifier:(NSString *)identifier;
-
+- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)aToolbar;
+- (BOOL)tableView:(NSTableView *)aTableView rowIsSeparator:(NSInteger)rowIndex;
 @end

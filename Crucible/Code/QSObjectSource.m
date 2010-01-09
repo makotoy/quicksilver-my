@@ -4,10 +4,13 @@
 #import "QSObjectSource.h"
 
 @implementation QSObjectSource
-+ (void)initialize
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
 {
-    [self setKeys:[NSArray arrayWithObject:@"selection"]
-          triggerChangeNotificationsForDependentKey:@"currentEntry"];
+    NSSet* resPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    if ([key isEqualToString:@"currentEntry"]) {
+        resPaths = [resPaths setByAddingObject:@"selection"];
+    }
+    return resPaths;
 }
 
 - (NSImage *)iconForEntry:(NSDictionary *)theEntry {return nil;}

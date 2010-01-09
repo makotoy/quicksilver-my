@@ -55,7 +55,7 @@ static NSMutableDictionary *typeSets;
 	typeSets=[[NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"FileTypeGroups" ofType:@"plist"]]retain];
 	[typeSets setObject:[NSImage imageUnfilteredFileTypes] forKey:@"QSImageFileTypes"];
 	[typeSets setObject:[QTMovie movieUnfilteredFileTypes] forKey:@"QSMovieFileTypes"];
-	[typeSets setObject:[NSSound soundUnfilteredFileTypes] forKey:@"QSSoundFileTypes"];
+	[typeSets setObject:[NSSound soundUnfilteredTypes] forKey:@"QSSoundFileTypes"];
 }
 
 
@@ -263,7 +263,8 @@ static NSMutableDictionary *typeSets;
 
 //Item Fields
 
-- (IBAction)setValueForSender:(id)sender{
+- (IBAction)setValueForSender:(id)sender
+{
     NSMutableDictionary *settings=[[self currentEntry] objectForKey:kItemSettings];
     if (!settings){
         settings=[NSMutableDictionary dictionaryWithCapacity:1];

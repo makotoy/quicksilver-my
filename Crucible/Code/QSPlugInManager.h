@@ -42,10 +42,6 @@
 
 + (id)sharedInstance;
 
-- (BOOL) showNotifications;
-- (void) setShowNotifications: (BOOL) flag;
-
-//- (QSPlugIn *)plugInWithBundle:(NSBundle *)bundle;
 - (QSPlugIn *)plugInWithID:(NSString *)identifier;
 - (BOOL)plugInIsMostRecent:(QSPlugIn *)plugIn inGroup:(NSDictionary *)loadingBundles;
 - (BOOL)plugInMeetsRequirements:(QSPlugIn *)plugIn;
@@ -56,38 +52,29 @@
 
 - (BOOL)startupLoadComplete;
 
-// - (NSArray *)allBundles;
-// - (void)loadPlugInsAtLaunch;
 - (void)suggestOldPlugInRemoval;
 - (BOOL)liveLoadPlugIn:(QSPlugIn *)plugin;
 - (NSArray *)knownPlugInsWithWebInfo ;
-//- (BOOL)shouldLoadPlugIn:(QSPlugIn *)plugIn inGroup:(NSDictionary *)loadingBundles;
+
 - (QSPlugIn *)plugInBundleWasInstalled:(NSBundle *)bundle;
 - (void)deletePlugIns:(NSArray *)deletePlugIns fromWindow:(NSWindow *)window;
 - (void)checkForUnmetDependencies;
-//- (NSMutableDictionary *)validPlugIns;
-//- (void)setValidPlugIns:(NSMutableDictionary *)newValidPlugIns;
 
-//- (NSString *)installPlugInFromFile:(NSString *)path;
 - (BOOL)installPlugInsForIdentifiers:(NSArray *)bundleIDs;
 - (BOOL)installPlugInsForIdentifiers:(NSArray *)bundleIDs version:(NSString *)version;
 - (void)loadNewWebData:(NSData *)data;
 - (BOOL)checkForPlugInUpdates;
 - (BOOL)checkForPlugInUpdatesForVersion:(NSString *)version;
 
-- (NSDictionary *)localPlugIns;
-- (void)setLocalPlugIns:(NSDictionary *)newLocalPlugIns;
-- (NSDictionary *)knownPlugIns;
-- (void)setKnownPlugIns:(NSDictionary *)newKnownPlugIns;
-- (NSDictionary *)loadedPlugIns;
-- (void)setLoadedPlugIns:(NSDictionary *)newLoadedPlugIns;
+@property (retain) NSMutableDictionary *localPlugIns;
+@property (retain) NSMutableDictionary *knownPlugIns;
+@property (retain) NSMutableDictionary *loadedPlugIns;
+@property (copy) NSString *installStatus;
+@property (assign) float installProgress;
+@property (assign) BOOL isInstalling;
+@property (retain) NSURLDownload* currentDownload;
+@property (assign) BOOL showNotifications;
 
-- (NSString *)installStatus;
-- (void)setInstallStatus:(NSString *)newInstallStatus;
-- (float)installProgress;
-- (void)setInstallProgress:(float)newInstallProgress;
-- (BOOL)isInstalling;
-- (void)setIsInstalling:(BOOL)flag;
 - (void)updateDownloadProgressInfo;
 - (NSString *)urlStringForPlugIn:(NSString *)ident version:(NSString *)version;
 - (BOOL)supressRelaunchMessage;

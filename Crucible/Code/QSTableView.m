@@ -137,7 +137,7 @@
     int column = [self columnAtPoint:point]; 
     int row = [self rowAtPoint:point]; 
     if ( column >= 0 && row >= 0 && [[self delegate] respondsToSelector:@selector(tableView:menuForTableColumn:row:)] ) 
-        return [[self delegate] tableView:self menuForTableColumn:[[self tableColumns] objectAtIndex:column] row:row]; 
+        return [(id<QSTableViewMenu>)[self delegate] tableView:self menuForTableColumn:[[self tableColumns] objectAtIndex:column] row:row]; 
     return [super menuForEvent:evt]; 
 } 
 
@@ -145,8 +145,9 @@
 {
     [super draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation]; 
 	
-    if ([[self dataSource] respondsToSelector:@selector(tableView:dropEndedWithOperation:)] ) 
-        [[self dataSource] tableView:self dropEndedWithOperation:operation]; 
+    if ([[self dataSource] respondsToSelector:@selector(tableView:dropEndedWithOperation:)] ) {
+        [(id<QSTableDropEnded>)[self dataSource] tableView:self dropEndedWithOperation:operation]; 
+    }
 }
 
 @synthesize draggingDelegate;
@@ -161,7 +162,7 @@
     int column = [self columnAtPoint:point]; 
     int row = [self rowAtPoint:point]; 
     if ( column >= 0 && row >= 0 && [[self delegate] respondsToSelector:@selector(tableView:menuForTableColumn:row:)] ) 
-        return [[self delegate] tableView:self menuForTableColumn:[[self tableColumns] objectAtIndex:column] row:row]; 
+        return [(id<QSTableViewMenu>)[self delegate] tableView:self menuForTableColumn:[[self tableColumns] objectAtIndex:column] row:row]; 
     return [super menuForEvent:evt]; 
 } 
 @end 

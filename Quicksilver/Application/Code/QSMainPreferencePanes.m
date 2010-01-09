@@ -4,18 +4,15 @@
 //
 //  Created by Alcor on 11/2/04.
 
-//
+//  2010-01-09 Makoto Yamashita
 
 #import <QSCrucible/NDHotKeyEvent.h>
 #import <QSCrucible/NDHotKeyEvent_QSMods.h>
 
 #import "QSApp.h"
-
 #import "QSUpdateController.h"
-
 #import "QSModifierKeyEvents.h"
 #import "QSController.h"
-
 #import "QSMainPreferencePanes.h"
 
 @implementation QSSearchPrefPane
@@ -306,25 +303,30 @@
 -(IBAction)checkNow:(id)sender{
 	[[QSUpdateController sharedInstance]threadedRequestedCheckForUpdate:sender];	
 }
-- (void)deleteSupportFiles{
-	NSFileManager *fm=[NSFileManager defaultManager];
-	[fm removeFileAtPath:QSApplicationSupportSubPath(@"Actions.plist",NO) handler:self];
-	[fm removeFileAtPath:QSApplicationSupportSubPath(@"Catalog.plist",NO) handler:self];
-	[fm removeFileAtPath:pIndexLocation handler:self];
-	[fm removeFileAtPath:QSApplicationSupportSubPath(@"Mnemonics.plist",NO) handler:self];
-	[fm removeFileAtPath:QSApplicationSupportSubPath(@"PlugIns",NO) handler:self];
-	[fm removeFileAtPath:QSApplicationSupportSubPath(@"PlugIns.plist",NO) handler:self];
-	[fm removeFileAtPath:QSApplicationSupportSubPath(@"Shelves",NO) handler:self];
-	[fm removeFileAtPath:[@"~/Library/Caches/Quicksilver" stringByStandardizingPath] handler:self];
-	[[NSUserDefaults standardUserDefaults]synchronize];
-	[fm removeFileAtPath:[@"~/Library/Preferences/com.blacktree.Quicksilver.plist" stringByStandardizingPath] handler:self];
-}
-- (void)deleteApplication{
-	NSFileManager *fm=[NSFileManager defaultManager];
-	[fm removeFileAtPath:[[NSBundle mainBundle]bundlePath] handler:self];
+
+- (void)deleteSupportFiles
+{
+	NSFileManager *fm = [NSFileManager defaultManager];
+	[fm removeItemAtPath:QSApplicationSupportSubPath(@"Actions.plist",NO) error:NULL];
+	[fm removeItemAtPath:QSApplicationSupportSubPath(@"Catalog.plist",NO) error:NULL];
+	[fm removeItemAtPath:pIndexLocation error:NULL];
+	[fm removeItemAtPath:QSApplicationSupportSubPath(@"Mnemonics.plist",NO) error:NULL];
+	[fm removeItemAtPath:QSApplicationSupportSubPath(@"PlugIns",NO) error:NULL];
+	[fm removeItemAtPath:QSApplicationSupportSubPath(@"PlugIns.plist",NO) error:NULL];
+	[fm removeItemAtPath:QSApplicationSupportSubPath(@"Shelves",NO) error:NULL];
+	[fm removeItemAtPath:[@"~/Library/Caches/Quicksilver" stringByStandardizingPath] error:NULL];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+	[fm removeItemAtPath:[@"~/Library/Preferences/com.blacktree.Quicksilver.plist" stringByStandardizingPath] error:NULL];
 }
 
-- (BOOL)fileManager:(NSFileManager *)manager shouldProceedAfterError:(NSDictionary *)errorInfo{
+- (void)deleteApplication
+{
+	NSFileManager *fm=[NSFileManager defaultManager];
+	[fm removeItemAtPath:[[NSBundle mainBundle]bundlePath] error:NULL];
+}
+
+- (BOOL)fileManager:(NSFileManager *)manager shouldProceedAfterError:(NSDictionary *)errorInfo
+{
 	QSLog(@"error: %@",errorInfo);
 	return YES;
 }

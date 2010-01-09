@@ -340,11 +340,10 @@ NSArray *recentDocumentsForBundle(NSString *bundleIdentifier) {
     
 }
 
-- (BOOL)objectHasValidChildren:(QSObject *)object {
+- (BOOL)objectHasValidChildren:(QSObject *)object
+{
     if ([object fileCount] == 1) {
-        NSString *path = [object singleFilePath];
-		
-		
+        NSString *path = [object singleFilePath];		
 		LSItemInfoRecord infoRec;
 		LSCopyItemInfoForURL((CFURLRef) [NSURL fileURLWithPath:path] , kLSRequestBasicFlagsOnly, &infoRec);
 		if (infoRec.flags & kLSItemInfoIsApplication) {
@@ -353,22 +352,18 @@ NSArray *recentDocumentsForBundle(NSString *bundleIdentifier) {
 			id handler = [QSReg instanceForPointID:@"QSBundleChildHandlers" withID:bundleIdentifier];
 			
 			if (handler) {
-				if ([handler respondsToSelector:@selector(objectHasValidChildren:)])
+				if ([handler respondsToSelector:@selector(objectHasValidChildren:)]) {
 					return [handler objectHasValidChildren:object];
-                
+                }
                 // TODO: This should return YES only if loaded in last 10 min or something
-				return YES;
-			}
-			
+			}			
 			return YES;
 		}
-		
-        NSTimeInterval modDate = [[[[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:NO] fileModificationDate] timeIntervalSinceReferenceDate];
-        if (modDate > [object childrenLoadedDate])
-            return NO;
+        NSTimeInterval modDate = [[[[NSFileManager defaultManager] attributesOfItemAtPath:path error:NULL]
+                                     fileModificationDate] timeIntervalSinceReferenceDate];
+        if (modDate > [object childrenLoadedDate]) return NO;
     }
-    return YES;
-    
+    return YES;    
 }
 
 - (NSDragOperation)operationForDrag:(id <NSDraggingInfo>)sender ontoObject:(QSObject *)dObject withObject:(QSBasicObject *)iObject {
@@ -421,7 +416,8 @@ NSArray *recentDocumentsForBundle(NSString *bundleIdentifier) {
     return [paths componentsJoinedByString:@" "];
 }
 
-- (BOOL)loadChildrenForObject:(QSObject *)object {
+- (BOOL)loadChildrenForObject:(QSObject *)object
+{
     NSArray *newChildren = nil;
     NSArray *newAltChildren = nil;
 	
@@ -443,16 +439,11 @@ NSArray *recentDocumentsForBundle(NSString *bundleIdentifier) {
         }
 		NSMutableArray *fileChildren = [NSMutableArray arrayWithCapacity:1];
 		NSMutableArray *visibleFileChildren = [NSMutableArray arrayWithCapacity:1];
-		
-		NSString *file;
-		NSEnumerator *enumerator = [[manager directoryContentsAtPath:path] objectEnumerator];
-		while ((file = [enumerator nextObject])) {
+		for (NSString* file in [manager contentsOfDirectoryAtPath:path error:NULL]) {
 			file = [path stringByAppendingPathComponent:file];
 			[fileChildren addObject:file];
-			if ([manager isVisible:file])
-				[visibleFileChildren addObject:file];
-		}
-		
+			if ([manager isVisible:file]) [visibleFileChildren addObject:file];
+		}		
 		newChildren = [QSObject fileObjectsWithPathArray:visibleFileChildren];
 		newAltChildren = [QSObject fileObjectsWithPathArray:fileChildren];
 		

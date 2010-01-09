@@ -353,11 +353,12 @@
 	return [plugin registerPlugIn];
 }
 
-- (BOOL) deletePlugin:(QSPlugIn*)plugin {
+- (BOOL) deletePlugin:(QSPlugIn*)plugin
+{
 	[localPlugIns removeObjectForKey:[plugin bundleIdentifier]];
 	[knownPlugIns removeObjectForKey:[plugin bundleIdentifier]];
     
-	return [[NSFileManager defaultManager] removeFileAtPath:[plugin bundlePath] handler:nil];
+	return [[NSFileManager defaultManager] removeItemAtPath:[plugin bundlePath] error:NULL];
 }
 
 - (void) checkForUnmetDependencies {
@@ -448,53 +449,6 @@
 }
 
 #define appSupportSubpath @"Application Support/Quicksilver/PlugIns"
-/*
-- (NSArray *) allBundles{
-	NSString *currPath;
-	NSMutableSet *bundleSearchPaths = [NSMutableSet set];
-	NSMutableArray *allBundles = [NSMutableArray array];
-	//[allBundles addObject:[[NSBundle mainBundle]bundlePath]];
-	
-	[bundleSearchPaths addObject:[[NSBundle mainBundle] builtInPlugInsPath]];
-	
-	if ( (int)getenv("QSDisableExternalPlugIns") ) {
-		QSLog(@"External PlugIns Disabled");
-	} else {
-		NSArray *librarySearchPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSAllDomainsMask - NSSystemDomainMask, YES);
-		for ( currPath in librarySearchPaths )
-			[bundleSearchPaths addObject:[currPath stringByAppendingPathComponent:appSupportSubpath]];	
-		[bundleSearchPaths addObject:QSApplicationSupportSubPath(@"PlugIns", NO)];
-		[bundleSearchPaths addObject:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
-		[bundleSearchPaths addObject:[[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"PlugIns"]];
-		[bundleSearchPaths addObject:[[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Embedded/PlugIns"]];
-		[bundleSearchPaths addObject:[[NSFileManager defaultManager] currentDirectoryPath]];
-		[bundleSearchPaths addObject:[[[NSFileManager defaultManager] currentDirectoryPath] stringByAppendingPathComponent:@"PlugIns"]];
-		[bundleSearchPaths addObject:[[[NSFileManager defaultManager] currentDirectoryPath] stringByAppendingPathComponent:@"Embedded/PlugIns"]];
-		//[bundleSearchPaths addObject:[[[NSFileManager defaultManager] currentDirectoryPath] stringByAppendingPathComponent:@"PrivatePlugIns"]];
-		
-		NSArray *paths = [[NSUserDefaults standardUserDefaults] arrayForKey:@"QSAdditionalPlugInPaths"];
-		paths = [paths valueForKey:@"stringByStandardizingPath"];
-		[bundleSearchPaths addObjectsFromArray:paths];
-		
-		[bundleSearchPaths addObject:[[[NSFileManager defaultManager] currentDirectoryPath] stringByAppendingPathComponent:@"PrivatePlugIns"]];
-	}
-	
-	for ( currPath in bundleSearchPaths ) {
-		NSEnumerator *bundleEnum;
-		NSString *curPlugInPath;
-		bundleEnum = [[[NSFileManager defaultManager]directoryContentsAtPath:currPath] objectEnumerator];
-		if ( bundleEnum ) {
-			while ( ( curPlugInPath = [bundleEnum nextObject] ) ) {
-				if ( [[curPlugInPath pathExtension] caseInsensitiveCompare:@"element"] == NSOrderedSame ) {
-					[allBundles addObject:[currPath stringByAppendingPathComponent:curPlugInPath]];
-				}
-			}
-		}
-	}
-	
-	return allBundles;
-}
- */
 
 - (BOOL) plugInMeetsRequirements:(QSPlugIn *)plugIn {
 	NSString *error;
@@ -511,41 +465,40 @@
  @abstract   (brief description)
  @discussion (comprehensive description)
  */
-- (BOOL) plugInMeetsDependencies:(QSPlugIn *)plugIn {
+- (BOOL) plugInMeetsDependencies:(QSPlugIn *)plugIn
+{
 	NSArray *unmet = [plugIn unmetDependencies];
 	
-	if ( [unmet count] ) {
-		//QSLog(@"unmet? %@",unmet);
-		foreach ( dependency, unmet ) {
-			NSString *iden = [dependency objectForKey:@"id"];
-			NSMutableArray *depending = [dependingPlugIns objectForKey:iden];
-			if (!depending) [dependingPlugIns setObject:(depending = [NSMutableArray array]) forKey:iden];
-			[depending addObject:plugIn];
-			//QSLog(@"depends %@",depending);
-		}
-		return NO;
-	}
-	return YES;
+	if (![unmet count] ) return YES;
+
+    for (id dependency in unmet ) {
+        NSString *iden = [dependency objectForKey:@"id"];
+        NSMutableArray *depending = [dependingPlugIns objectForKey:iden];
+        if (!depending) {
+            [dependingPlugIns setObject:(depending = [NSMutableArray array]) forKey:iden];
+        }
+        [depending addObject:plugIn];
+    }
+    return NO;
 }
 
-- (BOOL) plugInIsMostRecent:(QSPlugIn *)plugIn inGroup:(NSDictionary *)loadingBundles {
-	//	if (![bundle isKindOfClass:[NSBundle class]]) return NO;
+- (BOOL) plugInIsMostRecent:(QSPlugIn *)plugIn inGroup:(NSDictionary *)loadingBundles
+{
 	NSString *ident = [plugIn bundleIdentifier];
 	QSPlugIn *dupPlugIn = nil;
-	//NSString *error;
 	
 //TODO: should detect installation of a disabled plugin	
-	if ( ( dupPlugIn = [loadedPlugIns objectForKey:ident] ) ) {// check if the bundle is already loaded. if so need to restart.
-													  //QSLog(@"Bundle already loaded: %@",dupPlugIn);
+	if ( ( dupPlugIn = [loadedPlugIns objectForKey:ident] ) ) {
+        // check if the bundle is already loaded. if so need to restart.
 		return NO;
-		
-	} else if ( ( dupPlugIn = [loadingBundles objectForKey:ident] ) && ![plugIn isEqual:dupPlugIn] ) {
-		//	QSLog(@"Loading Duplicate %@ %@",dupPlugIn, plugIn);
+	}
+    if ( ( dupPlugIn = [loadingBundles objectForKey:ident] ) && ![plugIn isEqual:dupPlugIn] ) {
 		NSFileManager *manager = [NSFileManager defaultManager];
 		NSComparisonResult sorting = [[dupPlugIn buildVersion] versionCompare:[plugIn buildVersion]];
 		if ( sorting == NSOrderedSame ) {
-			sorting	= [[[manager fileAttributesAtPath:[dupPlugIn bundlePath] traverseLink:YES] fileModificationDate]
-							compare:[[manager fileAttributesAtPath:[plugIn bundlePath] traverseLink:YES] fileModificationDate]];
+            NSDate* dupPlugInDate = [[manager attributesOfItemAtPath:[dupPlugIn bundlePath] error:NULL] fileModificationDate];
+            NSDate* plugInDate = [[manager attributesOfItemAtPath:[plugIn bundlePath] error:NULL] fileModificationDate];
+			sorting	= [dupPlugInDate compare:plugInDate];
 		}
 		if ( sorting >= 0 ) {
 			[oldPlugIns addObject:plugIn];
@@ -556,81 +509,40 @@
 	return YES;
 }
 
-
-- (void) suggestOldPlugInRemoval {
-	//QSLog(@"old: %@",oldPlugIns);
-	if ( [oldPlugIns count] ) {
-		if ( 1 ) {//DEBUG || [[NSUserDefaults standardUserDefaults]boolForKey:@"QSIgnoreOldPlugIns"]){
-			   //	if (VERBOSE) QSLog(@"Ignored Old Plugins: %@",[[oldPlugIns valueForKeyPath:@"path"]componentsJoinedByString:@"\r"]);
-		} else {
-			foreach( plugIn, oldPlugIns ) {
-				QSLog(@"Deleting Old Duplicate Plug-in:\r%@", [plugIn path]);
-				[[NSFileManager defaultManager] removeFileAtPath:[plugIn path] handler:nil];
-			}
-		}
-	}
+- (void) suggestOldPlugInRemoval
+{
+// TODO: implement this
 }
 
-- (NSDictionary *) localPlugIns {
-    return [[localPlugIns copy] autorelease]; 
-}
 
-- (void) setLocalPlugIns:(NSDictionary *)newLocalPlugIns {
-    if ( newLocalPlugIns != nil && newLocalPlugIns != localPlugIns) {
-        [localPlugIns release];
-        localPlugIns = [newLocalPlugIns mutableCopy];
-    }
-}
+@synthesize localPlugIns;
+@synthesize knownPlugIns;
+@synthesize loadedPlugIns;
 
-- (NSDictionary *) knownPlugIns {
-    return [[knownPlugIns copy] autorelease]; 
-}
-
-- (void) setKnownPlugIns:(NSDictionary *)newKnownPlugIns {
-    if ( newKnownPlugIns != nil && newKnownPlugIns != knownPlugIns) {
-        [knownPlugIns release];
-        knownPlugIns = [newKnownPlugIns mutableCopy];
-    }
-}
-
-- (NSDictionary *) loadedPlugIns {
-    return [[loadedPlugIns copy] autorelease]; 
-}
-
-- (void) setLoadedPlugIns:(NSDictionary *)newLoadedPlugIns {
-    if ( newLoadedPlugIns != nil && newLoadedPlugIns != loadedPlugIns) {
-        [loadedPlugIns release];
-        loadedPlugIns = [newLoadedPlugIns retain];
-    }
-}
-
-- (BOOL) checkForPlugInUpdates {
+- (BOOL) checkForPlugInUpdates
+{
 	return [self checkForPlugInUpdatesForVersion:nil];
 }
 
-- (BOOL) checkForPlugInUpdatesForVersion:(NSString *)version {
-	if ( !plugInWebData )
-		[self loadWebPlugInInfo];
+- (BOOL) checkForPlugInUpdatesForVersion:(NSString *)version
+{
+	if ( !plugInWebData ) [self loadWebPlugInInfo];
 	
 	int newPlugInsAvailable = 0;
-	//NSDictionary *bundleIDs=[QSReg identifierBundles];
 	
-	if ( !updatedPlugIns )
+	if ( !updatedPlugIns ) {
         updatedPlugIns = [[NSMutableArray array]retain];
-	else
+	} else {
         [updatedPlugIns removeAllObjects];
-	
+	}
 	[self downloadWebPlugInInfoFromDate:plugInWebDownloadDate forUpdateVersion:version synchronously:YES];
 	
-	NSEnumerator *e = [knownPlugIns objectEnumerator];
-	QSPlugIn *thisPlugIn;
-	while ( ( thisPlugIn = [e nextObject] ) ) {
+	for (QSPlugIn *thisPlugIn in knownPlugIns) {
 		if ( [thisPlugIn needsUpdate] ) {
 			[updatedPlugIns addObject:thisPlugIn];
 			newPlugInsAvailable++;	
 		}
 	}
-	
 	if ( newPlugInsAvailable ){		
 		NSArray *names = [updatedPlugIns valueForKey:@"name"];
 		int selection = NSRunInformationalAlertPanel( [NSString stringWithFormat:@"Plug-in Updates are available", nil],
@@ -639,44 +551,44 @@
 			updatingPlugIns = YES;
 			[self installPlugInsForIdentifiers:[updatedPlugIns valueForKey:@"identifier"] version:version];
 			return YES;
-		}	
-		return NO;
+		}
 	}
 	return NO;
 }
 
-- (BOOL) updatePlugInsForNewVersion:(NSString *)version {
+- (BOOL) updatePlugInsForNewVersion:(NSString *)version
+{
 	supressRelaunchMessage = YES;
 	return [self checkForPlugInUpdatesForVersion:version];
 }
 
-
-- (NSArray *) extractFilesFromQSPkg:(NSString *)path toPath:(NSString *)tempDirectory {
-	if ( !path )
-        return nil;
+- (NSArray *) extractFilesFromQSPkg:(NSString *)path toPath:(NSString *)tempDirectory
+{
+	if ( !path ) return nil;
+    
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSTask *task = [[[NSTask alloc] init] autorelease];
 	[task setLaunchPath:@"/usr/bin/ditto"];
-	
 	[task setArguments:[NSArray arrayWithObjects:@"-x",@"-rsrc", path, tempDirectory, nil]];
 	[task launch];
 	[task waitUntilExit];
 	int status = [task terminationStatus];
-    if ( status != 0 )
-        QSLogError( @"Error while executing %@: %d", task, status );
-    [manager removeFileAtPath:path handler:nil];
+    if ( status != 0 )  QSLogError( @"Error while executing %@: %d", task, status );
+    
+    [manager removeItemAtPath:path error:NULL];
     [[NSWorkspace sharedWorkspace] noteFileSystemChanged:[path stringByDeletingLastPathComponent]];
-    return [manager directoryContentsAtPath:tempDirectory];
+    return [manager contentsOfDirectoryAtPath:tempDirectory error:NULL];
 }
 
-- (NSArray *) installPlugInFromCompressedFile:(NSString *)path {
+- (NSArray *) installPlugInFromCompressedFile:(NSString *)path
+{
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSString *tempDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString uniqueString]];
-	[manager createDirectoryAtPath:tempDirectory attributes:nil];
-	
+	[manager createDirectoryAtPath:tempDirectory
+       withIntermediateDirectories:NO
+                        attributes:nil
+                             error:NULL];
 	NSArray *extracted = [self extractFilesFromQSPkg:path toPath:tempDirectory];
-	
-	//QSLog(@"extra %@",extracted);
 	NSMutableArray *installedPlugIns = [NSMutableArray array];
 	NSString *file = nil;
 	for ( file in extracted ) {
@@ -684,8 +596,7 @@
 		NSString *destination = [self installPlugInFromFile:outFile];
 		if ( destination ) [installedPlugIns addObject:destination];
 	}
-	//QSLog(@"installed %@",installedPlugIns);
-	[manager removeFileAtPath:tempDirectory handler:nil];
+	[manager removeItemAtPath:tempDirectory error:NULL];
 	return installedPlugIns;
 }
 
@@ -694,27 +605,21 @@
 	NSFileManager *manager = [NSFileManager defaultManager];
 	[manager createDirectoriesForPath:destinationFolder];
 	NSString *destinationPath = [destinationFolder stringByAppendingPathComponent: [path lastPathComponent]];	
-	if ( ![destinationPath isEqualToString:path] ) {
-		if ( ![manager removeFileAtPath:destinationPath handler:nil] )
+	if ( ![destinationPath isEqualToString:path] && ![manager removeItemAtPath:destinationPath error:NULL] ) {
             QSLog(@"remove failed, %@, %@", path, destinationPath);
 	}
-	if ( ![manager movePath:path toPath:destinationPath handler:nil] )
+	if ( ![manager moveItemAtPath:path toPath:destinationPath error:NULL] ) {
         QSLog(@"move failed, %@, %@", path, destinationPath);
+    }
 	[[NSWorkspace sharedWorkspace] noteFileSystemChanged:[path stringByDeletingLastPathComponent]];
 	[[NSWorkspace sharedWorkspace] noteFileSystemChanged:destinationFolder];
 	return destinationPath;
 }
 
-- (NSArray *)updatedPlugIns {
-    return [[updatedPlugIns copy] autorelease];
-}
+- (NSArray *)updatedPlugIns { return updatedPlugIns; }
 
-	//-(float)downloadProgress{
-	//	if (!downloadsCount) return 1.0;
-	//	return 	(float)(downloadsCount-[downloadsQueue count])/(float)downloadsCount;
-	//}
-
-- (void) updateDownloadCount {
+- (void) updateDownloadCount
+{
 	if ( ![downloadsQueue count] ) {
 		//if (downloadsCount){
 		[[NSNotificationCenter defaultCenter] postNotificationName:QSPlugInUpdatesFinishedNotification object:self];
@@ -735,7 +640,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:QSUpdateControllerStatusChangedNotification object:self];
 }
 
-- (BOOL) plugInWasInstalled:(NSString *)plugInPath {	
+- (BOOL) plugInWasInstalled:(NSString *)plugInPath
+{	
 	NSBundle *bundle = [NSBundle bundleWithPath:plugInPath];
 	
 	QSPlugInManager *manager = [QSPlugInManager sharedInstance];
@@ -762,22 +668,21 @@
 	NSImage *image = [NSImage imageNamed:@"QSPlugIn"];
 	[image setSize:NSMakeSize( 128, 128 )];
 	
-	if ( showNotifications )
-		QSShowNotifierWithAttributes(
-									 [NSDictionary dictionaryWithObjectsAndKeys:
+	if ( showNotifications ) {
+		QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:
 										 @"QSPlugInInstalledNotification", QSNotifierType,
 										 image, QSNotifierIcon,
 										 title, QSNotifierTitle,
 										 ( liveLoaded ? nil : @"Relaunch required" ), QSNotifierText,
 										 nil] );
-	
+	}
 	return YES;
 }
 
-- (BOOL) installPlugInsFromFiles:(NSArray *)fileList {
+- (BOOL) installPlugInsFromFiles:(NSArray *)fileList
+{
 	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	int selection = [defaults boolForKey:kClickInstallWithoutAsking];
-	
 	
 	if ( !selection ) {//[NSApp activateIgnoringOtherApps:YES];
 		selection = NSRunInformationalAlertPanel( @"Install plug-ins?", @"Do you wish to move selected items to Quicksilver's plug-in folder?", @"Install", @"Cancel", @"Always Install Plug-ins" );
@@ -787,41 +692,38 @@
 			[defaults setBool:YES forKey:kClickInstallWithoutAsking];
 			[defaults synchronize];
 		}
-		
-		//NSString *destination=psMainPlugInsLocation;
 		NSString *newPlugIn = nil;
-		
-		NSString *path;
-		for ( path in fileList ) {
-			if ( [[path pathExtension] caseInsensitiveCompare:@"qspkg"] == NSOrderedSame )
+		for ( NSString *path in fileList ) {
+			if ( [[path pathExtension] caseInsensitiveCompare:@"qspkg"] == NSOrderedSame ) {
 				newPlugIn = [[self installPlugInFromCompressedFile:path] lastObject];
-			else if ( [[path pathExtension]caseInsensitiveCompare:@"qsplugin"] == NSOrderedSame )
+			} else if ( [[path pathExtension]caseInsensitiveCompare:@"qsplugin"] == NSOrderedSame ) {
 				newPlugIn = [self installPlugInFromFile:path];
-			
+			}
 			[self plugInWasInstalled:newPlugIn];
 		}
-		
 	}	
 	return YES;
 }
 
-- (BOOL) installPlugInsForIdentifiers:(NSArray *)bundleIDs {
+- (BOOL) installPlugInsForIdentifiers:(NSArray *)bundleIDs
+{
 	return [self installPlugInsForIdentifiers:bundleIDs version:nil];	
 }
 
-- (NSString *) urlStringForPlugIn:(NSString *)ident version:(NSString *)version {
-	if ( !version )
-        version = [NSApp buildVersion];
-	return [NSString stringWithFormat:@"http://quicksilver.blacktree.com/plugins/download.php?qsversion=%d&id=%@", [version hexIntValue], ident];
+- (NSString *) urlStringForPlugIn:(NSString *)ident version:(NSString *)version
+{
+	if ( !version ) version = [NSApp buildVersion];
+    
+	return [NSString stringWithFormat:@"http://quicksilver.blacktree.com/plugins/download.php?qsversion=%d&id=%@",
+            [version hexIntValue], ident];
 }
 
-- (BOOL) installPlugInsForIdentifiers:(NSArray *)bundleIDs version:(NSString *)version {
+- (BOOL) installPlugInsForIdentifiers:(NSArray *)bundleIDs version:(NSString *)version
+{
 	if (VERBOSE) QSLog(@"Update: %@", bundleIDs);
-	NSEnumerator *e = [bundleIDs objectEnumerator];
-	NSString *ident = nil;
-	if ( !version )
-        version = [NSApp buildVersion];
-	while ( ( ident = [e nextObject] ) ) {
+
+	if ( !version ) version = [NSApp buildVersion];
+	for ( NSString *ident in bundleIDs) {
 		NSString *url = [self urlStringForPlugIn:ident version:version];
 		NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                               ident, @"id",
@@ -839,7 +741,8 @@
 	return YES;
 }
 
-- (void) installPlugInWithInfo:(NSDictionary *)info{
+- (void) installPlugInWithInfo:(NSDictionary *)info
+{
 	NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[info objectForKey:@"url"]]
                                                 cachePolicy:NSURLRequestUseProtocolCachePolicy
                                             timeoutInterval:20.0];
@@ -850,10 +753,9 @@
 	[self updateDownloadProgressInfo];
 }
 
-- (void) startDownloadToTemp:(QSURLDownload *)theDownload {
+- (void) startDownloadToTemp:(QSURLDownload *)theDownload
+{
 	if ( theDownload ) {
-		//QSLog(@"DOWNLOAD :%@",theDownload);
-		
 		// set the destination file now
 		NSString *destination = NSTemporaryDirectory();
 		destination = [destination stringByAppendingPathComponent:[NSString uniqueString]];
@@ -862,7 +764,8 @@
 	} 
 }
 
-- (void) startDownloadQueue {
+- (void) startDownloadQueue
+{
 	if ( ![self currentDownload] && [downloadsQueue count] ) {
 		QSURLDownload *download = [downloadsQueue objectAtIndex:0];
 		
@@ -871,53 +774,47 @@
 	}
 }
 
-- (void)handleURL:(NSURL *)url {
-	
-}
+- (void)handleURL:(NSURL *)url { }
 
-- (NSImage *) image {
-	QSLog(@"eep");
-	return nil;
-}
+- (NSImage *) image { return nil; }
 
-- (BOOL) handleInstallURL:(NSURL *)url {
+- (BOOL) handleInstallURL:(NSURL *)url
+{
 	NSString *specifier = [url resourceSpecifier];
-	if ([specifier hasPrefix:@"//"])
-		specifier = [specifier substringFromIndex:2];
+	if ([specifier hasPrefix:@"//"]) specifier = [specifier substringFromIndex:2];
+    
 	NSArray *components = [specifier componentsSeparatedByString:@"&"];
-	//QSLog(@"PlugIn %@",components);
-	//	url=[NSURL URLWithString:[NSString stringWithFormat:@"http://quicksilver.blacktree.com/download.php?%@",specifier]];
 	NSString *idString = [components objectAtIndex:0];
-	if( [idString hasPrefix:@"id="] )
-		idString = [idString substringFromIndex:3];
+	if( [idString hasPrefix:@"id="] ) idString = [idString substringFromIndex:3];
 	
 	NSString *nameString = [components lastObject];
 	NSString *name = @"<Unknown Plug-in>";
-	if( [nameString hasPrefix:@"name="] )
+	if( [nameString hasPrefix:@"name="] ) {
 		name = [[nameString substringFromIndex:5] URLDecoding];
-	
+	}
 	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	
 	int selection = [defaults boolForKey:kWebInstallWithoutAsking];
-	if ( !selection )
+	if ( !selection ) {
 		selection = NSRunInformationalAlertPanel( name, @"Do you wish to install the %@?", @"Install", @"Cancel", @"Always Install Plug-ins", name );
+    }
 	if ( selection ) {
 		if ( selection < 0 ) {
 			[defaults setBool:YES forKey:kWebInstallWithoutAsking];
 			[defaults synchronize];
 		}
 		[self installPlugInsForIdentifiers:[idString componentsSeparatedByString:@","] version:nil];
-		//		[self installPlugInFromURL:url];
 	}
 	return YES;
 }
 
-- (NSString *) currentStatus{
+- (NSString *) currentStatus
+{
 	return [NSString stringWithFormat:@"%d remaining", [downloadsQueue count]];
 }
 
-- (void) updateDownloadProgressInfo {
-	//QSLog(@"count %d %d %f",[downloadsQueue count],downloadsCount,[[downloadsQueue objectAtIndex:0] progress]);
+- (void) updateDownloadProgressInfo
+{
 	float progress = downloadsCount - [downloadsQueue count] + [(QSURLDownload *)[self currentDownload] progress];
 	progress /= downloadsCount;
 	[self setInstallProgress:progress];	
@@ -928,19 +825,21 @@
 	[self updateDownloadProgressInfo];
 }
 
-- (float) downloadProgress {
-    return [self installProgress];
+- (float) downloadProgress { return [self installProgress]; }
+
+- (NSArray *)downloadsQueue
+{
+	if ( !downloadsQueue ) downloadsQueue = [[NSMutableArray alloc] init];
+	return downloadsQueue;
 }
 
-- (NSArray *)downloadsQueue { 	
-	if ( !downloadsQueue )
-		downloadsQueue = [[NSMutableArray alloc] init];
-	return [[downloadsQueue copy] autorelease];
-}
-
-- (void) download:(QSURLDownload *)download didFailWithError:(NSError *)error {
+- (void) download:(QSURLDownload *)download didFailWithError:(NSError *)error
+{
 	[[self plugInWithID:[download userInfo]] downloadFailed];
-    QSLog(@"Download failed! Error - %@ %@", [[[download request]URL]absoluteString], [error localizedDescription],[[error userInfo] objectForKey:NSErrorFailingURLStringKey]);	
+    QSLog(@"Download failed! Error - %@ %@",
+          [[[download request]URL]absoluteString],
+          [error localizedDescription],
+          [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);	
 	NSRunInformationalAlertPanel( @"Download Failed", @"%@\r%@", nil, nil, nil, [[[download request] URL] absoluteString], [error localizedDescription] );
 	[downloadsQueue removeObject:download];
 	downloadsCount--;
@@ -952,18 +851,16 @@
 	[download release];
 }
 
-- (void) cancelPlugInInstall {
+- (void) cancelPlugInInstall
+{
 	[[self currentDownload] cancel];
 	[downloadsQueue removeAllObjects];
 	[self setCurrentDownload:nil];
 	[self updateDownloadCount];
 }
 
-- (void) downloadDidFinish:(QSURLDownload *)download {
-	
-	//QSLog(@"path %@", download);
-	
-	//QSLog(@"FINISHED %@ %@", download, currentDownload);
+- (void) downloadDidFinish:(QSURLDownload *)download
+{
 	NSString *path = [download destination];
 	if ( path ){
 		NSString *plugInPath = [[self installPlugInFromCompressedFile:path] lastObject];
@@ -977,46 +874,10 @@
 	[download release];
 }
 
-- (NSString *) installStatus {
-    return [[installStatus retain] autorelease]; 
-}
-
-- (void) setInstallStatus:(NSString *)newInstallStatus {
-    if ( newInstallStatus != installStatus ) {
-        [installStatus release];
-        installStatus = [newInstallStatus retain];
-    }
-}
-
-- (float) installProgress {
-    return installProgress;
-}
-
-- (void) setInstallProgress:(float) newInstallProgress {
-    installProgress = newInstallProgress;
-}
-
-- (BOOL) isInstalling {
-    return isInstalling;
-}
-
-- (void) setIsInstalling:(BOOL)flag {
-    isInstalling = flag;
-}
-
-- (NSURLDownload *) currentDownload { return [[currentDownload retain] autorelease]; }
-- (void) setCurrentDownload:(NSURLDownload *)newCurrentDownload
-{
-    if ( newCurrentDownload != currentDownload ) {
-        [currentDownload release];
-        currentDownload = [newCurrentDownload retain];
-    }
-}
-
-- (BOOL) showNotifications { return showNotifications; }
-- (void) setShowNotifications: (BOOL)flag
-{
-    showNotifications = flag;
-}
+@synthesize installStatus;
+@synthesize installProgress;
+@synthesize isInstalling;
+@synthesize currentDownload;
+@synthesize showNotifications;
 
 @end

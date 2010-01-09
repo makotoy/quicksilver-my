@@ -1,3 +1,7 @@
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-09 Makoto Yamashita
+ */
 
 #define compGT(a, b) (a < b)
 
@@ -14,13 +18,14 @@ QSExecutor *QSExec;
 @end
 
 @implementation QSExecutor
-+ (id) sharedInstance {
-    if (!QSExec)
-        QSExec = [[[self class] allocWithZone:[self zone]] init];
++ (id) sharedInstance
+{
+    if (!QSExec) QSExec = [[[self class] allocWithZone:[self zone]] init];
     return QSExec;
 }
 
-- (id) init {
+- (id) init
+{
     self = [super init];
     if( self ) {
         actionSources = [[NSMutableDictionary alloc] initWithCapacity:1];
@@ -51,9 +56,6 @@ QSExecutor *QSExec;
 		if (!actionNames)
 			actionNames = [[NSMutableDictionary alloc] init];
 		
-        // Register for Notifications
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(writeCatalog:) name:QSCatalogEntryChanged object:nil];
-		
         //Create proxy Images
         NSArray* imageNames = [[NSArray alloc] initWithObjects:
                                @"QSDirectProxyImage",
@@ -72,7 +74,8 @@ QSExecutor *QSExec;
     return self;
 }
 
-- (void) dealloc {
+- (void) dealloc
+{
     [oldActionObjects release], oldActionObjects = nil;
     [actionIdentifiers release], actionIdentifiers = nil;
     [directObjectTypes release], directObjectTypes = nil;
@@ -87,12 +90,12 @@ QSExecutor *QSExec;
     [actionIndirects release], actionIndirects = nil;
     [actionNames release], actionNames = nil;
     
-	// [self writeCatalog:self];   
 	[super dealloc];
 }
 
 
-- (void) loadActions {
+- (void) loadActions
+{
 	NSArray *elements = [QSReg elementsForPointID:@"com.blacktree.actions"];
     NSDictionary *actionDict;
 	NSString *key;
@@ -103,19 +106,13 @@ QSExecutor *QSExec;
 		key = [element identifier];
 		actionDict = [element plistContent];
 		
-		if ([[actionDict objectForKey:@"disabled"] boolValue])
-            continue;
-		
-        //int feature=[[actionDict objectForKey:@"feature"] intValue];
-		//if (feature > [NSApp featureLevel])
-        //    continue;
+		if ([[actionDict objectForKey:@"disabled"] boolValue]) continue;
 		
 		QSAction *action = [QSAction actionWithDictionary:actionDict identifier:key bundle:bundle];
-		
 
-		if ([[actionDict objectForKey:@"initialize"] boolValue] && [[action provider] respondsToSelector:@selector(initializeAction:)])
+		if ([[actionDict objectForKey:@"initialize"] boolValue] && [[action provider] respondsToSelector:@selector(initializeAction:)]) {
 			action = [[action provider] initializeAction:action];
-		
+		}
 		if (action) {
 			[self addAction:action];
 			if (![bundle bundleIdentifier]) {
@@ -124,37 +121,18 @@ QSExecutor *QSExec;
 				[[self makeArrayForSource:[bundle bundleIdentifier]] addObject:action];
 			}
 		}
-	}
-	
+	}	
 	[self updateRanks];
 }
 
-//- (NSArray *) actionsForTypes:(NSArray *)types {
-//	NSMutableSet *set = [NSMutableSet set];
-//	NSEnumerator *e = [types objectEnumerator];
-//	NSString *type;
-//	while( ( type = [e nextObject] ) )
-//		[set addObjectsFromArray:[directObjectTypes objectForKey:type]];
-//	[set addObjectsFromArray:[directObjectTypes objectForKey:@"*"]];
-//	return [set allObjects];
-//}
-
-
-- (void) loadFileActions {
+- (void) loadFileActions
+{
 	NSString *rootPath = QSApplicationSupportSubPath(@"Actions/", NO);
-	
-	NSFileManager *manager = [NSFileManager defaultManager];
-	NSArray *files = [manager directoryContentsAtPath:rootPath];
-	
-	//NSMutableArray *array = [NSMutableArray array];
-	
-	files = [rootPath performSelector:@selector(stringByAppendingPathComponent:) onObjectsInArray:files];
-	
-	//NSMutableArray *actions=[NSMutableArray array];
-	NSEnumerator *e = [[QSReg loadedInstancesForPointID:@"QSFileActionCreators"] objectEnumerator];
-	id <QSFileActionProvider> creator;
-
-	while( ( creator = [e nextObject]) ) {
+	NSArray *files = [[NSFileManager defaultManager]
+                      contentsOfDirectoryAtPath:rootPath error:NULL];
+	files = [rootPath performSelector:@selector(stringByAppendingPathComponent:)
+                     onObjectsInArray:files];
+	for (id <QSFileActionProvider> creator in [QSReg loadedInstancesForPointID:@"QSFileActionCreators"]) {
 		[self addActions:[creator fileActionsFromPaths:files]];
 	}
 }
@@ -169,8 +147,8 @@ QSExecutor *QSExec;
 	return [set allObjects];
 }
 
-- (NSArray *) actionsForTypes:(NSArray *)types fileTypes:(NSArray *)fileTypes {
-	//QSLog(@"types %@ %@ %@", types, fileTypes, nil);
+- (NSArray *) actionsForTypes:(NSArray *)types fileTypes:(NSArray *)fileTypes
+{
 	NSMutableSet *set = [NSMutableSet set];
 	NSString *type;
 	for (type in types) {
@@ -183,33 +161,36 @@ QSExecutor *QSExec;
 	[set addObjectsFromArray:[directObjectTypes objectForKey:@"*"]];
 	return [set allObjects];
 }
-- (NSMutableArray *) actionsArrayForType:(NSString *)type {
+
+- (NSMutableArray *) actionsArrayForType:(NSString *)type
+{
 	NSMutableArray *array = [directObjectTypes objectForKey:type];
 	if (!array)
 		[directObjectTypes setObject:(array = [NSMutableArray array]) forKey:type];
 	return array;
 }
 
-- (NSMutableArray *) actionsArrayForFileType:(NSString *)type {
+- (NSMutableArray *) actionsArrayForFileType:(NSString *)type
+{
 	NSMutableArray *array = [directObjectFileTypes objectForKey:type];
-	if (!array)
+	if (!array) {
 		[directObjectFileTypes setObject:(array = [NSMutableArray array]) forKey:type];
+    }
 	return array;
 }
 
-- (void) addActions:(NSArray *)actions {
-    foreach (action, actions) {
+- (void) addActions:(NSArray *)actions
+{
+    for (id action in actions) {
 		[self addAction:action];
 	}
 }
 
-- (void) addAction:(QSAction *)action {
+- (void) addAction:(QSAction *)action
+{
 	NSDictionary *actionDict = [action actionDict];
 	NSString *ident = [action identifier];
-	if (!ident) {
-		//	QSLog(@"aciton %@",actionDict);
-		return;
-	}
+	if (!ident) return;
 
 	NSString *altName = [actionNames objectForKey:ident];
 	if (altName) [action setLabel:altName];
@@ -220,24 +201,21 @@ QSExecutor *QSExec;
 		[[directObjectTypes allValues] makeObjectsPerformSelector:@selector(removeObject:) withObject:dupAction];
 		[[directObjectFileTypes allValues] makeObjectsPerformSelector:@selector(removeObject:) withObject:dupAction];
 	}
-	
 	[actionIdentifiers setObject:action forKey:ident];
 	
 	NSNumber *activation = [actionActivation objectForKey:ident];
-	if (!activation)
-		activation = [action defaultEnabled];
+	if (!activation) activation = [action defaultEnabled];
 	[action _setEnabled:(activation ? [activation boolValue] : YES)];
 	
 	activation = [actionMenuActivation objectForKey:ident];
-	if (!activation)
-		activation = [action defaultEnabled];
+	if (!activation) activation = [action defaultEnabled];
 	[action _setMenuEnabled:(activation ? [activation boolValue] : YES)];	
 	
 	NSInteger index = [actionRanking indexOfObject:ident];
 	
 	if (index == NSNotFound) {
 		float prec = [action precedence];
-		int i;
+		NSUInteger i;
 		float otherPrec;
         
 		for(i = 0; i < [actionRanking count]; i++) {
@@ -253,62 +231,51 @@ QSExecutor *QSExec;
 		QSLogDebug(@"inserting action %@ at %d (%f)", action, i, prec);
 	} else {
 		[action _setRank:index];
-	}
-	
+	}	
 	NSArray *directTypes = [actionDict objectForKey:@"directTypes"];
-	if (![directTypes count])
+	if (![directTypes count]) {
         directTypes = [NSArray arrayWithObject:@"*"];
-	NSEnumerator *e = [directTypes objectEnumerator];
-	NSString *type;
-    
-	while ((type = [e nextObject]))
+    }
+	for (NSString *type in directTypes) {
 		[[self actionsArrayForType:type] addObject:action];
-	
+	}
 	if ([directTypes containsObject:QSFilePathType]) {
 		directTypes = [actionDict objectForKey:@"directFileTypes"];
-		if (![directTypes count])
+		if (![directTypes count]) {
             directTypes = [NSArray arrayWithObject:@"*"];
-		for (type in directTypes) {
-			//QSLog(@"type %@", type);
+        }
+		for (NSString *type in directTypes) {
 			[[self actionsArrayForFileType:type] addObject:action];
 		}
-
-		//QSLog(@"act %@ %@",action,directTypes);
 	}
 }
 
-- (void) updateRanks {
-	//QSLog(@"Reranking all");
-	int i;
-	for(i = 0; i < [actionRanking count]; i++) {
+- (void) updateRanks
+{
+	NSUInteger i;
+	for (i = 0; i < [actionRanking count]; i++) {
 		[[actionIdentifiers objectForKey:[actionRanking objectAtIndex:i]] _setRank:i];	
 	}
 	[self writeActionsInfo];
 }
 
-- (void) insertAction:(QSAction *)action {
-	
-}
+- (void) insertAction:(QSAction *)action { }
 
-- (void) addActionsFromDictionary:(NSDictionary *)actionsDictionary bundle:(NSBundle *)bundle {
+- (void) addActionsFromDictionary:(NSDictionary *)actionsDictionary bundle:(NSBundle *)bundle
+{
 	NSEnumerator *e = [actionsDictionary keyEnumerator];
     NSDictionary *actionDict;
 	NSString *key;
     while ((key = [e nextObject])) {
 		actionDict = [actionsDictionary objectForKey:key];
 		
-		if ([[actionDict objectForKey:@"disabled"] boolValue])
-            continue;
-		//QSLog(@"action %@",actionDict);
-		
-        //int feature = [[actionDict objectForKey:@"feature"] intValue];
-		//if (feature > [NSApp featureLevel]) continue;
+		if ([[actionDict objectForKey:@"disabled"] boolValue]) continue;
 		
 		QSAction *action = [QSAction actionWithDictionary:actionDict identifier:key bundle:bundle];
 		
-		if ([[actionDict objectForKey:@"initialize"] boolValue] && [[action provider] respondsToSelector:@selector(initializeAction:)])
+		if ([[actionDict objectForKey:@"initialize"] boolValue] && [[action provider] respondsToSelector:@selector(initializeAction:)]) {
 			action = [[action provider] initializeAction:action];
-		
+		}
 		if (action) {
 			[self addAction:action];
 			[[self makeArrayForSource:[bundle bundleIdentifier]] addObject:action];
@@ -316,38 +283,24 @@ QSExecutor *QSExec;
 	} 	
 }
 
-- (NSMutableArray *) getArrayForSource:(NSString *)sourceid {
+- (NSMutableArray *) getArrayForSource:(NSString *)sourceid
+{
 	NSMutableArray *array = [actionSources objectForKey:sourceid];
 	return array;
 }
 
-- (NSMutableArray *) makeArrayForSource:(NSString *)sourceid {
+- (NSMutableArray *) makeArrayForSource:(NSString *)sourceid
+{
 	NSMutableArray *array = [actionSources objectForKey:sourceid];
 	if (!array)
         [actionSources setObject:(array = [NSMutableArray array]) forKey:sourceid];
 	return array;
 }
 
-//- (void) registerActions:(id)actionObject {
-//    if (!actionObject) return;
-//    [oldActionObjects addObject:actionObject];
-//	[self performSelectorOnMainThread:@selector(loadActionsForObject:) withObject:actionObject waitUntilDone:YES];
-//}
+- (NSArray *) actions { return [actionIdentifiers allValues]; }
 
-//- (void) loadActionsForObject:(id)actionObject {
-//	NSEnumerator *actionEnumerator = [[actionObject actions] objectEnumerator];
-//    id action;
-//    while ((action = [actionEnumerator nextObject])) {
-//		if([action identifier])
-//            [actionIdentifiers setObject:action forKey:[action identifier]];
-//    } 	
-//}
-
-- (NSArray *) actions {
-	return [actionIdentifiers allValues];
-}
-
-- (QSAction *) actionForIdentifier:(NSString *)identifier {
+- (QSAction *) actionForIdentifier:(NSString *)identifier
+{
     QSAction* resAction = [actionIdentifiers objectForKey:identifier];
     if (!resAction) {
         NSLog(@"Could not find action for %@ among %@",

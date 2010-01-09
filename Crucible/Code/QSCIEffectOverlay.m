@@ -4,7 +4,7 @@
 //
 //  Created by Nicholas Jitkoff on 11/20/05.
 
-//
+//  2010-01-09 Makoto Yamashita
 
 #import "QSCIEffectOverlay.h"
 
@@ -89,11 +89,14 @@ CGRect QSCGRectFromScreenFrame(NSRect rect){
 	}
 	return self;
 }
--(void)setLevel:(int)level{
+
+-(void)setLevel:(CGWindowLevel)level
+{
 	QSLog(@"level %d",level);
 	CGSSetWindowLevel(cid, wid,level);
 	CGSOrderWindow(cid, wid, -1, 0);
 }
+
 - (void)createOverlayInRect:(CGRect) r{
 	
 	static CGRect   sWindowRgn = { {0.0, 0.0}, {1.0, 1.0} };
@@ -135,12 +138,10 @@ CGRect QSCGRectFromScreenFrame(NSRect rect){
 //	if ( successful )
 //		return wid;
 	return;
-}	
+}
 
-
-
-
-- (void)setFilter:(NSString *)filterName{
+- (void)setFilter:(NSString *)filterName
+{
 	if (fid){
 		CGSRemoveWindowFilter(cid,wid,fid);
 		CGSReleaseCIFilter(cid,fid);
@@ -154,7 +155,9 @@ CGRect QSCGRectFromScreenFrame(NSRect rect){
 		if (error) QSLog(@"setfilter err %d",error);
 	}
 }
--(void)setFilterValues:(NSDictionary *)filterValues{
+
+-(void)setFilterValues:(NSDictionary *)filterValues
+{
 	if (!fid) return;
 ///	CGError error = 
 		CGSSetCIFilterValuesFromDictionary(cid, fid, (CFDictionaryRef)filterValues);

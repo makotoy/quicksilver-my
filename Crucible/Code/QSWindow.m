@@ -1,13 +1,11 @@
-
+/* Derived from Blacktree, Inc. codebase
+ * 2010-01-03 Makoto Yamashita.
+ */
 
 #import "QSWindow.h"
-
-
 #import "QSWindowAnimation.h"
 #import "QSPreferenceKeys.h"
 #import <unistd.h>
-//typedef int CGSConnection;
-//extern CGSConnection _CGSDefaultConnection(void);
 
 @implementation NSWindow (Effects)
 
@@ -182,166 +180,117 @@
 - (BOOL)makeFirstResponder:(NSResponder *)aResponder{
     BOOL responderChanged=[super makeFirstResponder:aResponder];
     if(responderChanged && [[self delegate]respondsToSelector:@selector(firstResponderChanged:)])
-        [[self delegate]firstResponderChanged:aResponder];
+        [(id<QSWindowDelegate>)[self delegate] firstResponderChanged:aResponder];
     return responderChanged;    
 }
 
-- (void)sendEvent:(NSEvent *)theEvent{
-//	[self retain];
-    if (delegatesEvents && [[self delegate]respondsToSelector:@selector(shouldSendEvent:)] && ![[self delegate] shouldSendEvent:theEvent])
+- (void)sendEvent:(NSEvent *)theEvent
+{
+    if (delegatesEvents && [[self delegate]respondsToSelector:@selector(shouldSendEvent:)] && ![(id<QSWindowDelegate>)[self delegate] shouldSendEvent:theEvent]) {
         return;
+    }
 	if (eventDelegates){
-		foreach(eDelegate,eventDelegates){
+		for (id eDelegate in eventDelegates) {
 			if ([eDelegate respondsToSelector:@selector(shouldSendEvent:)] 
-				&& ![eDelegate shouldSendEvent:theEvent])
+				&& ![(id<QSWindowDelegate>)eDelegate shouldSendEvent:theEvent]) {
 				return;
+            }
 		}
 	}
     [super sendEvent:theEvent];
-//	[self release];
 }
 
-- (void)reallySendEvent:(NSEvent *)theEvent{
-    [super sendEvent:theEvent];
-}
+- (void)reallySendEvent:(NSEvent *)theEvent{ [super sendEvent:theEvent]; }
 
-- (NSTimeInterval)animationResizeTime:(NSRect)newFrame{
+- (NSTimeInterval)animationResizeTime:(NSRect)newFrame
+{
     return MAX([super animationResizeTime:newFrame]/3,0.125);
 }
 
--(BOOL)acceptsFirstResponder{
-    return YES;
-}
+-(BOOL)acceptsFirstResponder{ return YES; }
 
--(BOOL)canBecomeKeyWindow{
-    return YES;
-}
+-(BOOL)canBecomeKeyWindow{ return YES; }
+
+-(BOOL)canBecomeMainWindow{ return YES; }
 
 
--(BOOL)canBecomeMainWindow{
-    return YES;
-}
-/*
- - (void)performClose:(id)sender{ 
-	 // ***warning   * implement normal close
-	 [[self delegate]windowShouldClose:(id)sender
-		 [self orderOut:sender];
-}
-*/
-- (void)performMiniaturize:(id)sender{
-    [self miniaturize:sender];
-}
+- (void)performMiniaturize:(id)sender{ [self miniaturize:sender]; }
 
-
-- (void)orderOut:(id)sender{
+- (void)orderOut:(id)sender
+{
     [NSApp preventWindowOrdering];
     if ([self isVisible] && [[NSUserDefaults standardUserDefaults]boolForKey:kUseEffects]){
 		[self hideThreaded:sender];	
-	}
-	else
+	} else {
         [super orderOut:sender];
+    }
 }
 
-- (void)reallyOrderFront:(id)sender{
-	[super orderFront:sender];
-}
+- (void)reallyOrderFront:(id)sender{ [super orderFront:sender]; }
 
-- (void)reallyOrderOut:(id)sender{
-	[super orderOut:sender];
-}
+- (void)reallyOrderOut:(id)sender{ [super orderOut:sender]; }
 
-/*
- - (void)orderWindow:(NSWindowOrderingMode)place relativeTo:(int)otherWindowNumber{
-	 // QSLog(@"%d,%d %@",place, otherWindowNumber,self);
-	 [super orderWindow:(NSWindowOrderingMode)place relativeTo:(int)otherWindowNumber];
- }
- */
-- (void)orderFront:(id)sender{
-    if ([self isVisible] || fastShow ||![[NSUserDefaults standardUserDefaults]boolForKey:kUseEffects]){
+- (void)orderFront:(id)sender
+{
+    if ([self isVisible] || fastShow ||![[NSUserDefaults standardUserDefaults]boolForKey:kUseEffects]) {
 		[self setAlphaValue:1.0];
 		[super orderFront:sender];
-    }else{
+    } else {
         [self setAlphaValue:0.0];
         [super orderFront:sender];
 		[super display];
         [self showThreaded:self];
-        //  [NSThread detachNewThreadSelector:@selector(showThreaded:) toTarget:self withObject:sender];
     }
 }
 
-- (void)makeKeyAndOrderFront:(id)sender{
-    if ([self isVisible] || fastShow ||  ![[NSUserDefaults standardUserDefaults]boolForKey:kUseEffects]){
+- (void)makeKeyAndOrderFront:(id)sender
+{
+    if ([self isVisible] || fastShow ||  ![[NSUserDefaults standardUserDefaults]boolForKey:kUseEffects]) {
 		[self setAlphaValue:1.0];
 		[super makeKeyAndOrderFront:sender];
-    }else{
+    } else {
 		[self setAlphaValue:0.0];
         [super makeKeyAndOrderFront:sender];
-		// [self showThreaded:self];
-		//[self showThreaded:self];
-		
-		//        [self showThreaded:self];
-		
         [self showThreaded:self];
-		//     [NSThread detachNewThreadSelector:@selector(showThreaded:) toTarget:self withObject:sender];
     }
-	
 }
-/*
- - (void)setFrame:(NSRect)frameRect display:(BOOL)displayFlag animate:(BOOL)animationFlag{
-	 [super setFrame:frameRect display:displayFlag animate:animationFlag];
-	 [super setFrame:frameRect display:displayFlag];
- }
- */
 
-- (void)finishShow:(id)sender{
+- (void)finishShow:(id)sender
+{
     [self setAlphaValue:1.0];
     [self display];
-	if ([self drawers])
-		[self performSelector:@selector(_unhideAllDrawers)];
+	if ([self drawers]) [self performSelector:@selector(_unhideAllDrawers)];
 	
 	[self setHelper:nil];
 }
 
-
-- (void)performEffect:(NSDictionary *)effect{
+- (void)performEffect:(NSDictionary *)effect
+{
 	id hl=[QSWindowAnimation effectWithWindow:self attributes:effect];
 	[hl startAnimation];
 }
 
-
-
-
-
-
-- (void)showWithEffect:(id)showEffect{
+- (void)showWithEffect:(id)showEffect
+{
     trueRect=[self frame];
 	
-	//QSLog(@"effect",showEffect);
-	if (!showEffect)
-		showEffect=[self showEffect];
+	if (!showEffect) showEffect = [self showEffect];
 	
-	if (!showEffect){
+	if (!showEffect) {
 		showEffect=[NSDictionary dictionaryWithObjectsAndKeys:@"QSDefaultGrowEffect",@"transformFn",@"show",@"type",[NSNumber numberWithFloat:0.2],@"duration",nil];
-		
 	}
-	if (showEffect){
-		//[self disableScreenUpdatesUntilFlush];
+	if (showEffect) {
 		id hl=[QSWindowAnimation effectWithWindow:self attributes:showEffect];
 		[hl setDelegate:self];
-	
-	//	[hl setTarget:self];
-	//	[hl setAction:@selector(finishShow:)];
 		[hl startAnimation];
-	}else{
+	} else {
 		[self setFrame:NSOffsetRect(trueRect,showOffset.x,showOffset.y)  display:YES animate:NO];
-		
 		[[self helper] setTarget:self];
 		[[self helper] setAction:@selector(finishShow:)];
 		[[self helper] _resizeWindow:self toFrame:trueRect alpha:1.0 display:YES];
-		//QSLog(@"show");
 	}
 	return;
-	
+// TODO: review below	
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	//	QSLog(@"orderfront!");
@@ -365,62 +314,57 @@
     isMoving--;
     [pool release];
 }
-- (IBAction) showThreaded:(id)sender{
-	[self showWithEffect:[self showEffect]];
-}
-- (BOOL)animationIsValid{return !animationInvalid;}
 
-- (void)animationDidEnd:(NSAnimation*)animation{	
+- (IBAction) showThreaded:(id)sender{ [self showWithEffect:[self showEffect]]; }
+
+- (BOOL)animationIsValid{ return !animationInvalid; }
+
+- (void)animationDidEnd:(NSAnimation*)animation
+{
 	NSString *type=[[(QSWindowAnimation *)animation attributes]valueForKey:@"type"];
-	if ([type isEqualToString:@"hide"]){
+	if ([type isEqualToString:@"hide"]) {
 		[self finishHide:animation];
-	}else if ([type isEqualToString:@"show"]){
+	} else if ([type isEqualToString:@"show"]) {
 		[self finishShow:animation];
 	}
 }
-- (void)finishHide:(id)sender{	
+
+- (void)finishHide:(id)sender
+{
 	[super orderOut:sender];
-    if (hadShadow){
+    if (hadShadow) {
 		[self setHasShadow:YES];
 	}
 	[self setFrame:trueRect display:NO animate:NO];
     [self setAlphaValue:0.0];
 	[self setHelper:nil];
-	
 }
 
-- (IBAction) hideThreaded:(id)sender{
-	[self hideWithEffect:[self hideEffect]];
-}
+- (IBAction) hideThreaded:(id)sender{ [self hideWithEffect:[self hideEffect]]; }
 	
-- (void)hideWithEffect:(id)hideEffect{
+- (void)hideWithEffect:(id)hideEffect
+{
 	[self retain];
-	//  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	//if (!helper){
-	if ([self drawers])
-		[self performSelector:@selector(_hideAllDrawers)];
+	if ([self drawers]) [self performSelector:@selector(_hideAllDrawers)];
 	
     trueRect=[self frame];
 	hadShadow=[self hasShadow];
 	
     [self setHasShadow:NO];
-	if (!hideEffect){
+	if (!hideEffect) {
 		hideEffect=[NSDictionary dictionaryWithObjectsAndKeys:@"QSDefaultShrinkEffect",@"transformFn",@"hide",@"type",[NSNumber numberWithFloat:0.2],@"duration",nil];
-
 	}
-	if (hideEffect){
-		
+	if (hideEffect) {
 		id hl=[QSWindowAnimation effectWithWindow:self attributes:hideEffect];
 		[hl setDelegate:self];
 		[hl startAnimation];
-		
-	}else{
+	} else {
 		[[self helper] setTarget:self];
 		[[self helper] setAction:@selector(finishHide:)];
 		[[self helper] _resizeWindow:self toFrame:NSOffsetRect(trueRect,hideOffset.x,hideOffset.y) alpha:0.0 display:YES];
 	}
 	return;
-	//}
+//TODO: review below
     if (isMoving){
         animationInvalid=YES;
         NSDate *startDate=[NSDate date];
@@ -446,9 +390,7 @@
 #define RESIZE_SIZE 16
 
 - (NSPoint)hideOffset { return hideOffset; }
-- (void)setHideOffset:(NSPoint)newHideOffset {
-    hideOffset = newHideOffset;
-}
+- (void)setHideOffset:(NSPoint)newHideOffset { hideOffset = newHideOffset; }
 
 - (NSPoint)showOffset { return showOffset; }
 - (void)setShowOffset:(NSPoint)newShowOffset {
@@ -458,7 +400,6 @@
 - (char)_hasMainAppearance{
     return YES;
 }
-
 
 - (NSImage *) _gradientImage{
     return nil;
@@ -574,7 +515,6 @@
 		eventDelegates=nil;
 	}
 }
-
 
 @end
 

@@ -46,7 +46,7 @@ static NSInteger presetSort(id item1, id item2, QSLibrarian *librarian) {
 }
 
 + (void)removeIndexes {
-	[[NSFileManager defaultManager] removeFileAtPath:[pIndexLocation stringByStandardizingPath] handler:nil]; 	
+	[[NSFileManager defaultManager] removeItemAtPath:[pIndexLocation stringByStandardizingPath] error:NULL]; 	
 	[self createDirectories];
 }
 
@@ -225,7 +225,10 @@ static NSInteger presetSort(id item1, id item2, QSLibrarian *librarian) {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *path = [pCatalogSettings stringByStandardizingPath];
     if (![manager fileExistsAtPath:[path stringByDeletingLastPathComponent] isDirectory:nil]) {
-        [manager createDirectoryAtPath:[path stringByDeletingLastPathComponent] attributes:nil];
+        [manager createDirectoryAtPath:[path stringByDeletingLastPathComponent]
+           withIntermediateDirectories:NO
+                            attributes:nil
+                                 error:NULL];
     }
     else ;  
 	// ***warning   **add error
@@ -330,7 +333,7 @@ static NSInteger presetSort(id item1, id item2, QSLibrarian *librarian) {
 
 - (void)loadShelfArrays {
     NSString *path = [pShelfLocation stringByStandardizingPath];
-    NSArray *shelves = [[NSFileManager defaultManager] directoryContentsAtPath:path];
+    NSArray *shelves = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
     NSArray *dictionaryArray;
     for (NSString *thisShelf in shelves) {
         if (![[thisShelf pathExtension] isEqualToString:@"qsshelf"]) continue;

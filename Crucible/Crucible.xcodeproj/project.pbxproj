@@ -10,6 +10,7 @@
 		08628A6A10E9C64600B528B7 /* DRColorPermutator.h in Headers */ = {isa = PBXBuildFile; fileRef = 08628A6810E9C64600B528B7 /* DRColorPermutator.h */; };
 		08628A6B10E9C64600B528B7 /* DRColorPermutator.m in Sources */ = {isa = PBXBuildFile; fileRef = 08628A6910E9C64600B528B7 /* DRColorPermutator.m */; };
 		086D30ED1092528E00AC027B /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 086D30EC1092528D00AC027B /* QuickLook.framework */; };
+		088A45D310F20A5300C9F17B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088A45D210F20A5300C9F17B /* QuartzCore.framework */; };
 		089B414A10A0A19400A1D1BB /* QSCommandBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9A87BC0C497AF000B5912D /* QSCommandBuilder.m */; };
 		089B414B10A0A19500A1D1BB /* QSCommandBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F9A87BB0C497AF000B5912D /* QSCommandBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D1FA3A20FDD970400EBA56D /* QSFileSystemObjectHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D1FA3A00FDD970400EBA56D /* QSFileSystemObjectHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -416,7 +417,6 @@
 		7F9A89990C497DD400B5912D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9A898F0C497DD400B5912D /* Security.framework */; };
 		7F9A899A0C497DD400B5912D /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9A89900C497DD400B5912D /* ExceptionHandling.framework */; };
 		7F9A899B0C497DD400B5912D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9A89910C497DD400B5912D /* Carbon.framework */; };
-		7F9A899C0C497DD400B5912D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9A89920C497DD400B5912D /* QuartzCore.framework */; };
 		7F9A899D0C497DD400B5912D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9A89930C497DD400B5912D /* AddressBook.framework */; };
 		7F9A899E0C497DD400B5912D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9A89940C497DD400B5912D /* IOKit.framework */; };
 		7F9A899F0C497DD400B5912D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9A89950C497DD400B5912D /* Cocoa.framework */; };
@@ -470,6 +470,7 @@
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		086D30EC1092528D00AC027B /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = /System/Library/Frameworks/QuickLook.framework; sourceTree = "<absolute>"; };
+		088A45D210F20A5300C9F17B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4D1FA3A00FDD970400EBA56D /* QSFileSystemObjectHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSFileSystemObjectHandler.h; sourceTree = "<group>"; };
 		4D1FA3A10FDD970400EBA56D /* QSFileSystemObjectHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSFileSystemObjectHandler.m; sourceTree = "<group>"; };
 		4D1FA3D80FDDA17700EBA56D /* QSStringObjectHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSStringObjectHandler.h; sourceTree = "<group>"; };
@@ -479,10 +480,6 @@
 		4D2771FA0DFF029C002A960F /* NDLaunchServicesObject+Paths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NDLaunchServicesObject+Paths.h"; sourceTree = "<group>"; };
 		4D2771FB0DFF029C002A960F /* NDLaunchServicesObject+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NDLaunchServicesObject+Paths.m"; sourceTree = "<group>"; };
 		4D2771FC0DFF029C002A960F /* NDSDKCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDSDKCompatibility.h; sourceTree = "<group>"; };
-		4D2771FD0DFF029C002A960F /* NSOpenPanel+NDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOpenPanel+NDAlias.h"; sourceTree = "<group>"; };
-		4D2771FE0DFF029C002A960F /* NSOpenPanel+NDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOpenPanel+NDAlias.m"; sourceTree = "<group>"; };
-		4D2771FF0DFF029C002A960F /* NSPathControl+NDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPathControl+NDAlias.h"; sourceTree = "<group>"; };
-		4D2772000DFF029C002A960F /* NSPathControl+NDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPathControl+NDAlias.m"; sourceTree = "<group>"; };
 		4D2869910F4304DA00077D9E /* CGSPrivate_QSMods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSPrivate_QSMods.h; sourceTree = "<group>"; };
 		4D4EE9BD0E0180B400857804 /* NSColor+QSCGColorRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+QSCGColorRef.h"; sourceTree = "<group>"; };
 		4D4EE9BE0E0180B400857804 /* NSColor+QSCGColorRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+QSCGColorRef.m"; sourceTree = "<group>"; };
@@ -522,7 +519,6 @@
 		7F8825C30C498E1800631170 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		7F8825FF0C498E2E00631170 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		7F8827700C498E7D00631170 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
-		7F8827710C498E7D00631170 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		7F8828690C498F1C00631170 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		7F9A7DC00C4972A500B5912D /* QSCrucible-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "QSCrucible-Info.plist"; sourceTree = "<group>"; };
 		7F9A7DC10C4972A500B5912D /* QSCrucible_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QSCrucible_Prefix.pch; sourceTree = "<group>"; };
@@ -893,7 +889,6 @@
 		7F9A898F0C497DD400B5912D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		7F9A89900C497DD400B5912D /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		7F9A89910C497DD400B5912D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		7F9A89920C497DD400B5912D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		7F9A89930C497DD400B5912D /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
 		7F9A89940C497DD400B5912D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		7F9A89950C497DD400B5912D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -934,12 +929,12 @@
 				7F9A89990C497DD400B5912D /* Security.framework in Frameworks */,
 				7F9A899A0C497DD400B5912D /* ExceptionHandling.framework in Frameworks */,
 				7F9A899B0C497DD400B5912D /* Carbon.framework in Frameworks */,
-				7F9A899C0C497DD400B5912D /* QuartzCore.framework in Frameworks */,
 				7F9A899D0C497DD400B5912D /* AddressBook.framework in Frameworks */,
 				7F9A899E0C497DD400B5912D /* IOKit.framework in Frameworks */,
 				7F9A899F0C497DD400B5912D /* Cocoa.framework in Frameworks */,
 				7F9A89A00C497DD400B5912D /* SecurityFoundation.framework in Frameworks */,
 				086D30ED1092528E00AC027B /* QuickLook.framework in Frameworks */,
+				088A45D310F20A5300C9F17B /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,7 +980,6 @@
 				086D30EC1092528D00AC027B /* QuickLook.framework */,
 				7F8828690C498F1C00631170 /* WebKit.framework */,
 				7F8827700C498E7D00631170 /* Quartz.framework */,
-				7F8827710C498E7D00631170 /* QuartzCore.framework */,
 				7F8825FF0C498E2E00631170 /* IOKit.framework */,
 				7F8825C30C498E1800631170 /* Security.framework */,
 				7F8825BE0C498E0400631170 /* SecurityFoundation.framework */,
@@ -994,11 +988,11 @@
 				7F9A898F0C497DD400B5912D /* Security.framework */,
 				7F9A89900C497DD400B5912D /* ExceptionHandling.framework */,
 				7F9A89910C497DD400B5912D /* Carbon.framework */,
-				7F9A89920C497DD400B5912D /* QuartzCore.framework */,
 				7F9A89930C497DD400B5912D /* AddressBook.framework */,
 				7F9A89940C497DD400B5912D /* IOKit.framework */,
 				7F9A89950C497DD400B5912D /* Cocoa.framework */,
 				7F9A89960C497DD400B5912D /* SecurityFoundation.framework */,
+				088A45D210F20A5300C9F17B /* QuartzCore.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -1589,10 +1583,6 @@
 				4D2771FA0DFF029C002A960F /* NDLaunchServicesObject+Paths.h */,
 				4D2771FB0DFF029C002A960F /* NDLaunchServicesObject+Paths.m */,
 				4D2771FC0DFF029C002A960F /* NDSDKCompatibility.h */,
-				4D2771FD0DFF029C002A960F /* NSOpenPanel+NDAlias.h */,
-				4D2771FE0DFF029C002A960F /* NSOpenPanel+NDAlias.m */,
-				4D2771FF0DFF029C002A960F /* NSPathControl+NDAlias.h */,
-				4D2772000DFF029C002A960F /* NSPathControl+NDAlias.m */,
 				7F9A893C0C497D5C00B5912D /* NDAlias+AliasFile.h */,
 				7F9A893D0C497D5C00B5912D /* NDAlias+AliasFile.m */,
 				7F9A893E0C497D5C00B5912D /* NDAlias.h */,

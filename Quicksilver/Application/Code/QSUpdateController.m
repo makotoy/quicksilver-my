@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on 7/22/04.
 
-//
+//  2010-01-09 Makoto Yamashita
 
 #import <QSCrucible/QSPlugInManager.h>
 #import <QSCrucible/QSURLDownloadWrapper.h>
@@ -18,31 +18,23 @@
 NSString *QSGetPrimaryMACAddress();
 UInt64 QSGetPrimaryMACAddressInt();
 @implementation QSUpdateController
-+ (id)sharedInstance {
++ (id)sharedInstance
+{
     static id _sharedInstance;
     if (!_sharedInstance) _sharedInstance = [[[self class] allocWithZone:[self zone]] init];
     return _sharedInstance;
 }
 
-
-- (id)init {
-	if ((self = [super init])) {
-		
-		
-	}
-	return self; 	
-}
-
-- (void)forceStartupCheck {
+- (void)forceStartupCheck
+{
 	QSLog(@"Updated: Forcing Plug-in Check");
 	doStartupCheck = YES;
 }
 
-- (void)setUpdateTimer { 
+- (void)setUpdateTimer
+{
 	// ***warning   * fix me
-	
 	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-	
 	
 	if (DEVELOPMENTVERSION ? ![defaults boolForKey:@"QSPreventAutomaticUpdate"] : [defaults boolForKey:kCheckForUpdates]) {
 		NSDate *lastCheck = [defaults objectForKey:kLastUpdateCheck];
@@ -50,26 +42,11 @@ UInt64 QSGetPrimaryMACAddressInt();
 		
 		int versionType = [defaults integerForKey:@"QSUpdateReleaseLevel"];
 		
-	//	if (DEVELOPMENTVERSION && frequency>7)
-//			frequency = 7;
-		if ((versionType>0 || PRERELEASEVERSION) && frequency>1)
-			frequency = 1;
-		
+		if ((versionType>0 || PRERELEASEVERSION) && frequency>1) frequency = 1;
 		
 		BOOL shouldRepeat = (frequency>0);
-		
 		NSTimeInterval checkInterval = frequency*24*60*60;
-		
-		//QSLog(@"Last Version Check at : %@", [lastCheck description]);
-		
 		NSDate *nextCheck = [[NSDate alloc] initWithTimeInterval:checkInterval sinceDate:lastCheck];
-		
-		
-		//if (DEVELOPMENTVERSION)
-		//nextCheck = [NSDate distantPast];
-		
-		//nextCheck = [NSDate dateWithTimeIntervalSinceNow: 20.0];
-		
 		
 		if (updateTimer) {
 			[updateTimer invalidate];
@@ -84,20 +61,27 @@ UInt64 QSGetPrimaryMACAddressInt();
 	}
 }
 
-- (void)handleURL:(NSURL *)url {
+- (void)handleURL:(NSURL *)url
+{
 	QSLog(@"url %@", url);
 	[self threadedRequestedCheckForUpdate:nil];
 }
 
-- (IBAction)threadedCheckForUpdate:(id)sender {
-	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:nil];
+- (IBAction)threadedCheckForUpdate:(id)sender
+{
+	[NSThread detachNewThreadSelector:@selector(checkForUpdate:)
+                             toTarget:self
+                           withObject:nil];
 }
 
 - (IBAction)threadedRequestedCheckForUpdate:(id)sender {
-	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:mOptionKeyIsDown?@"Force":@"Requested"];
+	[NSThread detachNewThreadSelector:@selector(checkForUpdate:)
+                             toTarget:self
+                           withObject:(mOptionKeyIsDown ? @"Force" : @"Requested")];
 }
 
-- (BOOL)networkIsReachable {
+- (BOOL)networkIsReachable
+{
 	SCNetworkConnectionFlags reachabilityStatus;
     SCNetworkReachabilityRef target;
     Boolean success;
@@ -107,7 +91,8 @@ UInt64 QSGetPrimaryMACAddressInt();
 	return success && (reachabilityStatus & kSCNetworkFlagsReachable);
 }
 
-- (IBAction)checkForUpdate:(id)sender {
+- (IBAction)checkForUpdate:(id)sender
+{
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	[[QSTaskController sharedInstance] updateTask:@"Check for Update" status:@"Check for Update" progress:-1];
@@ -126,13 +111,9 @@ UInt64 QSGetPrimaryMACAddressInt();
 			int result = NSRunInformationalAlertPanel(@"Connection Error", @"Your internet connection does not appear to be active.", @"Cancel", @"Check Anyway", nil);
 			if (result == NSAlertDefaultReturn) return;
 		} 	
-	}
-	
+	}	
     if ( VERBOSE ) QSLog(@"Blacktree reacheable");
 	NSString *thisVersionString = (NSString *)CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), kCFBundleVersionKey);
-	
-	//QSLog(@"%@", sender); 	
-	//[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 	BOOL forceUpdate = [sender isEqual:@"Force"];
 	if (forceUpdate) QSLog(@"Forcing Update");
 	int versionType = [defaults integerForKey:@"QSNewUpdateReleaseLevel"];
@@ -366,7 +347,10 @@ UInt64 QSGetPrimaryMACAddressInt();
 		NSFileManager *manager = [NSFileManager defaultManager];
 		//	NSString *destination = psMainPlugInsLocation;
 		NSString *tempDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString uniqueString]];
-		[manager createDirectoryAtPath:tempDirectory attributes:nil];
+		[manager createDirectoryAtPath:tempDirectory
+           withIntermediateDirectories:NO
+                            attributes:nil
+                                 error:NULL];
 		
 		NSArray *extracted = [self extractFilesFromQSPkg:path toPath:tempDirectory];
 		if ([extracted count] != 1) {
@@ -377,16 +361,16 @@ UInt64 QSGetPrimaryMACAddressInt();
 		NSString *newAppVersionPath = [tempDirectory stringByAppendingPathComponent:[extracted lastObject]];
 		if (newAppVersionPath)
 			[NSApp relaunchAfterMovingFromPath:newAppVersionPath];
-	} 	else {
-		
+	} else {
 		[updateTask stopTask:nil];
 		[updateTask release];
 		updateTask = nil;
-		
 	}
 	return nil;
 }
-- (NSArray *)installAppFromDiskImage:(NSString *)path {
+
+- (NSArray *)installAppFromDiskImage:(NSString *)path
+{
 	int selection = defaultBool(@"QSUpdateWithoutAsking"); 	
 	if (!selection)
 		selection = NSRunInformationalAlertPanel(@"Download Successful", @"A new version of Quicksilver has been downloaded. This version must be relaunched after it is installed.", @"Install and Relaunch", @"Cancel Update", nil);
@@ -394,38 +378,40 @@ UInt64 QSGetPrimaryMACAddressInt();
 		NSFileManager *manager = [NSFileManager defaultManager];
 		
 		NSString *tempDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString uniqueString]];
-		[manager createDirectoryAtPath:tempDirectory attributes:nil];
+		[manager createDirectoryAtPath:tempDirectory
+           withIntermediateDirectories:NO
+                            attributes:nil
+                                 error:NULL];
 		
 		[updateTask setProgress:-1.0];
 		[updateTask setName:@"Installing Update"];
 		[updateTask setStatus:@"Verifying Data"];
-			//		[[QSTaskController sharedInstance] updateTask:@"QSAppUpdateInstalling" status:@"Verifying Data" progress:-1];
 		NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/hdiutil"
 											  arguments:[NSArray arrayWithObjects:@"attach", path, @"-nobrowse", @"-mountpoint", tempDirectory, nil]];
 		
 		[task waitUntilExit]; 	
 		
-		NSArray *extracted = [[manager directoryContentsAtPath:tempDirectory] pathsMatchingExtensions:[NSArray arrayWithObject:@"app"]];
-		//QSLog(@"extract %@", extracted);
+		NSArray *extracted = [[manager contentsOfDirectoryAtPath:tempDirectory
+                                                           error:NULL]
+                                 pathsMatchingExtensions:[NSArray arrayWithObject:@"app"]];
 		if ([extracted count] != 1) {
 			QSLog(@"App Update Error");
 			return nil;
-		}
-
-//		[updateTask:@"Installing Update" progress:-1];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWasMoved:) name:QSApplicationWillRelaunchNotification object:self];
+		}		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationWasMoved:)
+                                                     name:QSApplicationWillRelaunchNotification
+                                                   object:self];
 		NSString *newAppVersionPath = [tempDirectory stringByAppendingPathComponent:[extracted lastObject]];
 		if (newAppVersionPath) {
 			[updateTask setStatus:@"Copying Application"];
 			[NSApp replaceWithUpdateFromPath:newAppVersionPath];
 			[updateTask setStatus:@"Cleaning Up"];
-			//			[[QSTaskController sharedInstance] updateTask:@"QSAppUpdateInstalling" status:@"Cleaning Up" progress:-1];
 			task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/hdiutil"
 										  arguments:[NSArray arrayWithObjects:@"detach", tempDirectory, nil]];
 			
 			[task waitUntilExit]; 	
-			[[NSFileManager defaultManager] removeFileAtPath:tempDirectory handler:nil]; 	
+			[[NSFileManager defaultManager] removeItemAtPath:tempDirectory error:NULL]; 	
 			
 			[tempPath release];
 			tempPath = nil;
@@ -437,13 +423,12 @@ UInt64 QSGetPrimaryMACAddressInt();
 			
 			//	[[QSTaskController sharedInstance] removeTask:@"QSAppUpdateInstalling"]; 	
 			[QSTaskController hideViewer];
-			if (defaultBool(@"QSQuitAfterUpdate") )
+			if (defaultBool(@"QSQuitAfterUpdate")) {
 				[NSApp terminate:nil];
-			else
+			} else {
 				[NSApp relaunch:self];
-			
+            }
 		} else {
-			
 			[updateTask stopTask:nil];
 			[updateTask release];
 			updateTask = nil;
@@ -457,14 +442,10 @@ UInt64 QSGetPrimaryMACAddressInt();
 	QSLog(@"notif %@ %@", notif, tempPath);
 }
 
-- (void)finishInstallAndRelaunch {
-	
-	//	[manager removeFileAtPath:tempDirectory handler:nil]; 	
-}
+- (void)finishInstallAndRelaunch { }
 
-
-
-- (NSArray *)extractFilesFromQSPkg:(NSString *)path toPath:(NSString *)tempDirectory {
+- (NSArray *)extractFilesFromQSPkg:(NSString *)path toPath:(NSString *)tempDirectory
+{
 	if (!path) return nil;
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSTask *task = [[[NSTask alloc] init] autorelease];
@@ -475,14 +456,12 @@ UInt64 QSGetPrimaryMACAddressInt();
 	[task waitUntilExit];
 	int status = [task terminationStatus];
 	if (status == 0) {
-		[manager removeFileAtPath:path handler:nil];
+		[manager removeItemAtPath:path error:NULL];
 		[[NSWorkspace sharedWorkspace] noteFileSystemChanged:[path stringByDeletingLastPathComponent]];
-		return [manager directoryContentsAtPath:tempDirectory];
+		return [manager contentsOfDirectoryAtPath:tempDirectory error:NULL];
 	} else {
 		return nil;
-	}
-	
-	
+	}	
 }
 
 

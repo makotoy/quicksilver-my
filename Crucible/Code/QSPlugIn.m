@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on 2/5/05.
 
-//
+//  2010-01-03 Makoto Yamashita.
 
 #import "QSPlugIn.h"
 
@@ -30,9 +30,18 @@ NSMutableDictionary *plugInBundlePaths = nil;
 
 @implementation QSPlugIn
 
-+ (void) initialize {
++ (void) initialize
+{
 	plugInBundlePaths = [[NSMutableDictionary alloc] init];
-	[self setKeys:[NSArray arrayWithObject:@"bundle"] triggerChangeNotificationsForDependentKey:@"smallIcon"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
+{
+    NSSet* resPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    if ([key isEqualToString:@"smallIcon"]) {
+        resPaths = [resPaths setByAddingObject:@"bundle"];
+    }
+    return resPaths;
 }
 
 - (NSString *) description {
@@ -141,7 +150,7 @@ NSMutableDictionary *plugInBundlePaths = nil;
 	}
 	if ([self isLoaded]) {
 		if ( [bundle isLoaded]) {
-			int fileSize = [[[[NSFileManager defaultManager] fileAttributesAtPath:[bundle executablePath] traverseLink:YES] objectForKey:NSFileSize] intValue];
+			int fileSize = [[[[NSFileManager defaultManager] attributesOfItemAtPath:[bundle executablePath] error:NULL] objectForKey:NSFileSize] intValue];
 			
 			status = [NSString stringWithFormat:@"Loaded (%dk)", fileSize / 1024];
 		} else {
@@ -201,38 +210,39 @@ NSMutableDictionary *plugInBundlePaths = nil;
 	return [@"by " stringByAppendingString:author];
 }
 
-
-
-
-- (NSString *) helpPage {
+- (NSString *) helpPage
+{
 	return [[self info] valueForKeyPath:@"QSPlugIn.helpPage"];	
 }
 
-- (NSArray *) dependencies {
+- (NSArray *) dependencies
+{
 	return [[self info] valueForKeyPath:@"QSRequirements.plugins"];	
 }
 
-- (void) showHelp {
+- (void) showHelp
+{
 	NSString *urlString = [NSString stringWithFormat:@"http://docs.blacktree.com/?page=%@", [self helpPage]];
-	if (urlString)
+	if (urlString) {
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[urlString stringByReplacing:@" " with:@"+"]]];
+    }
 }
 
-- (NSDate *) createdDate {
+- (NSDate *) createdDate
+{
     // FIXME
 	return [NSDate date];
 }
     
-- (NSDate *) modifiedDate {
+- (NSDate *) modifiedDate
+{
 	if (data) {
 		return [NSDate dateWithString:[data valueForKeyPath:@"QSModifiedDate"]];
 	} else if (bundle) {
-		NSDate *buildDate = [[[NSFileManager defaultManager] fileAttributesAtPath:[bundle executablePath]
-                                                                     traverseLink:YES] fileModificationDate];
-		if (!buildDate)
-			buildDate = [[[NSFileManager defaultManager] fileAttributesAtPath:[bundle bundlePath]
-                                                                 traverseLink:YES] fileModificationDate];
-		
+		NSDate *buildDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:[bundle executablePath] error:NULL] fileModificationDate];
+		if (!buildDate) {
+			buildDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:[bundle bundlePath] error:NULL] fileModificationDate];
+        }		
 		return buildDate;
 	}
 	return nil;

@@ -5,6 +5,7 @@
  *  Created by Alcor on 9/3/04.
  *  Copyright 2004 Blacktree. All rights reserved.
  *
+ *  2010-01-09 Makoto Yamashita
  */
 
 #include <Carbon/Carbon.h>
@@ -21,6 +22,5 @@
 
 
 @interface NSEvent (BLTRExtensions)
-+ (NSTimeInterval)doubleClickTime;
-- (int)standardModifierFlags;
+- (NSUInteger)standardModifierFlags;
 @end

@@ -1,3 +1,8 @@
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-09 Makoto Yamashita
+ */
+
 #import <Carbon/Carbon.h>
 #import <QSCrucible/NDAlias.h>
 #import <QSCrucible/QSFileConflictPanel.h>
@@ -39,28 +44,25 @@
 	return newActions;
 }
 
-- (QSObject *)doURLOpenAction:(QSObject *)dObject {
+- (QSObject *)doURLOpenAction:(QSObject *)dObject
+{
 	NSMutableArray *urlArray = [NSMutableArray array];
-	NSString *urlString;
-	NSEnumerator *e = [[dObject arrayForType:QSURLType] objectEnumerator];
-	
-	while ( ( urlString = [e nextObject] ) ) {
+
+	for (NSString* urlString in [dObject arrayForType:QSURLType]) {
 		NSURL *url = [NSURL URLWithString:urlString];
 		
 		if ( [urlString rangeOfString:QUERY_KEY].location != NSNotFound ) {
-			int pathLoc = [urlString rangeOfString:[url path]].location;
+			NSInteger pathLoc = [urlString rangeOfString:[url path]].location;
 			if ( pathLoc != NSNotFound )
 				url = [NSURL URLWithString:[urlString substringWithRange:NSMakeRange(0, pathLoc)]];
 		}
-		
 		url = [url URLByInjectingPasswordFromKeychain];
 		if ( url ) {
 			[urlArray addObject:url];
 		} else {
 			QSLog( @"error with url: %@", urlString );
 		}
-	}
-	
+	}	
 	if ( fALPHA && ![QSAction modifiersAreIgnored] && mOptionKeyIsDown ) {
 		id cont = [[NSClassFromString(@"QSSimpleWebWindowController") alloc] initWithWindow:nil];
 		[(QSSimpleWebWindowController *)cont openURL:[urlArray lastObject]];
@@ -72,7 +74,6 @@
                                         options:0 additionalEventParamDescriptor:nil
                               launchIdentifiers:nil];		
 	}
-	
 	return nil;
 }
 
@@ -328,12 +329,16 @@
 	return nil;
 }
 
-- (QSObject *) makeFolderIn:(QSObject *)dObject named:(QSObject *)iObject {
+- (QSObject *) makeFolderIn:(QSObject *)dObject named:(QSObject *)iObject
+{
 	NSString *theFolder = [dObject validSingleFilePath];
 	NSString *newPath = [theFolder stringByAppendingPathComponent:[iObject stringValue]];
 	NSFileManager *fm = [NSFileManager defaultManager];
 	
-	[fm createDirectoryAtPath:newPath attributes:nil];
+	[fm createDirectoryAtPath:newPath
+  withIntermediateDirectories:NO
+                   attributes:nil
+                        error:NULL];
 	[[NSWorkspace sharedWorkspace] noteFileSystemChanged:theFolder];
 	
 	return [QSObject fileObjectWithPath:newPath];
@@ -355,7 +360,8 @@
 	return nil;
 }
 
-- (QSBasicObject *) deleteFile:(QSObject *)dObject {
+- (QSBasicObject *) deleteFile:(QSObject *)dObject
+{
 	NSArray *selection = [[dObject arrayForType:QSFilePathType] valueForKey:@"lastPathComponent"];
 	
 	// ***warning   * activate before showing
@@ -368,7 +374,7 @@
 		NSEnumerator *files = [dObject enumeratorForType:QSFilePathType];
 		NSString *thisFile;
 		while ( ( thisFile = [files nextObject] ) ) {
-			if ([[NSFileManager defaultManager] removeFileAtPath:thisFile handler:nil])
+			if ([[NSFileManager defaultManager] removeItemAtPath:thisFile error:NULL])
 				[[NSWorkspace sharedWorkspace] noteFileSystemChanged:[thisFile stringByDeletingLastPathComponent]];
 			else
 				QSLog(@"Could not delete file");
@@ -427,7 +433,7 @@
 	
 	NSString *destinationFile = [container stringByAppendingPathComponent:newName];
 	
-	if ( [[NSFileManager defaultManager] movePath:path toPath:destinationFile handler:nil] ) {
+	if ( [[NSFileManager defaultManager] moveItemAtPath:path toPath:destinationFile error:NULL]) {
 		[[NSWorkspace sharedWorkspace] noteFileSystemChanged:container];
 	} else {
 		[[NSAlert alertWithMessageText:@"Error" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"Error renaming File: %@ to %@", path, destinationFile] runModal];
@@ -472,7 +478,7 @@
 				NSEnumerator *enumerator = [[conflicts allValues] objectEnumerator];
 				while ( ( file = [enumerator nextObject] ) ) {
 					QSLog(file);
-					[manager removeFileAtPath:file handler:nil];
+					[manager removeItemAtPath:file error:NULL];
 				}
 				break;
             }
@@ -509,24 +515,24 @@
 		NSMutableArray *newPaths = [NSMutableArray arrayWithCapacity:[filePaths count]];
 		for ( NSString *thisFile in filePaths ) {
 			NSString *destinationFile = [destination stringByAppendingPathComponent:[thisFile lastPathComponent]];
-			if ( copy && [[NSFileManager defaultManager] copyPath:thisFile toPath:destinationFile handler:nil] ) {
+            NSFileManager* fileMan = [NSFileManager defaultManager];
+			if ( copy && [fileMan copyItemAtPath:thisFile toPath:destinationFile error:NULL] ) {
 				[newPaths addObject:destinationFile];
-			} else if ( !copy && [[NSFileManager defaultManager] movePath:thisFile toPath:destinationFile handler:nil] ) {
+			} else if (!copy && [fileMan moveItemAtPath:thisFile toPath:destinationFile error:NULL] ) {
 				[[NSWorkspace sharedWorkspace] noteFileSystemChanged:[thisFile stringByDeletingLastPathComponent]];
 				[newPaths addObject:destinationFile];
 			} else {
 				[[NSAlert alertWithMessageText:@"Move Error" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"Error Moving File: %@ to %@",thisFile,destination]runModal];
 			}
-		}
-        
+		}        
 		[[NSWorkspace sharedWorkspace] noteFileSystemChanged:destination];
 		return [QSObject fileObjectWithArray:newPaths];
-	}
-	
+	}	
 	return nil;
 }
 
-- (QSObject *) makeAliasTo:(QSObject *)dObject inFolder:(QSObject *)iObject {
+- (QSObject *) makeAliasTo:(QSObject *)dObject inFolder:(QSObject *)iObject
+{
 	NSString *destination = [iObject singleFilePath];
 	NSEnumerator *files = [dObject enumeratorForType:QSFilePathType];
 	NSString *thisFile, *destinationFile;
@@ -535,15 +541,14 @@
 		if ( [(NDAlias*)[NDAlias aliasWithPath:thisFile] writeToFile:destinationFile] ) {
 			[[NSWorkspace sharedWorkspace] noteFileSystemChanged:destination];
 		}
-	}
-	
+	}	
 	// ***warning   *  return [QSObject fileObjectWithPath:destinationFile];
 	return nil;
 }
 
-- (QSObject *) makeLinkTo:(QSObject *)dObject inFolder:(QSObject *)iObject {
+- (QSObject *) makeLinkTo:(QSObject *)dObject inFolder:(QSObject *)iObject
+{
 	// ***warning   * should warn
-	
 	NSString *destination = [iObject singleFilePath];
 	NSEnumerator *files = [dObject enumeratorForType:QSFilePathType];
 	NSString *thisFile, *destinationFile;
@@ -551,18 +556,19 @@
 	while ( ( thisFile = [files nextObject] ) ) {
 		destinationFile = [destination stringByAppendingPathComponent:[thisFile lastPathComponent]];
 		
-		if ( [[NSFileManager defaultManager] createSymbolicLinkAtPath:destinationFile pathContent:thisFile] ) {
+		if ([[NSFileManager defaultManager] createSymbolicLinkAtPath:destinationFile
+                                                 withDestinationPath:thisFile
+                                                               error:NULL] ) {
 			[[NSWorkspace sharedWorkspace] noteFileSystemChanged:destination];
 		}
 	}
-	
 	// ***warning   *  return [QSObject fileObjectWithPath:destinationFile];
 	return nil;
 }
 
-- (QSObject *) makeHardLinkTo:(QSObject *)dObject inFolder:(QSObject *)iObject{
+- (QSObject *) makeHardLinkTo:(QSObject *)dObject inFolder:(QSObject *)iObject
+{
 	// ***warning   * should warn
-	
 	NSString *destination = [iObject singleFilePath];
 	NSEnumerator *files = [dObject enumeratorForType:QSFilePathType];
 	NSString *thisFile, *destinationFile;
@@ -570,11 +576,10 @@
 	while( ( thisFile = [files nextObject] ) ) {
 		destinationFile = [destination stringByAppendingPathComponent:[thisFile lastPathComponent]];
 		
-		if ( [[NSFileManager defaultManager] linkPath:destinationFile toPath:thisFile handler:nil] ) {
+		if ( [[NSFileManager defaultManager] linkItemAtPath:destinationFile toPath:thisFile error:NULL] ) {
 			[[NSWorkspace sharedWorkspace] noteFileSystemChanged:destination];
 		}
-	}
-	
+	}	
 	// ***warning   *  return [QSObject fileObjectWithPath:destinationFile];
 	return nil;
 }
@@ -601,13 +606,11 @@
 # define kAppLaunchAgainAction @"AppLaunchAgainAction"
 @implementation AppActions
 
-- (NSArray *) validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject {
+- (NSArray *) validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject
+{
 	NSMutableArray *newActions = [NSMutableArray arrayWithCapacity:1];
-	
 	// ***warning   * this doesn't see the character palette
-	BOOL isRunning = (int)[dObject objectForType:QSProcessType];
-	//QSLog(@"%@ %@",path,[[NSFileManager defaultManager] typeOfFile:path]);
-	
+	BOOL isRunning = ([dObject objectForType:QSProcessType] != nil);
 	if ( !isRunning ) {
 		[newActions addObject:kAppLaunchAction];
 	}

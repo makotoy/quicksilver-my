@@ -103,6 +103,9 @@
 - (void)registerForErrors;
 @end
 
-
+@interface QSController (QSNotifications)
+- (void)activated:(NSNotification *)aNotification;
+- (void)deactivated:(NSNotification *)aNotification;
+@end
 
 extern QSController *QSCon;

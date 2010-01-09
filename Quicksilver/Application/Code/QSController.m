@@ -206,7 +206,7 @@ static id _sharedInstance;
 
 - (void)recompositeIconImages
 {
-	NSImage *icon = [NSImage imageNamed:@"NSApplicationIcon"];
+	NSImage *icon = [NSImage imageNamed:@"Quicksilver h05"];
 	[icon setSize:NSMakeSize(128, 128)];
 	NSImage *activatedIcon = [[icon copy] autorelease];
 	NSImage *runningIcon = [[icon copy] autorelease];
@@ -1341,11 +1341,11 @@ static id _sharedInstance;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(activated:)
                                                      name:QSInterfaceActivatedNotification
-                                                   object:interfaceController];
+                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(deactivated:)
                                                      name:QSInterfaceDeactivatedNotification
-                                                   object:interfaceController];
+                                                   object:nil];
 //    }
     
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kAutomaticTaskViewer])

@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on Thu Apr 24 2003.
 
-//
+//  2010-01-09 Makoto Yamashita
 
 #import <Foundation/Foundation.h>
 
@@ -25,8 +25,8 @@
 @interface NSImage (Scaling)
 
 
-- (NSImage *)imageByAdjustingHue:(float)hue;
-- (NSImage *)imageByAdjustingHue:(float)hue saturation:(float)saturation;
+- (NSImage *)imageByAdjustingHue:(CGFloat)hue;
+- (NSImage *)imageByAdjustingHue:(CGFloat)hue saturation:(CGFloat)saturation;
 - (NSImageRep *)representationOfSize:(NSSize)theSize;
 - (NSImageRep *)bestRepresentationForSize:(NSSize)theSize;
 - (BOOL)createRepresentationOfSize:(NSSize)newSize;

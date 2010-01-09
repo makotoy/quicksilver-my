@@ -1,14 +1,17 @@
-
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-09 Makoto Yamashita
+ */
 
 #import "QSResizingInterfaceController.h"
-
 #import "QSSearchObjectView.h"
 #import "QSAction.h"
 #import "QSTextProxy.h"
+
 @implementation QSResizingInterfaceController
 
-
-- (id)initWithWindowNibName:(NSString *)nib {
+- (id)initWithWindowNibName:(NSString *)nib
+{
     self = [super initWithWindowNibName:nib];
     if (self) {
         expandTimer=nil;
@@ -17,14 +20,14 @@
     return self;
 }
 
-
-
-
-- (void)showIndirectSelector:(id)sender{
+- (void)showIndirectSelector:(id)sender
+{
     [super showIndirectSelector:sender];
     [self resetAdjustTimer];
 }
-- (void)hideIndirectSelector:(id)sender{
+
+- (void)hideIndirectSelector:(id)sender
+{
     [super hideIndirectSelector:sender];
     [self resetAdjustTimer];
 }
@@ -71,24 +74,24 @@
  
 }
 
-- (void)firstResponderChanged:(NSResponder *)aResponder{
-    if (aResponder==iSelector || aResponder==[iSelector currentEditor]){
+- (void)firstResponderChanged:(NSResponder *)aResponder
+{
+    if (aResponder==iSelector || aResponder==[iSelector currentEditor]) {
         QSAction *action=(QSAction *)[aSelector objectValue];
         int argumentCount=[action argumentCount];
         BOOL indirectOptional=[[[[aSelector objectValue]actionDict]objectForKey:kActionIndirectOptional]boolValue];
 		
-        if (argumentCount==2 && indirectOptional && (aResponder==iSelector || aResponder==[iSelector currentEditor]))
+        if (argumentCount==2 && indirectOptional
+            && (aResponder==iSelector || aResponder==[iSelector currentEditor])) {
             [self adjustWindow:self];
+        }
     }     
 }
 
-- (void)expandWindow:(id)sender{ 
-    expanded=YES;
-}
+- (void)expandWindow:(id)sender{ expanded = YES; }
 
-- (void)contractWindow:(id)sender{
-    expanded=NO;
-}
+- (void)contractWindow:(id)sender{ expanded = NO; }
 
-- (BOOL)expanded {return expanded; }
+- (BOOL)expanded { return expanded; }
+
 @end

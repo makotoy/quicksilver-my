@@ -1,9 +1,12 @@
-
+/* Derived from Blacktree, Inc. codebase
+ * 2010-01-03 Makoto Yamashita.
+ */
 
 #import <Foundation/Foundation.h>
 
 #import "QSMoveHelper.h"
-@interface NSObject (QSWindowDelegate)
+
+@protocol QSWindowDelegate
 - (void)firstResponderChanged:(NSResponder *)aResponder;
 - (BOOL)shouldSendEvent:(NSEvent *)theEvent;
 @end

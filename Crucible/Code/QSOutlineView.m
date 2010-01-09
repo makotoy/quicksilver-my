@@ -19,24 +19,28 @@
 {
     if (highlightColor != aHighlightColor) {
         [highlightColor release];
-        highlightColor = [aHighlightColor copy];
-		
+        highlightColor = [aHighlightColor copy];		
 		[self setNeedsDisplay:YES];
     }
 }
 
-- (BOOL)shouldCollapseAutoExpandedItemsForDeposited:(BOOL)deposited{
+- (BOOL)shouldCollapseAutoExpandedItemsForDeposited:(BOOL)deposited
+{
     return NO;
 }
-- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal {
+
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
+{
     if (isLocal) return NSDragOperationMove;
     else return NSDragOperationCopy;
 }
-- (void)drawRow:(NSInteger)rowIndex clipRect:(NSRect)clipRect{
+
+- (void)drawRow:(NSInteger)rowIndex clipRect:(NSRect)clipRect
+{
     if ([[self delegate] respondsToSelector:@selector(outlineView:itemIsSeparator:)]
-        && [[self delegate]outlineView:self itemIsSeparator:[self itemAtRow:rowIndex]]){
+        && [(id<OutlineViewSeparator>)[self delegate] outlineView:self itemIsSeparator:[self itemAtRow:rowIndex]]) {
         [self drawSeparatorForRow:rowIndex clipRect:clipRect];
-    }else{
+    } else {
         [super drawRow:rowIndex clipRect:clipRect];
     }
 }

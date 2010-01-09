@@ -5,23 +5,24 @@
 //  Created by Nicholas Jitkoff on 6/25/07.
 //  Copyright 2007 Google Inc. All rights reserved.
 //
+//  2010-01-09 Makoto Yamashita
 
 #import "QSSearchController.h"
 #import "QSCatalogSearchProvider.h"
 #import "QSSpotlightSearchProvider.h"
 
 @implementation QSSearchController
-@synthesize searchText, resultArray, sourceArray, searchType, matchedString, objectValue;
+@synthesize searchText, resultArray, sourceArray, searchType, matchedString,
+    objectValue, visibleString, currentEditor, allowText, allowNonActions,
+    preferredEdge, searchMode, shouldResetSearchString, shouldResetSearchArray,
+    scoreData, selectedObject;
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sourceArrayChanged:) name:@"QSSourceArrayUpdated" object:nil];
 
   qsSearch = [[QSCatalogSearchProvider alloc] init];
   spotSearch = [[QSSpotlightSearchProvider alloc] init];
-//  [self bind:@"objectValue"
-//    toObject:resultArrayController
-// withKeyPath:@"selectedObjects" options:nil];
-//  
   [resultArrayController addObserver:self 
                           forKeyPath:@"selection"
                              options:0
@@ -29,7 +30,9 @@
   
 
 }
-- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
   [self setObjectValue:[[resultArrayController selectedObjects] lastObject]];
 }
 
@@ -1810,22 +1813,19 @@
 //}
 //@end
 
-
-
 @end
 
-
-
-
 @implementation QSSearchController (History)
-- (void)showHistoryObjects {
+- (void)showHistoryObjects
+{
 	NSMutableArray *array = [historyArray valueForKey:@"selection"];
 	[self setSourceArray:array];
 	[self setResultArray:array];
 }
 
-- (NSDictionary *)historyState {
-	QSObject *currentValue = [self objectValue];
+- (NSDictionary *)historyState
+{
+	QSBasicObject *currentValue = [self objectValue];
 	if (!currentValue) return nil;
 	NSMutableDictionary *state = [NSMutableDictionary dictionary];
 	[state setObject:currentValue forKey:@"selection"];
@@ -1835,13 +1835,13 @@
 	return state;
 }
 
-- (void)setHistoryState:(NSDictionary *)state {	
+- (void)setHistoryState:(NSDictionary *)state
+{
 	[self setSourceArray:[state objectForKey:@"sourceArray"]];
 	[self setResultArray:[state objectForKey:@"resultArray"]];
 	[self setVisibleString:[state objectForKey:@"visibleString"]];
 	[self selectObject:[state objectForKey:@"selection"]];
 }
-
 
 //- (id)nextHistoryState {
 //	QSLog(@"select in history %d %@", historyIndex, [historyArray valueForKeyPath:@"selection.displayName"]);
@@ -1849,37 +1849,36 @@
 //		return [historyArray objectAtIndex:0]; 		
 //	return nil;
 //}
-- (void)switchToHistoryState:(int)i {
+
+- (void)switchToHistoryState:(int)i
+{
 	if (VERBOSE) QSLog(@"select in history %d %@", i, [historyArray valueForKeyPath:@"selection.displayName"]);
 	//	
 	if (i<[historyArray count])
 		[self setHistoryState:[historyArray objectAtIndex:i]]; 	
 }
-- (void)clearHistory {
+- (void)clearHistory
+{
 	[historyArray removeAllObjects];
 	historyIndex = 0;
 }
 #define MAX_HISTORY_COUNT 10
-- (void)updateHistory {
-  
+- (void)updateHistory
+{
 	if (!recordsHistory) return;
-	// [NSDictionary dictionaryWithObjectsAndKeys:[self objectValue] , @"object", nil];
-	//  
 	
-	if ( [self objectValue])
-		[QSHist addObject:[self objectValue]];
+	if ( [self objectValue]) [QSHist addObject:[self objectValue]];
+    
 	NSDictionary *state = [self historyState];
-	//	if (!state)
-	//		[history removeObject:currentValue];
 	
 	historyIndex = -1;
-	if (state)
-		[historyArray insertObject:state atIndex:0];
+	if (state) [historyArray insertObject:state atIndex:0];
+    
 	if ([historyArray count] >  MAX_HISTORY_COUNT) [historyArray removeLastObject];
-  //	if (VERBOSE) QSLog(@"history %d items", [historyArray count]);
 }
 
-- (void)goForward:(id)sender {
+- (void)goForward:(id)sender
+{
 	if (VERBOSE) QSLog(@"goForward");
 	if (historyIndex>0) {
 		[self switchToHistoryState:--historyIndex];
@@ -1887,7 +1886,9 @@
 		[resultController bump:(4)]; 	
 	}
 }
-- (void)goBackward:(id)sender {
+
+- (void)goBackward:(id)sender
+{
 	if (VERBOSE) QSLog(@"goBackward");
   
 	if (historyIndex == -1) {
@@ -1901,64 +1902,37 @@
 	}
 }
 
-- (BOOL)objectIsInCollection:(QSObject *)thisObject {
-	return NO; 	
-}
-
+- (BOOL)objectIsInCollection:(QSObject *)thisObject { return NO; }
 
 @end
 
-
-
-
-
-
-
 @implementation QSSearchController (Browsing)
-- (void)moveWordRight:(id)sender {
-	[self browse:1];
-	
-}
-- (void)moveWordLeft:(id)sender {
-	[self browse:-1];
-	
-}
-- (void)moveRight:(id)sender {
-	[self browse:1];
-	
-}
-- (void)moveLeft:(id)sender {
-	[self browse:-1];
-}
 
-- (void)browse:(int)direction {
+- (void)moveWordRight:(id)sender { [self browse:1]; }
+
+- (void)moveWordLeft:(id)sender { [self browse:-1]; }
+
+- (void)moveRight:(id)sender { [self browse:1]; }
+
+- (void)moveLeft:(id)sender { [self browse:-1]; }
+
+- (void)browse:(int)direction
+{
 	NSArray *newObjects = nil;
 	QSBasicObject * newSelectedObject = [[resultArrayController selectedObjects] lastObject];
 	QSBasicObject * parent = nil;
 	NSArray *siblings;
-	//if (self == [self actionSelector]) {
-	//}
-	
 	BOOL alt = ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) > 0;
   
-	//   QSLog(@"child %d %d", [[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask, [[NSApp currentEvent] modifierFlags]);
 	if (direction>0) {
 		//Should show childrenLevel
 		newObjects = (alt?[newSelectedObject altChildren] :[newSelectedObject children]);
 		if ([newObjects count]) {
 			[parentStack addObject:newSelectedObject];
-			// if (VERBOSE) QSLog(@"addobject %@ %@", newSelectedObject, newObjects);
 		}
-		//		newSelectedObject = [[self nextHistoryState] objectForKey:@"selection"];
-		//		if (![newObjects containsObject:newSelectedObject]) {
-		//			QSLog(@"notsel %@", newSelectedObject);
-		//		} else {
-		//			QSLog(@"reselecting %@", newSelectedObject);
-		//		}
 		newSelectedObject = nil;
 	} else {
 		parent = [newSelectedObject parent];
-		
 		
 		if (parent && [[NSApp currentEvent] modifierFlags] & NSControlKeyMask) {
 			[parentStack removeAllObjects];
@@ -1969,34 +1943,25 @@
 			// ***warning   * this should check for a valid parent
 			[[parent retain] autorelease];
 			[parentStack removeLastObject];
-			
-			//		if (VERBOSE) QSLog(@"Using parent from stack: %@ (%@) ", parent, [parentStack componentsJoinedByString:@", "]);
-			//    if (
-			// && ![[parent children] containsObject:newSelectedObject])
 		}
-		
-		//[[parent children] containsObject:newSelectedObject]
-		
 		if (!browsing && [self searchMode] == SearchFilterAll && [[resultController window] isVisible]) {
 			//Maintain selection, but show siblings 
 			siblings = (alt?[parent altChildren] :[parent children]);
 			newObjects = siblings;
-			
 		} else {
 			//Should show parent's level
-			
 			newSelectedObject = parent;
 			if (newSelectedObject) {
 				if ([historyArray count] >historyIndex) {
-          //	if (VERBOSE) QSLog(@"history %@", [historyArray valueForKeyPath:@"selection.displayName"]);
 					if ([[[historyArray objectAtIndex:historyIndex+1] valueForKey:@"selection"] isEqual:parent]) {
 						if (VERBOSE) QSLog(@"Parent Missing, Using History");
 						[self goBackward:self];
 						return;
 					}
-					if (VERBOSE) QSLog(@"Parent Missing, No History, %@", [[historyArray objectAtIndex:0] valueForKey:@"selection"]);
-				}
-				
+					if (VERBOSE) {
+                        QSLog(@"Parent Missing, No History, %@", [[historyArray objectAtIndex:0] valueForKey:@"selection"]);
+                    }
+				}				
 				if (!newObjects)
 					newObjects = (alt?[newSelectedObject altSiblings] :[newSelectedObject siblings]);
 				if (![newObjects containsObject:newSelectedObject])
@@ -2005,8 +1970,7 @@
 				if (!newObjects && [parentStack count]) {
 					parent = [parentStack lastObject];
 					newObjects = [parent children];
-				}
-				
+				}				
 				if (!newObjects && [historyArray count]) {
 					//					
 					if ([[[historyArray objectAtIndex:0] valueForKey:@"selection"] isEqual:parent]) {
@@ -2015,15 +1979,11 @@
 						[self goBackward:self];
 						return;
 					}
-					if (VERBOSE) QSLog(@"Parent Missing, No History");
-					
+					if (VERBOSE) QSLog(@"Parent Missing, No History");					
 				}
 			}
 		}
-		
   }
-  
-  
   if ([newObjects count]) {
     browsing = YES;
     
@@ -2051,10 +2011,7 @@
       [resultController bump:(direction*4)];
     else
       NSBeep();
-  }
-  
-  
+  }  
 }
-
 
 @end
