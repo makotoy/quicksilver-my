@@ -6,14 +6,10 @@
 
 //  2010-01-09 Makoto Yamashita
 
-#import <QSCrucible/QSPlugInManager.h>
-#import <QSCrucible/QSURLDownloadWrapper.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 
 #import "QSApp.h"
-
 #import "QSUpdateController.h"
-
-#import <SystemConfiguration/SystemConfiguration.h>
 
 NSString *QSGetPrimaryMACAddress();
 UInt64 QSGetPrimaryMACAddressInt();

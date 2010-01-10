@@ -1,10 +1,7 @@
 #import <WebKit/WebKit.h>
-#import <QSCrucible/QSPlugInManager.h>
 
 #import "QSController.h"
-
 #import "QSUpdateController.h"
-
 #import "QSSetupAssistant.h"
 
 @implementation QSSetupAssistant
