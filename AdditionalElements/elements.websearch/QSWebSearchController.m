@@ -1,8 +1,11 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-10 Makoto Yamashita
+ */
 
+#import <CoreFoundation/CoreFoundation.h>
 
 #import "QSWebSearchController.h"
-
-
 
 @implementation QSWebSearchController
 + (id)sharedInstance{
@@ -37,19 +40,18 @@
 }
 
 //kQSStringEncoding
-- (NSString *)resolvedURL:(NSURL *)searchURL forString:(NSString *)string  encoding:(CFStringEncoding)encoding{
-	   NSString *query=[searchURL absoluteString];
+- (NSString *)resolvedURL:(NSURL *)searchURL forString:(NSString *)string encoding:(CFStringEncoding)encoding
+{
+    NSString *query=[searchURL absoluteString];
     NSString *searchTerm=[string URLDecoding];
 	
     searchTerm= [searchTerm stringByReplacing:@"+" with:@"/+/"];        
     searchTerm= [searchTerm stringByReplacing:@" " with:@"+"];
 	// NSLog(@"encoding %d",encoding);
 	if (encoding){
-		//	NSLog(@"searchterm %@",searchTerm);	
-    	searchTerm= [searchTerm URLEncodingWithEncoding:encoding];
-		//	NSLog(@"searchterm %@",searchTerm);	
-	}else{
-		searchTerm= [searchTerm URLEncoding];
+    	searchTerm = [searchTerm URLEncodingWithEncoding:encoding];
+	} else {
+		searchTerm = [searchTerm URLEncoding];
 	}
 	searchTerm= [searchTerm stringByReplacing:@"/+/" with:@"%2B"];  
     
@@ -57,7 +59,8 @@
 	return query;
 }
 
-- (void)searchURL:(NSURL *)searchURL forString:(NSString *)string  encoding:(CFStringEncoding)encoding{    
+- (void)searchURL:(NSURL *)searchURL forString:(NSString *)string encoding:(CFStringEncoding)encoding
+{   
     NSPasteboard *findPboard=[NSPasteboard pasteboardWithName:NSFindPboard];
     [findPboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
     [findPboard setString:string forType:NSStringPboardType];
@@ -82,10 +85,12 @@
 	   }
 }
 
-- (void)searchURL:(NSURL *)searchURL forString:(NSString *)string{    
-	[self searchURL:(NSURL *)searchURL forString:(NSString *)string  encoding:nil];   
+- (void)searchURL:(NSURL *)searchURL forString:(NSString *)string
+{
+	[self searchURL:(NSURL *)searchURL
+          forString:(NSString *)string
+           encoding:kCFStringEncodingASCII];   
 }
-
 
 - (void)openPOSTURL:(NSURL *)searchURL{
     NSMutableString *form=[NSMutableString stringWithCapacity:100];

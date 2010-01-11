@@ -12,6 +12,7 @@
 		08368A46108D13F400FDAB28 /* QSURLSearchActions.h in Headers */ = {isa = PBXBuildFile; fileRef = E1812D44076BDEE700A8EFA8 /* QSURLSearchActions.h */; };
 		08368A47108D140E00FDAB28 /* QSWebSearchPlugIn_Source.h in Headers */ = {isa = PBXBuildFile; fileRef = E1B32E9F078CCD0A0076DA42 /* QSWebSearchPlugIn_Source.h */; };
 		08368A49108D141F00FDAB28 /* QSWebSearchPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = E1EAB047068128A800774DFF /* QSWebSearchPlugIn.h */; };
+		089F27BF10FAD78900705BEF /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089F27BE10FAD78900705BEF /* CoreFoundation.framework */; };
 		7F7EB2D80BFEB69300AFDF2C /* QSWebSearchSource.nib in Resources */ = {isa = PBXBuildFile; fileRef = E1B332FE078CD6980076DA42 /* QSWebSearchSource.nib */; };
 		7F7EB2D90BFEB69300AFDF2C /* QSObjectSource.name.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1F2DC1D078D977D007B9046 /* QSObjectSource.name.strings */; };
 		7F7EB2DB0BFEB69300AFDF2C /* QSWebSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1812CB3076BDBFA00A8EFA8 /* QSWebSearchController.m */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		089F27BE10FAD78900705BEF /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		32DBCF980370C29C00C91783 /* QSWebSearchPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSWebSearchPlugIn_Prefix.pch; sourceTree = "<group>"; };
 		7F7EB2E90BFEB69300AFDF2C /* Web Search.element */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Web Search.element"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F7EB40B0BFEB72500AFDF2C /* element.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F7EB2DF0BFEB69300AFDF2C /* Cocoa.framework in Frameworks */,
+				089F27BF10FAD78900705BEF /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				DD92D38A0106425D02CA0E72 /* Cocoa.framework */,
+				089F27BE10FAD78900705BEF /* CoreFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
