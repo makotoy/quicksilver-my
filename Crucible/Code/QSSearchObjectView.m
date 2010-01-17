@@ -6,18 +6,20 @@
 #define pUserKeyBindingsPath QSApplicationSupportSubPath(@"KeyBindings.qskeys", NO)
 #define MAX_HISTORY_COUNT 20
 
-NSMutableDictionary *bindingsDict = nil;
+static NSMutableDictionary *bindingsDict = nil;
 
 @implementation QSSearchObjectView
-+(void)initialize {
++(void)initialize
+{
 	bindingsDict = [[[NSMutableDictionary alloc] initWithContentsOfFile:
 		[[NSBundle bundleForClass:[QSSearchObjectView class]]pathForResource:@"DefaultBindings" ofType:@"qskeys"]]objectForKey:@"QSSearchObjectView"];
 	
 	NSDictionary *mods = [[NSDictionary dictionaryWithContentsOfFile:pUserKeyBindingsPath] objectForKey:@"QSSearchObjectView"];
 	[bindingsDict addEntriesFromDictionary:mods];
-	
 }
-- (void)awakeFromNib {
+
+- (void)awakeFromNib
+{
 	[super awakeFromNib];
 	resetTimer = nil;
 	searchTimer = nil;
@@ -1653,13 +1655,15 @@ indexOfObject:[[self objectValue] identifier]] != NSNotFound;
 	}
 }
 
-
-
-- (NSAttributedString *)attributedSubstringFromRange:(NSRange)theRange {
+- (NSAttributedString *)attributedSubstringFromRange:(NSRange)theRange
+{
 	QSLog(@"attributedSubstringFromRange");
-	return [[NSAttributedString alloc] initWithString:[partialString substringWithRange:theRange]];
+    NSAttributedString* resStr = [[NSAttributedString alloc] initWithString:[partialString substringWithRange:theRange]];
+	return [resStr autorelease];
 }
-- (unsigned int) characterIndexForPoint:(NSPoint) thePoint {
+
+- (unsigned int) characterIndexForPoint:(NSPoint) thePoint
+{
 	QSLog(@"index");
 	return 0;
 }

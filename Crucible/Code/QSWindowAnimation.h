@@ -4,12 +4,11 @@
 //
 //  Created by Nicholas Jitkoff on 10/24/05.
 
-//
+//  2010-01-15 Makoto Yamashita.
 
 #import <Cocoa/Cocoa.h>
 #import "QSMoveHelper.h"
 #import "QSEmbeddedEffects.h"
-
 
 #define kQSGSTransformF @"transformFn"
 #define kQSGSBrightF @"brightnessFn"
@@ -22,9 +21,6 @@
 #define kQSGSAlphaA @"alphaA"
 #define kQSGSBrightB @"brightnessB"
 #define kQSGSAlphaB @"alphaB"
-
-
-
 
 @interface QSWindowAnimation : NSAnimation {
 	@public
@@ -50,20 +46,17 @@
 	NSDictionary *attributes;
 	BOOL restoreTransform;
 }
-- (NSDictionary *)attributes;
-- (void)setAttributes:(NSDictionary *)value;
++ (QSWindowAnimation *)effectWithWindow:(NSWindow *)aWindow attributes:(NSDictionary *)attr;
++ (QSWindowAnimation *)showHelperForWindow:(NSWindow *)aWindow;
++ (QSWindowAnimation *)hideHelperForWindow:(NSWindow *)aWindow;
 
-- (NSWindow *)window;
-- (void)setWindow:(NSWindow *)aWindow;
+@property (retain) NSDictionary* attributes;
+@property (retain) NSWindow* window;
 - (void)setTransformFt:(void *)aTransformFt;
 //- (void)animate:(id)sender;
 //- (void)_transformWindow:(NSWindow *)window toTransformation:(CGAffineTransform)end  alpha:(float)alpha;
 - (void)finishAnimation;
-@end
 
-@interface QSWindowAnimation (DefaultEffects)
-+ (QSWindowAnimation *)effectWithWindow:(NSWindow *)window attributes:(NSDictionary *)attr;
-+ (QSWindowAnimation *)showHelperForWindow:(NSWindow *)window;
-+ (QSWindowAnimation *)hideHelperForWindow:(NSWindow *)window;
+- (id)initWithWindow:(NSWindow *)window;
 
 @end

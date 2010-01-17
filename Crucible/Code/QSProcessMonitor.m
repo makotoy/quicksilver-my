@@ -1,3 +1,8 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
+
 #import "QSObject.h"
 #import "QSObject_FileHandling.h"
 
@@ -44,20 +49,15 @@ OSStatus GetPSNForAppInfo(ProcessSerialNumber *psn,NSDictionary *theApp){
     procInfo.processInfoLength              = sizeof(ProcessInfoRec);
     procInfo.processName                    = procName;
     
-    while (procNotFound != (resultCode = GetNextProcess(&serialNumber))) {
-        if (noErr == (resultCode = 
-                      GetProcessInformation(&serialNumber, &procInfo)))
-        {
-            if ('\0' == procName[1])
-                procName[1] = '0';
-            [resultsArray addObject:(NSString 
-                                     *)CFStringCreateWithPascalString(NULL,procInfo.processName,kCFStringEncodingMacRoman)
-                ];
+    while (procNotFound != GetNextProcess(&serialNumber)) {
+        if (noErr == GetProcessInformation(&serialNumber, &procInfo)) {
+            if ('\0' == procName[1]) procName[1] = '0';
+            
+            NSString *procName = (NSString*)CFStringCreateWithPascalString(NULL,procInfo.processName,kCFStringEncodingMacRoman);
+            [resultsArray addObject:[procName autorelease]];
         }
     }
     return resultsArray;
-    
-    
 }
 
 

@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on Fri May 09 2003.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "NSWorkspace_BLTRExtensions.h"
 #import "NSApplication_BLTRExtensions.h"
@@ -36,7 +36,7 @@ void cycleDock(){
         hfsPath = (NSString *)CFURLCopyFileSystemPath(fileURL, kCFURLHFSPathStyle);
         CFRelease(fileURL);
 		
-        scriptText = [NSString stringWithFormat:@"tell application \"Finder\" to comment of item \"%@\"", hfsPath];
+        scriptText = [NSString stringWithFormat:@"tell application \"Finder\" to comment of item \"%@\"", [hfsPath autorelease]];
         script = [[[NSAppleScript alloc] initWithSource:scriptText] autorelease];
         aeDesc = [script executeAndReturnError:nil];
 		//QSLog([aeDesc stringValue]);
@@ -64,7 +64,7 @@ void cycleDock(){
         hfsPath = (NSString *)CFURLCopyFileSystemPath(fileURL, kCFURLHFSPathStyle);
         CFRelease(fileURL);
 		
-        scriptText = [NSString stringWithFormat:@"tell application \"Finder\" to set comment of item \"%@\" to \"%@\"", hfsPath, comment];
+        scriptText = [NSString stringWithFormat:@"tell application \"Finder\" to set comment of item \"%@\" to \"%@\"", [hfsPath autorelease], comment];
         script = [[[NSAppleScript alloc] initWithSource:scriptText] autorelease];
         aeDesc = [script executeAndReturnError:nil];
         result = (aeDesc != nil);
@@ -260,7 +260,7 @@ void cycleDock(){
     else
     {
         AppleEvent reply;
-        err=AESend(&event,&reply,kAEWaitReply,kAENormalPriority,100,NULL,NULL);
+        AESend(&event,&reply,kAEWaitReply,kAENormalPriority,100,NULL,NULL);
         AEDisposeDesc(&event); // we must dispose of this and the reply.
     }
 }

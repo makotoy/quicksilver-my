@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on Mon Mar 03 2003.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import <Foundation/Foundation.h>
 
@@ -31,6 +31,7 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString);
 
 @interface NSString (URLEncoding)
 - (NSString *) URLEncoding;
+- (NSString *)URLEncodingWithEncoding:(CFStringEncoding) encoding;
 - (NSString *) URLDecoding;
 @end
 

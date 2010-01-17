@@ -161,7 +161,8 @@ static id sharedInstance = nil;
     
     if (!plugin) {
         BLogError(([NSString stringWithFormat:@"failed to create plugin for path: %@", [bundle bundlePath]]));
-    } 
+    }
+    [plugin release], plugin = nil;
     
     [self didChangeValueForKey:@"plugins"];
 }

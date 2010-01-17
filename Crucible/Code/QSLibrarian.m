@@ -102,10 +102,8 @@ static NSInteger presetSort(id item1, id item2, QSLibrarian *librarian) {
         [(NSImage *)[[NSImage alloc] initWithSize:NSZeroSize] setName:@"QSDefaultAppProxyImage"];
         [(NSImage *)[[NSImage alloc] initWithSize:NSZeroSize] setName:@"QSIndirectProxyImage"];
         
-        
 		[self loadShelfArrays];
-    }
-    
+    }    
     return self;
 }
 
@@ -579,20 +577,6 @@ static NSInteger presetSort(id item1, id item2, QSLibrarian *librarian) {
 	NSAutoreleasePool *pool;
 	for(i = 0; i<count; i++) {
 		date = [NSDate date];
-		for(j = 0; j<25; j++) {
-			
-			
-			//    NSData *scores;
-			NSString *string = [array objectAtIndex:i];
-			
-			//date = [NSDate date];
-			pool = [[NSAutoreleasePool alloc] init];
-			newResultArray = [self scoredArrayForString:string inSet:nil mnemonicsOnly:NO];
-			//if (VERBOSE) QSLog(@"Searched for \"%@\" in %3fms (%d items) ", string, (1000 * -[date timeIntervalSinceNow]) , [newResultArray count]);
-			
-			[pool release];
-		}
-		
 		if (VERBOSE) QSLog(@"SearchTesA in %3fs, %3fs", -[date timeIntervalSinceNow] , -[totalDate timeIntervalSinceNow]); 	
 		
 		//	if (VERBOSE) QSLog(@"SearchTest in %3fs, %f", -[totalDate timeIntervalSinceNow] , moo);

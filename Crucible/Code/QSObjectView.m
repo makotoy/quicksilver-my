@@ -92,11 +92,8 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
 	BOOL isInside = YES;
-	NSPoint mouseLoc;
 	
 	theEvent = [[self window] nextEventMatchingMask: NSLeftMouseUpMask | NSLeftMouseDraggedMask];
-	mouseLoc = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-	isInside = [self mouse:mouseLoc inRect:[self bounds]];
 	
 	switch ([theEvent type]) {
 		case NSLeftMouseDragged:
@@ -376,7 +373,6 @@
 	NSString *action = [[self objectValue] actionForDragOperation:sourceDragMask withObject:draggedObject];
 	[self invalidateSpringTimer];
 	if (shouldSpring) {
-		action = @"FileRevealAction";
 		[self performSelector:@selector(concludeSpringWithData:) withObject:[NSApp currentEvent] afterDelay:0.1];
 		
 		id winController = [[self window] windowController];

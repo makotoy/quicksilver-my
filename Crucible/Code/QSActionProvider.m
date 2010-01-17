@@ -1,3 +1,7 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
 
 
 #import "QSActionProvider.h"
@@ -9,8 +13,9 @@
 
 @implementation QSActionProvider
 + (void)initialize{
-	if (![NSImage imageNamed:QSDirectObjectIconProxy]) 
-		[(NSImage *)[[NSImage imageNamed:@"defaultAction"]copy]setName:QSDirectObjectIconProxy];
+	if (![NSImage imageNamed:QSDirectObjectIconProxy]) {
+		[(NSImage *)[[NSImage imageNamed:@"defaultAction"] copy] setName:QSDirectObjectIconProxy];
+    }
 }
 
 

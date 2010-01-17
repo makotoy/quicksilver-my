@@ -577,11 +577,11 @@ static id QSPrefs;
 		   //		[prefsBox removeFromSuperview]; 		
 		[mainBox setContentView:nil]; //settingsPrefsBox];
 		showingSettings = NO;
-	}
-	
+	}	
 }
 
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag {
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
+{
 	if ([itemIdentifier isEqualToString:@"QSSettingsPanePlaceholder"]) {
 		NSToolbarItem *newItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
 		[newItem setLabel:@"Preferences"];
@@ -607,22 +607,12 @@ static id QSPrefs;
 		[newItem setPaletteLabel:@"Location"];
 		[newItem setView:toolbarTitleView];
 		[newItem setMinSize:NSMakeSize(128, 32)];
-		
 		[newItem setMaxSize:NSMakeSize(512, 48)];
 		[newItem setEnabled:YES];
-	//	QSLog(@"ident %@", [toolbarTitleView subviews]);
-		
-		//[toolbarTitleView setColor:[NSColor whiteColor]];
+
 		return newItem; 		
-		
-	}
-	
-	
+	}	
 	NSDictionary *info = [modulesByID objectForKey:itemIdentifier];
-	//int index = [toolbarTabView indexOfTabViewItemWithIdentifier:itemIdentifier];
-	//if (index == NSNotFound) return nil;
-	//NSTabViewItem *tabViewItem = [toolbarTabView tabViewItemAtIndex:index];
-	//QSLog(@"tool %@", info);
 	NSToolbarItem *newItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
 	[newItem setLabel:[info objectForKey:@"name"]];
 	[newItem setPaletteLabel:[info objectForKey:@"name"]];
@@ -633,7 +623,6 @@ static id QSPrefs;
 	return newItem; 	
 	return nil;
 }
-
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)aToolbar
 {
@@ -666,43 +655,31 @@ static id QSPrefs;
 	return  YES; //[[self toolbarStandardItemIdentifiers:nil] containsObject:[toolbarItem itemIdentifier]];
 }
 
-
-//- (void)splitView:(NSSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize;
-
-- (float) splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset {
-//    QSLog(@"constrainMax: %f, %d", proposedMax, offset);
-    //  return proposedMax-36;
+- (CGFloat) splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset
+{
     return proposedMax - 384;
 }
 
-- (float) splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset {
-   // QSLog(@"constrainMin: %f, %d", proposedMin, offset);
-	
-	if (offset)
-		return NSWidth([sender frame]) /2;
+- (CGFloat) splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset
+{
+	if (offset)	return NSWidth([sender frame]) /2;
+    
     return 160;
-    return proposedMin;
 }
 
-- (void)splitView:(NSSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize {
+- (void)splitView:(NSSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize
+{
 	NSArray *subviews = [sender subviews];
-//	NSRect newFrame0 = [[subviews objectAtIndex:0] frame];
 	NSRect newFrame1 = [[subviews objectAtIndex:1] frame]; 	
 	float change = NSWidth([sender frame]) -oldSize.width;
 	newFrame1.size.width += change;
-//	[[subviews objectAtIndex:0] setFrame:newFrame0];
 	[[subviews objectAtIndex:1] setFrame:newFrame1];
 	[sender adjustSubviews]; 	
 }
 
-
-//- (void)splitViewWillResizeSubviews:(NSNotification *)notification;
-//- (void)splitViewDidResizeSubviews:(NSNotification *)notification;
-- (BOOL)splitView:(NSSplitView *)sender canCollapseSubview:(NSView *)subview {
+- (BOOL)splitView:(NSSplitView *)sender canCollapseSubview:(NSView *)subview
+{
 	return NO; 	
 }
-//- (float) splitView:(NSSplitView *)splitView constrainSplitPosition:(float)proposedPosition ofSubviewAt:(int)index {
-//	
-//}
 
 @end

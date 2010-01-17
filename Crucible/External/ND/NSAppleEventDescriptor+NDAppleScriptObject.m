@@ -4,6 +4,9 @@
  *
  *  Created by Nathan Day on Fri Dec 14 2001.
  *  Copyright (c) 2001 Nathan Day. All rights reserved.
+ *
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
  */
 
 #import "NSAppleEventDescriptor+NDAppleScriptObject.h"
@@ -19,7 +22,7 @@
  */
 + (id)descriptorWithAEDescNoCopy:(const AEDesc *)aDesc
 {
-	return [[[self alloc] initWithAEDescNoCopy:aDesc] autorelease];
+    return [[[[self class] alloc] initWithAEDescNoCopy:aDesc] autorelease];
 }
 
 /*
@@ -27,7 +30,7 @@
  */
 + (id)descriptorWithAEDesc:(const AEDesc *)anAEDesc
 {
-	return [[[self alloc] initWithAEDesc:anAEDesc] autorelease];
+	return [[[[self class] alloc] initWithAEDesc:anAEDesc] autorelease];
 }
 
 /*

@@ -8,47 +8,43 @@
 #import "QSWebSearchController.h"
 
 @implementation QSWebSearchController
-+ (id)sharedInstance{
++ (id)sharedInstance
+{
     static id _sharedInstance;
     if (!_sharedInstance) _sharedInstance = [[[self class] allocWithZone:[self zone]] init];
     return _sharedInstance;  
 }
 
-- (id)init {
-    self = [super init]; // initWithWindowNibName:@"WebSearch"]; 
+- (id)init
+{
+    self = [super init];
     if (self) {
 		[[self window] setLevel:NSFloatingWindowLevel];
     }
     return self;
 }
 
-
-- (void)windowDidLoad {
+- (void)windowDidLoad
+{
     [super windowDidLoad];
     [[self window]setHidesOnDeactivate:NO];
-	//    [webSearchWindow setFrameTopLeftPoint:[mainWindow frame].origin];
 }
 
-
-
-- (void)searchURL:(NSURL *)searchURL{
-	//    NSLog(@"SEARCH: %@",searchURL);
+- (void)searchURL:(NSURL *)searchURL
+{
     [self setWebSearch:searchURL];
-    //performingWebSearch=YES;
     [self showSearchView:self];
 	[[self window] makeKeyAndOrderFront:self];
 }
 
-//kQSStringEncoding
 - (NSString *)resolvedURL:(NSURL *)searchURL forString:(NSString *)string encoding:(CFStringEncoding)encoding
 {
-    NSString *query=[searchURL absoluteString];
-    NSString *searchTerm=[string URLDecoding];
+    NSString *query =[searchURL absoluteString];
+    NSString *searchTerm =[string URLDecoding];
 	
-    searchTerm= [searchTerm stringByReplacing:@"+" with:@"/+/"];        
-    searchTerm= [searchTerm stringByReplacing:@" " with:@"+"];
-	// NSLog(@"encoding %d",encoding);
-	if (encoding){
+    searchTerm = [searchTerm stringByReplacing:@"+" with:@"/+/"];        
+    searchTerm = [searchTerm stringByReplacing:@" " with:@"+"];
+	if (encoding) {
     	searchTerm = [searchTerm URLEncodingWithEncoding:encoding];
 	} else {
 		searchTerm = [searchTerm URLEncoding];
@@ -92,14 +88,15 @@
            encoding:kCFStringEncodingASCII];   
 }
 
-- (void)openPOSTURL:(NSURL *)searchURL{
+- (void)openPOSTURL:(NSURL *)searchURL
+{
     NSMutableString *form=[NSMutableString stringWithCapacity:100];
     
     [form appendString:@"<html><head><title>Quicksilver Search Submitter</title></head><body onLoad=\"document.qsform.submit()\">"];
-    [form appendFormat:@"<form name=\"qsform\" action=\"%@\" method=\"POST\">",[[[searchURL absoluteString]componentsSeparatedByString:@"?"]objectAtIndex:0]];
-    NSString *component;
-    NSEnumerator *queryEnumerator=[[[searchURL query]componentsSeparatedByString:@"&"]objectEnumerator];
-    while (component = [queryEnumerator nextObject]){
+    [form appendFormat:@"<form name=\"qsform\" action=\"%@\" method=\"POST\">",
+     [[[searchURL absoluteString] componentsSeparatedByString:@"?"] objectAtIndex:0]];
+
+    for (NSString* component in [[searchURL query]componentsSeparatedByString:@"&"]) {
         NSArray *nameAndValue=[component componentsSeparatedByString:@"="];
         [form appendFormat:@"<input type=hidden name=\"%@\" value=\"%@\">",
             [[[nameAndValue objectAtIndex:0]URLDecoding]stringByReplacing:@"+" with:@" "],
@@ -108,12 +105,12 @@
     [form appendString:@"</body></html>"];
     NSString *postFile=[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"QSPOST-%@.html",[NSString uniqueString]]]; 
 	// ***warning   * delete these files
-    [form writeToFile:postFile atomically:NO];
+    [form writeToFile:postFile atomically:NO encoding:NSASCIIStringEncoding error:NULL];
     [[NSWorkspace sharedWorkspace]openFile:postFile];
 }
 
-
-- (IBAction)submitWebSearch:(id)sender{
+- (IBAction)submitWebSearch:(id)sender
+{
     if ([[webSearchField stringValue]length]){
 		[self searchURL:webSearch forString:[webSearchField stringValue]];
 		[self setWebSearch:nil];
@@ -121,9 +118,8 @@
     }
 }
 
-
-
-- (IBAction) showSearchView:sender{
+- (IBAction) showSearchView:sender
+{
     NSPasteboard *findPboard=[NSPasteboard pasteboardWithName:NSFindPboard];
     NSString *webSearchString=[findPboard stringForType:NSStringPboardType];
     if (webSearchString) [webSearchField setStringValue:webSearchString];
@@ -131,17 +127,11 @@
     
 }
 
-
-- (void)windowDidResignKey:(NSNotification *)aNotification{
+- (void)windowDidResignKey:(NSNotification *)aNotification
+{
 	[[self window] orderOut:self];
 }
 
-
-- (id)webSearch { return [[webSearch retain] autorelease]; }
-
-- (void)setWebSearch:(id)newWebSearch {
-    [webSearch release];
-    webSearch = [newWebSearch retain];
-}
+@synthesize webSearch;
 
 @end

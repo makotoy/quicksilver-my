@@ -4,6 +4,9 @@
  *
  *  Created by nathan on Thu Nov 29 2001.
  *  Copyright (c) 2001 Nathan Day. All rights reserved.
+ *
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
  */
 
 #import "NDAppleScriptObject.h"
@@ -474,11 +477,10 @@ const NSString			* NDAppleScriptPartialResult = @"Error Partial Result";
 	OSAID							theResultID = 0;
 	NSAppleEventDescriptor	* theResultDesc = nil,
 									* theNameDescriptor = [NSAppleEventDescriptor descriptorWithString:aVariableName];
-	OSAError						theErr;
 
 	if( OSAGetProperty( [self scriptingComponent], kOSAModeNull, [self compiledScriptID], [theNameDescriptor aeDesc], &theResultID ) == noErr )
 	{
-		if( (theErr = OSACoerceToDesc ( [self scriptingComponent], theResultID, typeWildCard, kOSAModeNull, &theDesc )) == noErr )
+		if(OSACoerceToDesc ( [self scriptingComponent], theResultID, typeWildCard, kOSAModeNull, &theDesc ) == noErr )
 			theResultDesc = [NSAppleEventDescriptor descriptorWithAEDescNoCopy:&theDesc];
 	}
 
@@ -657,9 +659,8 @@ const NSString			* NDAppleScriptPartialResult = @"Error Partial Result";
 {
 	AEDesc		theDesc = { typeNull, NULL };
 	NSString		* theSource = scriptSource;
-	OSAError		theErr = noErr;
 
-	if( theSource == nil && (theErr = OSAGetSource( [self scriptingComponent], compiledScriptID, typeChar, &theDesc)) == noErr )
+	if( theSource == nil && OSAGetSource( [self scriptingComponent], compiledScriptID, typeChar, &theDesc) == noErr )
 	{
 		theSource = [[NSAppleEventDescriptor descriptorWithAEDescNoCopy:&theDesc] stringValue];
 	}

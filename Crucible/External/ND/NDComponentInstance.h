@@ -1,3 +1,7 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
 /*!
 	@header NDComponentInstance
 	@abstract Header file for <tt>NDComponentInstance</tt>.
@@ -15,14 +19,13 @@
 @interface NDComponentInstance : NSObject <NDAppleScriptObjectSendEvent, NDAppleScriptObjectActive>
 {
 @private
-	ComponentInstance						scriptingComponent;
-	id<NDAppleScriptObjectSendEvent>	sendAppleEventTarget;
-	id<NDAppleScriptObjectActive>		activeTarget;
-	OSASendUPP								defaultSendProcPtr;
-	long										defaultSendProcRefCon;
-	OSAActiveProcPtr						defaultActiveProcPtr;
-	long										defaultActiveProcRefCon;
-
+	ComponentInstance scriptingComponent;
+	id<NDAppleScriptObjectSendEvent> sendAppleEventTarget;
+	id<NDAppleScriptObjectActive> activeTarget;
+	OSASendUPP defaultSendProcPtr;
+	OSAActiveProcPtr defaultActiveProcPtr;
+	SRefCon defaultSendProcRefCon;
+	SRefCon defaultActiveProcRefCon;
 }
 
 /*!

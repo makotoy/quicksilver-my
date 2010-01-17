@@ -82,12 +82,12 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
 	[pasteboard releaseGlobally];
 }
 
-- (void)addContentsOfPasteboard:(NSPasteboard *)pasteboard types:(NSArray *)types {
-    NSEnumerator *typesEnumerator = [(types?types:[pasteboard types]) objectEnumerator];
-    NSString *thisType;
+- (void)addContentsOfPasteboard:(NSPasteboard *)pasteboard types:(NSArray *)types
+{
+    NSArray *typeCands = (types ? types : [pasteboard types]);
     NSMutableArray *typeArray = [NSMutableArray arrayWithCapacity:1];
     NSArray *ignoreTypes = [NSArray arrayWithObjects:@"QSObjectAddress", @"CorePasteboardFlavorType 0x4D555246", @"CorePasteboardFlavorType 0x54455854", nil];
-    while ((thisType = [typesEnumerator nextObject])) {
+    for  (NSString *thisType in typeCands) {
         if ([[pasteboard types] containsObject:thisType] && ![ignoreTypes containsObject:thisType]) {
             id theObject = objectForPasteboardType(pasteboard, thisType);
             if (theObject && thisType) [self setObject:theObject forType:thisType];  
@@ -96,11 +96,10 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
             [typeArray addObject:[thisType decodedPasteboardType]];
         }
     }
-	// QSLog(@"data:%@", [self dataDictionary]);
 }
 
-
-- (id)initWithPasteboard:(NSPasteboard *)pasteboard types:(NSArray *)types {
+- (id)initWithPasteboard:(NSPasteboard *)pasteboard types:(NSArray *)types
+{
     if ((self = [self init])) {
         //QSLog(@"new pasteboard object:%d", self);
         if (!types)

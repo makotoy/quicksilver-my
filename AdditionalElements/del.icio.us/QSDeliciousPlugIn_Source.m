@@ -15,9 +15,15 @@
 #define kQSDeliciousTagType @"us.icio.del.tag"
 
 @implementation QSDeliciousPlugIn_Source
-+ (void)initialize{
-	[self setKeys:[NSArray arrayWithObject:@"selection"] triggerChangeNotificationsForDependentKey:@"currentPassword"];
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
+{
+    NSSet* resPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    if ([key isEqualToString:@"currentPassword"]) {
+        resPaths = [resPaths setByAddingObject:@"selection"];
+    }
+    return resPaths;
 }
+
 - (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry{
 	return -[indexDate timeIntervalSinceNow] < 24*60*60;
 }
@@ -141,10 +147,7 @@
 	
     NSMutableArray *objects=[NSMutableArray arrayWithCapacity:1];
     QSObject *newObject;
-	NSEnumerator *e=[posts objectEnumerator];
-	NSDictionary *post;
-	NSMutableSet *tagSet=[NSMutableSet set];
-	while(post=[e nextObject]){
+	for (NSDictionary* post in posts) {
 		if ([[post objectForKey:@"tag"]rangeOfString:tag].location==NSNotFound)continue;
 		newObject=[self objectForPost:post];
 		[objects addObject:newObject];

@@ -88,7 +88,8 @@
     [(QSBasicObject*)[attachmentCell representedObject] loadIcon];
     
     NSTextAttachment *attachment = [[[NSTextAttachment alloc] init] autorelease];
-    [attachment setAttachmentCell: attachmentCell];
+    [attachment setAttachmentCell:attachmentCell];
+    [attachmentCell release], attachmentCell = nil;
     
     [self searchObjectChanged:nil];
 	
@@ -102,9 +103,8 @@
 					       object:nil];
 }
 
-- (IBAction)customize:(id)sender
-{ // subclasses should override this method.
-}
+// subclasses should override this method.
+- (IBAction)customize:(id)sender { }
 
 - (IBAction)hideWindows:(id)sender
 {
@@ -275,7 +275,7 @@
 	
     [dSelector setSearchMode:SearchFilter];
     if ([array count]) {
-	[dSelector selectObject:[array objectAtIndex:0]];
+        [dSelector selectObject:[array objectAtIndex:0]];
     }
     [self updateViewLocations];
     [self updateActionsNow];
@@ -428,7 +428,7 @@
     QSObject *entry;
     entry = [[QSObject alloc] initWithPasteboard:pboard];
     [dSelector setObjectValue:entry];
-    
+    [entry release], entry = nil;
     [self activate:self];
 }
 

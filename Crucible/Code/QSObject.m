@@ -149,8 +149,7 @@ NSSize QSMaxIconSize;
 		[self extractMetadata];
 		
 		id dup = [self findDuplicateOrRegisterID];
-		if (dup)
-            return dup;
+		if (dup) return dup;
 /*		if ([self containsType:QSFilePathType])
 			[self changeFilesToPaths];*/
 	}
@@ -213,7 +212,8 @@ NSSize QSMaxIconSize;
 	[data removeObjectForKey:QSProcessType]; // Don't carry over process info
 }
 
-- (id)findDuplicateOrRegisterID {
+- (id)findDuplicateOrRegisterID
+{
 	id dup = [QSObject objectWithIdentifier:[self identifier]];
 	if (dup) {
 		[self release];

@@ -6,7 +6,7 @@
 @interface QSABContactActions : QSObjectSource
 @end
 
-@interface QSAddressBookObjectSource : QSObjectSource{
+@interface QSAddressBookObjectSource : QSObjectSource {
 	NSTimeInterval addressBookModDate;
 	NSMutableDictionary *contactDictionary;
 	

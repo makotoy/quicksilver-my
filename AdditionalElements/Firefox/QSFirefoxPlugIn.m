@@ -5,6 +5,7 @@
 //  Created by Nicholas Jitkoff on 4/6/05.
 //  Copyright __MyCompanyName__ 2005. All rights reserved.
 //
+//  2010-01-16 Makoto Yamashita
 
 #import "QSFirefoxPlugIn.h"
 
@@ -43,13 +44,9 @@
 	
 	
     NSMutableArray *array=[NSMutableArray arrayWithCapacity:1];
-    
-    NSEnumerator *childEnum=[[string lines] objectEnumerator];
-    NSDictionary *child;
-    while (child=[childEnum nextObject]){
+    for (NSString* child in [string lines]) {
 		if ([child length]<15) continue;
         NSString *url=[child substringFromIndex:13];
-		//NSLog(url);
         NSString *title=nil;
         QSObject *object=[QSObject URLObjectWithURL:url title:title];
         if (object) [array addObject:object];

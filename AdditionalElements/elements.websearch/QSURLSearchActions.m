@@ -2,7 +2,7 @@
 // Makoto Yamashita 2009-11-30
 
 #import "QSURLSearchActions.h"
-
+#import "QSWebSearchController.h"
 
 # define kURLSearchAction @"QSURLSearchAction"
 # define kURLSearchForAction @"QSURLSearchForAction"
@@ -11,34 +11,29 @@
 
 
 @implementation QSURLSearchActions
-- (NSString *) defaultWebClient{
-	
+- (NSString *) defaultWebClient
+{
 	NSURL *appURL = nil; 
 	OSStatus err; 
 	err = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString: @"http:"],kLSRolesAll, NULL, (CFURLRef *)&appURL); 
-	if (err != noErr) NSLog(@"error %ld", err); 
-	// else NSLog(@"%@", appURL); 
+	if (err != noErr) NSLog(@"error %ld", err);
 	
 	return [appURL path];
-	
 }
 
-- (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
-	//  NSLog(@"request");
-	
+- (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject
+{
 	if ([action isEqualToString:kURLSearchForAction] || [action isEqualToString:kURLSearchForAndReturnAction]){
 		NSString *webSearchString=[[NSPasteboard pasteboardWithName:NSFindPboard] stringForType:NSStringPboardType];
 		return [NSArray arrayWithObject: [QSObject textProxyObjectWithDefaultValue:(webSearchString?webSearchString:@"")]];
-		//[QSLibarrayForType:NSFilenamesPboardType];
-//        return [NSArray arrayWithObject:[QSTextEntryProxy sharedInstance]]; //[QSLibarrayForType:NSFilenamesPboardType];
 	} else if ([action isEqualToString:kURLFindWithAction]) {
 		return [QSLib arrayForType:NSURLPboardType];
 	}
-	
 	return nil;
 }
 
-- (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject{
+- (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject
+{
 	NSString *urlString=[[dObject arrayForType:QSURLType]lastObject];
 	
 	NSMutableArray *newActions=[NSMutableArray arrayWithCapacity:1];
@@ -58,10 +53,10 @@
 	return newActions;
 }
 
-
-- (QSObject *)doURLSearchAction:(QSObject *)dObject{
+- (QSObject *)doURLSearchAction:(QSObject *)dObject
+{
 	NSURL *url=[NSURL URLWithString:[dObject objectForType:QSURLType]];
-	[[NSClassFromString(@"QSWebSearchController") sharedInstance] searchURL:url];
+	[[QSWebSearchController sharedInstance] searchURL:url];
 	return nil;
 }
 
@@ -72,48 +67,34 @@
 		NSString *string=[iObject stringValue];
 		CFStringEncoding encoding = [[dObject objectForMeta:kQSStringEncoding]
 									    intValue];
-		[[NSClassFromString(@"QSWebSearchController") sharedInstance]
+		[[QSWebSearchController sharedInstance]
 		    searchURL:url forString:string encoding:encoding];
 	}
 	return nil;
 }
 
-- (QSObject *)doURLSearchForAndReturnAction:(QSObject *)dObject withString:(QSObject *)iObject{
-	foreach(urlString,[dObject arrayForType:QSURLType]){
+- (QSObject *)doURLSearchForAndReturnAction:(QSObject *)dObject withString:(QSObject *)iObject
+{
+	for (NSString* urlString in [dObject arrayForType:QSURLType]) {
 		NSURL *url=[NSURL URLWithString:urlString];
 		NSString *string=[iObject stringValue];
 		CFStringEncoding encoding=[[dObject objectForMeta:kQSStringEncoding]intValue];
-		NSString *query=[[NSClassFromString(@"QSWebSearchController") sharedInstance] resolvedURL:url forString:string encoding:encoding];
-		BOOL post=NO;
-		NSURL *queryURL=nil;
-		if ([[url scheme]isEqualToString:@"qssp-http"]){
-			query=[self openPOSTURL:[NSURL URLWithString:[query stringByReplacing:@"qssp-http" with:@"http"]]];  
-		//	return;
-		} else if ([[url scheme]isEqualToString:@"http-post"]){
+		NSString *query=[[QSWebSearchController sharedInstance] resolvedURL:url forString:string encoding:encoding];
+		BOOL post = NO;
+		if ([[url scheme]isEqualToString:@"http-post"]) {
 			NSBeep();
-			post=YES;
-			query=[query stringByReplacing:@"http-post" with:@"http"];  
-		//	return;
-		} else if ([[url scheme]isEqualToString:@"qss-http"]){
-			query=[query stringByReplacing:@"qss-http" with:@"http"];  
-		}else{
-	}
-		
-		
+			post = YES;
+			query = [query stringByReplacing:@"http-post" with:@"http"];  
+		} else if ([[url scheme]isEqualToString:@"qss-http"]) {
+			query = [query stringByReplacing:@"qss-http" with:@"http"];  
+		}
 		id <QSParser> parser=[QSReg instanceForKey:@"html" inTable:@"QSURLTypeParsers"];
-		//NSLog(@" %@ %@",type,parser);
 		
 		[QSTasks updateTask:@"DownloadPage" status:@"Downloading Page" progress:0];
-		NSArray *children=[parser objectsFromURL:[NSURL URLWithString:query] withSettings:nil];
+		NSArray *children = [parser objectsFromURL:[NSURL URLWithString:query] withSettings:nil];
 		[QSTasks removeTask:@"DownloadPage"];
-		
-		[[QSReg preferredCommandInterface]showArray:children];
-		
-		
-		
+		[[QSReg preferredCommandInterface] showArray:[[children mutableCopy] autorelease]];
 	}
-	
-
 	return nil;
 }
 @end

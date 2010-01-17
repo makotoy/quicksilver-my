@@ -4,6 +4,9 @@
  *
  *  Created by Nathan Day on Sun Dec 14 2003.
  *  Copyright (c) 2002 Nathan Day. All rights reserved.
+ *
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
  */
 
 #import "NSString+NDUtilities.h"
@@ -237,7 +240,6 @@
 	if( ![theComponet isEqualToString:@""] )
 	{
 		[theComponentArray addObject:theComponet];
-		theComponet = [NSMutableString string];
 	}
 	
 	return theComponentArray;

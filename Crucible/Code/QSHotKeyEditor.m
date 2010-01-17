@@ -275,15 +275,10 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 - (NSDictionary *)hotKeyDictForEvent:(NSEvent *)event{
 	unsigned int modifiers=[event modifierFlags];
 	unsigned short keyCode=[event keyCode];
-	NSString *character=[event charactersIgnoringModifiers];
-	if (keyCode == 48){
-		character=@"\t";
-	}
 	
 	NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithUnsignedInt:modifiers],@"modifiers",
 		[NSNumber numberWithUnsignedShort:keyCode],@"keyCode",
-		//character,@"character",
 		nil];
 	return dict;
 }
@@ -359,14 +354,9 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 		switch ([theEvent type]){
 			case NSKeyDown:
 				{
-				//	unsigned int modifiers=[theEvent modifierFlags];
 					unsigned short keyCode=[theEvent keyCode];
-					NSString *characters=[theEvent charactersIgnoringModifiers];
-					if (keyCode == 48) characters=@"\t";
 					
 					if ([theEvent modifierFlags] & (NSCommandKeyMask|NSFunctionKeyMask|NSControlKeyMask|NSAlternateKeyMask)){
-						//[self setObjectValue:[self hotKeyDictForEvent:theEvent]];
-	
 						[self setHotKey:[self hotKeyDictForEvent:theEvent]];
 						collectEvents=NO; 
 					}else  if ([theEvent keyCode] == 53){ //Escape

@@ -69,8 +69,8 @@
 - (id)hideEffect;
 - (void)setHideEffect:(id)aHideEffect;
 
-- (id)showEffect;
-- (void)setShowEffect:(id)aShowEffect;
+- (NSDictionary*)showEffect;
+- (void)setShowEffect:(NSDictionary*)aShowEffect;
 - (void)reallyOrderOut:(id)sender;
 - (void)hideWithEffect:(id)hideEffect;
 - (void)performEffect:(NSDictionary *)effect;

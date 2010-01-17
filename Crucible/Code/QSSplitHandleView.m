@@ -4,7 +4,7 @@
 //
 //  Created by Nicholas Jitkoff on 4/21/06.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "QSSplitHandleView.h"
 
@@ -63,7 +63,7 @@
 - (void)mouseDown:(NSEvent *)theEvent{
 	NSPoint origPoint, curPoint;
 	
-	origPoint = curPoint = [theEvent locationInWindow];
+	origPoint = [theEvent locationInWindow];
 	
 	NSArray *subviews= [splitView subviews];
 	NSRect frame0=[[subviews objectAtIndex:0]frame];

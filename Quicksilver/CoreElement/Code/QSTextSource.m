@@ -49,18 +49,24 @@
     return nil;
 }
 
--(void)typeString:(NSString *)string{
-	const char *s=[string UTF8String];
+-(void)typeString:(NSString *)string
+{
+	const char *s = [string UTF8String];
 	int i;
-	BOOL upper;
-	for (i=0;i<strlen(s);i++){
+	for (i = 0; i < strlen(s); i++){
 		CGKeyCode code = [QSKeyCodeTranslator keyCodeForCharacter:s[i]];
-		// QSLog(@"%d",code);   
-		upper=isupper(s[i]);
-		if (upper) CGPostKeyboardEvent( (CGCharCode)0, (CGKeyCode)56, true ); // shift down
-		CGPostKeyboardEvent( (CGCharCode)s[i], (CGKeyCode)code, true ); // 'z' down
-		CGPostKeyboardEvent( (CGCharCode)s[i], (CGKeyCode)code, false ); // 'z' up
-		if (upper) CGPostKeyboardEvent( (CGCharCode)0, (CGKeyCode)56, false ); // 'shift up
+        CGEventRef vKeyDownEventRef, vKeyUpEventRef;
+        vKeyDownEventRef = CGEventCreateKeyboardEvent(NULL, code, true);
+        vKeyUpEventRef = CGEventCreateKeyboardEvent(NULL, code, false);
+        if (isupper(s[i])) {
+            CGEventSetFlags(vKeyDownEventRef, kCGEventFlagMaskShift);
+            CGEventSetFlags(vKeyUpEventRef, kCGEventFlagMaskShift);
+        }
+        CGEventPost(kCGHIDEventTap, vKeyDownEventRef);
+        CGEventPost(kCGHIDEventTap, vKeyUpEventRef);
+        
+        CFRelease(vKeyDownEventRef);
+        CFRelease(vKeyUpEventRef);
 	}
 }
 

@@ -15,8 +15,6 @@
 #import "QSKeyCodeTranslator.h"
 
 void QSForcePaste(){
-//	CGSetLocalEventsFilterDuringSupressionState(kCGEventFilterMaskPermitAllEvents, kCGEventSupressionStateSupressionInterval);
-	
 	CGEventRef vKeyDownEventRef, vKeyUpEventRef;
 	CGKeyCode keyCode = [QSKeyCodeTranslator keyCodeForCharacter:'v'];
 	vKeyDownEventRef = CGEventCreateKeyboardEvent(NULL, keyCode, true);

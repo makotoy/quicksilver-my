@@ -157,9 +157,9 @@
 		[newObject setPrimaryType:kQSAppleMailMailboxType];
 		[objects addObject:newObject];
 	}
-	NSDirectoryEnumerator *de=[manager enumeratorAtPath:[@"~/Library/Mail/Mailboxes/" stringByStandardizingPath]];
+	NSDirectoryEnumerator *de = [manager enumeratorAtPath:[@"~/Library/Mail/Mailboxes/" stringByStandardizingPath]];
 	NSString *path;
-	while (path = [de nextObject]) {
+	while ((path = [de nextObject])) {
 		if ([[path pathExtension]isEqual:@"mbox"]){
 			newObject=[QSObject objectWithName:[[path lastPathComponent]stringByDeletingPathExtension]];
 			[newObject setObject:[path stringByDeletingPathExtension] forType:kQSAppleMailMailboxType];

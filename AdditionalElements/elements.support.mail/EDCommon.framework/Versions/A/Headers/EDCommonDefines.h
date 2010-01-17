@@ -18,6 +18,8 @@
 //  OR OF ANY DERIVATIVE WORK.
 //---------------------------------------------------------------------------------------
 
+//  2010-01-16 Makoto Yamashita
+
 # define EDCOMMON_EXTERN extern
 
 /*" Use this if you want to say neither YES nor NO... "*/
@@ -49,8 +51,16 @@ typedef unsigned char byte;
 
 static __inline__ id EDCast(id object, Class aClass, SEL cmd, id self, const char *file, int line)
 {
-    if((object != nil) && ([object isKindOfClass:aClass] == NO))
-        [[NSAssertionHandler currentHandler] handleFailureInMethod:cmd object:self file:[NSString stringWithCString:file] lineNumber:line description:@"cast failure; cannot cast instance of %@ to %@", NSStringFromClass([object class]), NSStringFromClass(aClass)];
+    if((object != nil) && ([object isKindOfClass:aClass] == NO)) {
+        [[NSAssertionHandler currentHandler]
+           handleFailureInMethod:cmd
+           object:self
+           file:[NSString stringWithCString:file encoding:NSASCIIStringEncoding]
+           lineNumber:line
+           description:@"cast failure; cannot cast instance of %@ to %@",
+                       NSStringFromClass([object class]),
+                       NSStringFromClass(aClass)];
+    }
     return object;
 }
 

@@ -49,7 +49,7 @@
 - (NSProgressIndicator *)progressIndicator;
 
 - (void)openURL:(NSURL *)url;
-- (void)showSplash:sender;
+- (void)showSplash:(id)sender;
 
 - (void)recompositeIconImages;
 

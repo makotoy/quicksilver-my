@@ -270,49 +270,20 @@
 	[hl startAnimation];
 }
 
-- (void)showWithEffect:(id)showEffect
+- (void)showWithEffect:(NSDictionary*)showEffect
 {
-    trueRect=[self frame];
+    NSDictionary* effectDesc = showEffect;
+    trueRect = [self frame];
 	
-	if (!showEffect) showEffect = [self showEffect];
-	
-	if (!showEffect) {
-		showEffect=[NSDictionary dictionaryWithObjectsAndKeys:@"QSDefaultGrowEffect",@"transformFn",@"show",@"type",[NSNumber numberWithFloat:0.2],@"duration",nil];
+	if (!effectDesc && !(effectDesc = [self showEffect])) {
+		effectDesc = [NSDictionary dictionaryWithObjectsAndKeys:@"QSDefaultGrowEffect", kQSGSTransformF,
+                        @"show", kQSGSType,
+                        [NSNumber numberWithFloat:0.2], kQSGSDuration, nil];
 	}
-	if (showEffect) {
-		id hl=[QSWindowAnimation effectWithWindow:self attributes:showEffect];
-		[hl setDelegate:self];
-		[hl startAnimation];
-	} else {
-		[self setFrame:NSOffsetRect(trueRect,showOffset.x,showOffset.y)  display:YES animate:NO];
-		[[self helper] setTarget:self];
-		[[self helper] setAction:@selector(finishShow:)];
-		[[self helper] _resizeWindow:self toFrame:trueRect alpha:1.0 display:YES];
-	}
+    QSWindowAnimation* hl = [QSWindowAnimation effectWithWindow:self attributes:effectDesc];
+    [hl setDelegate:self];
+    [hl startAnimation];
 	return;
-// TODO: review below	
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	//	QSLog(@"orderfront!");
-    [NSThread setThreadPriority:1.0];
-    if (!isMoving)
-        trueRect=[self frame];
-    isMoving++;
-    
-	//   QSLog(@"orderfronta");
-	//   logRect(NSOffsetRect(trueRect,showOffset.x,showOffset.y));
-    [self setFrame:NSOffsetRect(trueRect,showOffset.x,showOffset.y)  display:YES animate:NO];
-    
-	//    QSLog(@"orderfrontb");
-    [self setFrame:trueRect alphaValue:1.0 display:NO animate:YES];
-    
-	//    QSLog(@"orderfront");
-    [self setAlphaValue:1.0];
-    [self display];
-	if ([self drawers])
-		[self performSelector:@selector(_unhideAllDrawers)];
-    isMoving--;
-    [pool release];
 }
 
 - (IBAction) showThreaded:(id)sender{ [self showWithEffect:[self showEffect]]; }
@@ -489,7 +460,7 @@
 }
 
 
-- (id)showEffect { return [properties objectForKey:kQSWindowShowEffect]; }
+- (NSDictionary*)showEffect { return [properties objectForKey:kQSWindowShowEffect]; }
 
 - (void)setShowEffect:(id)aShowEffect{
 	[self setWindowProperty:aShowEffect forKey:kQSWindowShowEffect];

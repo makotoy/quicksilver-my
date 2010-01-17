@@ -97,8 +97,8 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString) {
 		if (remainingScore) {
 			score = remainingSearchRange.location-searchRange.location;
 			// ignore skipped characters if is first letter of a word
-			if (matchedRange.location>searchRange.location) {//if some letters were skipped
-				j = 0;
+			if (matchedRange.location>searchRange.location) {
+                //if some letters were skipped
 				if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:[self characterAtIndex:matchedRange.location-1]]) {
 					for (j = matchedRange.location-2; j >= (int) searchRange.location; j--) {
 						if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:[self characterAtIndex:j]]) score--;
@@ -187,29 +187,33 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString) {
 
 @implementation NSString (URLEncoding)
 
-- (NSString *)URLEncoding {// escape embedded %-signs that don't appear to actually be escape sequences,
-						  // and pre-decode the result to avoid double-encoding
-	return (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef) self, NULL, NULL, kCFStringEncodingUTF8);
+- (NSString *)URLEncoding
+{
+// escape embedded %-signs that don't appear to actually be escape sequences,
+// and pre-decode the result to avoid double-encoding
+	return [self URLEncodingWithEncoding:kCFStringEncodingUTF8];
 }
 
-- (NSString *)URLEncodingWithEncoding:(CFStringEncoding) encoding {// escape embedded %-signs that don't appear to actually be escape sequences,
-						  // and pre-decode the result to avoid double-encoding
-	return (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef) self, NULL, NULL, encoding);
+- (NSString *)URLEncodingWithEncoding:(CFStringEncoding) encoding
+{
+// escape embedded %-signs that don't appear to actually be escape sequences,
+// and pre-decode the result to avoid double-encoding
+	CFStringRef resStr = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef) self, NULL, NULL, encoding);
+    return [(NSString *)resStr autorelease];
 }
 
 - (NSString *)URLDecoding {
 	// escape embedded %-signs that don't appear to actually be escape sequences
 	//NSString * preppedString = escapePercentsInString(self);
-	return (NSString *)
-	CFURLCreateStringByReplacingPercentEscapes(kCFAllocatorDefault, (CFStringRef) self, (CFStringRef) @"");
+    CFStringRef resStr = CFURLCreateStringByReplacingPercentEscapes(kCFAllocatorDefault, (CFStringRef) self, (CFStringRef) @"");
+	return [(NSString *)resStr autorelease];
 }
 @end
 
 @implementation NSString (Truncation)
 
-- (NSString *)stringTruncatedToWidth:(float) width withAttributes:(NSDictionary *)attributes {
-	
-	
+- (NSString *)stringTruncatedToWidth:(float) width withAttributes:(NSDictionary *)attributes
+{
 	if ([self sizeWithAttributes:attributes] .width <= width) return self;
 	
 	NSString *ellipsisString = @"...";
@@ -366,15 +370,15 @@ NSComparisonResult prefixCompare(NSString *aString, NSString *bString) {
 
 
 @implementation NSString (Blacktree)
-- (NSArray *)componentsSeparatedByStrings:(NSArray *)strings {
-	//QSLog(@"%@ - >> %@", self, strings);
-	NSArray *array;
-	if ([strings count] >0)
+- (NSArray *)componentsSeparatedByStrings:(NSArray *)strings
+{
+	NSArray *array = nil;
+	if ([strings count] > 0) {
 		array = [self componentsSeparatedByString:[strings head]];
-	
-	if ([strings count] >1) 	
+	} if ([strings count] >1) {
 		array = [array arrayByPerformingSelector:@selector(componentsSeparatedByStrings:) 
 									withObject:[strings tail]];
+    }
 	return array;
 }
 

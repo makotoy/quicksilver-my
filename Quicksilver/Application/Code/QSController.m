@@ -487,7 +487,7 @@ static id _sharedInstance;
 	return;
 }
 
-- (void)showSplash:sender
+- (void)showSplash:(id)sender
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSImage *splashImage = [NSImage imageNamed:@"QSLigature"];
@@ -535,7 +535,7 @@ static id _sharedInstance;
 - (void)hideSplash:sender
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	if (splashWindow) {
+	if (0&&splashWindow) {
 		[splashWindow setLevel:NSFloatingWindowLevel];
 		[splashWindow flare:self];
 		[splashWindow close];

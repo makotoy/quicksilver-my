@@ -27,7 +27,7 @@ QSExecutor *QSExec;
 - (id) init
 {
     self = [super init];
-    if( self ) {
+    if (self) {
         actionSources = [[NSMutableDictionary alloc] initWithCapacity:1];
 	    oldActionObjects = [[NSMutableArray alloc] initWithCapacity:1];
         actionIdentifiers = [[NSMutableDictionary alloc] initWithCapacity:1];
@@ -56,7 +56,9 @@ QSExecutor *QSExec;
 		if (!actionNames)
 			actionNames = [[NSMutableDictionary alloc] init];
 		
-        //Create proxy Images
+        /*
+         Create proxy Images: dup with QSLibrarian.m
+        
         NSArray* imageNames = [[NSArray alloc] initWithObjects:
                                @"QSDirectProxyImage",
                                @"QSDefaultAppProxyImage",
@@ -67,10 +69,9 @@ QSExecutor *QSExec;
             [image setName:imageName];
         }
         [imageNames release];
-        
+         */
 		[self loadActions];
-    }
-    
+    }    
     return self;
 }
 

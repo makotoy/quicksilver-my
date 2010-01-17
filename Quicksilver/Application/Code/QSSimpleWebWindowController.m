@@ -25,31 +25,27 @@
 	[window setMovableByWindowBackground:NO];
 	[window setContentView:[[[WebView alloc] initWithFrame:windowRect frameName:nil groupName:nil] autorelease]];
 	
-	//QSLog(@"loaded %@", window);
-	
 	self = [super initWithWindow:window];
-	
-	if (self != nil) {
+	if (self) {
 		[window setDelegate:self];
 		NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:@"mainToolbar"];
 		
 		[toolbar setDelegate:self];
 		[toolbar setAllowsUserCustomization:YES];
 		[toolbar setAutosavesConfiguration:YES];
-		//[toolbar setDisplayMode:NSToolbarDisplayModeIconOnly];
 		[toolbar setSizeMode:NSToolbarSizeModeSmall];
 		[window setToolbar:[toolbar autorelease]];
-		
 	}
 	return self;
 }
 
-- (void)openURL:(NSURL *)url {
+- (void)openURL:(NSURL *)url
+{
 	[[[[self window] contentView] mainFrame] loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
-- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL {
-//	QSLog(@"------------definition %@ %@", string, [[[self window] contentView] mainFrame]);
+- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL
+{
 	[[[[self window] contentView] mainFrame] loadHTMLString:string baseURL:URL];
 }
 
@@ -60,20 +56,19 @@
 		NSToolbarFlexibleSpaceItemIdentifier,
 		NSToolbarCustomizeToolbarItemIdentifier, @"Backward", @"Forward", @"Stop", @"Reload", @"URLField", nil];
 }
+
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
 {
     return [NSArray arrayWithObjects:NSToolbarFlexibleSpaceItemIdentifier,
 		NSToolbarCustomizeToolbarItemIdentifier, @"Backward", @"Forward", @"Stop", @"Reload", @"URLField", nil];
 }
+
 #define safariBundle [NSBundle bundleWithPath:[[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:@"com.apple.Safari"]]
 
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar
-	 itemForItemIdentifier:(NSString *)itemIdentifier
- willBeInsertedIntoToolbar:(BOOL)flag
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
 	NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
 	if ( [itemIdentifier isEqualToString:@"URLField"] ) {
-		
 		NSRect fRect = NSMakeRect(0, 0, 128, 16);
 		NSTextField *textField = [[NSTextField alloc] initWithFrame:fRect];
 		[[textField cell] setControlSize:NSSmallControlSize];
@@ -111,10 +106,11 @@
     } else if ( [itemIdentifier isEqualToString:@"SearchItem"] ) {
         // Configuration code for "SearchItem"
     }
-	
     return [item autorelease];
 }
-- (BOOL)windowShouldClose:(id)sender {
+
+- (BOOL)windowShouldClose:(id)sender
+{
 	[self autorelease];
 	return YES; 	
 }

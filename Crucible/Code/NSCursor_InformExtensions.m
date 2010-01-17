@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on Thu May 06 2004.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "NSCursor_InformExtensions.h"
 
@@ -29,7 +29,7 @@
 	
 	//imageRect=NSInsetRect(imageRect,0,NSHeight(imageRect)/2);
 	
-	NSImage * cImg=[[NSImage alloc]initWithSize:imageRect.size];
+	NSImage * cImg=[[NSImage alloc] initWithSize:imageRect.size];
 	NSBezierPath *roundRect=[NSBezierPath bezierPath];
 	[roundRect appendBezierPathWithRoundedRectangle:blobRect withRadius:size.height/2 indent:NO];
 	
@@ -42,8 +42,9 @@
 	
 	[string drawInRect:textRect withAttributes:informAttributes];
 	[cImg unlockFocus];
-	return [[[NSCursor alloc]initWithImage:cImg hotSpot:NSZeroPoint]autorelease];
+	return [[[NSCursor alloc] initWithImage:[cImg autorelease] hotSpot:NSZeroPoint] autorelease];
 }
+
 @end
 /*
 + informativeCursorWithString:(NSString *)string{

@@ -36,7 +36,7 @@ static OSStatus	switchHotKey( NDHotKeyEvent * self, BOOL aFlag );
 #ifdef NDHotKeyEventThreadSafe
 	#warning Thread safety has been enabled for NDHotKeyEvent class methods
 	#define	NDHotKeyEventLock  NSLock* theLock = [[NSLock alloc] init];[theLock lock]
-	#define	NDHotKeyEventUnlock [theLock unlock]
+	#define	NDHotKeyEventUnlock [theLock unlock]; [theLock release]; theLock = nil
 #else
 	#warning The NDHotKeyEvent class methods are NOT thread safe
 	#define	NDHotKeyEventLock // lock
@@ -342,23 +342,15 @@ struct HotKeyMappingEntry
 		NSString		* theCharacter;
 		NSNumber		* theKeyCode,
 						* theModiferFlag;
-		SEL			theKeyPressedSelector,
-						theKeyReleasedSelector;
 
 		theKeyCode = [aPropertyList objectForKey:kArchivingKeyCodeKey];
 		theCharacter = [aPropertyList objectForKey:kArchivingCharacterKey];
 		theModiferFlag = [aPropertyList objectForKey:kArchivingModifierFlagsKey];
-		theKeyPressedSelector = NSSelectorFromString([aPropertyList objectForKey:kArchivingSelectorPressedCodeKey]);
-		theKeyReleasedSelector = NSSelectorFromString([aPropertyList objectForKey:kArchivingSelectorReleasedCodeKey]);
-
 		self = [self initWithKeyCode:[theKeyCode unsignedShortValue] character:[theCharacter characterAtIndex:0] modifierFlags:[theModiferFlag unsignedIntValue]];
-	}
-	else
-	{
+	} else {
 		[self release];
 		self = nil;
 	}
-
 	return self;
 }
 

@@ -1,7 +1,9 @@
-
+/*
+ * Derived from Blacktree, Inc. codebase
+ * 2010-01-16 Makoto Yamashita.
+ */
 
 #import <AppKit/AppKit.h>
-
 
 @interface QSWebSearchController : NSWindowController {
     IBOutlet NSTextField *webSearchField;
@@ -10,17 +12,17 @@
     
     id webSearch;
 }
++ (id)sharedInstance;
+
 - (IBAction)submitWebSearch:(id)sender;
+- (IBAction)showSearchView:(id)sender;
 
+@property (retain) id webSearch;
 
-- (id)webSearch;
-- (void)setWebSearch:(id)newWebSearch;
-
-//- (IBAction) hideSearchView:sender;
-- (IBAction) showSearchView:sender;
 - (void)searchURL:(NSURL *)searchURL;
-
+- (NSString *)resolvedURL:(NSURL *)searchURL forString:(NSString *)string encoding:(CFStringEncoding)encoding;
 - (void)openPOSTURL:(NSURL *)searchURL;
 - (void)searchURL:(NSURL *)searchURL forString:(NSString *)string;
-+ (id)sharedInstance;
+- (void)searchURL:(NSURL *)searchURL forString:(NSString *)string encoding:(CFStringEncoding)encoding;
+
 @end

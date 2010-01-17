@@ -31,9 +31,8 @@
 			[newActions addObject:kComposeEmailItemAction];
 		}
         [newActions addObject:kEmailAction];
-    }
-    else if (mediatorAvailable && ([[dObject types] containsObject:NSFilenamesPboardType] && [dObject validPaths])
-             || ([[dObject types] containsObject:NSStringPboardType] && ![[dObject types] containsObject:NSFilenamesPboardType])){
+    } else if ((mediatorAvailable && [[dObject types] containsObject:NSFilenamesPboardType] && [dObject validPaths])
+             || ([[dObject types] containsObject:NSStringPboardType] && ![[dObject types] containsObject:NSFilenamesPboardType])) {
         [newActions addObject:kEmailItemReverseAction];
         [newActions addObject:kComposeEmailItemReverseAction];
     }

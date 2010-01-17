@@ -6,7 +6,7 @@
 //  Copyright (c) 2002 Infinity-to-the-Power-of-Infinity. All rights reserved.
 //
 //  Changed by Travis Mcleskey Sun Jan 13 2002.
-
+//  2010-01-16 Makoto Yamashita
 #import "DRColorPermutator.h"
 
 #import "math.h"
@@ -141,25 +141,24 @@ float a[4][4], b[4][4], c[4][4];
  *	identmat -	
  *		make an identity matrix
  */
-static void identmat(matrix)
-float *matrix;
+static void identmat(float matrix[4][4])
 {
-    *matrix++ = 1.0;    /* row 1        */
-    *matrix++ = 0.0;
-    *matrix++ = 0.0;
-    *matrix++ = 0.0;
-    *matrix++ = 0.0;    /* row 2        */
-    *matrix++ = 1.0;
-    *matrix++ = 0.0;
-    *matrix++ = 0.0;
-    *matrix++ = 0.0;    /* row 3        */
-    *matrix++ = 0.0;
-    *matrix++ = 1.0;
-    *matrix++ = 0.0;
-    *matrix++ = 0.0;    /* row 4        */
-    *matrix++ = 0.0;
-    *matrix++ = 0.0;
-    *matrix++ = 1.0;
+    matrix[0][0] = 1.0;    /* row 1        */
+    matrix[0][1] = 0.0;
+    matrix[0][2] = 0.0;
+    matrix[0][3] = 0.0;
+    matrix[1][0] = 0.0;    /* row 2        */
+    matrix[1][1] = 1.0;
+    matrix[1][2] = 0.0;
+    matrix[1][3] = 0.0;
+    matrix[2][0] = 0.0;    /* row 3        */
+    matrix[2][1] = 0.0;
+    matrix[2][2] = 1.0;
+    matrix[2][3] = 0.0;
+    matrix[3][0] = 0.0;    /* row 4        */
+    matrix[3][1] = 0.0;
+    matrix[3][2] = 0.0;
+    matrix[3][3] = 1.0;
 }
 
 /* 

@@ -149,7 +149,8 @@
 	return fetchURLString;
 }
 
-- (void) downloadWebPlugInInfoFromDate:(NSDate *)date forUpdateVersion:(NSString *)version synchronously:(BOOL)synchro {
+- (void) downloadWebPlugInInfoFromDate:(NSDate *)date forUpdateVersion:(NSString *)version synchronously:(BOOL)synchro
+{
 	NSString *fetchURLString = [self webInfoURLFromDate:date forUpdateVersion:version];
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fetchURLString]
                                                               cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -184,7 +185,6 @@
 	} else {
 		NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:theRequest
                                                                          delegate:self];
-		
 		if ( theConnection ) {
 			receivedData = [[NSMutableData data] retain];
 			[QSTasks updateTask:@"UpdatePlugInInfo" status:@"Updating Plug-in Info" progress:0.0];
@@ -214,24 +214,26 @@
 	}	
 }
 
-- (void) loadWebPlugInInfo {	
-	//	QSLog(@"known %@",knownPlugIns);
-	if ( !plugInWebData )
-		[self loadInfo];
+- (void) loadWebPlugInInfo
+{	
+	if ( !plugInWebData ) [self loadInfo];
 	
 	[self loadPlugInInfo:[plugInWebData allValues]];
 }
 
 
-- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
 	[receivedData setLength:0];
 }
 
-- (void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+- (void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
     [receivedData appendData:data];
 }
 
-- (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+- (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
     [connection release];
     [receivedData release];
 	receivedData = nil;
@@ -488,7 +490,7 @@
 	QSPlugIn *dupPlugIn = nil;
 	
 //TODO: should detect installation of a disabled plugin	
-	if ( ( dupPlugIn = [loadedPlugIns objectForKey:ident] ) ) {
+	if ([loadedPlugIns objectForKey:ident]) {
         // check if the bundle is already loaded. if so need to restart.
 		return NO;
 	}
@@ -749,6 +751,7 @@
 	QSURLDownload *theDownload = [[QSURLDownload alloc] initWithRequest:theRequest delegate:self];
 	[theDownload setUserInfo:[info objectForKey:@"id"]];
 	[downloadsQueue addObject:theDownload];
+    [theDownload release], theDownload = nil;
 	downloadsCount++;
 	[self updateDownloadProgressInfo];
 }
