@@ -37,10 +37,11 @@ void DXSetWindowTag(int wid, CGSWindowTag tag,int state){
 	OSStatus retVal = CGSGetWindowTags(cid, wid, tags, 32);
 	if(!retVal) {
 		tags[0] = tag;
-		if (state)
-			retVal = CGSSetWindowTags(cid, wid, tags, 32);
-		else
-			retVal = CGSClearWindowTags(cid, wid, tags, 32);
+		if (state) {
+			CGSSetWindowTags(cid, wid, tags, 32);
+		} else {
+			CGSClearWindowTags(cid, wid, tags, 32);
+        }
 	}
 }
 
@@ -97,15 +98,14 @@ CGRect QSCGRectFromScreenFrame(NSRect rect){
 	CGSOrderWindow(cid, wid, -1, 0);
 }
 
-- (void)createOverlayInRect:(CGRect) r{
-	
+- (void)createOverlayInRect:(CGRect) r
+{
 	static CGRect   sWindowRgn = { {0.0, 0.0}, {1.0, 1.0} };
 	CGError         error;
 	CGSRegionRef    shape, opaqueShape;
 	void           *unknown;
-	bool            successful = false;
-	error = CGSNewRegionWithRect(&sWindowRgn, &shape);
-	error = CGSNewEmptyRegion(&opaqueShape);
+	CGSNewRegionWithRect(&sWindowRgn, &shape);
+	CGSNewEmptyRegion(&opaqueShape);
 	error = CGSNewWindowWithOpaqueShape(cid, 2, 0.0, 0.0, shape, opaqueShape, 0, &unknown, 32, &wid);
 	CGSReleaseRegion(shape);
 	CGSReleaseRegion(opaqueShape);
@@ -131,13 +131,9 @@ CGRect QSCGRectFromScreenFrame(NSRect rect){
             CGContextSetRGBFillColor(cgContext, 1.0, 1.0, 1.0, 0.0);
 			CGContextFillRect(cgContext, sWindowRgn);
 			CFRelease(cgContext);
-			successful = true;
 		}
 	}
-	
-//	if ( successful )
-//		return wid;
-	return;
+    return;
 }
 
 - (void)setFilter:(NSString *)filterName

@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on 8/19/04.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "NSAppleEventDescriptor_QSMods.h"
 #import "NSURL+NDCarbonUtilities.h"
@@ -28,7 +28,7 @@
 		QSLog(@"sendAppleEventError %d",err);
 	}else{
 		AEDisposeDesc(&reply);
-		return [NSAppleEventDescriptor descriptorWithAEDescNoCopy:&reply];
+		return [NSAppleEventDescriptor descriptorWithAEDescNoCp:&reply];
     }	
 	return nil;
 }

@@ -177,26 +177,27 @@ void cycleDock(){
 }
 
 
-- (void)hideOtherApplications:(NSArray *)theApps{ 
+- (void)hideOtherApplications:(NSArray *)theApps
+{    
 	NSDictionary *theApp=[theApps lastObject];
 	int count=[theApps count];
 	int i;
     ProcessSerialNumber psn[count];
-	for (i=0;i<count;i++)
+	for (i=0;i<count;i++) {
 		[self PSN:psn+i forApplication:[theApps objectAtIndex:i]];
+    }
 	[self switchToApplication:theApp frontWindowOnly:YES];
 
 	ProcessSerialNumber thisPSN;
 	thisPSN.highLongOfPSN = kNoProcess;
 	thisPSN.lowLongOfPSN = 0;
-	Boolean show;
-	while(GetNextProcess ( &thisPSN ) == noErr){
-		for (i=0;i<[theApps count];i++){
+	Boolean show = false;
+	while (GetNextProcess ( &thisPSN ) == noErr) {
+		for (i=0;i<[theApps count];i++) {
 			SameProcess(&thisPSN,psn+i,&show);
 			if (show) break;
 		}
-	//	QSLog(@"same %d",show);
-		ShowHideProcess(&thisPSN,show);  
+		ShowHideProcess(&thisPSN, show);  
 	}    
 }
 

@@ -561,21 +561,13 @@ static NSInteger presetSort(id item1, id item2, QSLibrarian *librarian) {
     return MIN(estimate, 0.5);
 }
 
-- (NSMutableArray *)scoreTest:(id)sender {
-	
+- (NSMutableArray *)scoreTest:(id)sender
+{
 	NSArray *array = [NSArray arrayWithObjects:@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", nil];
-	int i, j;
-	int count = [array count];
-	
-	
+	int i, count = [array count];
 	NSDate *totalDate = [NSDate date];
 	NSDate *date;
-	NSMutableArray *newResultArray;
-	
-	//NSTimeInterval moo = 0;
-	//NSTimeInterval moo2 = 0;
-	NSAutoreleasePool *pool;
-	for(i = 0; i<count; i++) {
+	for (i = 0; i<count; i++) {
 		date = [NSDate date];
 		if (VERBOSE) QSLog(@"SearchTesA in %3fs, %3fs", -[date timeIntervalSinceNow] , -[totalDate timeIntervalSinceNow]); 	
 		

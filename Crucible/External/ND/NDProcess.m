@@ -189,6 +189,136 @@ NSString		* kBundleExecutableKey = @"CFBundleExecutable";
 	return self;
 }
 
+/*
+ * -name
+ */
+- (NSString *)name
+{
+	if( name == nil )
+	{
+		if( [self isNoProcess] )
+		{
+			name = @"no process";
+		}
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5
+		else if( [self isSystemProcess] )
+		{
+			name = @"system process";
+		}
+#endif
+		else
+		{
+			unsigned char			theProcessName[32];
+            
+			infoRec.processInfoLength = 0;			// set to zero to force retireve process info
+			infoRec.processName = theProcessName;
+            
+			if( [self fillProcessInfoRec] && infoRec.processName != NULL )
+			{
+				name = [[NSString alloc] initWithCString:(const char *)(theProcessName + 1) length:*theProcessName];
+				infoRec.processName = NULL;		// not valid after this method call
+			}
+		}
+	}
+	
+	return name;
+}
+
+/*
+ * -type
+ */
+- (OSType)type
+{
+	return [self fillProcessInfoRec] ? infoRec.processType : 0;
+}
+
+/*
+ * -signature
+ */
+- (OSType)signature
+{
+	return [self fillProcessInfoRec] ? infoRec.processSignature : 0;
+}
+
+/*
+ * -mode
+ */
+- (UInt32)mode
+{
+	return [self fillProcessInfoRec] ? infoRec.processMode : 0;
+}
+
+/*
+ * -launcher
+ */
+- (NDProcess *)launcher
+{
+	return [self fillProcessInfoRec] ? [[[NDProcess alloc] initWithProcessSerialNumber:infoRec.processLauncher] autorelease] : nil;
+}
+
+/*
+ * -launchTime
+ */
+- (NSTimeInterval)launchTime
+{
+	return [self fillProcessInfoRec] ? (NSTimeInterval)TicksToEventTime( infoRec.processLaunchDate )/kEventDurationSecond : 0;
+}
+
+/*
+ * -url
+ */
+- (NSURL *)url
+{
+	if( url == nil )
+	{
+#if __LP64__
+		FSRef			theRef;
+		infoRec.processInfoLength = 0;			// set to zero to force retireve process info
+		infoRec.processAppRef = &theRef;
+        
+		if( [self fillProcessInfoRec] && infoRec.processAppRef != NULL )
+			url = [[NSURL URLWithFSRef:&theRef] retain];
+		
+		infoRec.processAppRef = NULL;		// not valid after method call
+#else
+		FSSpec				theSpec;
+        
+		infoRec.processInfoLength = 0;			// set to zero to force retireve process info
+		infoRec.processAppSpec = &theSpec;
+        
+		if( [self fillProcessInfoRec] && infoRec.processAppSpec != NULL )
+		{
+			FSRef			theRef;
+            
+			FSpMakeFSRef ( &theSpec, &theRef );			// I known this is deprecated, but that is because FSSpec is deprecated, so I have no choice but to use this
+			url = [[NSURL URLWithFSRef:&theRef] retain];
+		}
+		
+		infoRec.processAppSpec = NULL;		// not valid after method call
+#endif
+	}
+	
+	return url;
+}
+
+/*
+ * -path
+ */
+- (NSString *)path
+{
+	return [[self url] path];
+}
+
+/*
+ * -processID
+ */
+- (pid_t)processID
+{
+	pid_t pid = -1;
+	
+	return GetProcessPID(&processSerialNumber, &pid) == noErr ? pid : -1;
+}
+
 @end
 
 /*
@@ -545,143 +675,6 @@ NSString		* kBundleExecutableKey = @"CFBundleExecutable";
 {
 	infoRec.processInfoLength = 0;			// set to zero to force attempt to retireve process info
 	return [self fillProcessInfoRec];
-}
-
-@end
-
-/*
- * category implementation NDProcess (ProcessInfoRec)
- */
-@implementation NDProcess (ProcessInfoRec)
-
-/*
- * -name
- */
-- (NSString *)name
-{
-	if( name == nil )
-	{
-		if( [self isNoProcess] )
-		{
-			name = @"no process";
-		}
-#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5
-		else if( [self isSystemProcess] )
-		{
-			name = @"system process";
-		}
-#endif
-		else
-		{
-			unsigned char			theProcessName[32];
-		
-			infoRec.processInfoLength = 0;			// set to zero to force retireve process info
-			infoRec.processName = theProcessName;
-		
-			if( [self fillProcessInfoRec] && infoRec.processName != NULL )
-			{
-				name = [[NSString alloc] initWithCString:(const char *)(theProcessName + 1) length:*theProcessName];
-				infoRec.processName = NULL;		// not valid after this method call
-			}
-		}
-	}
-	
-	return name;
-}
-
-/*
- * -type
- */
-- (OSType)type
-{
-	return [self fillProcessInfoRec] ? infoRec.processType : 0;
-}
-
-/*
- * -signature
- */
-- (OSType)signature
-{
-	return [self fillProcessInfoRec] ? infoRec.processSignature : 0;
-}
-
-/*
- * -mode
- */
-- (UInt32)mode
-{
-	return [self fillProcessInfoRec] ? infoRec.processMode : 0;
-}
-
-/*
- * -launcher
- */
-- (NDProcess *)launcher
-{
-	return [self fillProcessInfoRec] ? [[[NDProcess alloc] initWithProcessSerialNumber:infoRec.processLauncher] autorelease] : nil;
-}
-
-/*
- * -launchTime
- */
-- (NSTimeInterval)launchTime
-{
-	return [self fillProcessInfoRec] ? (NSTimeInterval)TicksToEventTime( infoRec.processLaunchDate )/kEventDurationSecond : 0;
-}
-
-/*
- * -url
- */
-- (NSURL *)url
-{
-	if( url == nil )
-	{
-#if __LP64__
-		FSRef			theRef;
-		infoRec.processInfoLength = 0;			// set to zero to force retireve process info
-		infoRec.processAppRef = &theRef;
-
-		if( [self fillProcessInfoRec] && infoRec.processAppRef != NULL )
-			url = [[NSURL URLWithFSRef:&theRef] retain];
-		
-		infoRec.processAppRef = NULL;		// not valid after method call
-#else
-		FSSpec				theSpec;
-
-		infoRec.processInfoLength = 0;			// set to zero to force retireve process info
-		infoRec.processAppSpec = &theSpec;
-
-		if( [self fillProcessInfoRec] && infoRec.processAppSpec != NULL )
-		{
-			FSRef			theRef;
-
-			FSpMakeFSRef ( &theSpec, &theRef );			// I known this is deprecated, but that is because FSSpec is deprecated, so I have no choice but to use this
-			url = [[NSURL URLWithFSRef:&theRef] retain];
-		}
-		
-		infoRec.processAppSpec = NULL;		// not valid after method call
-#endif
-	}
-	
-	return url;
-}
-
-/*
- * -path
- */
-- (NSString *)path
-{
-	return [[self url] path];
-}
-
-/*
- * -processID
- */
-- (pid_t)processID
-{
-	pid_t pid = -1;
-	
-	return GetProcessPID(&processSerialNumber, &pid) == noErr ? pid : -1;
 }
 
 @end

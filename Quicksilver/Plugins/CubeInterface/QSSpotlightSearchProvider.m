@@ -5,6 +5,7 @@
 //  Created by Nicholas Jitkoff on 7/14/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
+//  2010-01-16 Makoto Yamashita
 
 #import "QSSpotlightSearchProvider.h"
 
@@ -57,7 +58,7 @@
                                [[[NSSortDescriptor alloc] initWithKey:NSMetadataQueryResultContentRelevanceAttribute ascending:NO] autorelease],
                                [[[NSSortDescriptor alloc] initWithKey:(NSString*)kMDItemContentModificationDate ascending:NO] autorelease],
                                nil]];
-    [query setDelegate:self];
+    [query setDelegate:(id<NSMetadataQueryDelegate>)self];
   }
   [query stopQuery];
   [query setPredicate:predicate];

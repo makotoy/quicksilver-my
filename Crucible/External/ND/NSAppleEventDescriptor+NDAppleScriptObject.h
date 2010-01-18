@@ -1,3 +1,7 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
 /*!
 	@header NSAppleEventDescriptor+NDAppleScriptObject
 	@abstract Declares the category <tt>NSAppleEventDescriptor (NDAppleScriptObject)</tt>
@@ -15,13 +19,13 @@
 @interface NSAppleEventDescriptor (NDAppleScriptObject)
 
 /*!
-	@method descriptorWithAEDescNoCopy:
+	@method descriptorWithAEDescNoCp:
 	@abstract Returns a <tt>NSAppleEventDescriptor</tt> for the <tt>AEDesc</tt>.
 	@discussion Allocates, initializes and returns an <tt>NSAppleEventDescriptor</tt> that takes ownership of the Carbon <tt>AEDesc</tt> structure pointed to by <tt>aeDesc</tt>. Returns <tt>nil</tt> if an error occurs. The initialized object takes responsibility for calling the <tt>AEDisposeDesc</tt> function on the <tt>AEDesc</tt> at object deallocation time.
 	@param aeDesc A Carbon <tt>AEDesc</tt> structure.
 	@result A <tt>NSAppleEventDescriptor</tt>
  */
-+ (id)descriptorWithAEDescNoCopy:(const AEDesc *)aeDesc;
++ (id)descriptorWithAEDescNoCp:(const AEDesc *)aeDesc;
 
 /*!
 	@method descriptorWithAEDesc:

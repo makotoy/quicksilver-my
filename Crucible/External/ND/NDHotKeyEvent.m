@@ -34,7 +34,7 @@ static OSStatus	switchHotKey( NDHotKeyEvent * self, BOOL aFlag );
 @implementation NDHotKeyEvent
 
 #ifdef NDHotKeyEventThreadSafe
-	#warning Thread safety has been enabled for NDHotKeyEvent class methods
+//	#warning Thread safety has been enabled for NDHotKeyEvent class methods
 	#define	NDHotKeyEventLock  NSLock* theLock = [[NSLock alloc] init];[theLock lock]
 	#define	NDHotKeyEventUnlock [theLock unlock]; [theLock release]; theLock = nil
 #else
@@ -874,7 +874,7 @@ static OSStatus switchHotKey( NDHotKeyEvent * self, BOOL aFlag )
 NSString * stringForKeyCodeAndModifierFlags( unsigned short aKeyCode, unichar aChar, unsigned int aModifierFlags )
 {
 	NSString 	* stringForCharacter( const unsigned short aKeyCode, unichar aCharacter );
-	NSString 	* stringForModifiers( unsigned int aModifierFlags );	
+//	NSString 	* stringForModifiers( unsigned int aModifierFlags );	
 
 	return [stringForModifiers(aModifierFlags) stringByAppendingString:stringForCharacter( aKeyCode, aChar )];
 }

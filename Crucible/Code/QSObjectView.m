@@ -37,7 +37,9 @@
 {
 	[self viewDidMoveToWindow];
 	[self registerForDraggedTypes:standardPasteboardTypes];
-	if (!controller && [self window]) controller = [[self window] delegate];
+	if (!controller && [self window]) {
+        controller = (QSInterfaceController*)[[self window] delegate];
+    }
 	draggedObject = nil;
 	springTimer = nil;
     [self setDropMode:QSFullDropMode]; 	
@@ -45,7 +47,9 @@
 
 - (QSInterfaceController *)controller
 {
-	if (!controller && [self window]) controller = [[self window] delegate];
+	if (!controller && [self window]) {
+        controller = (QSInterfaceController*)[[self window] delegate];
+    }
 	return controller;  
 }
 
@@ -76,7 +80,9 @@
     currentMouseLocation2.x = dummyPt.x;
     currentMouseLocation2.y = dummyPt.y;
 	shouldSpring = YES;
-	CGPostMouseEvent (currentMouseLocation2, NO, 1, NO);
+    CGEventRef mouseDownRef = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseUp, currentMouseLocation2, 0);
+    CGEventPost(kCGHIDEventTap, mouseDownRef);
+    CFRelease(mouseDownRef);
 }
 
 - (BOOL)becomeFirstResponder
@@ -91,8 +97,6 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	BOOL isInside = YES;
-	
 	theEvent = [[self window] nextEventMatchingMask: NSLeftMouseUpMask | NSLeftMouseDraggedMask];
 	
 	switch ([theEvent type]) {

@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on Thu Aug 28 2003.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "NSAppleScript+QSStorage.h"
 #import "NSData_RangeExtensions.h"
@@ -33,12 +33,15 @@
 
 
 @implementation NSAppleScript (Constructors)
-+ (NSAppleScript *)scriptWithContentsOfFile:(NSString *)path{
-	return [[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
++ (NSAppleScript *)scriptWithContentsOfFile:(NSString *)path
+{
+	return [[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil] autorelease];
 }
-+ (NSAppleScript *)scriptWithContentsOfResource:(NSString *)path inBundle:(NSBundle *)bundle{
+
++ (NSAppleScript *)scriptWithContentsOfResource:(NSString *)path inBundle:(NSBundle *)bundle
+{
 	path=[bundle pathForResource:[path stringByDeletingPathExtension] ofType:[path pathExtension]];
-	return [[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
+	return [self scriptWithContentsOfFile:path];
 }
 @end
 
@@ -51,7 +54,7 @@
 	
 	{	if( [self isCompiled] && (noErr == OSAStore( [NSAppleScript _defaultScriptingComponent], [self _compiledScriptID], typeOSAGenericStorage, kOSAModeNull, &theDesc ) ) )
 
-		theData = [[NSAppleEventDescriptor descriptorWithAEDescNoCopy:&theDesc] data];
+		theData = [[NSAppleEventDescriptor descriptorWithAEDescNoCp:&theDesc] data];
 	}
 	return theData;
 }

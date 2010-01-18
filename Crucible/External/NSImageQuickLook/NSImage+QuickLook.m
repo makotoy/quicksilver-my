@@ -4,9 +4,10 @@
 //
 //  Created by Matt Gemmell on 29/10/2007.
 //
+//  2010-01-16 Makoto Yamashita
 
 #import "NSImage+QuickLook.h"
-#import <QuickLook/QuickLook.h> // Remember to import the QuickLook framework into your project!
+#import <QuickLook/QuickLook.h>
 
 @implementation NSImage (QuickLook)
 
@@ -35,7 +36,7 @@
             newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
             [newImage addRepresentation:bitmapImageRep];
             [bitmapImageRep release];
-            
+            CGImageRelease(ref);
             if (newImage) {
                 return [newImage autorelease];
             }

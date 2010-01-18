@@ -11,12 +11,7 @@
 {
     static NSImage *daedalusImage = nil;
     if (!daedalusImage) {
-		daedalusImage = [[NSImage alloc] initWithData:[[self imageNamed:@"FinderIcon"] TIFFRepresentation]];
-		[daedalusImage setCacheMode:NSImageCacheNever];
-		[daedalusImage setScalesWhenResized:NO];
-		DRColorPermutator *perm = [[[DRColorPermutator alloc] init] autorelease];
-		[perm rotateHueByDegrees:140 preservingLuminance:YES fromScratch:YES];
-		[perm applyToBitmapImageRep:(NSBitmapImageRep *)[daedalusImage bestRepresentationForDevice:nil]];
+		daedalusImage = [[self imageNamed:@"FinderIcon"] imageByAdjustingHue:(3.14 * 140 / 180)];
         
 		[daedalusImage lockFocus];
 		[[NSColor whiteColor] set];
@@ -239,7 +234,7 @@ static QSResourceManager *sharedResourceManager = nil;
 
 - (NSImage *)imageWithLocatorInformation:(id)locator
 {
-    NSImage *image;
+    NSImage *image = nil;
     if ([locator isKindOfClass:[NSArray class]]) {
         int i;
         for (i = 0; i<[locator count]; i++) {

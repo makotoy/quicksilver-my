@@ -5,6 +5,7 @@
 //  Created by Nicholas Jitkoff on 7/14/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
+//  2010-01-16 Makoto Yamashita
 
 #import "QSSearchFieldCell.h"
 
@@ -15,7 +16,7 @@
   
   textObj = [super setUpFieldEditorAttributes:textObj];
   [(NSTextView*)textObj setSelectedTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[NSColor colorWithDeviceWhite:1.0 alpha:1.0], NSBackgroundColorAttributeName, nil]];
-  [textObj setDelegate:self];
+  [textObj setDelegate:(id<NSTextDelegate>)self];
   return textObj;
 }
 //- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {}

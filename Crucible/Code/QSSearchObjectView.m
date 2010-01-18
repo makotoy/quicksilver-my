@@ -6,16 +6,21 @@
 #define pUserKeyBindingsPath QSApplicationSupportSubPath(@"KeyBindings.qskeys", NO)
 #define MAX_HISTORY_COUNT 20
 
-static NSMutableDictionary *bindingsDict = nil;
-
 @implementation QSSearchObjectView
 +(void)initialize
 {
-	bindingsDict = [[[NSMutableDictionary alloc] initWithContentsOfFile:
-		[[NSBundle bundleForClass:[QSSearchObjectView class]]pathForResource:@"DefaultBindings" ofType:@"qskeys"]]objectForKey:@"QSSearchObjectView"];
-	
 	NSDictionary *mods = [[NSDictionary dictionaryWithContentsOfFile:pUserKeyBindingsPath] objectForKey:@"QSSearchObjectView"];
-	[bindingsDict addEntriesFromDictionary:mods];
+	[[self bindingsDict] addEntriesFromDictionary:mods];
+}
+
++ (NSMutableDictionary*)bindingsDict
+{
+    static NSMutableDictionary* bindingsDict = nil;
+    if (!bindingsDict) {
+        bindingsDict = [[[NSMutableDictionary alloc] initWithContentsOfFile:
+                         [[NSBundle bundleForClass:[QSSearchObjectView class]]pathForResource:@"DefaultBindings" ofType:@"qskeys"]]objectForKey:@"QSSearchObjectView"];
+    }
+    return bindingsDict;
 }
 
 - (void)awakeFromNib
@@ -678,17 +683,13 @@ indexOfObject:[[self objectValue] identifier]] != NSNotFound;
 	[[editor enclosingScrollView] removeFromSuperview];
 }
 
-
-
-
-
-
-
-- (void)deleteBackward:(id)sender {
+- (void)deleteBackward:(id)sender
+{
 	[self clearSearch];
 	//	NSText *fieldEditor = [[self window] fieldEditor:YES forObject:self];
 	//[[self cell] editWithFrame:[self frame] inView:self editor:fieldEditor delegate:self event:nil];
 }
+
 - (NSMutableString *)partialString { return partialString;}
 
 - (void)clearSearch {
@@ -932,7 +933,7 @@ indexOfObject:[[self objectValue] identifier]] != NSNotFound;
  }
  */
 - (BOOL)handleBoundKey:(NSEvent *)theEvent {
-	NSString *selectorString = [bindingsDict objectForKey:[self stringForEvent:theEvent]];
+	NSString *selectorString = [[[self class] bindingsDict] objectForKey:[self stringForEvent:theEvent]];
 	
 	if (selectorString) {
 		SEL selector = NSSelectorFromString(selectorString);

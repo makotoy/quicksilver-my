@@ -417,9 +417,8 @@ static BOOL gModifiersAreIgnored;
 		if (splitPlural && [dObject count] > 1) {
 			NSArray *objects = [dObject splitObjects];
 			id object;
-			id result;
 			for (object in objects) {
-				result = [self performOnDirectObject:object indirectObject:iObject];
+				[self performOnDirectObject:object indirectObject:iObject];
 			}
 			return nil;
 		}

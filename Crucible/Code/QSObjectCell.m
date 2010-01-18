@@ -1,4 +1,7 @@
-
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
 
 #import "QSObjectCell.h"
 
@@ -119,17 +122,17 @@ NSRect alignRectInRect(NSRect innerRect, NSRect outerRect, int quadrant);
  */
 
 
-- (NSRect) titleRectForBounds:(NSRect)theRect {
-  
-  NSCellImagePosition pos = [self imagePosition];
-  if (autosize) {
-    pos = -1;
-    BOOL wideDraw = NSWidth(theRect) /NSHeight(theRect) > 2;
-    if (wideDraw || [self isBezeled])
-      pos = NSImageLeft;
-    else
-      pos = NSImageAbove;
-  }
+- (NSRect) titleRectForBounds:(NSRect)theRect
+{
+    NSCellImagePosition pos = [self imagePosition];
+    if (autosize) {
+        BOOL wideDraw = NSWidth(theRect) /NSHeight(theRect) > 2;
+        if (wideDraw || [self isBezeled]) {
+              pos = NSImageLeft;
+        } else {
+              pos = NSImageAbove;
+        }
+    }
   
   switch (pos) {
     case NSNoImage:
@@ -564,10 +567,10 @@ NSRect alignRectInRect(NSRect innerRect, NSRect outerRect, int quadrant);
   }
 }
 
-- (void)drawObjectImage:(QSObject *)drawObject inRect:(NSRect)drawingRect cellFrame:(NSRect)cellFrame controlView:(NSView *)controlView flipped:(BOOL)flipped opacity:(float)opacity {
+- (void)drawObjectImage:(QSObject *)drawObject inRect:(NSRect)drawingRect cellFrame:(NSRect)cellFrame controlView:(NSView *)controlView flipped:(BOOL)flipped opacity:(float)opacity
+{
 	NSImage *icon = [drawObject icon];
 	NSImage *cornerBadge = nil;
-	// QSLog(@"icon");
 	BOOL proxyDraw = [[icon name] isEqualToString:QSDirectObjectIconProxy];
 	if (proxyDraw) {
 		if ([controlView isKindOfClass:[QSSearchObjectView class]]) {
@@ -577,13 +580,10 @@ NSRect alignRectInRect(NSRect innerRect, NSRect outerRect, int quadrant);
 			icon = [QSResourceManager imageNamed:@"defaultAction"];
 		}
 	}
-	//  NSRect imageRect = rectFromSize([icon size]);
-	
-  
 	BOOL handlerDraw = NO;
-	if (NSWidth(drawingRect) >64)
+	if (NSWidth(drawingRect) >64) {
 		handlerDraw = [drawObject drawIconInRect:(NSRect) drawingRect flipped:flipped];
-	
+	}
 	if (!handlerDraw) {
 		[icon setFlipped:flipped];  
 		

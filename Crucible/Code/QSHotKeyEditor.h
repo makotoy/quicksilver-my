@@ -4,7 +4,7 @@
  */
 
 #import <Foundation/Foundation.h>
-
+/*
 @interface QSHotKeyControl : NSTextField {
 	@private
 	unsigned short		keyCode;
@@ -12,7 +12,7 @@
 	unsigned long		modifierFlags;
 }
 @end
-
+*/
 @interface QSHotKeyField : NSTextField {
 	IBOutlet NSButton *setButton;
 	@private

@@ -30,7 +30,6 @@ OSStatus GetPSNForAppInfo(ProcessSerialNumber *psn,NSDictionary *theApp){
 + (NSArray *)processes
 {
     NSMutableArray *resultsArray=[NSMutableArray array];
-    OSErr resultCode=noErr;
     ProcessSerialNumber serialNumber;
     
     Str255                             procName;

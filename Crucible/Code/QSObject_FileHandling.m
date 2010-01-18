@@ -1,3 +1,7 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
 
 
 #import "QSObject_FileHandling.h"
@@ -75,44 +79,47 @@ NSString *identifierForPaths(NSArray *paths) {
 
 @implementation QSObject (FileHandling)
 
-+ (QSObject *)fileObjectWithPath:(NSString *)path {
++ (QSObject *)fileObjectWithPath:(NSString *)path
+{
     if (![path length]) return nil;
-	//QSLog(@"Path %@", path);
+
     path = [[path stringByStandardizingPath] stringByResolvingSymlinksInPath];
-	
-	//QSLog(@"Path %@", path);
 	
 	// ***warning * should this only resolve simlinks of ancestors?
     
-    if ([[path pathExtension] isEqualToString:@"silver"])
+    if ([[path pathExtension] isEqualToString:@"silver"]) {
 		return [QSObject objectWithDictionary:[NSDictionary dictionaryWithContentsOfFile:path]];
-    
+    }
     QSObject *newObject = [QSObject objectWithIdentifier:path];  
     if (!newObject) {
-		//	QSLog(@"creating for %@", path);
 		newObject = [[[QSObject alloc] initWithArray:[NSArray arrayWithObject:path]]autorelease];
     }
     NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
-    if ([clippingTypes containsObject:type])
-		[newObject performSelectorOnMainThread:@selector(addContentsOfClipping:) withObject:path waitUntilDone:YES];
+    if ([clippingTypes containsObject:type]) {
+		[newObject performSelectorOnMainThread:@selector(addContentsOfClipping:)
+                                    withObject:path
+                                 waitUntilDone:YES];
+    }
 	return newObject;
 }
 
-+ (QSObject *)fileObjectWithArray:(NSArray *)paths {
++ (QSObject *)fileObjectWithArray:(NSArray *)paths
+{
     QSObject *newObject = [QSObject objectWithIdentifier:identifierForPaths(paths)];
-    //  QSLog(@"object:%@", newObject);
     if (!newObject) {
-        if ([paths count] >1)
+        if ([paths count] >1) {
             newObject = [[[QSObject alloc] initWithArray:paths] autorelease];
-        else if ([paths count] == 0)
+        } else if ([paths count] == 0) {
             return nil;
-        else
+        } else {
             newObject = [QSObject fileObjectWithPath:[paths lastObject]];
+        }
     }    
     return newObject;
 }
 
-+ (NSArray *)fileObjectsWithPathArray:(NSArray *)pathArray {
++ (NSArray *)fileObjectsWithPathArray:(NSArray *)pathArray
+{
     NSMutableArray *fileObjectArray = [NSMutableArray arrayWithCapacity:1];
 	id object;
     for (id loopItem in pathArray) {
@@ -122,18 +129,18 @@ NSString *identifierForPaths(NSArray *paths) {
     return fileObjectArray;
 }
 
-+ (NSMutableArray *)fileObjectsWithURLArray:(NSArray *)pathArray {
++ (NSMutableArray *)fileObjectsWithURLArray:(NSArray *)pathArray
+{
     NSMutableArray *fileObjectArray = [NSMutableArray arrayWithCapacity:1];
     for (id loopItem in pathArray) {
-        //QSLog(@"path %@", [[pathArray objectAtIndex:i] path]);
         [fileObjectArray addObject:[QSObject fileObjectWithPath:[loopItem path]]];
-        
     }
     return fileObjectArray;
 }
 
 
-- (id)initWithArray:(NSArray *)paths { //**this function could create dups
+- (id)initWithArray:(NSArray *)paths
+{ //**this function could create dups
     if ((self = [self init])) {
         NSString *thisIdentifier = identifierForPaths(paths);
 		
@@ -142,15 +149,15 @@ NSString *identifierForPaths(NSArray *paths) {
             [[self dataDictionary] setObject:path forKey:QSFilePathType];  
 			NSString *uti = QSUTIOfFile(path);
 			id handler = nil;
-            if (![uti hasPrefix:@"dyn."]) handler = [QSReg instanceForKey:uti inTable:@"QSFileObjectCreationHandlers"];
-			//QSLog(@"handler %@ %@", uti, handler);
-			if (handler)
+            if (![uti hasPrefix:@"dyn."]) {
+                handler = [QSReg instanceForKey:uti inTable:@"QSFileObjectCreationHandlers"];
+            }
+			if (handler) {
 				return [handler initFileObject:self ofType:uti];
-			
+			}
         } else {
 			[[self dataDictionary] setObject:paths forKey:QSFilePathType];
-		}
-		
+		}		
         [QSObject registerObject:self withIdentifier:thisIdentifier];
         [self setPrimaryType:QSFilePathType];
         [self getNameFromFiles];
@@ -158,7 +165,8 @@ NSString *identifierForPaths(NSArray *paths) {
     return self;
 }
 
-- (BOOL)isApplication {
+- (BOOL)isApplication
+{
     NSString *path = [self singleFilePath];
     
     LSItemInfoRecord infoRec;

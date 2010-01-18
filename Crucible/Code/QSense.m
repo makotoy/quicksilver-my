@@ -4,7 +4,7 @@
 //
 //  Created by Alcor on 11/22/04.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "QSense.h"
 
@@ -83,10 +83,9 @@ float QSScoreForAbbreviationWithRanges( CFStringRef str, CFStringRef abbr, id ma
 				if( !whitespace )
                     whitespace = CFCharacterSetGetPredefined( kCFCharacterSetWhitespace );
 				static CFCharacterSetRef uppercase = NULL;
-				if( !uppercase )
+				if( !uppercase ) {
                     uppercase = CFCharacterSetGetPredefined( kCFCharacterSetUppercaseLetter );
-				
-				j = 0;
+				}
 				if( CFCharacterSetIsCharacterMember( whitespace, CFStringGetCharacterAtIndex( str, matchedRange.location - 1 ) ) ) {
 					for( j = matchedRange.location - 2; j >= (int)strRange.location; j-- ) {
 						if( CFCharacterSetIsCharacterMember( whitespace, CFStringGetCharacterAtIndex( str, j ) ) )

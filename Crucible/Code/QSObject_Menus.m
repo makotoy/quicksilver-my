@@ -1,3 +1,7 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
 
 
 #import "QSObject_Menus.h"
@@ -137,27 +141,27 @@
 
 - (NSMenu *)actionsMenu {
     NSMenu *menu = [[[NSMenu alloc] initWithTitle:kQSObjectActionsMenu] autorelease];
-    [menu setDelegate:self];
+    [menu setDelegate:(id<NSMenuDelegate>)self];
 	return menu;
 }
 
 - (NSMenu *)fullMenu {
 	NSMenu *menu = [[[NSMenu alloc] initWithTitle:kQSObjectFullMenu] autorelease];
-	[menu setDelegate:self];
+	[menu setDelegate:(id<NSMenuDelegate>)self];
 	return menu;
 }
 
 
-- (NSMenu *)childrenMenu {
-	if (![self hasChildren])
-        return nil;
+- (NSMenu *)childrenMenu
+{
+	if (![self hasChildren]) return nil;
 	NSMenu *menu = [[[NSMenu alloc] initWithTitle:kQSObjectChildrenMenu] autorelease];
-	[menu setDelegate:self];	
+	[menu setDelegate:(id<NSMenuDelegate>)self];	
 	return menu;
 }
 
-- (BOOL)addChildrenInArray:(NSArray *)children count:(int)count toMenu:(NSMenu *)menu indent:(int)indent {
-	count = MIN(count, [children count]);
+- (BOOL)addChildrenInArray:(NSArray *)children count:(int)count toMenu:(NSMenu *)menu indent:(int)indent
+{
 	for (QSBasicObject *child in [self children]) {
 		NSMenuItem *item = [child menuItemWithChildren:YES];
 		[item setIndentationLevel:indent];
@@ -166,8 +170,8 @@
 	return YES;
 }
 
-- (BOOL)addActionsInArray:(NSArray *)actions count:(int)count toMenu:(NSMenu *)menu indent:(int)indent {
-	count = MIN(count, [actions count]);
+- (BOOL)addActionsInArray:(NSArray *)actions count:(int)count toMenu:(NSMenu *)menu indent:(int)indent
+{
 	NSMenuItem *item;
 	NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                            [NSFont menuBarFontOfSize:0],NSFontAttributeName,
@@ -200,16 +204,14 @@
 				if ([action argumentCount] > 1) {
 					NSMenu *sub = [[[NSMenu alloc] initWithTitle:[action name]] autorelease];
 					[sub setDelegate:command];
-					[command retain]; // so it doesn't get released too early when menu deconstructed
+					// [command retain]; // so it doesn't get released too early when menu deconstructed
 					[item setSubmenu:sub];
 				}
 			}
 			[item setAttributedTitle:[[[NSAttributedString alloc] initWithString:[item title] attributes:attrs] autorelease]];
-			
 			[item setTarget:command];
 			[item setRepresentedObject:command];
-			if (iconCopy)
-                [item setImage:iconCopy];
+			if (iconCopy) [item setImage:iconCopy];
 			[item setIndentationLevel:indent];
 		}
 	}

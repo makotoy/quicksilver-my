@@ -465,7 +465,7 @@ NSMutableDictionary *plugInBundlePaths = nil;
 	} else if (bundle) {
 		NSString *identifier = [bundle bundleIdentifier];
 		
-		NSMutableSet *disabledPlugInsSet = [[NSMutableSet alloc] init];
+		NSMutableSet *disabledPlugInsSet = [NSMutableSet setWithCapacity:0];
 		[disabledPlugInsSet addObjectsFromArray:disabledPlugIns];
 		
 		if (flag) {

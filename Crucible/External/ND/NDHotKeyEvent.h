@@ -9,6 +9,8 @@
  
 	<p>Created by Nathan Day on Wed Feb 26 2003.<br>
 	Copyright &copy; 2002 Nathan Day. All rights reserved.</p>
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
  */
 
 #import <Cocoa/Cocoa.h>
@@ -425,3 +427,5 @@ NSString * stringForKeyCodeAndModifierFlags( unsigned short keyCode, unichar aCh
 	@result A <tt>unichar</tt>
  */
 unichar unicharForKeyCode( unsigned short keyCode );
+
+NSString * stringForModifiers( unsigned int aModifierFlags );

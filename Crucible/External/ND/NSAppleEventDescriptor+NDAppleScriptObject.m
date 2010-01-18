@@ -18,11 +18,11 @@
 @implementation NSAppleEventDescriptor (NDAppleScriptObject)
 
 /*
- * +descriptorWithAEDescNoCopy:
+ * +descriptorWithAEDescNoCp:
  */
-+ (id)descriptorWithAEDescNoCopy:(const AEDesc *)aDesc
++ (id)descriptorWithAEDescNoCp:(const AEDesc *)aDesc
 {
-    return [[[[self class] alloc] initWithAEDescNoCopy:aDesc] autorelease];
+    return [[[NSAppleEventDescriptor alloc] initWithAEDescNoCopy:aDesc] autorelease];
 }
 
 /*
@@ -30,7 +30,7 @@
  */
 + (id)descriptorWithAEDesc:(const AEDesc *)anAEDesc
 {
-	return [[[[self class] alloc] initWithAEDesc:anAEDesc] autorelease];
+	return [[[NSAppleEventDescriptor alloc] initWithAEDesc:anAEDesc] autorelease];
 }
 
 /*
@@ -39,7 +39,14 @@
 - (id)initWithAEDesc:(const AEDesc *)anAEDesc
 {
 	AEDesc	theAEDesc;
-	return AEDuplicateDesc( anAEDesc, &theAEDesc ) == noErr ? [self initWithAEDescNoCopy:&theAEDesc] : nil;
+    OSStatus result;
+    result = AEDuplicateDesc( anAEDesc, &theAEDesc );
+    if (result == noErr) {
+        self = [self initWithAEDescNoCopy:&theAEDesc];
+    } else {
+        self = nil;
+    }
+    return self;
 }
 
 /*
@@ -322,7 +329,7 @@
 
 				if( AECreateDesc( typeRangeDescriptor, (void*)&theRange, sizeof(NSRange), &theDesc ) == noErr )
 				{
-					theDescriptor = [NSAppleEventDescriptor descriptorWithAEDescNoCopy:&theDesc];
+					theDescriptor = [NSAppleEventDescriptor descriptorWithAEDescNoCp:&theDesc];
 				}
 				else
 					AEDisposeDesc( &theDesc );

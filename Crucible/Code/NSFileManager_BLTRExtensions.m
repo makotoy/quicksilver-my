@@ -84,7 +84,7 @@
 							"'----':alis(@@)", fileAlias);
 	if (err != noErr) return NO;
 	
-	err = AESend(&event, &reply, kAEWaitReply, kAENormalPriority, 
+	AESend(&event, &reply, kAEWaitReply, kAENormalPriority, 
 				 kAEDefaultTimeout, NULL, NULL);
 	AEDisposeDesc(&event);
 	AEDisposeDesc(&reply);
@@ -274,11 +274,10 @@ NSString *QSUTIWithLSInfoRec(NSString *path,LSItemInfoRecord *infoRec)
     
     NSString *type;
     LSItemInfoRecord infoRec;
-    OSStatus status;
     for (NSString* file in [manager contentsOfDirectoryAtPath:path error:NULL]) {
         file = [path stringByAppendingPathComponent:file];
         type = [self typeOfFile:file];
-        status=LSCopyItemInfoForURL((CFURLRef)[NSURL fileURLWithPath:file],
+        LSCopyItemInfoForURL((CFURLRef)[NSURL fileURLWithPath:file],
                                     kLSRequestBasicFlagsOnly, &infoRec);
         
         if (infoRec.flags & kLSItemInfoIsAliasFile){

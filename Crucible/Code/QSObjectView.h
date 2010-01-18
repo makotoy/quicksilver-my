@@ -14,7 +14,6 @@ typedef enum {
 } QSObjectDropMode;	
 
 @interface QSObjectView : NSControl {
-        
     NSString *searchString;
     QSInterfaceController *controller;
     BOOL dragImageDraw;
@@ -24,8 +23,7 @@ typedef enum {
     NSDictionary *nameAttributes;
     NSDictionary *detailAttributes,*liteDetailAttributes;
 
-    NSTimer *iconLoadTimer;
-    
+    NSTimer *iconLoadTimer;    
     
 	QSObjectDropMode dropMode;
 	

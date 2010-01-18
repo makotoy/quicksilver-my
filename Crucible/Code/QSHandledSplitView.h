@@ -4,7 +4,7 @@
 //
 //  Created by Nicholas Jitkoff on 4/20/06.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import <Cocoa/Cocoa.h>
 
@@ -25,7 +25,7 @@
 //}
 - (BOOL)drawsDivider;
 - (void)setDrawsDivider:(BOOL)flag;
-- (float)dividerThickness;
-- (void)setDividerThickness:(float)newDividerThickness;
+- (CGFloat)dividerThickness;
+- (void)setDividerThickness:(CGFloat)newDividerThickness;
 
 @end

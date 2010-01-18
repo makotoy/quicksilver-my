@@ -1,6 +1,8 @@
 /*
  QSImageAndTextCell.m
  ALCHEMY
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
  */
 
 #import "QSImageAndTextCell.h"
@@ -128,7 +130,8 @@
 }
 
 
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
     if (image_ != nil) {
         NSSize	size = imageSize_;
         NSRect	imageFrame;
@@ -139,9 +142,7 @@
             }else{
                 size = NSMakeSize(NSHeight(cellFrame),NSHeight(cellFrame));
             }
-        }
-        
-        
+        }        
 		NSRect rest;
         NSDivideRect(cellFrame, &imageFrame, &rest, 1+[self imageWidthForFrame:cellFrame] *1.125, NSMinXEdge);
         if ([self drawsBackground]) {
@@ -155,12 +156,6 @@
     }
 	
 	cellFrame = [self textRectForFrame:cellFrame];
-	NSRect textCellFrame = cellFrame;
-  
-	textCellFrame.size.height = [super cellSizeForBounds:textCellFrame] .height;
-	textCellFrame = centerRectInRect(textCellFrame, cellFrame);
-	
-
 	[self setTextColor:[self isHighlighted] && !editing?[NSColor alternateSelectedControlTextColor] :[NSColor selectedControlTextColor]];
     [super drawWithFrame:cellFrame inView:controlView];
 	

@@ -127,7 +127,9 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
         // if (VERBOSE) QSLog(@"Created object with types:\r%@", [typeArray componentsJoinedByString:@", "]);
         id value;
 		if ((value = [self objectForType:NSRTFPboardType])) {
-			value = [[[NSAttributedString alloc] initWithRTF:value documentAttributes:nil] string];
+            NSAttributedString* aStr = [[NSAttributedString alloc] initWithRTF:value documentAttributes:nil];
+			value = [aStr string];
+            [aStr autorelease];
 			[self setObject:value forType:QSTextType];
 		}
         if ([self objectForType:QSTextType]) {

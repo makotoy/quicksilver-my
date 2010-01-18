@@ -1,3 +1,7 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
 #import <Foundation/Foundation.h>
 #import "QSObjectView.h"
 
@@ -74,6 +78,7 @@ typedef enum QSSearchMode {
     BOOL allowText;
     BOOL allowNonActions;
 }
++ (NSMutableDictionary*)bindingsDict;
 
 - (void)clearSearch;
 

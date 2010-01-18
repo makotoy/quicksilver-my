@@ -239,10 +239,15 @@ NSTimeInterval QSTimeIntervalForString(NSString *intervalString) {
     return self;
 }
 
-+ (id) commandWithDirectObject:(QSBasicObject *)dObject actionObject:(QSBasicObject *)aObject indirectObject:(QSBasicObject *)iObject {
-    if (dObject && aObject)
-        return [[[self alloc] initWithDirectObject:(QSBasicObject *)dObject actionObject:(QSBasicObject *)aObject indirectObject:(QSBasicObject *)iObject] autorelease];
-    return nil;
++ (id) commandWithDirectObject:(QSBasicObject *)dObject actionObject:(QSBasicObject *)aObject indirectObject:(QSBasicObject *)iObject
+{
+    id resCommand = nil;
+    if (dObject && aObject) {
+        resCommand = [[[self class] alloc] initWithDirectObject:(QSBasicObject *)dObject
+                                           actionObject:(QSBasicObject *)aObject
+                                         indirectObject:(QSBasicObject *)iObject];
+    }
+    return [resCommand autorelease];
 }
 
 - (id) initWithDirectObject:(QSBasicObject *)dObject actionObject:(QSBasicObject *)aObject indirectObject:(QSBasicObject *)iObject {

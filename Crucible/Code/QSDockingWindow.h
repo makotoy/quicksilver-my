@@ -1,9 +1,13 @@
+/*
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
+ */
 
 
 #import "QSWindow.h"
 #import "QSTrackingWindow.h"
 
-@interface QSDockingWindow : QSBorderlessWindow {
+@interface QSDockingWindow : QSBorderlessWindow <NSWindowDelegate> {
 
     NSTrackingRectTag trackingRect;
    // BOOL hidden;

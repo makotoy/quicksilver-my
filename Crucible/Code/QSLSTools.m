@@ -4,16 +4,13 @@
 //
 //  Created by Alcor on 4/6/05.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "QSLSTools.h"
 
 NSString *QSApplicationPathForURL(NSString *urlString){
 	NSURL *appURL = nil; 
-	OSStatus err; 
-	err = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString: urlString],kLSRolesAll, NULL, (CFURLRef *)&appURL); 
-//	if (err != noErr) QSLog(@"error %ld", err); 
-	// else QSLog(@"%@", appURL); 
+	LSGetApplicationForURL((CFURLRef)[NSURL URLWithString: urlString],kLSRolesAll, NULL, (CFURLRef *)&appURL); 
 	
 	return [appURL path];
 }

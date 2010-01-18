@@ -4,7 +4,7 @@
 //
 //  Created by Nicholas Jitkoff on 4/20/06.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "QSHandledSplitView.h"
 
@@ -52,8 +52,8 @@ dividerThickness=1.0;
 }
 
 
-- (float)dividerThickness { return dividerThickness; }
-- (void)setDividerThickness:(float)newDividerThickness
+- (CGFloat)dividerThickness { return dividerThickness; }
+- (void)setDividerThickness:(CGFloat)newDividerThickness
 {
     dividerThickness = newDividerThickness;
 }

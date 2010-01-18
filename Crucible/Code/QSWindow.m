@@ -281,7 +281,7 @@
                         [NSNumber numberWithFloat:0.2], kQSGSDuration, nil];
 	}
     QSWindowAnimation* hl = [QSWindowAnimation effectWithWindow:self attributes:effectDesc];
-    [hl setDelegate:self];
+    [hl setDelegate:(id<NSAnimationDelegate>)self];
     [hl startAnimation];
 	return;
 }

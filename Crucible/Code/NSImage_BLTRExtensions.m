@@ -107,7 +107,7 @@ static inline int get_bit(unsigned char *arr, unsigned long bit_num)
               operation:NSCompositeCopy
                fraction:1.0];
     [newImage unlockFocus];
-    return newImage;
+    return [newImage autorelease];
 }
 
 - (NSSize) adjustSizeToDrawAtSize:(NSSize)theSize
@@ -287,56 +287,54 @@ static inline int get_bit(unsigned char *arr, unsigned long bit_num)
 @end
 
 @implementation  NSImage (Trim)
-- (NSRect) usedRect {
-	
-	
-  NSData* tiffData = [self TIFFRepresentation];
+- (NSRect) usedRect
+{
+    NSData* tiffData = [self TIFFRepresentation];
 	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithData:tiffData];
-	
-  
-  if (![bitmap hasAlpha]) return NSMakeRect(0, 0, [bitmap size] .height, [bitmap size] .width);
-	
+	NSRect resRect;
+    if (![bitmap hasAlpha]) {
+        resRect = NSMakeRect(0, 0, [bitmap size] .height, [bitmap size] .width);
+        [bitmap release], bitmap = nil;        
+        return resRect;
+	}
   int minX = [bitmap pixelsWide];
   int minY = [bitmap pixelsHigh];
   int maxX = 0;
   int maxY = 0;
-	
-	
   int i, j;
   unsigned char* pixels = [bitmap bitmapData];
 	
-  //int alpha;
-  for(i = 0; i<[bitmap pixelsWide]; i++) {
+  for (i = 0; i < [bitmap pixelsWide]; i++) {
     for (j = 0; j<[bitmap pixelsHigh]; j++) {
-      //alpha = *(pixels + i*[bitmap pixelsWide] *[bitmap samplesPerPixel] + j*[bitmapsamplesPerPixel] + 3);
-      if (*(pixels + j*[bitmap pixelsWide] *[bitmap samplesPerPixel] + i*[bitmap samplesPerPixel] + 3) ) { //This pixel is not transparent! Readjust bounds.
-        //QSLog(@"Pixel Occupied: (%d, %d) ", i, j);
+      if (*(pixels + j*[bitmap pixelsWide] *[bitmap samplesPerPixel] + i*[bitmap samplesPerPixel] + 3) ) {
+          //This pixel is not transparent! Readjust bounds.
         minX = MIN(minX, i);
         maxX = MAX(maxX, i);
         minY = MIN(minY, j);
         maxY = MAX(maxY, j);
-      }
-			
+      }			
     }
   }
-  [bitmap release];
-  //flip y!!
-	//QSLog(@"%d, %d, %d, %d", minX, minY, maxX, maxY);
-  return NSMakeRect(minX, [bitmap pixelsHigh] -maxY-1, maxX-minX+1, maxY-minY+1);
+    resRect = NSMakeRect(minX, [bitmap pixelsHigh] -maxY-1, maxX-minX+1, maxY-minY+1);
+  [bitmap release], bitmap = nil;
+
+  return resRect;
 }
 
-- (NSImage *)scaleImageToSize:(NSSize)newSize trim:(BOOL)trim expand:(BOOL)expand scaleUp:(BOOL)scaleUp {
-  NSRect sourceRect = (trim?[self usedRect] :rectFromSize([self size]) );
-  NSRect drawRect = (scaleUp || NSHeight(sourceRect) >newSize.height || NSWidth(sourceRect)>newSize.width ? sizeRectInRect(sourceRect, rectFromSize(newSize), expand) : NSMakeRect(0, 0, NSWidth(sourceRect), NSHeight(sourceRect)));
-  NSImage *tempImage = [[NSImage alloc] initWithSize:NSMakeSize(NSWidth(drawRect), NSHeight(drawRect) )];
-  [tempImage lockFocus];
-  {
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-    [self drawInRect:drawRect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1];
-  }
-  [tempImage unlockFocus];
-  //QSLog(@"%@", tempImage);
-  return [[[NSImage alloc] initWithData:[tempImage TIFFRepresentation]]autorelease]; //*** UGH! why do I have to do this to commit the changes?;
+- (NSImage *)scaleImageToSize:(NSSize)newSize trim:(BOOL)trim expand:(BOOL)expand scaleUp:(BOOL)scaleUp
+{
+    NSRect sourceRect = (trim?[self usedRect] :rectFromSize([self size]) );
+    NSRect drawRect = (scaleUp || NSHeight(sourceRect) >newSize.height || NSWidth(sourceRect)>newSize.width ? sizeRectInRect(sourceRect, rectFromSize(newSize), expand) : NSMakeRect(0, 0, NSWidth(sourceRect), NSHeight(sourceRect)));
+    NSImage *tempImage = [[NSImage alloc] initWithSize:NSMakeSize(NSWidth(drawRect), NSHeight(drawRect) )];
+    [tempImage lockFocus];
+    {
+        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+        [self drawInRect:drawRect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1];
+    }
+    [tempImage unlockFocus];
+    [tempImage autorelease];
+  return [[[NSImage alloc] initWithData:[tempImage TIFFRepresentation]]autorelease];
+    //*** UGH! why do I have to do this to commit the changes?;
 }
 @end
 

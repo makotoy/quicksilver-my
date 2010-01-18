@@ -5,6 +5,8 @@
  *  Created by Etienne on 09/01/08.
  *  Copyright 2008 __MyCompanyName__. All rights reserved.
  *
+ *  Derived from Blacktree, Inc. codebase
+ *  2010-01-16 Makoto Yamashita
  */
 
 #import "QSExternals.h"
@@ -47,7 +49,6 @@
 #import "NSWorkspace_BLTRExtensions.h"
 
 #import "NSException_TraceExtensions.h"
-#import "NSColor+QSCGColorRef.h"
 #import "NSColor_QSModifications.h"
 #import "NSCursor_InformExtensions.h"
 #import "NSIndexSet+Extensions.h"

@@ -4,7 +4,7 @@
 //
 //  Created by Nicholas Jitkoff on 7/2/05.
 
-//
+//  2010-01-16 Makoto Yamashita
 
 #import "QSTextViewer.h"
 
@@ -49,8 +49,6 @@ QSTextViewer * QSShowTextViewerWithFile(NSString *path)
 	
 	NSScrollView *scrollview = [[NSScrollView alloc]
             initWithFrame:[[theWindow contentView] frame]];
-	
-	
 	NSSize contentSize = [scrollview contentSize];
 	[scrollview setBorderType:NSNoBorder];
 	[scrollview setHasVerticalScroller:YES];
@@ -70,19 +68,15 @@ QSTextViewer * QSShowTextViewerWithFile(NSString *path)
 	[[theTextView textContainer] setWidthTracksTextView:YES];
 	
 	[scrollview setDocumentView:theTextView];
-	[theWindow setContentView:scrollview];
+	[theWindow setContentView:[scrollview autorelease]];
 	[theWindow makeKeyAndOrderFront:nil];
-	[theWindow makeFirstResponder:theTextView];
-	
-
+	[theWindow makeFirstResponder:[theTextView autorelease]];
 	
 	[[theTextView enclosingScrollView] setHasHorizontalScroller:YES];
 	[theTextView setHorizontallyResizable:YES];
 	[theTextView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[[theTextView textContainer] setContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
 	[[theTextView textContainer] setWidthTracksTextView:YES];
-	
-	//QSLog(@"loaded %@",window);
 	
 	self = [super initWithWindow:window];
 	

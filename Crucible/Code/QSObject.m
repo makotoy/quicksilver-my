@@ -219,10 +219,9 @@ NSSize QSMaxIconSize;
 		[self release];
 		return [dup retain];
 	}
-    
-	if ([self identifier])
+    if ([self identifier]) {
 		[QSObject registerObject:self withIdentifier:[self identifier]];
-    
+    }
 	return nil;
 }
 

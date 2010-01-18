@@ -3,7 +3,7 @@
  * 2010-01-09 Makoto Yamashita
  */
 
-NSString * stringForModifiers( unsigned int aModifierFlags );
+// NSString * stringForModifiers( unsigned int aModifierFlags );
 
 #import "QSHotKeyEditor.h"
 
@@ -33,7 +33,7 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 - (void)validateEditing{ QSLog(@"validate"); }
 
 @end
-
+/*
 @implementation QSHotKeyControl
 + (Class)cellClass{	return [QSHotKeyCell class]; }
 
@@ -53,7 +53,7 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 	[super setStringValue:string];
 }
 @end
-
+*/
 @implementation QSHotKeyFieldEditor
 + (id)sharedInstance
 {
@@ -152,7 +152,7 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 - (void)cancel
 {
 	if ([[self window]firstResponder]==self) {
-		if(VERBOSE)QSLog(@"Cancel");
+		if(VERBOSE) QSLog(@"Cancel");
 		[[self window] makeFirstResponder:[self delegate]];   
 	}
 }
@@ -224,7 +224,8 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 
 
 @implementation QSHotKeyField
-+ (void)initialize{
++ (void)initialize
+{
 	[self exposeBinding:@"hotKey"];	
 	//[self exposeBinding:@"value"];	
 	//[self setKeys:[NSArray arrayWithObject:@"hotKey"] triggerChangeNotificationsForDependentKey:@"value"];
@@ -253,23 +254,15 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 	return self;
 }
 
-- (void)awakeFromNib{
-	
+- (void)awakeFromNib
+{
 	// Remap value binding to hotKey dictionary
-	NSDictionary *binding=[self infoForBinding:@"value"];
+	NSDictionary *binding = [self infoForBinding:@"value"];
 	[self unbind:@"value"];
-	[self bind:@"hotKey" toObject:[binding objectForKey:NSObservedObjectKey]
+	[self bind:@"hotKey"
+      toObject:[binding objectForKey:NSObservedObjectKey]
    withKeyPath:[binding objectForKey:NSObservedKeyPathKey]
 	   options:[binding objectForKey:NSOptionsKey]];
-
-		//QSLog(@"binding %@ %@",[self infoForBinding:@"hotKey"],[[NSUserDefaultsController sharedUserDefaultsController]infoForBinding:@"values.QSActivationHotKey"]);
-	
-		
-//	[[[NSUserDefaultsController sharedUserDefaultsController]values]
-//bind:@"QSActivationHotKey"
-//		toObject:self
-//		withKeyPath:@"hotKey"
-//		options:nil];
 }
 
 - (NSDictionary *)hotKeyDictForEvent:(NSEvent *)event{
@@ -286,12 +279,9 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 - (NSDictionary *)hotKey { return [[hotKey retain] autorelease]; }
 - (void)setHotKey:(NSDictionary *)newHotKey
 {
-	//QSLog(@"setHotKey: %@",newHotKey);
     if (hotKey != newHotKey) {
-		//[self willChangeValueForKey:@"value"];
         [hotKey release];
         hotKey = [newHotKey retain];
-		//[self didChangeValueForKey:@"value"];
 		NSDictionary *binding=[self infoForBinding:@"hotKey"];
 		if (binding)
 			[[binding objectForKey:NSObservedObjectKey] setValue:hotKey forKeyPath:[binding objectForKey:NSObservedKeyPathKey]];
@@ -300,7 +290,8 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
     }
 }
 
-- (void)updateStringForHotKey{
+- (void)updateStringForHotKey
+{
 	if ([hotKey isKindOfClass:[NSDictionary class]]){
 		NSString *descrip=[[QSHotKeyEvent hotKeyWithDictionary:hotKey] stringValue];
 		[self setStringValue:descrip?descrip:@""];
@@ -310,18 +301,13 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 		[self setStringValue:@""];
 	}
 }
-- (IBAction)set:(id)sender{
-	[self absorbEvents];
-}
 
-- (void)mouseDown:(NSEvent *)event{
-	
-	[self absorbEvents];
-}
+- (IBAction)set:(id)sender { [self absorbEvents]; }
 
+- (void)mouseDown:(NSEvent *)event { [self absorbEvents]; }
 
-- (void)timerFire:(NSTimer *)timer{
-//	QSLog(@"fire");	
+- (void)timerFire:(NSTimer *)timer
+{
 	NSTimeInterval t=[[NSDate date]timeIntervalSinceReferenceDate];
 	t=fmod(t,1.0);
 	t=(sin(t*M_PI*2)+1)/2;
@@ -329,16 +315,15 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 	NSColor *newColor=[[NSColor textBackgroundColor] blendedColorWithFraction:t
 																	  ofColor:[NSColor selectedTextBackgroundColor]];
 	
-		[self setBackgroundColor:newColor];
-	//	[self setNeedsDisplay:YES];
+    [self setBackgroundColor:newColor];
 }
-- (void)absorbEvents{
+
+- (void)absorbEvents
+{
 	[[self window]makeFirstResponder:self];
 	NSTimer *timer=[[NSTimer alloc]initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0.1] interval:0.1 target:self selector:@selector(timerFire:) userInfo:nil repeats:YES];
 	[[NSRunLoop currentRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
-	//	[timer fire]; 
-	
-//	NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
 	[self setBackgroundColor:[NSColor selectedTextBackgroundColor]];
 	[setButton setState:NSOnState];
 	[[self cell]setPlaceholderString:[self stringValue]];
@@ -353,45 +338,38 @@ NSString * stringForModifiers( unsigned int aModifierFlags );
 		theEvent=[NSApp nextEventMatchingMask:NSKeyDownMask|NSFlagsChangedMask|NSLeftMouseDownMask|NSAppKitDefinedMask|NSSystemDefinedMask untilDate:[NSDate dateWithTimeIntervalSinceNow:10.0] inMode:NSDefaultRunLoopMode dequeue:YES];
 		switch ([theEvent type]){
 			case NSKeyDown:
-				{
-					unsigned short keyCode=[theEvent keyCode];
-					
-					if ([theEvent modifierFlags] & (NSCommandKeyMask|NSFunctionKeyMask|NSControlKeyMask|NSAlternateKeyMask)){
-						[self setHotKey:[self hotKeyDictForEvent:theEvent]];
-						collectEvents=NO; 
-					}else  if ([theEvent keyCode] == 53){ //Escape
-						collectEvents=NO; 
-					}else  if ([theEvent keyCode] == 48){ //Tab
-						[[self window]makeFirstResponder:[self nextKeyView]];
-						collectEvents=NO;
-					}else  if ([theEvent keyCode] == 51){ //Delete
-						[self setHotKey:nil];
-						collectEvents=NO; 
-					}else{
-						NSBeep();
-					}
-				}					
-					break;
+                if ([theEvent modifierFlags] & (NSCommandKeyMask|NSFunctionKeyMask|NSControlKeyMask|NSAlternateKeyMask)) {
+                    [self setHotKey:[self hotKeyDictForEvent:theEvent]];
+                    collectEvents=NO; 
+                } else  if ([theEvent keyCode] == 53) { //Escape
+                    collectEvents=NO; 
+                } else  if ([theEvent keyCode] == 48) { //Tab
+                    [[self window]makeFirstResponder:[self nextKeyView]];
+                    collectEvents=NO;
+                } else  if ([theEvent keyCode] == 51) { //Delete
+                    [self setHotKey:nil];
+                    collectEvents=NO; 
+                } else {
+                    NSBeep();
+                }
+                break;
 			case NSFlagsChanged:
-			{
+            {
 				NSString *newString=stringForModifiers([theEvent modifierFlags]);
 				QSLog(newString);
 				[self setStringValue:[newString length]?newString:@""];	
 				[self display];
 				[setButton display];
+            }
 				break;
-			}
 			case NSSystemDefinedMask:
 			case NSAppKitDefinedMask:
 			case NSLeftMouseDown:
 				if (![self containsEvent:theEvent] && ![setButton containsEvent:theEvent]){
 					//Absorb events on self or setButton
 					[NSApp postEvent:theEvent atStart:YES];
-				}
-					
-					
-			
-				collectEvents=NO;
+				}			
+				collectEvents = NO;
 			default:
 				break;
 		}
