@@ -14,4 +14,7 @@
 	//NSColor *color;
 }
 + (QSCountBadgeImage *)badgeForCount:(int)count;
+
+- (void)drawBadgeForIconRect:(NSRect)rect;
+
 @end

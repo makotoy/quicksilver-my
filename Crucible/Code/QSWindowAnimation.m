@@ -142,7 +142,7 @@
 		QSExtraExtraEffect,transformFt];
 }
 
-@synthesize window;
+@synthesize window = _window;
 - (void)setWindow:(NSWindow *)aWindow{
     [_window autorelease];
     _window = [aWindow retain];

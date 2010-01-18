@@ -76,25 +76,23 @@
         NSRunAlertPanel(@"An error occured while sending mail", [errorDict objectForKey:@"NSAppleScriptErrorMessage"], nil,nil,nil);
 }
 
-
-
-- (NSAppleScript *)mailScript {
-    if (!mailScript){
+- (NSAppleScript *)mailScript
+{
+    if (!mailScript) {
         NSString *path=[self scriptPath];
         if (path) mailScript=[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
     }
     return mailScript;
 }
 
-- (void)setMailScript:(NSAppleScript *)newMailScript {
+- (void)setMailScript:(NSAppleScript *)newMailScript
+{
     [mailScript release];
     mailScript = [newMailScript retain];
 }
 
-
-//--------------------
-
-- (BOOL)drawIconForObject:(QSObject *)object inRect:(NSRect)rect flipped:(BOOL)flipped{
+- (BOOL)drawIconForObject:(QSObject *)object inRect:(NSRect)rect flipped:(BOOL)flipped
+{
 	if (![object objectForType:QSProcessType]) return NO;
 	
 	int count=[[[self mailScript] executeSubroutine:@"unread_count"

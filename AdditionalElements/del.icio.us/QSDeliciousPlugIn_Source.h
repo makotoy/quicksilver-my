@@ -9,7 +9,7 @@
 //  Makoto Yamashita 2009-11-30
 
 
-@interface QSDeliciousPlugIn_Source : QSObjectSource{
+@interface QSDeliciousPlugIn_Source : QSObjectSource <NSXMLParserDelegate> {
 	NSMutableArray *posts;
 	NSMutableArray *tags;
 	NSMutableArray *dates;
