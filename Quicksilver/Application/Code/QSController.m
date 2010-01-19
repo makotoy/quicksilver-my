@@ -228,7 +228,7 @@ static id _sharedInstance;
 	}
 	uiColor = [uiColor colorUsingColorSpaceName:NSDeviceRGBColorSpace];
 	CGFloat hue = [uiColor hueComponent];
-	CGFloat saturation = [uiColor saturationComponent];
+	CGFloat saturation = 1.0; // [uiColor saturationComponent];
 	
 	if (fSPECIAL) {		
 		hue = (CGFloat) (([[NSCalendarDate calendarDate] secondOfMinute] / 30.0) - 1.0) * 3.14;
