@@ -25,6 +25,7 @@
 				084BB0A010E9A842003D2539 /* PBXTargetDependency */,
 				084BB0A210E9A842003D2539 /* PBXTargetDependency */,
 				084BB0A410E9A842003D2539 /* PBXTargetDependency */,
+				08E362C4110B31A9008F2E6A /* PBXTargetDependency */,
 			);
 			name = "Build All Plugins";
 			productName = "Build All Plugins";
@@ -200,6 +201,20 @@
 			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
 			remoteInfo = "Apple Mail";
 		};
+		08E362B0110B3168008F2E6A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Safari.element */;
+			remoteInfo = Safari;
+		};
+		08E362C3110B31A9008F2E6A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* Safari */;
+			remoteInfo = Safari;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -245,6 +260,7 @@
 		084BB0AB10E9A88B003D2539 /* QSPlugIn.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = QSPlugIn.xcconfig; path = Configuration/QSPlugIn.xcconfig; sourceTree = QS_SOURCE_ROOT; };
 		084BB0AC10E9A88B003D2539 /* QSPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSPlugIn_Prefix.pch; path = Configuration/QSPlugIn_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
 		084BB0AD10E9A88B003D2539 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Configuration/Release.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariElement.xcodeproj; path = com.apple.Safari/SafariElement.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -263,6 +279,7 @@
 				084BB04010E9A7E1003D2539 /* iTunesElement.xcodeproj */,
 				084BB03710E9A7D3003D2539 /* QSAddressBookElement.xcodeproj */,
 				084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */,
+				08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -369,6 +386,14 @@
 			path = Configuration;
 			sourceTree = QS_SOURCE_ROOT;
 		};
+		08E362AA110B3167008F2E6A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08E362B1110B3168008F2E6A /* Safari.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXProject section */
@@ -419,6 +444,10 @@
 				{
 					ProductGroup = 084BB08910E9A82E003D2539 /* Products */;
 					ProjectRef = 084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */;
+				},
+				{
+					ProductGroup = 08E362AA110B3167008F2E6A /* Products */;
+					ProjectRef = 08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */;
 				},
 				{
 					ProductGroup = 084BB06E10E9A817003D2539 /* Products */;
@@ -510,6 +539,13 @@
 			remoteRef = 084BB08F10E9A82E003D2539 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		08E362B1110B3168008F2E6A /* Safari.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Safari.element;
+			remoteRef = 08E362B0110B3168008F2E6A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXTargetDependency section */
@@ -567,6 +603,11 @@
 			isa = PBXTargetDependency;
 			name = "Apple Mail";
 			targetProxy = 084BB0A310E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		08E362C4110B31A9008F2E6A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Safari;
+			targetProxy = 08E362C3110B31A9008F2E6A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

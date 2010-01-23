@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7FFDC5290D0EE6C400758682 /* QSSafariFaviconSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFDC5250D0EE6C400758682 /* QSSafariFaviconSource.m */; };
 		7FFDC52A0D0EE6C400758682 /* QSSafariPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FFDC5270D0EE6C400758682 /* QSSafariPlugin.m */; };
 		7FFDC5E40D0EE72D00758682 /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7FFDC5E30D0EE72D00758682 /* element.xml */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -210,7 +209,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FFDC5290D0EE6C400758682 /* QSSafariFaviconSource.m in Sources */,
 				7FFDC52A0D0EE6C400758682 /* QSSafariPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

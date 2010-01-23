@@ -123,9 +123,9 @@
             <file-parser id="QSSafariHistoryParser" class="QSSafariHistoryParser"></file-parser>
             <file-parser id="QSSafariBookmarksParser" class="QSSafariBookmarksParser"></file-parser>
         </extension>
-        <extension point="QSFaviconSources">
+        <!-- extension point="QSFaviconSources">
             <favicon-source id="QSSafariFaviconSource" class="QSSafariFaviconSource"></favicon-source>
-        </extension>
+        </extension -->
         <extension point="QSObjectHandlers">
             <object-handler id="qs.safari.bookmarkGroup" class="QSSafariObjectHandler"></object-handler>
         </extension>
