@@ -43,7 +43,7 @@ static OSStatus	switchHotKey( NDHotKeyEvent * self, BOOL aFlag );
 	#define	NDHotKeyEventUnlock // unlock
 #endif
 
-static NSMutableDictionary* hotKeyIDDict = nil;
+static NSMutableArray* hotKeyIDArray = nil;
 static NSHashTable		* allHotKeyEvents = NULL;
 static BOOL					isInstalled = NO;
 static OSType				signature = 0;
@@ -100,7 +100,7 @@ struct HotKeyMappingEntry
  */
 + (void)initialize
 {
-	hotKeyIDDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+    hotKeyIDArray = [[NSMutableArray alloc] initWithCapacity:0];
 }
 
 /*
@@ -653,15 +653,13 @@ pascal OSErr eventHandlerCallback( EventHandlerCallRef anInHandlerCallRef, Event
 
 	theError = GetEventParameter( anInEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(EventHotKeyID), NULL, &theHotKeyID );
 
-	if( theError == noErr )
-	{
+	if (theError == noErr) {
 		NDHotKeyEvent		* theHotKeyEvent;
 		UInt32				theEventKind;
 		
 		NSCAssert( [NDHotKeyEvent signature] == theHotKeyID.signature, @"Got hot key event with wrong signature" );
 
-		NSNumber* keyID = [NSNumber numberWithInt:theHotKeyID.id];
- 		theHotKeyEvent = (NDHotKeyEvent*)[hotKeyIDDict objectForKey:keyID];;
+ 		theHotKeyEvent = (NDHotKeyEvent*)[hotKeyIDArray objectAtIndex:theHotKeyID.id];
 
 		theEventKind = GetEventKind( anInEvent );
 		if( kEventHotKeyPressed == theEventKind )
@@ -841,27 +839,30 @@ NSString * describeHashFunction( NSHashTable * aTable, const void * aHotKeyEntry
  */
 static OSStatus switchHotKey( NDHotKeyEvent * self, BOOL aFlag )
 {
-	OSStatus				theError;
-	if( aFlag )
-	{
-		EventHotKeyID 		theHotKeyID;
+	OSStatus theError;
+	if (aFlag) {
+		EventHotKeyID theHotKeyID;
 
 		theHotKeyID.signature = [NDHotKeyEvent signature];
- 		theHotKeyID.id = (UInt32)self;
-		NSNumber* idKey = [NSNumber numberWithInt:theHotKeyID.id];
-		if (![hotKeyIDDict objectForKey:idKey]) {
-			[hotKeyIDDict setObject:self forKey:idKey];
-		}
-
+        
+        NSUInteger hotKeyIDOrder = [hotKeyIDArray indexOfObject:self];
+        if (hotKeyIDOrder != NSNotFound) {
+            theHotKeyID.id = hotKeyIDOrder;
+        } else {
+            [hotKeyIDArray addObject:self];
+            theHotKeyID.id = [hotKeyIDArray count];
+        }
 		NSCAssert( theHotKeyID.signature, @"HotKeyEvent signature has not been set yet" );
 
-		theError = RegisterEventHotKey( self->keyCode, cocoaModifierFlagsToCarbonModifierFlags(self->modifierFlags), theHotKeyID, GetEventDispatcherTarget(), 0, &self->reference );
-	}
-	else
-	{
+		theError = RegisterEventHotKey(self->keyCode,
+                                       cocoaModifierFlagsToCarbonModifierFlags(self->modifierFlags),
+                                       theHotKeyID,
+                                       GetEventDispatcherTarget(),
+                                       0,
+                                       &self->reference );
+	} else {
 		theError = UnregisterEventHotKey( self->reference );
 	}
-
 	return theError;
 }
 
