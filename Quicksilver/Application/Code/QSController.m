@@ -489,11 +489,11 @@ static id _sharedInstance;
 
 - (void)showSplash:(id)sender
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	NSImage *splashImage = [NSImage imageNamed:@"QSLigature"];
 	if ((fALPHA && OneIn(1000)) || ((fDEV && OneIn(20) ))) splashImage = [self daedalusImage];
 	
-    splashWindow = [NSWindow windowWithImage:splashImage];
+    splashWindow = [[NSWindow windowWithImage:splashImage] retain];
     
     if ([NSApp isPrerelease]) {
         NSRect rect = NSMakeRect(28, 108, 88, 24);
@@ -503,8 +503,11 @@ static id _sharedInstance;
         [[NSColor colorWithCalibratedRed:0.0 green:0.33 blue:0.0 alpha:0.8] set];
         [path fill]; 			
         [[splashWindow contentView] lockFocus];
+        NSDictionary* attrDesc = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [NSFont boldSystemFontOfSize:12] , NSFontAttributeName,
+                                  [NSColor whiteColor] , NSForegroundColorAttributeName, nil];
         NSAttributedString *string = [[[NSAttributedString alloc] initWithString:@"prerelease" 
-                                                                   attributes:[NSDictionary dictionaryWithObjectsAndKeys:[NSFont boldSystemFontOfSize:12] , NSFontAttributeName, [NSColor whiteColor] , NSForegroundColorAttributeName, nil]]autorelease];
+                                                                   attributes:attrDesc] autorelease];
         [string drawWithRect:NSOffsetRect(centerRectInRect(rectFromSize([string size]), rect), 0, 4) options:NSStringDrawingOneShot];
         [path addClip];
         [QSGlossClipPathForRectAndStyle(rect, 4) addClip];
@@ -529,19 +532,17 @@ static id _sharedInstance;
 		[animation setAnimationBlockingMode:NSAnimationBlocking];
 		[animation startAnimation];
 	}
-	[pool release];
+    [pool release], pool = nil;
 }
 
-- (void)hideSplash:sender
+- (void)hideSplash:(id)sender
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	if (0&&splashWindow) {
+	if (splashWindow) {
 		[splashWindow setLevel:NSFloatingWindowLevel];
 		[splashWindow flare:self];
 		[splashWindow close];
 		splashWindow = nil;
 	}
-	[pool release];
 }
 
 - (void)startDropletConnection
@@ -1086,77 +1087,38 @@ static id _sharedInstance;
 	}
 }
 
-- (void)setupSplash {
+- (void)setupSplash
+{
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kUseEffects]) {
-		[self showSplash:nil];
-		//[NSThread detachNewThreadSelector:@selector(showSplash:) toTarget:self withObject:nil];
+		[NSThread detachNewThreadSelector:@selector(showSplash:) toTarget:self withObject:nil];
 		[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(threadedHideSplash) userInfo:nil repeats:NO];
-		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(threadedHideSplash) name:@"QSApplicationReallyDidFinishLaunching" object:NSApp]; 	
 	}
-	
 }
-- (void)startQuicksilver:(id)sender {
-	//	QSLog(@"%@", [[NSProcessInfo processInfo] processName]);
-	//
-	//			id object = [[NSObject alloc] init];
-	//			QSLog(@"Object %@", object);
-	//			[object release];
-	//			QSLog(@"Object %@", object);
-	//		
-	
-	
-	
+
+- (void)startQuicksilver:(id)sender
+{
 	[self checkForFirstRun];
 	
-	NSString *equiv = [[NSUserDefaults standardUserDefaults] objectForKey:@"QSServiceMenuKeyEquivalent"];
-	//QSLog(@"Setting service %@", equiv);
-	if (equiv && ![equiv isEqualToString:[NSApp keyEquivalentForService:@"Quicksilver/Send to Quicksilver"]]) {
-		QSLog(@"Setting Service Key Equivalent to %@", equiv);
-		[NSApp setKeyEquivalent:equiv forService:@"Quicksilver/Send to Quicksilver"];
-	}
-	
-	//[self daedalusImage];
 	// Show Splash Screen
 	BOOL atLogin = [NSApp wasLaunchedAtLogin];
-	if (!atLogin)
-		[self setupSplash];
-	
+
+	if (!atLogin) [self setupSplash];
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (DEBUG_STARTUP) 
-		QSLog(@"Instantiate Classes");
+	if (DEBUG_STARTUP)  QSLog(@"Instantiate Classes");
 	
 	[QSMnemonics sharedInstance];
 	[QSLibrarian sharedInstance];
 	[QSExecutor sharedInstance];
-	[QSTaskController sharedInstance];
-	//[QSTaskViewer sharedInstance];
-	
-	if (DEBUG_STARTUP)
-		QSLog(@"Library loaded");
-	
-	// [[QSPlugInManager sharedInstance] loadPlugInsAtLaunch];
-	if (DEBUG_STARTUP) 
-		QSLog(@"PlugIns loaded");
-	
+	[QSTaskController sharedInstance];	
 	[QSLib initCatalog];
-	
-	
-	
-	
 	[QSLib pruneInvalidChildren:nil];
-	[QSLib loadCatalogInfo];
-	//	[QSReg instantiatePlugIns];
-	
-	//	[QSReg suggestOldPlugInRemoval];
-	
+	[QSLib loadCatalogInfo];	
 	[QSExec loadFileActions];
-	
 	[QSLib reloadIDDictionary:nil];
 	[QSLib enableEntries];
 	
-	if (DEBUG_STARTUP)
-		QSLog(@"Catalog loaded");
+	if (DEBUG_STARTUP) QSLog(@"Catalog loaded");
 	
 	[QSObject purgeIdentifiers];
 	
@@ -1173,10 +1135,8 @@ static id _sharedInstance;
 	} else {
 		[QSLib loadCatalogArrays];
 	}
-	
 	[QSLib reloadEntrySources:nil];
-	if (atLogin)
-		[self setupSplash];
+	if (atLogin) [self setupSplash];
 	
 	// Instantiate some Classes
 	
@@ -1184,8 +1144,6 @@ static id _sharedInstance;
 	//		if ([defaults boolForKey:kCapturePasteboardHistory]) /
 	//			[QSPasteboardController sharedInstance];
 	QSSandBoxMain();
-	
-	
 	
 	[NSApp setServicesProvider:self];
 	
@@ -1212,23 +1170,17 @@ static id _sharedInstance;
 		[modActivation setAction:@selector(activateInterface:)];
 		[modActivation enable];
 	}
-	
-	//if (newVersion) {
 	id oldModifiers = [defaults objectForKey:kHotKeyModifiers];
 	id oldKeyCode = [defaults objectForKey:kHotKeyCode];
 	
-	
 	//Update hotkey prefs
-	
 	if (oldModifiers && oldKeyCode) {
 		int modifiers = [oldModifiers unsignedIntValue];
 		if (modifiers < (1 << (rightControlKeyBit+1) )) {
 			QSLog(@"updating hotkey %d", modifiers);
 			[defaults setValue:[NSNumber numberWithInt:carbonModifierFlagsToCocoaModifierFlags(modifiers)] forKey:kHotKeyModifiers];
 			[defaults synchronize];
-		}
-		
-		
+		}		
 		QSLog(@"Updating Activation Key");
 		[defaults removeObjectForKey:kHotKeyModifiers];
 		[defaults removeObjectForKey:kHotKeyCode];
@@ -1236,38 +1188,50 @@ static id _sharedInstance;
 		[defaults setObject:dict forKey:@"QSActivationHotKey"];
 		[defaults synchronize];
 	}
-	
-	//}
 	[self bind:@"activationHotKey"
 	  toObject:[NSUserDefaultsController sharedUserDefaultsController]
-   withKeyPath:@"values.QSActivationHotKey"
-	   options:nil];
-
+      withKeyPath:@"values.QSActivationHotKey"
+      options:nil];
 
 	quitWindowController = nil;
 	aboutWindowController = nil;
-
-	//   [self setUpdateTimer];
 
 	int rescanInterval = [defaults integerForKey:@"QSCatalogRescanFrequency"];
 	if (rescanInterval > 0) {
 		
 		if (DEBUG_STARTUP) QSLog(@"Rescanning every %d minutes", rescanInterval);
 		
-		[[NSTimer scheduledTimerWithTimeInterval:rescanInterval*60 target:self selector:@selector(rescanItems:) userInfo:nil repeats:YES] retain];
+		[[NSTimer scheduledTimerWithTimeInterval:rescanInterval*60
+                                          target:self
+                                        selector:@selector(rescanItems:)
+                                        userInfo:nil
+                                         repeats:YES] retain];
 	}
-
-
 	if (DEBUG_STARTUP) QSLog(@"Register for Notifications");
-	[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(appLaunched:) name:NSWorkspaceDidLaunchApplicationNotification object:nil];
+    
+	[[[NSWorkspace sharedWorkspace] notificationCenter]
+       addObserver:self
+       selector:@selector(appLaunched:)
+       name:NSWorkspaceDidLaunchApplicationNotification
+       object:nil];
 
-	if (fSPECIAL)
-	[[NSTimer scheduledTimerWithTimeInterval:60*10 target:self selector:@selector(recompositeIconImages) userInfo:nil repeats:YES] retain];
-	else if (fBETA)
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recompositeIconImages) name:NSSystemColorsDidChangeNotification object:nil];
-	else
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recompositeIconImages) name:NSControlTintDidChangeNotification object:NSApp];
-
+	if (fSPECIAL) {
+        [[NSTimer scheduledTimerWithTimeInterval:60*10
+                                          target:self
+                                        selector:@selector(recompositeIconImages)
+                                        userInfo:nil
+                                         repeats:YES] retain];
+    } else if (fBETA) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(recompositeIconImages)
+                                                     name:NSSystemColorsDidChangeNotification
+                                                   object:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(recompositeIconImages)
+                                                     name:NSControlTintDidChangeNotification
+                                                   object:NSApp];
+    }
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionDidInitialize:) name:NSConnectionDidInitializeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionDidDie:) name:NSConnectionDidDieNotification object:nil];
 
@@ -1406,8 +1370,11 @@ static id _sharedInstance;
 	[activationKey setEnabled:YES];
 	
 }
-- (void)threadedHideSplash {
+
+- (void)threadedHideSplash
+{
 	[NSThread detachNewThreadSelector:@selector(hideSplash:) toTarget:self withObject:nil];
+//    [self hideSplash:self];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {

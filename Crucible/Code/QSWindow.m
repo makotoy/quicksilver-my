@@ -318,15 +318,18 @@
 	[self retain];
 	if ([self drawers]) [self performSelector:@selector(_hideAllDrawers)];
 	
-    trueRect=[self frame];
-	hadShadow=[self hasShadow];
+    trueRect = [self frame];
+	hadShadow = [self hasShadow];
 	
     [self setHasShadow:NO];
 	if (!hideEffect) {
-		hideEffect=[NSDictionary dictionaryWithObjectsAndKeys:@"QSDefaultShrinkEffect",@"transformFn",@"hide",@"type",[NSNumber numberWithFloat:0.2],@"duration",nil];
+		hideEffect = [NSDictionary dictionaryWithObjectsAndKeys:
+                      @"QSDefaultShrinkEffect", kQSGSTransformF,
+                      @"hide", kQSGSType,
+                      [NSNumber numberWithFloat:0.2], kQSGSDuration, nil];
 	}
 	if (hideEffect) {
-		id hl=[QSWindowAnimation effectWithWindow:self attributes:hideEffect];
+		id hl = [QSWindowAnimation effectWithWindow:self attributes:hideEffect];
 		[hl setDelegate:self];
 		[hl startAnimation];
 	} else {
@@ -515,8 +518,6 @@
 	[self display];
 	CGSInvokeTransition(cgs, handle, duration);
 	usleep((useconds_t)(duration * 1000000));
-	//[NSTimer scheduledTimerWithTimeInterval:duration target:<#(id)aTarget#> selector:<#(SEL)aSelector#> userInfo:<#(id)userInfo#> repeats:<#(BOOL)yesOrNo#>
-	QSLog(@"end"); 
 	CGSReleaseTransition(cgs, handle);
 }
 @end

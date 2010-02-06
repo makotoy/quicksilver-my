@@ -119,16 +119,6 @@
         }     
     }
 }     
-
-- (NSString *)serviceMenuKeyEquivalent{
-	return [NSApp keyEquivalentForService:@"Quicksilver/Send to Quicksilver"];
-}
-
-- (void)setServiceMenuKeyEquivalent:(NSString *)string{
-	[[NSUserDefaults standardUserDefaults]setObject:string forKey:@"QSServiceMenuKeyEquivalent"];
-	[NSApp setKeyEquivalent:string forService:@"Quicksilver/Send to Quicksilver"];
-}
-
 @end
 
 

@@ -47,9 +47,12 @@
 	NSRect centeredRect=NSOffsetRect(windowRect,NSMidX(screenRect)-NSMidX(windowRect),NSMidY(screenRect)-NSMidY(windowRect));
 	[self setFrame:centeredRect display:NO];	
 }
-- (void)setFrame:(NSRect)frameRect alphaValue:(float)alpha display:(BOOL)displayFlag animate:(BOOL)animationFlag{
-    if (alpha==[self alphaValue]) [self setFrame:frameRect display:displayFlag animate:animationFlag];
 
+- (void)setFrame:(NSRect)frameRect alphaValue:(float)alpha display:(BOOL)displayFlag animate:(BOOL)animationFlag
+{
+    if (alpha==[self alphaValue]) {
+        [self setFrame:frameRect display:displayFlag animate:animationFlag];
+    }
     float elapsed;
     float seconds=(float)[self animationResizeTime:frameRect];
     NSTimeInterval fadeStart = [NSDate timeIntervalSinceReferenceDate];
@@ -65,10 +68,10 @@
     }
     [self setAlphaValue:alpha];
     [self setFrame:frameRect display:displayFlag];
- }
+}
 
-
-+(NSWindow *)windowWithImage:(NSImage *)image{
++(NSWindow *)windowWithImage:(NSImage *)image
+{
 	NSRect windowRect=NSMakeRect(0,0,[image size].width,[image size].height);
 	NSWindow *window = [[[self class] alloc] initWithContentRect:windowRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 	[window setIgnoresMouseEvents:YES];
