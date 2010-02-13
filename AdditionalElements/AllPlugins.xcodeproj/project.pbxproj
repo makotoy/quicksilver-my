@@ -26,6 +26,7 @@
 				084BB0A210E9A842003D2539 /* PBXTargetDependency */,
 				084BB0A410E9A842003D2539 /* PBXTargetDependency */,
 				08E362C4110B31A9008F2E6A /* PBXTargetDependency */,
+				0847167A112598B600BA7FC5 /* PBXTargetDependency */,
 			);
 			name = "Build All Plugins";
 			productName = "Build All Plugins";
@@ -33,6 +34,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0847167D112598D900BA7FC5 /* Camino Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08471678112598A400BA7FC5 /* Camino Module.element */; };
+		0847167E112598F100BA7FC5 /* Safari.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08E362B1110B3168008F2E6A /* Safari.element */; };
 		08B2FF5A10F017C700C3175C /* Terminal Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB09010E9A82E003D2539 /* Terminal Module.element */; };
 		08B2FF5B10F017DC00C3175C /* Primer Interface.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB08710E9A827003D2539 /* Primer Interface.element */; };
 		08B2FF5C10F017DC00C3175C /* Firefox Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB07E10E9A820003D2539 /* Firefox Module.element */; };
@@ -47,6 +50,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		08471677112598A400BA7FC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08471673112598A400BA7FC5 /* QSCaminoPlugIn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9;
+			remoteInfo = "Camino Module";
+		};
+		08471679112598B600BA7FC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08471673112598A400BA7FC5 /* QSCaminoPlugIn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
+			remoteInfo = "Camino Module";
+		};
 		084BB02D10E9A753003D2539 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */;
@@ -205,14 +222,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Safari.element */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = Safari;
 		};
 		08E362C3110B31A9008F2E6A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* Safari */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = Safari;
 		};
 /* End PBXContainerItemProxy section */
@@ -224,6 +241,8 @@
 			dstPath = Quicksilver.app/Contents/PlugIns;
 			dstSubfolderSpec = 16;
 			files = (
+				0847167E112598F100BA7FC5 /* Safari.element in CopyFiles */,
+				0847167D112598D900BA7FC5 /* Camino Module.element in CopyFiles */,
 				08B2FF6210F017FB00C3175C /* iTunes Module.element in CopyFiles */,
 				08B2FF6310F017FB00C3175C /* Apple Address Book.element in CopyFiles */,
 				08B2FF6410F017FB00C3175C /* Bezel Interface.element in CopyFiles */,
@@ -241,6 +260,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		08471673112598A400BA7FC5 /* QSCaminoPlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSCaminoPlugIn.xcodeproj; path = Camino/QSCaminoPlugIn.xcodeproj; sourceTree = "<group>"; };
 		084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSBezelInterfacePlugIn.xcodeproj; path = Bezel/QSBezelInterfacePlugIn.xcodeproj; sourceTree = "<group>"; };
 		084BB03710E9A7D3003D2539 /* QSAddressBookElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSAddressBookElement.xcodeproj; path = com.apple.AddressBook/QSAddressBookElement.xcodeproj; sourceTree = "<group>"; };
 		084BB04010E9A7E1003D2539 /* iTunesElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iTunesElement.xcodeproj; path = com.apple.iTunes/iTunesElement.xcodeproj; sourceTree = "<group>"; };
@@ -264,10 +284,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		08471674112598A400BA7FC5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08471678112598A400BA7FC5 /* Camino Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		084BB01310E9A722003D2539 = {
 			isa = PBXGroup;
 			children = (
 				084BB0A510E9A88B003D2539 /* Configuration */,
+				08471673112598A400BA7FC5 /* QSCaminoPlugIn.xcodeproj */,
 				084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */,
 				084BB07F10E9A827003D2539 /* QSPrimerInterfacePlugIn.xcodeproj */,
 				084BB07610E9A820003D2539 /* QSFirefoxPlugIn.xcodeproj */,
@@ -430,6 +459,10 @@
 					ProjectRef = 084BB02610E9A753003D2539 /* QSBezelInterfacePlugIn.xcodeproj */;
 				},
 				{
+					ProductGroup = 08471674112598A400BA7FC5 /* Products */;
+					ProjectRef = 08471673112598A400BA7FC5 /* QSCaminoPlugIn.xcodeproj */;
+				},
+				{
 					ProductGroup = 084BB05310E9A7F6003D2539 /* Products */;
 					ProjectRef = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
 				},
@@ -462,6 +495,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		08471678112598A400BA7FC5 /* Camino Module.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Camino Module.element";
+			remoteRef = 08471677112598A400BA7FC5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		084BB02E10E9A753003D2539 /* Bezel Interface.element */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -549,6 +589,11 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXTargetDependency section */
+		0847167A112598B600BA7FC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Camino Module";
+			targetProxy = 08471679112598B600BA7FC5 /* PBXContainerItemProxy */;
+		};
 		084BB03410E9A7BF003D2539 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Bezel Interface";
