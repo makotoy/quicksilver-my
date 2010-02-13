@@ -10,8 +10,6 @@
 
 #import "QSDeliciousPlugIn_Source.h"
 
-#define DELICIOUS_API_URL @"api.del.icio.us/v1"
-#define MAGNOLIA_API_URL @"ma.gnolia.com/api/mirrord/v1"
 #define kQSDeliciousTagType @"us.icio.del.tag"
 
 @implementation QSDeliciousPlugIn_Source
@@ -24,108 +22,128 @@
     return resPaths;
 }
 
-- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry{
-	return -[indexDate timeIntervalSinceNow] < 24*60*60;
+- (id)init
+{
+    if (self == [super init]) {
+        posts = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    return self;
 }
 
-- (BOOL)isVisibleSource{return YES;}
-
-- (NSImage *) iconForEntry:(NSDictionary *)dict{
-    return [[NSBundle bundleForClass:[self class]]imageNamed:@"bookmark_icon"];
+- (void)dealloc
+{
+    [posts release], posts = nil;
+    [super dealloc];
 }
 
-- (NSString *)identifierForObject:(id <QSObject>)object{
+- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry
+{
+    if (-[indexDate timeIntervalSinceNow] < 10 * 60) {
+        // ten minutes, keep cache but incr update
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)isVisibleSource { return YES; }
+
+- (NSImage *)iconForEntry:(NSDictionary *)dict
+{
+    return [[NSBundle bundleForClass:[self class]] imageNamed:@"bookmark_icon"];
+}
+
+- (NSString *)identifierForObject:(id <QSObject>)object
+{
     return nil;
 }
 
-- (NSView *) settingsView{
+- (NSView *)settingsView
+{
     if (![super settingsView]){
         [NSBundle loadNibNamed:@"QSDeliciousPlugInSource" owner:self];
     }
     return [super settingsView];
 }
 
-- (NSData *)cachedBookmarkDataForUser:(NSString *)username{
-	NSString *cachePath=[QSApplicationSupportSubPath(@"Caches/del.icio.us/",NO) stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.xml",username]];
-	return [NSData dataWithContentsOfFile:cachePath];
+- (NSString *)cachePath:(NSString*)username
+{
+    return [QSApplicationSupportSubPath(@"Caches/del.icio.us/",YES)
+              stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.xml", username]];
 }
-- (NSString *)passwordForUser:(NSString *)username{
-	NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://%@@del.icio.us/",username]];
+
+- (NSArray *)cachedBookmarksForUser:(NSString *)username
+{
+	return [NSArray arrayWithContentsOfFile:[self cachePath:username]];
+}
+
+- (NSString *)passwordForUser:(NSString *)username
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@@del.icio.us/", username]];
 	return [url keychainPassword];	
 }
-- (NSData *)bookmarkDataForUser:(NSString *)username onSite:(int)isMagnolia{
 
-	NSString *password=[self passwordForUser:username];
-	if (VERBOSE)NSLog(@"Downloading del.icio.us bookmarks for %@ %d",username, isMagnolia);
-	//NSString *count=[[self currentEntry] objectForKey:@"QSDeliciousRecentCount"];
-	
+- (NSArray *)bookmarksForUser:(NSString *)username
+{
+	NSString *password = [self passwordForUser:username];
 	if (!username || !password) return nil;
-	//if (!count)count=@"50";
-
-		
-	NSString *apiurl=isMagnolia?MAGNOLIA_API_URL:DELICIOUS_API_URL;
-	
-	NSError *error;
-	NSURL *url=[NSURL URLWithString:
-		[NSString stringWithFormat:@"https://%@:%@@%@/posts/all?",username,password,apiurl]];
-	
-	NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:url
+	NSString *apiurl;
+    [posts removeAllObjects];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[self cachePath:username]]) {
+        [posts addObjectsFromArray:[self cachedBookmarksForUser:username]];
+        apiurl = [NSString stringWithFormat:@"https://%@:%@@api.del.icio.us/v1/posts/recent?",
+                  username, password];
+    } else {
+        apiurl = [NSString stringWithFormat:@"https://%@:%@@api.del.icio.us/v1/posts/all?",
+                  username, password];
+    }
+	NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:apiurl]
 															cachePolicy:NSURLRequestUseProtocolCachePolicy
 														timeoutInterval:60.0];
-	
-	[theRequest setValue:@"Quicksilver (Blacktree,MacOSX)" forHTTPHeaderField:@"User-Agent"]; 
-	
-	
-	//	NSURLConnection *theConnection=[[[NSURLConnection alloc] initWithRequest:theRequest delegate:nil];
-	
-	//NSLog(@"url %@",url);
-	NSData *data=[NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
-	NSString *cachePath=[QSApplicationSupportSubPath(@"Caches/del.icio.us/",YES) stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.xml",username]];
-	[data writeToFile:cachePath atomically:NO];	
-	return data;
+	[theRequest setValue:@"Quicksilver (Blacktree,MacOSX)" forHTTPHeaderField:@"User-Agent"];
+    NSError *error = nil;
+    NSHTTPURLResponse* response = nil;
+	NSData *data = [NSURLConnection sendSynchronousRequest:theRequest
+                                         returningResponse:&response
+                                                     error:&error];
+    if (error) {
+        NSLog(@"Could not retrieve posts, code: %d domain: %@ desc: %@", [error code], [error domain], [error localizedDescription]);
+        return nil;
+    } else if ([response statusCode] == 999) {
+        NSLog(@"Received code 999 -- service temporarily unavailable -- do nothing for now");
+        return nil;
+    }
+	NSXMLParser *postParser = [[NSXMLParser alloc]initWithData:data];
+	[postParser setDelegate:self];
+	[postParser parse];
+    [postParser release], postParser = nil;
+	[posts writeToFile:[self cachePath:username] atomically:NO];
+	return posts;
 }
-- (QSObject *)objectForPost:(NSDictionary *)post{
+
+- (QSObject *)objectForPost:(NSDictionary *)post
+{
 	QSObject *newObject=[QSObject makeObjectWithIdentifier:[post objectForKey:@"hash"]];
 	[newObject setObject:[post objectForKey:@"href"] forType:QSURLType];
 	[newObject setName:[post objectForKey:@"description"]];
 	[newObject setDetails:[post objectForKey:@"extended"]];
 	[newObject setPrimaryType:QSURLType];
-	//NSDate *date=[NSCalendarDate dateWithString:[post objectForKey:@"time"] 
-	//							 calendarFormat:@"%Y-%m-%dT%H:%M:%SZ"];
-	//[date setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-	//[newObject setObject:date forMeta:kQSObjectCreationDate];
+
 	return newObject;
 }
 
-- (NSArray *) objectsForEntry:(NSDictionary *)theEntry{
-	NSString *username=[theEntry objectForKey:@"username"];
-	NSData *data= [self cachedBookmarkDataForUser:username];
-	if (![data length]) {
-		data=[self bookmarkDataForUser:username
-								onSite:[[theEntry objectForKey:@"site"]intValue]];
-	}
-	/*
-	NSString *string=[[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]autorelease];
-	NSLog(@"data %@",string);
-	 */
-	NSXMLParser *postParser = [[NSXMLParser alloc]initWithData:data];
-	
-	[postParser setDelegate:self];
-	posts=[NSMutableArray arrayWithCapacity:1];
-	[postParser parse];
-	
+- (NSArray *)objectsForEntry:(NSDictionary *)theEntry
+{
+	NSString *username = [theEntry objectForKey:@"username"];
     NSMutableArray *objects=[NSMutableArray arrayWithCapacity:1];
-    QSObject *newObject;
 	NSMutableSet *tagSet=[NSMutableSet set];
-	for (NSDictionary *post in posts) {
-		newObject=[self objectForPost:post];
-		[tagSet addObjectsFromArray:
-		 [[post objectForKey:@"tag"] componentsSeparatedByString:@" "]];
+	for (NSDictionary *post in [self bookmarksForUser:username]) {
+		QSObject *newObject = [self objectForPost:post];
+		[tagSet addObjectsFromArray:[[post objectForKey:@"tag"] componentsSeparatedByString:@" "]];
 		[objects addObject:newObject];
 	}
 	if ([[theEntry objectForKey:@"includeTags"] boolValue]){
 		for (NSString *tag in tagSet){
-			newObject=[QSObject makeObjectWithIdentifier:[NSString stringWithFormat:@"[del.icio.us tag]:%@",tag]];
+			QSObject* newObject=[QSObject makeObjectWithIdentifier:[NSString stringWithFormat:@"[del.icio.us tag]:%@",tag]];
 			[newObject setObject:tag forType:kQSDeliciousTagType];
 			[newObject setObject:username forMeta:@"us.icio.del.username"];
 			[newObject setName:tag];
@@ -133,67 +151,53 @@
 			[objects addObject:newObject];
 		}
 	}
-	[postParser release];
     return objects;
 }
 
-- (NSArray *)objectsForTag:(NSString *)tag username:(NSString *)username{
-	NSData *data=[self cachedBookmarkDataForUser:username];
-	
-	NSXMLParser *postParser=[[NSXMLParser alloc]initWithData:data];
-	[postParser setDelegate:self];
-	posts=[NSMutableArray arrayWithCapacity:1];
-	[postParser parse];
-	
-    NSMutableArray *objects=[NSMutableArray arrayWithCapacity:1];
-    QSObject *newObject;
-	for (NSDictionary* post in posts) {
-		if ([[post objectForKey:@"tag"]rangeOfString:tag].location==NSNotFound)continue;
-		newObject=[self objectForPost:post];
-		[objects addObject:newObject];
+- (NSArray *)objectsForTag:(NSString *)tag username:(NSString *)username
+{	
+    NSMutableArray *objects = [NSMutableArray arrayWithCapacity:1];
+	for (NSDictionary* post in [self cachedBookmarksForUser:username]) {
+		if ([[post objectForKey:@"tag"] rangeOfString:tag].location == NSNotFound) {
+            continue;
+        }
+		[objects addObject:[self objectForPost:post]];
 	}
 	return objects;
 }
 
-// XML Stuff
-- (void)parser:(NSXMLParser*)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
-	//	NSLog(@"started %@ %@ %@ %@",elementName,namespaceURI,qName,attributeDict);
-	
-	if ([elementName isEqualToString:@"post"] && attributeDict)
-		[posts addObject:attributeDict];
+- (BOOL)loadChildrenForObject:(QSObject *)object
+{
+	[object setChildren:
+     [self objectsForTag:[object objectForType:kQSDeliciousTagType] 
+                username:[object objectForMeta:@"us.icio.del.username"]]];
+	return YES;
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
-	//	NSLog(@"ended %@ %@ %@ %@",elementName,namespaceURI,qName);
+#pragma mark XML Stuff
+
+- (void)parser:(NSXMLParser*)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+{	
+	if ([elementName isEqualToString:@"post"] && attributeDict) {
+        NSPredicate* postPred = [NSPredicate predicateWithFormat:@"href = %@",
+                                   [attributeDict objectForKey:@"href"]];
+        NSArray* matches = [posts filteredArrayUsingPredicate:postPred];
+        if ([matches count]) {
+            NSUInteger index = [posts indexOfObject:[matches objectAtIndex:0]];
+            [posts replaceObjectAtIndex:index withObject:attributeDict];
+        } else {
+            [posts addObject:attributeDict];
+        }
+    }
 }
 
-
-
-
-
-
-
-// Object Handler Methods
-
-/*
- - (void)setQuickIconForObject:(QSObject *)object{
-	 [object setIcon:nil]; // An icon that is either already in memory or easy to load
- }
- - (BOOL)loadIconForObject:(QSObject *)object{
-	 return NO;
-	 id data=[object objectForType:QSDeliciousPlugInType];
-	 [object setIcon:nil];
-	 return YES;
- }
- */
-
-
-
-
-
-- (NSString *) mainNibName{
-	return @"QSDeliciousPrefPane";
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+{
 }
+
+#pragma mark Pref Pane UI
+
+- (NSString *) mainNibName{	return @"QSDeliciousPrefPane"; }
 
 - (void)populateFields
 {
@@ -205,39 +209,32 @@
 {
 	return [[self currentEntry] objectForKey:@"username"];
 }
+
 - (void)setUsername:(NSString*)newUsername
 {
 	[[self currentEntry] setObject:newUsername forKey:@"username"];
 }
 
-- (NSString *)currentPassword{
-	NSString *account=[[self currentEntry] objectForKey:@"username"];
-	if (!account)return nil;
-	NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://%@@del.icio.us/",account]];
-	NSString *password=[url keychainPassword];
-	return password;
-}
-- (void)setCurrentPassword:(NSString *)newPassword{
-	NSString *account=[[self currentEntry] objectForKey:@"username"];
-	NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%@@del.icio.us/",account,newPassword]];
-	if ([newPassword length])
-		[url addPasswordToKeychain];
-	
-}
-
-- (void)setQuickIconForObject:(QSObject *)object{
-	[object setIcon:[[NSBundle bundleForClass:[self class]]imageNamed:@"bookmark_icon"]];
-}
-- (BOOL)loadChildrenForObject:(QSObject *)object{
-	[object setChildren:
-		[self objectsForTag:[object objectForType:kQSDeliciousTagType] 
-				   username:[object objectForMeta:@"us.icio.del.username"]]];
-	return YES;
-}
-
-// TODO: implement this
-- (IBAction)savePassword:(id)sender
+- (NSString *)currentPassword
 {
+	if (![self username]) return nil;
+    NSString* urlStr = [NSString stringWithFormat:@"http://%@@del.icio.us/", [self username]];
+	NSURL *url=[NSURL URLWithString:urlStr];
+
+	return [url keychainPassword];
 }
+
+- (void)setCurrentPassword:(NSString *)newPassword
+{
+    NSString* urlStr = [NSString stringWithFormat:@"http://%@:%@@del.icio.us/", [self username], newPassword];
+	NSURL *url=[NSURL URLWithString:urlStr];
+	if ([newPassword length]) [url addPasswordToKeychain];
+}
+/*
+- (void)setQuickIconForObject:(QSObject *)object
+{
+	[object setIcon:[[NSBundle bundleForClass:[self class]] imageNamed:@"bookmark_icon"]];
+}
+*/
 
 @end

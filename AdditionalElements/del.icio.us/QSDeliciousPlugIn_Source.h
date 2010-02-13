@@ -18,6 +18,8 @@
 	IBOutlet NSTextField *passField;
 }
 
-- (IBAction)savePassword:(id)sender;
+- (NSArray *)bookmarksForUser:(NSString *)username;
+- (NSArray *)cachedBookmarksForUser:(NSString *)username;
+- (NSString *)cachePath:(NSString*)username;
 
 @end
