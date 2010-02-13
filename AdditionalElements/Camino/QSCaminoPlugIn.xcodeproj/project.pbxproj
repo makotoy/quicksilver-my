@@ -1,0 +1,261 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0847164E1125976B00BA7FC5 /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 084716461125976B00BA7FC5 /* Common.xcconfig */; };
+		0847164F1125976B00BA7FC5 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 084716471125976B00BA7FC5 /* Debug.xcconfig */; };
+		084716501125976B00BA7FC5 /* Developer.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 084716481125976B00BA7FC5 /* Developer.xcconfig */; };
+		084716511125976B00BA7FC5 /* QSElement.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 084716491125976B00BA7FC5 /* QSElement.xcconfig */; };
+		084716521125976B00BA7FC5 /* QSPlugIn.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0847164B1125976B00BA7FC5 /* QSPlugIn.xcconfig */; };
+		084716531125976B00BA7FC5 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0847164D1125976B00BA7FC5 /* Release.xcconfig */; };
+		084716571125983200BA7FC5 /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 084716561125983200BA7FC5 /* element.xml */; };
+		7F3F94A7084FCAD600B757FA /* QSCaminoParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3F94A6084FCAD600B757FA /* QSCaminoParser.m */; };
+		8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		084716461125976B00BA7FC5 /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = Configuration/Common.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084716471125976B00BA7FC5 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Configuration/Debug.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084716481125976B00BA7FC5 /* Developer.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Developer.xcconfig; path = Configuration/Developer.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084716491125976B00BA7FC5 /* QSElement.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = QSElement.xcconfig; path = Configuration/QSElement.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		0847164A1125976B00BA7FC5 /* QSElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSElement_Prefix.pch; path = Configuration/QSElement_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
+		0847164B1125976B00BA7FC5 /* QSPlugIn.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = QSPlugIn.xcconfig; path = Configuration/QSPlugIn.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		0847164D1125976B00BA7FC5 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Configuration/Release.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		084716561125983200BA7FC5 /* element.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
+		7F3F94A5084FCAD600B757FA /* QSCaminoParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QSCaminoParser.h; sourceTree = "<group>"; };
+		7F3F94A6084FCAD600B757FA /* QSCaminoParser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QSCaminoParser.m; sourceTree = "<group>"; };
+		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1AC9740486D14A00FE50C9 /* Camino Module.element */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Camino Module.element"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D1AC96E0486D14A00FE50C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0259C574FE90428111CA0C5A /* QSCaminoPlugIn */ = {
+			isa = PBXGroup;
+			children = (
+				084716451125976B00BA7FC5 /* Configuration */,
+				32DBCF9E0370C38000C91783 /* Classes */,
+				32DBCF9F0370C38200C91783 /* Other Sources */,
+				0259C582FE90428111CA0C5A /* Resources */,
+				1ED78706FE9D4A0611CA0C5A /* Products */,
+				2E58F364FFB232C311CA0CBA /* Frameworks */,
+			);
+			name = QSCaminoPlugIn;
+			sourceTree = "<group>";
+		};
+		0259C582FE90428111CA0C5A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				084716561125983200BA7FC5 /* element.xml */,
+				8D1AC9730486D14A00FE50C9 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		084716451125976B00BA7FC5 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				084716461125976B00BA7FC5 /* Common.xcconfig */,
+				084716471125976B00BA7FC5 /* Debug.xcconfig */,
+				084716481125976B00BA7FC5 /* Developer.xcconfig */,
+				084716491125976B00BA7FC5 /* QSElement.xcconfig */,
+				0847164A1125976B00BA7FC5 /* QSElement_Prefix.pch */,
+				0847164B1125976B00BA7FC5 /* QSPlugIn.xcconfig */,
+				0847164D1125976B00BA7FC5 /* Release.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = QS_SOURCE_ROOT;
+		};
+		1ED78706FE9D4A0611CA0C5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1AC9740486D14A00FE50C9 /* Camino Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2E58F364FFB232C311CA0CBA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DD92D38A0106425D02CA0E72 /* Cocoa.framework */,
+				7FC20C8107FB741700FDD3CA /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		32DBCF9E0370C38000C91783 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7F3F94A5084FCAD600B757FA /* QSCaminoParser.h */,
+				7F3F94A6084FCAD600B757FA /* QSCaminoParser.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		32DBCF9F0370C38200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		7FC20C8107FB741700FDD3CA /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1AC9600486D14A00FE50C9 /* Camino Module */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F07AF56085E432B00E2AFC4 /* Build configuration list for PBXNativeTarget "Camino Module" */;
+			buildPhases = (
+				8D1AC9660486D14A00FE50C9 /* Resources */,
+				8D1AC96A0486D14A00FE50C9 /* Sources */,
+				8D1AC96E0486D14A00FE50C9 /* Frameworks */,
+				E1022B2806B3475D00299BEC /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Camino Module";
+			productInstallPath = "$(HOME)/Developer/Palettes";
+			productName = QSCaminoPlugIn;
+			productReference = 8D1AC9740486D14A00FE50C9 /* Camino Module.element */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0259C573FE90428111CA0C5A /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 7F07AF5A085E432B00E2AFC4 /* Build configuration list for PBXProject "QSCaminoPlugIn" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0259C574FE90428111CA0C5A /* QSCaminoPlugIn */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1AC9600486D14A00FE50C9 /* Camino Module */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1AC9660486D14A00FE50C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0847164E1125976B00BA7FC5 /* Common.xcconfig in Resources */,
+				0847164F1125976B00BA7FC5 /* Debug.xcconfig in Resources */,
+				084716501125976B00BA7FC5 /* Developer.xcconfig in Resources */,
+				084716511125976B00BA7FC5 /* QSElement.xcconfig in Resources */,
+				084716521125976B00BA7FC5 /* QSPlugIn.xcconfig in Resources */,
+				084716531125976B00BA7FC5 /* Release.xcconfig in Resources */,
+				084716571125983200BA7FC5 /* element.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E1022B2806B3475D00299BEC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/perl $QS_SOURCE_ROOT/put_bndl_ver.pl";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D1AC96A0486D14A00FE50C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F3F94A7084FCAD600B757FA /* QSCaminoParser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7F07AF57085E432B00E2AFC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084716491125976B00BA7FC5 /* QSElement.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		7F07AF58085E432B00E2AFC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084716491125976B00BA7FC5 /* QSElement.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		7F07AF5B085E432B00E2AFC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084716471125976B00BA7FC5 /* Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		7F07AF5C085E432B00E2AFC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0847164D1125976B00BA7FC5 /* Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7F07AF56085E432B00E2AFC4 /* Build configuration list for PBXNativeTarget "Camino Module" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F07AF57085E432B00E2AFC4 /* Debug */,
+				7F07AF58085E432B00E2AFC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7F07AF5A085E432B00E2AFC4 /* Build configuration list for PBXProject "QSCaminoPlugIn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F07AF5B085E432B00E2AFC4 /* Debug */,
+				7F07AF5C085E432B00E2AFC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0259C573FE90428111CA0C5A /* Project object */;
+}
