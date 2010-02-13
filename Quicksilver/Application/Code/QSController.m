@@ -537,12 +537,14 @@ static id _sharedInstance;
 
 - (void)hideSplash:(id)sender
 {
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	if (splashWindow) {
 		[splashWindow setLevel:NSFloatingWindowLevel];
 		[splashWindow flare:self];
 		[splashWindow close];
 		splashWindow = nil;
 	}
+    [pool release], pool = nil;
 }
 
 - (void)startDropletConnection
@@ -1354,11 +1356,10 @@ static id _sharedInstance;
   QSLog(@"LaunchLoaders %@", [[QSRegistry sharedInstance] loadedInstancesForPointID:@"QSLoadAtLaunch"]);
 }
 
+- (id)activationHotKey { return nil; }
 
-- (id)activationHotKey {
-	return nil;
-}
-- (void)setActivationHotKey:(id)object {
+- (void)setActivationHotKey:(id)object
+{
 	//QSLog(@"SetActivation %@", object); 	
 	//Deactivate Old
 	
@@ -1374,19 +1375,15 @@ static id _sharedInstance;
 - (void)threadedHideSplash
 {
 	[NSThread detachNewThreadSelector:@selector(hideSplash:) toTarget:self withObject:nil];
-//    [self hideSplash:self];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
 	[self startQuicksilver:aNotification];
-	//OSStatus err = AEInstallEventHandler('GURL', 'GURL', NewAEEventHandlerUPP(handleGURLEvent), 0, false);
-	//QSLog(@"err %d", err);
-	
 }
 
-
-
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag {
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
+{
 	[self activateInterface:theApplication];
 	return YES;
 }
