@@ -11,19 +11,31 @@
 #import "QSDictionaryPlugIn.h"
 #import "QSDictionaryUtility.h"
 
-#define THESAURUS_NAME @"Oxford American Writers Thesaurus"
+#define THESAURUS_NAME @"Oxford American Writer's Thesaurus"
 #define DICTIONARY_NAME	@"New Oxford American Dictionary"
+
+#define DICT_ROOT @"/Library/Dictionaries"
+#define ACTIVE_DICT_KEY @"DCSActiveDictionaries"
+#define DICT_DOMAIN @"com.apple.DictionaryServices"
+
+NSArray *DCSCopyAvailableDictionaries();
+NSString *DCSDictionaryGetName(DCSDictionaryRef dictID);
 
 @implementation QSDictionaryPlugIn
 // Currently there is no way to actually use the dictName parameter
 - (void)lookupWord:(NSString *)word inDictionary:(NSString *)dictName
 {
-	word=[word lowercaseString];
-    CFRange range;
-    range.location = 0;
-    range.length = [word length];
+	word = [word lowercaseString];
+    CFRange range = CFRangeMake(0, [word length]);
     NSString *definition;
-    definition = (NSString*)DCSCopyTextDefinition( NULL, (CFStringRef)word, range);
+    DCSDictionaryRef dictRef = NULL;
+    for (id dict in DCSCopyAvailableDictionaries()) {
+        if ([dictName isEqualToString:DCSDictionaryGetName((DCSDictionaryRef)dict)]) {
+            dictRef = (DCSDictionaryRef)dict;
+            break;
+        }
+    }    
+    definition = (NSString*)DCSCopyTextDefinition(dictRef, (CFStringRef)word, range);
     
 	if (![definition length]) {
         definition = [NSString stringWithFormat:@"\"%@\" could not be found.", word];
