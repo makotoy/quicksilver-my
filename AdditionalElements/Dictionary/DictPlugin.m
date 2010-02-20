@@ -10,10 +10,10 @@
 
 #import "DictPlugin.h"
 #import "NSMutableStringAdditions.h"
+#import "QSDictionaryUtility.h"
 
 #define kDictPluginDefineAction @"DictPluginDefineAction"
 #define kDictTaskID @"DictModule-Define"
-#define kDictWindowName @"Dict Results Window"
 
 static NSArray *parseDictOutput(NSString *input);
 void showResultsWindow(NSString *input, NSString *title, id delegate);
@@ -103,26 +103,22 @@ void showResultsWindow(NSString *input, NSString *title, id delegate);
 - (void)processBuffer
 {
 	if ([dictTask terminationStatus] != 0) {
-		[dictTask release];
-		dictTask = nil;
+		[dictTask release], dictTask = nil;
 		NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:
 			@"Define complete", QSNotifierTitle,
 			@"Unknown curl error", QSNotifierText,
 			dictIcon, QSNotifierIcon, nil];
 		[[QSTaskController sharedInstance] removeTask:kDictTaskID];
-		[dictTaskStatus release];
-		dictTaskStatus = nil;
+		[dictTaskStatus release], dictTaskStatus = nil;
 		QSShowNotifierWithAttributes(notif);
 		return;
 	}
-	[dictTask release];
-	dictTask = nil;
+	[dictTask release], dictTask = nil;
 	NSString *curlStr = [[NSString alloc] initWithData:buffer encoding:NSUTF8StringEncoding];
 	NSArray *entries = parseDictOutput(curlStr);
-	NSEnumerator *e = [entries objectEnumerator];
-	NSDictionary *item, *notif;
+	NSDictionary *notif;
 	NSMutableString *result = [NSMutableString string];
-	while (item = [e nextObject]) {
+	for (NSDictionary *item in entries) {
 		int code = [[item objectForKey:@"Code"] intValue];
 		if (code >= 400) {
 			if (code == 500) {
@@ -166,8 +162,7 @@ void showResultsWindow(NSString *input, NSString *title, id delegate);
 	
 	[[QSTaskController sharedInstance] removeTask:kDictTaskID];
 	showResultsWindow(definition, dictTaskStatus, self);
-	[dictTaskStatus release];
-	dictTaskStatus = nil;
+	[dictTaskStatus release], dictTaskStatus = nil;
 }
 
 - (void)windowDidResize:(NSNotification *)aNotification {
@@ -228,59 +223,4 @@ static NSArray *parseDictOutput(NSString *input)
 		[result addObject:entry];
 	}
 	return result;
-}
-
-void showResultsWindow(NSString *input, NSString *title, id delegate)
-{
-	NSRect windowRect = NSMakeRect(0, 0, 455, 490);
-	NSRect screenRect = [[NSScreen mainScreen] frame];
-	QSWindow *window = [[QSWindow alloc] initWithContentRect:windowRect
-												   styleMask:(NSTitledWindowMask | NSClosableWindowMask |
-															  NSUtilityWindowMask | NSResizableWindowMask |
-															  NSNonactivatingPanelMask)
-													 backing:NSBackingStoreBuffered defer: NO];
-	[window setFrameUsingName:kDictWindowName];
-	windowRect = [window frame];
-	NSRect centeredRect = centerRectInRect(windowRect, screenRect);
-	[window setFrame:centeredRect display:YES];
-	[window setOneShot:YES];
-	[window setReleasedWhenClosed:YES];
-	[window setShowOffset:NSMakePoint(-16, 16)];
-	[window setHideOffset:NSMakePoint(16, -16)];
-	[window setHidesOnDeactivate:NO];
-	[window setMinSize:NSMakeSize(400, 280)];
-	[window setMaxSize:NSMakeSize(600, FLT_MAX)];
-	[window setTitle:title];
-	
-	if (delegate)
-		[window setDelegate:delegate];
-	
-	NSScrollView *scrollView = [[[NSScrollView alloc]
-						initWithFrame:[[window contentView] frame]] autorelease];
-	[scrollView setBorderType:NSNoBorder];
-	[scrollView setHasVerticalScroller:YES];
-	[scrollView setHasHorizontalScroller:NO];
-	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	NSSize contentSize = [scrollView contentSize];
-	NSTextView *textView = [[[NSTextView alloc] initWithFrame:(NSRect){{0,0},contentSize}] autorelease];
-	[textView setMinSize:NSMakeSize(0.0, contentSize.height)];
-	[textView setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
-	[textView setVerticallyResizable:YES];
-	[textView setHorizontallyResizable:NO];
-	[textView setAutoresizingMask:NSViewWidthSizable];
-	
-	[textView setString:input];
-	[textView setEditable:NO];
-	[textView setSelectable:YES];
-	
-	[[textView textContainer] setContainerSize:NSMakeSize(contentSize.width, FLT_MAX)];
-	[[textView textContainer] setWidthTracksTextView:YES];
-	
-	[scrollView setDocumentView:textView];
-	[window setContentView:scrollView];
-	[[window contentView] display];
-	[window setLevel:NSFloatingWindowLevel];
-	[window makeKeyAndOrderFront:nil];
-	[window setLevel:NSNormalWindowLevel];
-	[window makeFirstResponder:textView];
 }

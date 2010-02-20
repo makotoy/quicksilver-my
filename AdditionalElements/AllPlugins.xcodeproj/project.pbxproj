@@ -27,6 +27,7 @@
 				084BB0A410E9A842003D2539 /* PBXTargetDependency */,
 				08E362C4110B31A9008F2E6A /* PBXTargetDependency */,
 				0847167A112598B600BA7FC5 /* PBXTargetDependency */,
+				085C5420112FA95100E8C4B8 /* PBXTargetDependency */,
 			);
 			name = "Build All Plugins";
 			productName = "Build All Plugins";
@@ -36,6 +37,7 @@
 /* Begin PBXBuildFile section */
 		0847167D112598D900BA7FC5 /* Camino Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08471678112598A400BA7FC5 /* Camino Module.element */; };
 		0847167E112598F100BA7FC5 /* Safari.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08E362B1110B3168008F2E6A /* Safari.element */; };
+		085C541E112FA93E00E8C4B8 /* Dictionary Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 085C541D112FA93600E8C4B8 /* Dictionary Module.element */; };
 		08B2FF5A10F017C700C3175C /* Terminal Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB09010E9A82E003D2539 /* Terminal Module.element */; };
 		08B2FF5B10F017DC00C3175C /* Primer Interface.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB08710E9A827003D2539 /* Primer Interface.element */; };
 		08B2FF5C10F017DC00C3175C /* Firefox Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB07E10E9A820003D2539 /* Firefox Module.element */; };
@@ -218,6 +220,20 @@
 			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
 			remoteInfo = "Apple Mail";
 		};
+		085C541C112FA93600E8C4B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 085C5418112FA93600E8C4B8 /* DictPlugin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Dictionary Module.element */;
+			remoteInfo = "Dictionary Module";
+		};
+		085C541F112FA95100E8C4B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 085C5418112FA93600E8C4B8 /* DictPlugin.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Dictionary Module */;
+			remoteInfo = "Dictionary Module";
+		};
 		08E362B0110B3168008F2E6A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */;
@@ -254,6 +270,7 @@
 				08B2FF5C10F017DC00C3175C /* Firefox Module.element in CopyFiles */,
 				08B2FF5D10F017DC00C3175C /* Web Search.element in CopyFiles */,
 				08B2FF5A10F017C700C3175C /* Terminal Module.element in CopyFiles */,
+				085C541E112FA93E00E8C4B8 /* Dictionary Module.element in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +297,7 @@
 		084BB0AB10E9A88B003D2539 /* QSPlugIn.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = QSPlugIn.xcconfig; path = Configuration/QSPlugIn.xcconfig; sourceTree = QS_SOURCE_ROOT; };
 		084BB0AC10E9A88B003D2539 /* QSPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSPlugIn_Prefix.pch; path = Configuration/QSPlugIn_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
 		084BB0AD10E9A88B003D2539 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Configuration/Release.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		085C5418112FA93600E8C4B8 /* DictPlugin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DictPlugin.xcodeproj; path = Dictionary/DictPlugin.xcodeproj; sourceTree = "<group>"; };
 		08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariElement.xcodeproj; path = com.apple.Safari/SafariElement.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -296,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				084BB0A510E9A88B003D2539 /* Configuration */,
+				085C5418112FA93600E8C4B8 /* DictPlugin.xcodeproj */,
 				08471673112598A400BA7FC5 /* QSCaminoPlugIn.xcodeproj */,
 				084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */,
 				084BB07F10E9A827003D2539 /* QSPrimerInterfacePlugIn.xcodeproj */,
@@ -415,6 +434,14 @@
 			path = Configuration;
 			sourceTree = QS_SOURCE_ROOT;
 		};
+		085C5419112FA93600E8C4B8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				085C541D112FA93600E8C4B8 /* Dictionary Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		08E362AA110B3167008F2E6A /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,6 +468,10 @@
 				{
 					ProductGroup = 084BB05C10E9A803003D2539 /* Products */;
 					ProjectRef = 084BB05B10E9A803003D2539 /* ClipboardElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 085C5419112FA93600E8C4B8 /* Products */;
+					ProjectRef = 085C5418112FA93600E8C4B8 /* DictPlugin.xcodeproj */;
 				},
 				{
 					ProductGroup = 084BB04110E9A7E1003D2539 /* Products */;
@@ -579,6 +610,13 @@
 			remoteRef = 084BB08F10E9A82E003D2539 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		085C541D112FA93600E8C4B8 /* Dictionary Module.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Dictionary Module.element";
+			remoteRef = 085C541C112FA93600E8C4B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		08E362B1110B3168008F2E6A /* Safari.element */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -648,6 +686,11 @@
 			isa = PBXTargetDependency;
 			name = "Apple Mail";
 			targetProxy = 084BB0A310E9A842003D2539 /* PBXContainerItemProxy */;
+		};
+		085C5420112FA95100E8C4B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Dictionary Module";
+			targetProxy = 085C541F112FA95100E8C4B8 /* PBXContainerItemProxy */;
 		};
 		08E362C4110B31A9008F2E6A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

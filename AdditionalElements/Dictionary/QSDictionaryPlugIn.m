@@ -9,6 +9,7 @@
 //  2010-02-20 Makoto Yamashita
 
 #import "QSDictionaryPlugIn.h"
+#import "QSDictionaryUtility.h"
 
 #define THESAURUS_NAME @"Oxford American Writers Thesaurus"
 #define DICTIONARY_NAME	@"New Oxford American Dictionary"
@@ -27,13 +28,7 @@
 	if (![definition length]) {
         definition = [NSString stringWithFormat:@"\"%@\" could not be found.", word];
     }
-    id cont = [[NSClassFromString(@"QSSimpleWebWindowController") alloc] initWithWindow:nil];
-    [[cont window] center];
-    [[cont window] setLevel:NSFloatingWindowLevel];
-    [[cont window] setTitle:[NSString stringWithFormat:@"%@", word]];
-    [[cont window] makeKeyAndOrderFront:nil];	
-		
-    [cont loadHTMLString:definition baseURL:nil];
+    showResultsWindow(definition, word, nil);
 }
 
 - (QSObject *)lookupWordInDictionary:(QSObject *)dObject
