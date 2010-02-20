@@ -48,7 +48,6 @@
 		087D5A0D108F5A92001FF05F /* QSDeliciousPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSDeliciousPlugIn.m; sourceTree = "<group>"; };
 		087D5A16108F5B0C001FF05F /* del.icio.us.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = del.icio.us.png; sourceTree = "<group>"; };
 		087D5A17108F5B0C001FF05F /* del.icio.us.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = del.icio.us.tif; sourceTree = "<group>"; };
-		32DBCF980370C29C00C91783 /* QSDeliciousPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDeliciousPlugIn_Prefix.pch; sourceTree = "<group>"; };
 		7F8AD05007F2503600011548 /* QSDeliciousPlugInSource.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = QSDeliciousPlugInSource.nib; sourceTree = "<group>"; };
 		7F9441A00803A9D9007EDC31 /* QSObjectSource.name.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = QSObjectSource.name.strings; sourceTree = "<group>"; };
 		7FB0DC190B91FF8600A5B6FF /* bookmark_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookmark_icon.png; sourceTree = "<group>"; };
@@ -154,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				E182BE3A06FC9B13007BF2C2 /* Localizable.strings */,
-				32DBCF980370C29C00C91783 /* QSDeliciousPlugIn_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

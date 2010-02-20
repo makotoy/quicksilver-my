@@ -1,0 +1,81 @@
+<element id="com.blacktree.Quicksilver.QSDictionaryPlugIn" name="Dictionary Module" version="11B">
+    <info>
+        <category>Text</category>
+        <image>com.apple.Dictionary</image>
+    </info>
+    <requirements></requirements>
+    <extensions xmlns:qs="com.blacktree">
+        <extension point="com.blacktree.actions">
+            <action id="DictPluginDefineAction">
+                <plist version="1.0">
+                    <dict>
+                        <key>actionClass</key>
+                        <string>DictPlugin</string>
+                        <key>actionSelector</key>
+                        <string>define:</string>
+                        <key>description</key>
+                        <string>Define with dict.org</string>
+                        <key>directTypes</key>
+                        <array>
+                            <string>NSStringPboardType</string>
+                        </array>
+                        <key>displaysResult</key>
+                        <true></true>
+                        <key>icon</key>
+                        <string>Reference</string>
+                        <key>name</key>
+                        <string>Define with dict.org</string>
+                    </dict>
+                </plist>
+            </action>
+            <action id="QSDictionaryLookupAction">
+                <plist version="1.0">
+                    <dict>
+                        <key>actionClass</key>
+                        <string>QSDictionaryPlugIn</string>
+                        <key>actionSelector</key>
+                        <string>lookupWordInDictionary:</string>
+                        <key>description</key>
+                        <string>Lookup in Dictionary</string>
+                        <key>directTypes</key>
+                        <array>
+                            <string>NSStringPboardType</string>
+                        </array>
+                        <key>displaysResult</key>
+                        <true></true>
+                        <key>icon</key>
+                        <string>com.apple.Dictionary</string>
+                        <key>name</key>
+                        <string>Lookup in Dictionary</string>
+                    </dict>
+                </plist>
+            </action>
+            <action id="QSThesaurusLookupAction">
+                <plist version="1.0">
+                    <dict>
+                        <key>actionClass</key>
+                        <string>QSDictionaryPlugIn</string>
+                        <key>actionSelector</key>
+                        <string>lookupWordInThesaurus:</string>
+                        <key>description</key>
+                        <string>Lookup in Thesaurus</string>
+                        <key>directTypes</key>
+                        <array>
+                            <string>NSStringPboardType</string>
+                        </array>
+                        <key>displaysResult</key>
+                        <true></true>
+                        <key>icon</key>
+                        <string>com.apple.Dictionary</string>
+                        <key>name</key>
+                        <string>Lookup in Thesaurus</string>
+                    </dict>
+                </plist>
+            </action>
+        </extension>
+        <extension point="QSActionProviders">
+            <action-provider id="DictPlugin" class="DictPlugin"></action-provider>
+            <action-provider id="QSDictionaryPlugIn" class="QSDictionaryPlugIn"></action-provider>
+        </extension>
+    </extensions>
+</element>
