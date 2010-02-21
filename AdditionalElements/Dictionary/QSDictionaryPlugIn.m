@@ -14,24 +14,24 @@
 #define THESAURUS_NAME @"Oxford American Writer's Thesaurus"
 #define DICTIONARY_NAME	@"New Oxford American Dictionary"
 
-#define DICT_ROOT @"/Library/Dictionaries"
-#define ACTIVE_DICT_KEY @"DCSActiveDictionaries"
-#define DICT_DOMAIN @"com.apple.DictionaryServices"
-
-NSArray *DCSCopyAvailableDictionaries();
-NSString *DCSDictionaryGetName(DCSDictionaryRef dictID);
+CFArrayRef DCSCopyAvailableDictionaries();
+CFStringRef DCSDictionaryGetName(DCSDictionaryRef dictID);
+DCSDictionaryRef DCSGetDefaultDictionary();
+DCSDictionaryRef DCSGetDefaultThesaurus();
 
 @implementation QSDictionaryPlugIn
-// Currently there is no way to actually use the dictName parameter
+
 - (void)lookupWord:(NSString *)word inDictionary:(NSString *)dictName
 {
 	word = [word lowercaseString];
     CFRange range = CFRangeMake(0, [word length]);
     NSString *definition;
     DCSDictionaryRef dictRef = NULL;
-    for (id dict in DCSCopyAvailableDictionaries()) {
-        if ([dictName isEqualToString:DCSDictionaryGetName((DCSDictionaryRef)dict)]) {
-            dictRef = (DCSDictionaryRef)dict;
+    NSArray* dArray = (NSArray*)DCSCopyAvailableDictionaries();
+    for (id dummy in dArray) {
+        DCSDictionaryRef dict = (DCSDictionaryRef)dummy;
+        if ([dictName isEqualToString:(NSString*)DCSDictionaryGetName(dict)]) {
+            dictRef = dict;
             break;
         }
     }    
@@ -45,13 +45,19 @@ NSString *DCSDictionaryGetName(DCSDictionaryRef dictID);
 
 - (QSObject *)lookupWordInDictionary:(QSObject *)dObject
 {
-    [self lookupWord:[dObject stringValue] inDictionary:DICTIONARY_NAME];
+    DCSDictionaryRef dict = DCSGetDefaultDictionary();
+    NSString* dictName = (NSString*)DCSDictionaryGetName(dict);
+    if (!dictName) dictName = DICTIONARY_NAME;
+    [self lookupWord:[dObject stringValue] inDictionary:dictName];
     return nil;
 }
 
 - (QSObject *)lookupWordInThesaurus:(QSObject *)dObject
 {
-    [self lookupWord:[dObject stringValue] inDictionary:THESAURUS_NAME];
+    DCSDictionaryRef dict = DCSGetDefaultThesaurus();
+    NSString* dictName = (NSString*)DCSDictionaryGetName(dict);
+    if (!dictName) dictName = THESAURUS_NAME;
+    [self lookupWord:[dObject stringValue] inDictionary:dictName];
     return nil;
 }
 
