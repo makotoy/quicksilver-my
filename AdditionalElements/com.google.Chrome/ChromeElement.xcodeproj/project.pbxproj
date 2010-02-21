@@ -1,0 +1,272 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		087633DF113103F700B51F69 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087633DE113103F700B51F69 /* Cocoa.framework */; };
+		087633EC1131065300B51F69 /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08C3F9331130FE290019338F /* JSON.framework */; };
+		08C3F92B1130FB880019338F /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 08C3F92A1130FB880019338F /* element.xml */; };
+		08C3F92F1130FCAB0019338F /* QSChromeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C3F92E1130FCAB0019338F /* QSChromeParser.m */; };
+		08C3F9341130FE290019338F /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C3F9331130FE290019338F /* JSON.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		087633FB1131065A00B51F69 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				087633EC1131065300B51F69 /* JSON.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		087633DE113103F700B51F69 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		089236AC1130F9D8005CE45C /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = Configuration/Common.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		089236AD1130F9D8005CE45C /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Configuration/Debug.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		089236AE1130F9D8005CE45C /* Developer.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Developer.xcconfig; path = Configuration/Developer.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		089236AF1130F9D8005CE45C /* QSElement.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = QSElement.xcconfig; path = Configuration/QSElement.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		089236B01130F9D8005CE45C /* QSElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSElement_Prefix.pch; path = Configuration/QSElement_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
+		089236B11130F9D8005CE45C /* QSPlugIn.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = QSPlugIn.xcconfig; path = Configuration/QSPlugIn.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		089236B21130F9D8005CE45C /* QSPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSPlugIn_Prefix.pch; path = Configuration/QSPlugIn_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
+		089236B31130F9D8005CE45C /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Configuration/Release.xcconfig; sourceTree = QS_SOURCE_ROOT; };
+		089236BA1130FA22005CE45C /* Chrome Module.element */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chrome Module.element"; sourceTree = BUILT_PRODUCTS_DIR; };
+		089236BC1130FA22005CE45C /* Chrome Module-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Chrome Module-Info.plist"; sourceTree = "<group>"; };
+		08C3F92A1130FB880019338F /* element.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
+		08C3F92D1130FCAB0019338F /* QSChromeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSChromeParser.h; sourceTree = "<group>"; };
+		08C3F92E1130FCAB0019338F /* QSChromeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSChromeParser.m; sourceTree = "<group>"; };
+		08C3F9331130FE290019338F /* JSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSON.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		089236B81130FA22005CE45C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08C3F9341130FE290019338F /* JSON.framework in Frameworks */,
+				087633DF113103F700B51F69 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0876331F113103DE00B51F69 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08C3F9331130FE290019338F /* JSON.framework */,
+				087633DE113103F700B51F69 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0881E3781130F99600252374 = {
+			isa = PBXGroup;
+			children = (
+				0876331F113103DE00B51F69 /* Frameworks */,
+				08C3F9241130FB640019338F /* Classes */,
+				08C3F9231130FB5C0019338F /* Resources */,
+				089236AB1130F9D8005CE45C /* Configuration */,
+				089236BB1130FA22005CE45C /* Products */,
+				089236BC1130FA22005CE45C /* Chrome Module-Info.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		089236AB1130F9D8005CE45C /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				089236AC1130F9D8005CE45C /* Common.xcconfig */,
+				089236AD1130F9D8005CE45C /* Debug.xcconfig */,
+				089236AE1130F9D8005CE45C /* Developer.xcconfig */,
+				089236AF1130F9D8005CE45C /* QSElement.xcconfig */,
+				089236B01130F9D8005CE45C /* QSElement_Prefix.pch */,
+				089236B11130F9D8005CE45C /* QSPlugIn.xcconfig */,
+				089236B21130F9D8005CE45C /* QSPlugIn_Prefix.pch */,
+				089236B31130F9D8005CE45C /* Release.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = QS_SOURCE_ROOT;
+		};
+		089236BB1130FA22005CE45C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				089236BA1130FA22005CE45C /* Chrome Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		08C3F9231130FB5C0019338F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				08C3F92A1130FB880019338F /* element.xml */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08C3F9241130FB640019338F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				08C3F92D1130FCAB0019338F /* QSChromeParser.h */,
+				08C3F92E1130FCAB0019338F /* QSChromeParser.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		089236B91130FA22005CE45C /* Chrome Module */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 089236C01130FA23005CE45C /* Build configuration list for PBXNativeTarget "Chrome Module" */;
+			buildPhases = (
+				089236B61130FA22005CE45C /* Resources */,
+				089236B71130FA22005CE45C /* Sources */,
+				089236B81130FA22005CE45C /* Frameworks */,
+				087633FB1131065A00B51F69 /* CopyFiles */,
+				087634021131071000B51F69 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Chrome Module";
+			productName = "Chrome Module";
+			productReference = 089236BA1130FA22005CE45C /* Chrome Module.element */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0881E37A1130F99600252374 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0881E37D1130F99600252374 /* Build configuration list for PBXProject "ChromeElement" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 0881E3781130F99600252374;
+			productRefGroup = 089236BB1130FA22005CE45C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				089236B91130FA22005CE45C /* Chrome Module */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		089236B61130FA22005CE45C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08C3F92B1130FB880019338F /* element.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		087634021131071000B51F69 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/perl $QS_SOURCE_ROOT/put_bndl_ver.pl";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		089236B71130FA22005CE45C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08C3F92F1130FCAB0019338F /* QSChromeParser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0881E37B1130F99600252374 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 089236AD1130F9D8005CE45C /* Debug.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		0881E37C1130F99600252374 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 089236B31130F9D8005CE45C /* Release.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		089236BE1130FA23005CE45C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 089236AF1130F9D8005CE45C /* QSElement.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					/System/Library/PrivateFrameworks,
+					"~/Library/Frameworks",
+					"$(BUILT_PRODUCTS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "Chrome Module-Info.plist";
+				PRODUCT_NAME = "Chrome Module";
+			};
+			name = Debug;
+		};
+		089236BF1130FA23005CE45C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 089236AF1130F9D8005CE45C /* QSElement.xcconfig */;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = "Chrome Module-Info.plist";
+				PRODUCT_NAME = "Chrome Module";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0881E37D1130F99600252374 /* Build configuration list for PBXProject "ChromeElement" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0881E37B1130F99600252374 /* Debug */,
+				0881E37C1130F99600252374 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		089236C01130FA23005CE45C /* Build configuration list for PBXNativeTarget "Chrome Module" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				089236BE1130FA23005CE45C /* Debug */,
+				089236BF1130FA23005CE45C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0881E37A1130F99600252374 /* Project object */;
+}

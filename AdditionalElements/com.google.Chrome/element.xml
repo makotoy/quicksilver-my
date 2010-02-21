@@ -1,0 +1,40 @@
+<element id="com.Quicksilver.ChromeModule" name="Chrome Module" version="97">
+    <info>
+        <category>Applications</category>
+        <category>Web</category>
+        <image>com.google.chrome</image>
+    </info>
+    <requirements></requirements>
+    <extensions xmlns:qs="com.blacktree">
+        <extension point="com.blacktree.catalog.presets">
+            <catalog-preset id="QSPresetChromeBookmarks">
+                <plist version="1.0">
+                    <dict>
+                        <key>ID</key>
+                        <string>QSPresetChromeBookmarks</string>
+                        <key>icon</key>
+                        <string>com.google.chrome</string>
+                        <key>name</key>
+                        <string>Chrome Bookmarks</string>
+                        <key>requiresSettingsPath</key>
+                        <true></true>
+                        <key>settings</key>
+                        <dict>
+                            <key>parser</key>
+                            <string>QSChromeBookmarksParser</string>
+                            <key>path</key>
+                            <string>~/Library/Application Support/Google/Chrome/Default/Bookmarks</string>
+                            <key>skipItem</key>
+                            <integer>1</integer>
+                        </dict>
+                        <key>source</key>
+                        <string>QSFileSystemObjectSource</string>
+                    </dict>
+                </plist>
+            </catalog-preset>
+        </extension>
+        <extension point="QSFSParsers">
+            <file-parser id="QSChromeBookmarksParser" class="QSChromeBookmarksParser"></file-parser>
+        </extension>
+    </extensions>
+</element>
