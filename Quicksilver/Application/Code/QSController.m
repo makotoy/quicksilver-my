@@ -239,7 +239,7 @@ static id _sharedInstance;
 	
 	[self setActivatedImage:newActivated];
 	[self setRunningImage:newRunning];
-    [self deactivated:nil];
+	[NSApp setApplicationIconImage: [NSImage imageNamed:@"Quicksilver-Running"]];
 }
 
 - (int) showMenuIcon { return -1; }
@@ -777,7 +777,7 @@ static id _sharedInstance;
 
 - (NSImage *)daedalusImage
 {
-	return [QSResourceManager imageNamed:@"daedalus"];
+	return [QSRez daedalusImage];
 }
 
 @end
@@ -786,8 +786,14 @@ static id _sharedInstance;
 
 - (void)activated:(NSNotification *)aNotification
 {
-	if ( (fALPHA && OneIn(100) ) || (fDEV && OneIn(10))) {
-		[NSApp setApplicationIconImage:[self daedalusImage]];
+	if ( (fALPHA && OneIn(5) ) || (fDEV && OneIn(3))) {
+        dispatch_queue_t myGCDQueue;
+        myGCDQueue = dispatch_queue_create("com.makotoy.QuickSilver.GCD", NULL);
+        dispatch_async(myGCDQueue, ^{
+            NSImage* easterEggImage = [QSRez daedalusImage];
+            [NSApp setApplicationIconImage:easterEggImage];
+        });
+        dispatch_release(myGCDQueue);
     } else {
 		[NSApp setApplicationIconImage:[NSImage imageNamed:@"Quicksilver-Activated"]];
     }
@@ -795,7 +801,7 @@ static id _sharedInstance;
 
 - (void)deactivated:(NSNotification *)aNotification 
 {
-	[NSApp setApplicationIconImage: [NSImage imageNamed:@"Quicksilver-Running"]];
+    [self recompositeIconImages];
 }
 
 @end

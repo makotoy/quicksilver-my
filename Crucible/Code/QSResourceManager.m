@@ -11,7 +11,7 @@
 {
     static NSImage *daedalusImage = nil;
     if (!daedalusImage) {
-		daedalusImage = [[self imageNamed:@"FinderIcon"] imageByAdjustingHue:(3.14 * 140 / 180)];
+		daedalusImage = [[[self imageNamed:@"FinderIcon"] imageByAdjustingHue:(3.14 * 140 / 180)] retain];
         
 		[daedalusImage lockFocus];
 		[[NSColor whiteColor] set];

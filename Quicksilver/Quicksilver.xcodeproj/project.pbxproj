@@ -563,7 +563,7 @@
 		7F9A85A40C497A8A00B5912D /* QuitConfirm.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = QuitConfirm.nib; sourceTree = "<group>"; };
 		7F9A86120C497A8B00B5912D /* da */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Placeholder.strings; sourceTree = "<group>"; };
 		7F9A86130C497A8B00B5912D /* de */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Placeholder.strings; sourceTree = "<group>"; };
-		7F9A86150C497A8B00B5912D /* en */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7F9A86150C497A8B00B5912D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7F9A86170C497A8B00B5912D /* en */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7F9A86180C497A8B00B5912D /* es */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Placeholder.strings; sourceTree = "<group>"; };
 		7F9A86190C497A8B00B5912D /* fi */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Placeholder.strings; sourceTree = "<group>"; };

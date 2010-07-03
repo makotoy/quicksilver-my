@@ -112,7 +112,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Copyright ©2000-2005 Blacktree, Inc.</string>
+	<string>Copyright ©2009-2010 Makoto Yamashita</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>QSHelp</string>
 	<key>CFBundleHelpBookName</key>
@@ -320,7 +320,7 @@
 		</dict>
 	</array>
 	<key>XSmartCrashReports_CompanyName</key>
-	<string>Blacktree</string>
+	<string>Makoto_Yamashita</string>
 	<key>XSmartCrashReports_EmailTicket</key>
 	<string>SCR-E91B5AACA3</string>
 </dict>
