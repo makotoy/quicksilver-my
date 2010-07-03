@@ -21,5 +21,6 @@
 - (NSArray *)bookmarksForUser:(NSString *)username;
 - (NSArray *)cachedBookmarksForUser:(NSString *)username;
 - (NSString *)cachePath:(NSString*)username;
+- (NSDictionary*)cacheDictionaryForUser:(NSString*)username;
 
 @end

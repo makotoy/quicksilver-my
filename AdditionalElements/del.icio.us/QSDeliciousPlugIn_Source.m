@@ -71,9 +71,27 @@
               stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.xml", username]];
 }
 
+- (NSDictionary*)cacheDictionaryForUser:(NSString*)username
+{
+    return [NSDictionary dictionaryWithContentsOfFile:[self cachePath:username]];
+}
+
 - (NSArray *)cachedBookmarksForUser:(NSString *)username
 {
-	return [NSArray arrayWithContentsOfFile:[self cachePath:username]];
+	return [[self cacheDictionaryForUser:username] objectForKey:@"Bookmarks"];
+}
+
+- (void)checkCacheValidityForUser:(NSString*)username
+{
+    NSString* cacheStamp = [[self cacheDictionaryForUser:username] objectForKey:@"Timestamp"];
+    NSDateFormatter* dtFmt = [[NSDateFormatter alloc] init];
+    [dtFmt setDateFormat:@"MM-dd"];
+    NSString* todayStamp = [dtFmt stringFromDate:[NSDate date]];
+    [dtFmt release], dtFmt = nil;
+    if (![todayStamp isEqualToString:cacheStamp]) {
+        [[NSFileManager defaultManager] removeItemAtPath:[self cachePath:username]
+                                                   error:NULL];
+    }
 }
 
 - (NSString *)passwordForUser:(NSString *)username
@@ -88,6 +106,7 @@
 	if (!username || !password) return nil;
 	NSString *apiurl;
     [posts removeAllObjects];
+    [self checkCacheValidityForUser:username];
     if ([[NSFileManager defaultManager] fileExistsAtPath:[self cachePath:username]]) {
         [posts addObjectsFromArray:[self cachedBookmarksForUser:username]];
         apiurl = [NSString stringWithFormat:@"https://%@:%@@api.del.icio.us/v1/posts/recent?",
@@ -116,7 +135,14 @@
 	[postParser setDelegate:self];
 	[postParser parse];
     [postParser release], postParser = nil;
-	[posts writeToFile:[self cachePath:username] atomically:NO];
+    
+    NSMutableDictionary* newCache = [NSMutableDictionary dictionaryWithCapacity:0];
+    [newCache setObject:posts forKey:@"Bookmarks"];
+    NSDateFormatter* dtFmt = [[NSDateFormatter alloc] init];
+    [dtFmt setDateFormat:@"MM-dd"];
+    [newCache setObject:[dtFmt stringFromDate:[NSDate date]] forKey:@"Timestamp"];
+    [dtFmt release], dtFmt = nil;
+	[newCache writeToFile:[self cachePath:username] atomically:NO];
 	return posts;
 }
 

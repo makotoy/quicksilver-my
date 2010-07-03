@@ -24,18 +24,20 @@
     NSMutableArray* resArray = [NSMutableArray arrayWithCapacity:0];
     [roots enumerateObjectsUsingBlock:
      ^(id obj, NSUInteger idx, BOOL *stop){
-         [resArray addObjectsFromArray:[self chromeBookmarksForDict:obj]];
+         [resArray addObjectsFromArray:chromeBookmarksForDict(obj)];
      }];
     return resArray;
 }
+@end
 
-- (NSArray *)chromeBookmarksForDict:(NSDictionary *)dict
+NSArray* chromeBookmarksForDict(NSDictionary *dict)
 {
     if ([dict objectForKey:@"children"]) {
         NSMutableArray *array=[NSMutableArray arrayWithCapacity:1];
-        for (NSDictionary *child in [dict objectForKey:@"children"]) {
-            [array addObjectsFromArray:[self chromeBookmarksForDict:child]];
-        }
+        [[dict objectForKey:@"children"] enumerateObjectsUsingBlock:
+          ^(id child, NSUInteger idx, BOOL *stop){
+            [array addObjectsFromArray:chromeBookmarksForDict(child)];
+          }];
         return  array;
     } else {
         NSString *url = [dict objectForKey:@"url"];
@@ -47,4 +49,4 @@
     }
     return nil;
 }
-@end
+

@@ -13,7 +13,7 @@
                         <key>ID</key>
                         <string>QSPresetCaminoBookmarks</string>
                         <key>icon</key>
-                        <string>org.mozilla.navigator</string>
+                        <string>org.mozilla.camino</string>
                         <key>name</key>
                         <string>Camino Bookmarks</string>
                         <key>requiresSettingsPath</key>

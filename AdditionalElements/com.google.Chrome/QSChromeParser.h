@@ -5,6 +5,9 @@
 //  Apache License v2
 
 #import <Foundation/Foundation.h>
-@interface QSChromeBookmarksParser : QSParser
-- (NSArray *)chromeBookmarksForDict:(NSDictionary *)dict;
+@interface QSChromeBookmarksParser : QSParser {
+}
 @end
+
+NSArray* chromeBookmarksForDict(NSDictionary *dict);
+

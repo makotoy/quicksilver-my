@@ -28,6 +28,7 @@
 				08E362C4110B31A9008F2E6A /* PBXTargetDependency */,
 				0847167A112598B600BA7FC5 /* PBXTargetDependency */,
 				085C5420112FA95100E8C4B8 /* PBXTargetDependency */,
+				08B78D57113121CD00DC1360 /* PBXTargetDependency */,
 			);
 			name = "Build All Plugins";
 			productName = "Build All Plugins";
@@ -234,6 +235,20 @@
 			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
 			remoteInfo = "Dictionary Module";
 		};
+		08B78D54113121C400DC1360 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08B78D4D113121C400DC1360 /* ChromeElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 089236BA1130FA22005CE45C;
+			remoteInfo = "Chrome Module";
+		};
+		08B78D56113121CD00DC1360 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08B78D4D113121C400DC1360 /* ChromeElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 089236B91130FA22005CE45C;
+			remoteInfo = "Chrome Module";
+		};
 		08E362B0110B3168008F2E6A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */;
@@ -298,6 +313,7 @@
 		084BB0AC10E9A88B003D2539 /* QSPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSPlugIn_Prefix.pch; path = Configuration/QSPlugIn_Prefix.pch; sourceTree = QS_SOURCE_ROOT; };
 		084BB0AD10E9A88B003D2539 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Configuration/Release.xcconfig; sourceTree = QS_SOURCE_ROOT; };
 		085C5418112FA93600E8C4B8 /* DictPlugin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DictPlugin.xcodeproj; path = Dictionary/DictPlugin.xcodeproj; sourceTree = "<group>"; };
+		08B78D4D113121C400DC1360 /* ChromeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ChromeElement.xcodeproj; path = com.google.Chrome/ChromeElement.xcodeproj; sourceTree = "<group>"; };
 		08E362A9110B3167008F2E6A /* SafariElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariElement.xcodeproj; path = com.apple.Safari/SafariElement.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -314,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				084BB0A510E9A88B003D2539 /* Configuration */,
+				08B78D4D113121C400DC1360 /* ChromeElement.xcodeproj */,
 				085C5418112FA93600E8C4B8 /* DictPlugin.xcodeproj */,
 				08471673112598A400BA7FC5 /* QSCaminoPlugIn.xcodeproj */,
 				084BB08810E9A82E003D2539 /* QSTerminalPlugIn.xcodeproj */,
@@ -442,6 +459,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		08B78D4E113121C400DC1360 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08B78D55113121C400DC1360 /* Chrome Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		08E362AA110B3167008F2E6A /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -464,6 +489,10 @@
 				{
 					ProductGroup = 084BB04A10E9A7EA003D2539 /* Products */;
 					ProjectRef = 084BB04910E9A7EA003D2539 /* AppleMailElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 08B78D4E113121C400DC1360 /* Products */;
+					ProjectRef = 08B78D4D113121C400DC1360 /* ChromeElement.xcodeproj */;
 				},
 				{
 					ProductGroup = 084BB05C10E9A803003D2539 /* Products */;
@@ -617,6 +646,13 @@
 			remoteRef = 085C541C112FA93600E8C4B8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		08B78D55113121C400DC1360 /* Chrome Module.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Chrome Module.element";
+			remoteRef = 08B78D54113121C400DC1360 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		08E362B1110B3168008F2E6A /* Safari.element */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -691,6 +727,11 @@
 			isa = PBXTargetDependency;
 			name = "Dictionary Module";
 			targetProxy = 085C541F112FA95100E8C4B8 /* PBXContainerItemProxy */;
+		};
+		08B78D57113121CD00DC1360 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Chrome Module";
+			targetProxy = 08B78D56113121CD00DC1360 /* PBXContainerItemProxy */;
 		};
 		08E362C4110B31A9008F2E6A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
