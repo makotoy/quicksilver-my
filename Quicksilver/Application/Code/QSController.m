@@ -35,7 +35,7 @@
 
 extern char** environ;
 
-#define OneIn(i) ((int) (i*(double)random()/(double)0x7fffffff) == 0)
+#define OneIn(i) (random() % i == 0)
 
 #pragma mark Events
 NSString * QSQuicksilverWillQuitEvent = @"QSQuicksilverWillQuitEvent";
@@ -786,7 +786,7 @@ static id _sharedInstance;
 
 - (void)activated:(NSNotification *)aNotification
 {
-	if ( (fALPHA && OneIn(5) ) || (fDEV && OneIn(3))) {
+	if ( (fALPHA && OneIn(100) ) || (fDEV && OneIn(10))) {
         dispatch_queue_t myGCDQueue;
         myGCDQueue = dispatch_queue_create("com.makotoy.QuickSilver.GCD", NULL);
         dispatch_async(myGCDQueue, ^{

@@ -22,15 +22,12 @@ BOOL QSApplicationCompletedLaunch = NO;
 @end
 
 //#import "QSToolbarView.h"
-@implementation QSApp 
-- (void)handleCreateCommand:(id)command {
-	QSLog(@"create %@", command); 	
-}
-+(void)load {
-	
-    if (DEBUG)
+@implementation QSApp
++(void)load
+{	
+    if (DEBUG) {
         setenv("verbose", "1", YES);
-    else if (mOptionKeyIsDown) {
+    } else if (mOptionKeyIsDown) {
         QSLog(@"Setting Verbose");
         setenv("QSDebugPlugIns", "1", YES);
         setenv("QSDebugStartup", "1", YES);
@@ -38,18 +35,24 @@ BOOL QSApplicationCompletedLaunch = NO;
     } else {
 		unsetenv("verbose");
 	}
-	
 }
 
-
-+ (void)initialize {
++ (void)initialize
+{
     if (DEBUG_STARTUP) QSLog(@"App Initialize");
-  [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"QSDefaults" ofType:@"plist"]]];
+    NSString* defaultDictPath = [[NSBundle mainBundle] pathForResource:@"QSDefaults"
+                                                                ofType:@"plist"];
+    NSDictionary* defaultDict = [NSDictionary dictionaryWithContentsOfFile:defaultDictPath];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultDict];
 }
 
+- (void)handleCreateCommand:(id)command
+{
+	QSLog(@"create %@", command); 	
+}
 
-
-- (id)init {
+- (id)init
+{
 	char *relaunchingFromPid = getenv("relaunchFromPid"); 	
 	if (relaunchingFromPid) {
 		unsetenv("relaunchFromPid");
@@ -57,22 +60,7 @@ BOOL QSApplicationCompletedLaunch = NO;
 		int i;
 		for (i = 0; !kill(pid, 0) && i < 50; i++) usleep(100000);
 	}
-	
-	
     if ((self = [super init])) {
-		
-		
-		// Prevent Pre-Tiger Systems
-		
-		//QSLog([self versionString]);
-		SInt32 version;
-		Gestalt (gestaltSystemVersion, & version);
-		if (version < 0x1040) {
-			//int selection=
-			NSRunAlertPanel([[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] stringByAppendingString:@" requires Mac OS 10.4"] , @"Recent versions of Quicksilver require Mac OS 10.4 Tiger. An older, 10.3 compatible version is available from the website.", @"OK", nil, nil, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]);
-			[self terminate:self];
-		}
-        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
         // Honor dock hidden preference if new version
@@ -96,56 +84,41 @@ BOOL QSApplicationCompletedLaunch = NO;
         //Set Feature level
         featureLevel = [defaults integerForKey:kFeatureLevel];
 		if (featureLevel < 0) featureLevel = 0;
-		if (featureLevel > 0) featureLevel = 2;
-		// if (!featureLevel && DEVELOPMENTVERSION)
-		//     featureLevel = 1;
-        if (featureLevel > 2 && !([defaults boolForKey:kCuttingEdgeFeatures]) )
+        /*
+        if (featureLevel > 2 && !([defaults boolForKey:kCuttingEdgeFeatures]) ) {
             featureLevel = 2;
-		//if (featureLevel == 1)
-		//	featureLevel == 2;
-		
-		
-		}
+        }
+        */
+    }
     return self;
-	}
+}
 
-- (void)finishLaunching {
+- (void)finishLaunching
+{
 	[super finishLaunching];
 }
 
-- (void)_sendFinishLaunchingNotification {
+- (void)_sendFinishLaunchingNotification
+{
 	[super _sendFinishLaunchingNotification];
 	[[NSNotificationCenter defaultCenter] postNotificationName:QSApplicationDidFinishLaunchingNotification object:self];
 	QSApplicationCompletedLaunch = YES;
 }
 
-
-- (BOOL)completedLaunch {
+- (BOOL)completedLaunch
+{
 	return QSApplicationCompletedLaunch;
 }
 
-- (void)setApplicationIconImage:(NSImage *)image {
-    if (!isUIElement)
-        [super setApplicationIconImage:image];
+- (void)setApplicationIconImage:(NSImage *)image
+{
+    if (!isUIElement) [super setApplicationIconImage:image];
 }
 
 - (int) featureLevel {return featureLevel;}
-
 - (BOOL)betaLevel {return featureLevel > 0;}
 - (BOOL)alphaLevel {return featureLevel > 1;}
 - (BOOL)devLevel {return featureLevel > 2;}
-
-- (BOOL)isTiger {
-	SInt32 version;
-	Gestalt (gestaltSystemVersion, & version);
-	return (version >= 0x1040);
-}
-
-//- (void)setApplicationIconImage:(NSImage *)image {
-// QSLog(@"AppImage: %@", image);
-//    [super setApplicationIconImage: image];
-//}
-
 
 - (void)sendEvent:(NSEvent *)theEvent {
 	//	QSLog(@"event %@", theEvent);

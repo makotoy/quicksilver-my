@@ -35,7 +35,11 @@
     return version;
 }
 
-- (int)featureLevel { return 0; }
+- (int)featureLevel
+{
+    // Set feature level to fDEV (max) for now
+    return 3;
+}
 
 - (NSDictionary *)processInformation
 {
