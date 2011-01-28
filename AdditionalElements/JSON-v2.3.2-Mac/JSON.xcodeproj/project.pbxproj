@@ -1192,6 +1192,7 @@
 		};
 		53D229860C96121700276605 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084617C412F2A02700A403DF /* Common.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 11;
 				DYLIB_COMPATIBILITY_VERSION = 4;
