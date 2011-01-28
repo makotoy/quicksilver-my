@@ -18,7 +18,7 @@
     NSString *dictRep = [NSString stringWithContentsOfFile:[path stringByStandardizingPath]
                                                   encoding:NSUTF8StringEncoding
                                                      error:NULL];
-    SBJSON* parser = [[SBJSON alloc] init];
+    SBJsonParser* parser = [[SBJsonParser alloc] init];
     NSDictionary* dict = [parser objectWithString:dictRep error:NULL];
     NSArray* roots = [[dict objectForKey:@"roots"] allValues];
     NSMutableArray* resArray = [NSMutableArray arrayWithCapacity:0];

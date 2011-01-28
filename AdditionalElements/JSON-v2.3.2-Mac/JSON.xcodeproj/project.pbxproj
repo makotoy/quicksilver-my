@@ -259,7 +259,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		084617C412F2A02700A403DF /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = ../../../Configuration/Common.xcconfig; sourceTree = SOURCE_ROOT; };
+		084617C412F2A02700A403DF /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = ../../Configuration/Common.xcconfig; sourceTree = SOURCE_ROOT; };
 		535157780F6E3BE100C8AABD /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		535157790F6E3BE100C8AABD /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		535157A30F6EE4A800C8AABD /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
@@ -1222,6 +1222,7 @@
 		};
 		53D229870C96121700276605 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 084617C412F2A02700A403DF /* Common.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 11;
 				DYLIB_COMPATIBILITY_VERSION = 4;

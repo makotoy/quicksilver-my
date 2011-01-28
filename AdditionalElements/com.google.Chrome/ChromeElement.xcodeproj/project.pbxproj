@@ -8,11 +8,42 @@
 
 /* Begin PBXBuildFile section */
 		087633DF113103F700B51F69 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087633DE113103F700B51F69 /* Cocoa.framework */; };
-		087633EC1131065300B51F69 /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08C3F9331130FE290019338F /* JSON.framework */; };
 		08C3F92B1130FB880019338F /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 08C3F92A1130FB880019338F /* element.xml */; };
 		08C3F92F1130FCAB0019338F /* QSChromeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C3F92E1130FCAB0019338F /* QSChromeParser.m */; };
-		08C3F9341130FE290019338F /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C3F9331130FE290019338F /* JSON.framework */; };
+		08D2BA4412F2BC01000583A3 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D2BA3912F2BBF3000583A3 /* JSON.framework */; };
+		08D2BA4512F2BC10000583A3 /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08D2BA3912F2BBF3000583A3 /* JSON.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		08D2BA3812F2BBF3000583A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53D229810C96121600276605 /* JSON.framework */;
+			remoteInfo = JSON;
+		};
+		08D2BA3A12F2BBF3000583A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53D2298D0C96122A00276605 /* Tests.octest */;
+			remoteInfo = Tests;
+		};
+		08D2BA3C12F2BBF3000583A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FE2BBD800D8B0D3900184787 /* libjson.a */;
+			remoteInfo = libjson;
+		};
+		08D2BA3E12F2BBF3000583A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FE2BBDAB0D8B0EE000184787 /* libjsontests.octest */;
+			remoteInfo = libjsontests;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		087633FB1131065A00B51F69 /* CopyFiles */ = {
@@ -21,7 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				087633EC1131065300B51F69 /* JSON.framework in CopyFiles */,
+				08D2BA4512F2BC10000583A3 /* JSON.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,7 +73,7 @@
 		08C3F92A1130FB880019338F /* element.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
 		08C3F92D1130FCAB0019338F /* QSChromeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSChromeParser.h; sourceTree = "<group>"; };
 		08C3F92E1130FCAB0019338F /* QSChromeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSChromeParser.m; sourceTree = "<group>"; };
-		08C3F9331130FE290019338F /* JSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSON.framework; sourceTree = "<group>"; };
+		08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = "../JSON-v2.3.2-Mac/JSON.xcodeproj"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08C3F9341130FE290019338F /* JSON.framework in Frameworks */,
+				08D2BA4412F2BC01000583A3 /* JSON.framework in Frameworks */,
 				087633DF113103F700B51F69 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,7 +92,6 @@
 		0876331F113103DE00B51F69 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08C3F9331130FE290019338F /* JSON.framework */,
 				087633DE113103F700B51F69 /* Cocoa.framework */,
 			);
 			name = Frameworks;
@@ -70,6 +100,7 @@
 		0881E3781130F99600252374 = {
 			isa = PBXGroup;
 			children = (
+				08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */,
 				0876331F113103DE00B51F69 /* Frameworks */,
 				08C3F9241130FB640019338F /* Classes */,
 				08C3F9231130FB5C0019338F /* Resources */,
@@ -119,6 +150,17 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		08D2BA3112F2BBF3000583A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08D2BA3912F2BBF3000583A3 /* JSON.framework */,
+				08D2BA3B12F2BBF3000583A3 /* Tests.octest */,
+				08D2BA3D12F2BBF3000583A3 /* libjson.a */,
+				08D2BA3F12F2BBF3000583A3 /* libjsontests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -130,6 +172,7 @@
 				089236B71130FA22005CE45C /* Sources */,
 				089236B81130FA22005CE45C /* Frameworks */,
 				087633FB1131065A00B51F69 /* CopyFiles */,
+				08D2BA4C12F2BC2A000583A3 /* ShellScript */,
 				087634021131071000B51F69 /* ShellScript */,
 			);
 			buildRules = (
@@ -159,12 +202,49 @@
 			mainGroup = 0881E3781130F99600252374;
 			productRefGroup = 089236BB1130FA22005CE45C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 08D2BA3112F2BBF3000583A3 /* Products */;
+					ProjectRef = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				089236B91130FA22005CE45C /* Chrome Module */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		08D2BA3912F2BBF3000583A3 /* JSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = JSON.framework;
+			remoteRef = 08D2BA3812F2BBF3000583A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		08D2BA3B12F2BBF3000583A3 /* Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Tests.octest;
+			remoteRef = 08D2BA3A12F2BBF3000583A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		08D2BA3D12F2BBF3000583A3 /* libjson.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjson.a;
+			remoteRef = 08D2BA3C12F2BBF3000583A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		08D2BA3F12F2BBF3000583A3 /* libjsontests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = libjsontests.octest;
+			remoteRef = 08D2BA3E12F2BBF3000583A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		089236B61130FA22005CE45C /* Resources */ = {
@@ -190,6 +270,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/bin/perl $QS_SOURCE_ROOT/put_bndl_ver.pl";
+		};
+		08D2BA4C12F2BC2A000583A3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/JSON.framework/Versions/A/JSON\" \\\n \"@loader_path/../Frameworks/JSON.framework/Versions/A/JSON\" \\\n \"$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
