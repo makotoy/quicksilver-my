@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		08016CFD108F5B6C00FF7B19 /* QSDeliciousPlugIn_Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 087D5A0A108F5A92001FF05F /* QSDeliciousPlugIn_Action.h */; };
 		08016CFE108F5B6D00FF7B19 /* QSDeliciousPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 087D5A0C108F5A92001FF05F /* QSDeliciousPlugIn.h */; };
+		0846179B12F2121C00A403DF /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0846179212F2120800A403DF /* JSON.framework */; };
+		084617F012F2A1B200A403DF /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0846179212F2120800A403DF /* JSON.framework */; };
 		0853D8D1108F5C1C005FEEF0 /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0853D8D0108F5C1C005FEEF0 /* element.xml */; };
 		087D59BB108F571A001FF05F /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 087D59B3108F571A001FF05F /* Common.xcconfig */; };
 		087D59BC108F571A001FF05F /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 087D59B4108F571A001FF05F /* Debug.xcconfig */; };
@@ -32,7 +34,59 @@
 		E182BE5B06FC9C46007BF2C2 /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E182BE5A06FC9C46007BF2C2 /* PreferencePanes.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0846179112F2120800A403DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0846178612F2120800A403DF /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53D229810C96121600276605;
+			remoteInfo = JSON;
+		};
+		0846179312F2120800A403DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0846178612F2120800A403DF /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53D2298D0C96122A00276605;
+			remoteInfo = Tests;
+		};
+		0846179512F2120800A403DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0846178612F2120800A403DF /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FE2BBD800D8B0D3900184787;
+			remoteInfo = libjson;
+		};
+		0846179712F2120800A403DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0846178612F2120800A403DF /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FE2BBDAB0D8B0EE000184787;
+			remoteInfo = libjsontests;
+		};
+		0846179912F2121000A403DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0846178612F2120800A403DF /* JSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 53D229800C96121600276605;
+			remoteInfo = JSON;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		08DF311112F1F0590039252F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0846179B12F2121C00A403DF /* JSON.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0846178612F2120800A403DF /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = "JSON-v2.3.2-Mac/JSON.xcodeproj"; sourceTree = "<group>"; };
 		0853D8D0108F5C1C005FEEF0 /* element.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
 		087D59B3108F571A001FF05F /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
 		087D59B4108F571A001FF05F /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
@@ -67,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084617F012F2A1B200A403DF /* JSON.framework in Frameworks */,
 				8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */,
 				E182BE5B06FC9C46007BF2C2 /* PreferencePanes.framework in Frameworks */,
 			);
@@ -78,6 +133,7 @@
 		0259C574FE90428111CA0C5A /* QSDeliciousPlugIn */ = {
 			isa = PBXGroup;
 			children = (
+				0846178612F2120800A403DF /* JSON.xcodeproj */,
 				087D59AD108F5665001FF05F /* Configuration */,
 				32DBCF9E0370C38000C91783 /* Classes */,
 				32DBCF9F0370C38200C91783 /* Other Sources */,
@@ -100,6 +156,17 @@
 				7F9441A00803A9D9007EDC31 /* QSObjectSource.name.strings */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		0846178712F2120800A403DF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0846179212F2120800A403DF /* JSON.framework */,
+				0846179412F2120800A403DF /* Tests.octest */,
+				0846179612F2120800A403DF /* libjson.a */,
+				0846179812F2120800A403DF /* libjsontests.octest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		087D59AD108F5665001FF05F /* Configuration */ = {
@@ -179,12 +246,15 @@
 				8D1AC9660486D14A00FE50C9 /* Resources */,
 				8D1AC96A0486D14A00FE50C9 /* Sources */,
 				8D1AC96E0486D14A00FE50C9 /* Frameworks */,
+				08DF311112F1F0590039252F /* CopyFiles */,
+				08DF30FC12F1F0410039252F /* ShellScript */,
 				E1022B2806B3475D00299BEC /* ShellScript */,
 				08016D02108F5B8B00FF7B19 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0846179A12F2121000A403DF /* PBXTargetDependency */,
 			);
 			name = "Social Bookmarks Module";
 			productInstallPath = "$(HOME)/Developer/Palettes";
@@ -199,6 +269,7 @@
 			isa = PBXProject;
 			buildConfigurationList = 7F07AFAE085E432E00E2AFC4 /* Build configuration list for PBXProject "QSDeliciousPlugIn" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -209,12 +280,49 @@
 			);
 			mainGroup = 0259C574FE90428111CA0C5A /* QSDeliciousPlugIn */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0846178712F2120800A403DF /* Products */;
+					ProjectRef = 0846178612F2120800A403DF /* JSON.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1AC9600486D14A00FE50C9 /* Social Bookmarks Module */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0846179212F2120800A403DF /* JSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = JSON.framework;
+			remoteRef = 0846179112F2120800A403DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0846179412F2120800A403DF /* Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Tests.octest;
+			remoteRef = 0846179312F2120800A403DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0846179612F2120800A403DF /* libjson.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjson.a;
+			remoteRef = 0846179512F2120800A403DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0846179812F2120800A403DF /* libjsontests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = libjsontests.octest;
+			remoteRef = 0846179712F2120800A403DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D1AC9660486D14A00FE50C9 /* Resources */ = {
@@ -242,6 +350,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		08DF30FC12F1F0410039252F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/JSON.framework/Versions/A/JSON\" \\\n \"@loader_path/../Frameworks/JSON.framework/Versions/A/JSON\" \\\n \"$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\"";
+		};
 		E1022B2806B3475D00299BEC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -271,6 +392,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		0846179A12F2121000A403DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JSON;
+			targetProxy = 0846179912F2121000A403DF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		E182BE3A06FC9B13007BF2C2 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -294,6 +423,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 087D59B7108F571A001FF05F /* QSElement.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
 			};
 			name = Debug;
 		};
@@ -301,6 +434,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 087D59B7108F571A001FF05F /* QSElement.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
 			};
 			name = Release;
 		};

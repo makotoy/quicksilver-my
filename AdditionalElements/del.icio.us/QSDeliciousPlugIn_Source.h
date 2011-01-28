@@ -18,9 +18,12 @@
 	IBOutlet NSTextField *passField;
 }
 
-- (NSArray *)bookmarksForUser:(NSString *)username;
+- (void)collectBookmarksForUser:(NSString *)username;
 - (NSArray *)cachedBookmarksForUser:(NSString *)username;
 - (NSString *)cachePath:(NSString*)username;
 - (NSDictionary*)cacheDictionaryForUser:(NSString*)username;
-
+- (void)writeCache:(NSString*)username;
+- (void)updateCacheForUser:(NSString*)username;
+- (void)getDatesForUser:(NSString *)username;
+- (NSString *)passwordForUser:(NSString *)username;
 @end
