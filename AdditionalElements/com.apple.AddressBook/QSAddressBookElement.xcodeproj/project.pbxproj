@@ -156,7 +156,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 7F07AEFE085E432900E2AFC4 /* Build configuration list for PBXProject "QSAddressBookElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0259C574FE90428111CA0C5A /* QSAddressBookPlugIn */;
 			projectDirPath = "";
 			projectRoot = "";

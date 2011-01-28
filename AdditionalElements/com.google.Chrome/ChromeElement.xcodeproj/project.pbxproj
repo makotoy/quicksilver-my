@@ -148,7 +148,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 0881E37D1130F99600252374 /* Build configuration list for PBXProject "ChromeElement" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0881E3781130F99600252374;
 			productRefGroup = 089236BB1130FA22005CE45C /* Products */;
 			projectDirPath = "";
