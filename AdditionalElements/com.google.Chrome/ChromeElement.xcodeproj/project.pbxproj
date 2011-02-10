@@ -19,28 +19,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 53D229810C96121600276605 /* JSON.framework */;
+			remoteGlobalIDString = 53D229810C96121600276605;
 			remoteInfo = JSON;
 		};
 		08D2BA3A12F2BBF3000583A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 53D2298D0C96122A00276605 /* Tests.octest */;
+			remoteGlobalIDString = 53D2298D0C96122A00276605;
 			remoteInfo = Tests;
 		};
 		08D2BA3C12F2BBF3000583A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = FE2BBD800D8B0D3900184787 /* libjson.a */;
+			remoteGlobalIDString = FE2BBD800D8B0D3900184787;
 			remoteInfo = libjson;
 		};
 		08D2BA3E12F2BBF3000583A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = FE2BBDAB0D8B0EE000184787 /* libjsontests.octest */;
+			remoteGlobalIDString = FE2BBDAB0D8B0EE000184787;
 			remoteInfo = libjsontests;
 		};
 /* End PBXContainerItemProxy section */
@@ -74,6 +74,7 @@
 		08C3F92D1130FCAB0019338F /* QSChromeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSChromeParser.h; sourceTree = "<group>"; };
 		08C3F92E1130FCAB0019338F /* QSChromeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSChromeParser.m; sourceTree = "<group>"; };
 		08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = "../JSON-v2.3.2-Mac/JSON.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		08DF1A341302D66A007350CF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				087633DE113103F700B51F69 /* Cocoa.framework */,
+				08DF1A341302D66A007350CF /* Cocoa.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

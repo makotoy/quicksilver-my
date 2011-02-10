@@ -153,7 +153,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 7F07AF2A085E432A00E2AFC4 /* Build configuration list for PBXProject "AppleMailElement" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0259C574FE90428111CA0C5A /* QSAppleMailPlugIn */;
 			projectDirPath = "";
 			projectRoot = "";
