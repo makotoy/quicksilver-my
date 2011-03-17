@@ -16,7 +16,18 @@
 #define QS_DEL_CACHE_DATE_FMT @"yyyy-MM-dd'T'hh:mm:ss" // @"yyyy-MM-dd'T'hh:mm:ss'Z'"
 #define QS_DEL_API_DATE_FMT @"yyyy-MM-dd"
 
-NSURL* urlForSiteAndUser(QSDeliciousPlugIn_Site site, NSString* username)
+
+@implementation QSDeliciousPlugIn_Source
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
+{
+    NSSet* resPaths = [super keyPathsForValuesAffectingValueForKey:key];
+    if ([key isEqualToString:@"currentPassword"]) {
+        resPaths = [resPaths setByAddingObject:@"selection"];
+    }
+    return resPaths;
+}
+
++ (NSURL*)urlForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username
 {
     NSString* formatStr;
     if (site == QSDeliciousPlugIn_Delicious) {
@@ -25,11 +36,11 @@ NSURL* urlForSiteAndUser(QSDeliciousPlugIn_Site site, NSString* username)
         formatStr = @"http://%@@diigo.com/";
     }
     NSString* urlStr = [NSString stringWithFormat:formatStr, username];
-
+    
 	return [NSURL URLWithString:urlStr];
 }
 
-NSURL* urlForSiteUserAndPassword(QSDeliciousPlugIn_Site site, NSString* username, NSString* password)
++ (NSURL*)urlForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username password:(NSString*)password
 {
     NSString* formatStr;
     if (site == QSDeliciousPlugIn_Delicious) {
@@ -40,17 +51,6 @@ NSURL* urlForSiteUserAndPassword(QSDeliciousPlugIn_Site site, NSString* username
     NSString* urlStr = [NSString stringWithFormat:formatStr, username, password];
     
 	return [NSURL URLWithString:urlStr];
-}
-
-
-@implementation QSDeliciousPlugIn_Source
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
-{
-    NSSet* resPaths = [super keyPathsForValuesAffectingValueForKey:key];
-    if ([key isEqualToString:@"currentPassword"]) {
-        resPaths = [resPaths setByAddingObject:@"selection"];
-    }
-    return resPaths;
 }
 
 - (id)init
@@ -184,14 +184,13 @@ NSURL* urlForSiteUserAndPassword(QSDeliciousPlugIn_Site site, NSString* username
     }
 
     NSString* cacheStamp = [[self cacheDictionaryForSite:site user:username] objectForKey:@"Timestamp"];
-    NSString* newestPostDateStr = [[self agentForSite:site] getRecentDateForUser:username password:password];
-    if (!newestPostDateStr) {
+    NSDate* postDate = [[self agentForSite:site] getRecentDateForUser:username password:password];
+    if (!postDate) {
         return;
     }    
-    NSDate *postsDate = [self convertTimestampToDate:newestPostDateStr];
     NSDate *cacheDate = [self convertTimestampToDate:cacheStamp];
 
-    if ([postsDate compare:cacheDate] == NSOrderedDescending) {
+    if ([postDate compare:cacheDate] == NSOrderedDescending) {
         [[NSFileManager defaultManager] removeItemAtPath:[self cachePathForSite:site user:username]
                                                    error:NULL];
         [self collectBookmarksForSite:site user:username];
@@ -286,7 +285,7 @@ NSURL* urlForSiteUserAndPassword(QSDeliciousPlugIn_Site site, NSString* username
 	if (!username) return nil;
     
     QSDeliciousPlugIn_Site site = [[[self currentEntry] objectForKey:@"site"] intValue];    
-    NSURL* url = urlForSiteAndUser(site, username);
+    NSURL* url = [QSDeliciousPlugIn_Source urlForSite:site user:username];
     
 	return [url keychainPassword];
 }
@@ -295,16 +294,16 @@ NSURL* urlForSiteUserAndPassword(QSDeliciousPlugIn_Site site, NSString* username
 {
 	if ([newPassword length]) {
         QSDeliciousPlugIn_Site site = [[[self currentEntry] objectForKey:@"site"] intValue];    
-        NSURL *url = urlForSiteUserAndPassword(site,
-                                               [[self currentEntry] objectForKey:@"username"],
-                                               newPassword);
+        NSURL *url = [QSDeliciousPlugIn_Source urlForSite:site
+                                                     user:[[self currentEntry] objectForKey:@"username"]
+                                                 password:newPassword];
         [url addPasswordToKeychain];
     }
 }
 
 - (NSString *)passwordForSite:(QSDeliciousPlugIn_Site)site user:(NSString *)username
 {
-	NSURL *url = urlForSiteAndUser(site, username);
+	NSURL *url = [QSDeliciousPlugIn_Source urlForSite:site user:username];
 	return [url keychainPassword];	
 }
 

@@ -12,7 +12,7 @@
 @interface QSSocialAgent : NSObject {
 
 }
-- (id)getRecentDateForUser:(NSString*)user password:(NSString*)password;
+- (NSDate*)getRecentDateForUser:(NSString*)user password:(NSString*)password;
 - (id)tryAddNewBookmarks:(NSMutableArray*)bookmarks forUser:(NSString*)user password:(NSString*)password;
 
 @end

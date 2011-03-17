@@ -10,10 +10,5 @@
 #import "QSSocialAgent.h"
 
 @interface QSSocialDiigoAgent : QSSocialAgent {
-
 }
-- (NSString*)convertDiigoDateRep:(NSString*)dateRep;
-- (id)retrieveDiigoObject:(NSString*)apiURLStr;
-- (NSString*)hashRep:(NSString*)inputStr;
-- (id)cacheEntryForDiigoRecord:(NSDictionary*)diigoRep;
 @end

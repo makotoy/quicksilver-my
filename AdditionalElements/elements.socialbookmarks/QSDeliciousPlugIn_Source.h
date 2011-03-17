@@ -22,6 +22,8 @@ typedef enum _QSDeliciousPlugIn_Site {
 	IBOutlet NSTextField *userField;
 	IBOutlet NSTextField *passField;
 }
++ (NSURL*)urlForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username;
++ (NSURL*)urlForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username password:(NSString*)password;
 - (QSSocialAgent*)agentForSite:(QSDeliciousPlugIn_Site)site;
 - (NSDate*)convertTimestampToDate:(NSString*)timestamp;
 - (NSArray *)cachedBookmarksForSite:(QSDeliciousPlugIn_Site)site user:(NSString *)username;

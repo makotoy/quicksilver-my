@@ -12,8 +12,16 @@
 
 #define QS_SOCIAL_DIIGO_TIME_FORMAT @"yyyy/MM/dd HH:mm:ss Z"
 
-@implementation QSSocialDiigoAgent
-- (NSString*)convertDiigoDateRep:(NSString*)dateRep
+@interface QSSocialDiigoAgent(PrivateClassMethods)
++ (NSString*)convertDiigoDateRep:(NSString*)dateRep;
++ (id)retrieveDiigoObject:(NSString*)apiURLStr;
++ (NSString*)hashRep:(NSString*)inputStr;
++ (id)cacheEntryForDiigoRecord:(NSDictionary*)diigoRep;
+@end
+
+@implementation QSSocialDiigoAgent(PrivateClassMethods)
+
++ (NSString*)convertDiigoDateRep:(NSString*)dateRep
 {
     NSDateFormatter* dtFmt = [[NSDateFormatter alloc] init];
     [dtFmt setDateFormat:QS_SOCIAL_DIIGO_TIME_FORMAT];
@@ -27,9 +35,23 @@
     return resStr;
 }
 
-- (id)retrieveDiigoObject:(NSString*)apiURLStr
++ (NSString*)hashRep:(NSString*)inputStr
 {
-    NSURL* apiURL = [NSURL URLWithString:apiURLStr];
+    unsigned char md[20];
+    const char* inbuff = [inputStr UTF8String];
+    CC_SHA1(inbuff, strlen(inbuff), md);
+    int i;
+    char outbuff[41];
+    for (i = 0; i < 20; i++) {
+        snprintf(outbuff + 2 * i, 3, "%02x", md[i]);
+    }
+    outbuff[40] = 0x00;
+    NSString* resStr = [NSString stringWithCString:outbuff encoding:NSASCIIStringEncoding];
+    return resStr;
+}
+
++ (id)retrieveDiigoObject:(NSString*)apiURLStr
+{
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:apiURLStr]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:4.0];
@@ -53,25 +75,9 @@
     return resObj;
 }
 
-- (NSString*)hashRep:(NSString*)inputStr
-{
-    unsigned char md[20];
-    const char* inbuff = [inputStr UTF8String];
-    CC_SHA1(inbuff, strlen(inbuff), md);
-    int i;
-    char outbuff[41];
-    for (i = 0; i < 20; i++) {
-        snprintf(outbuff + 2 * i, 3, "%02x", md[i]);
-    }
-    outbuff[40] = 0x00;
-    NSString* resStr = [NSString stringWithCString:outbuff encoding:NSASCIIStringEncoding];
-    return resStr;
-}
-
-- (id)cacheEntryForDiigoRecord:(NSDictionary*)diigoRep
++ (id)cacheEntryForDiigoRecord:(NSDictionary*)diigoRep
 {
     NSDictionary* resDict;
-    NSString* dateCacheRep = [self convertDiigoDateRep:[diigoRep objectForKey:@"updated_at"]];
     NSString* tagRep = @"";
     for (id tag in [[diigoRep objectForKey:@"tags"] componentsSeparatedByString:@","]) {
         tagRep = [tagRep stringByAppendingFormat:@" %@", tag];
@@ -79,27 +85,32 @@
     if ([tagRep length]) {
         tagRep = [tagRep substringFromIndex:1];
     }
-    NSString* hashStr = [self hashRep:[diigoRep objectForKey:@"url"]];
     resDict = [NSDictionary dictionaryWithObjectsAndKeys:
                [diigoRep objectForKey:@"url"], @"href",
                [diigoRep objectForKey:@"title"], @"description",
                [diigoRep objectForKey:@"desc"], @"extended",
-               hashStr, @"hash",
-               dateCacheRep, @"time",
+               [QSSocialDiigoAgent hashRep:[diigoRep objectForKey:@"url"]], @"hash",
+               [QSSocialDiigoAgent convertDiigoDateRep:[diigoRep objectForKey:@"updated_at"]], @"time",
                tagRep, @"tag",
                nil];
     return resDict;
 }
+@end
 
-- (id)getRecentDateForUser:(NSString*)user password:(NSString*)password
+@implementation QSSocialDiigoAgent
+
+- (NSDate*)getRecentDateForUser:(NSString*)user password:(NSString*)password
 {
     NSString* apiURLStr;
     apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=0&count=1&user=%@",
                  user, password, user];
-    id latestBmkList = [self retrieveDiigoObject:apiURLStr];
+    id latestBmkList = [QSSocialDiigoAgent retrieveDiigoObject:apiURLStr];
     NSString* dateRep = [[latestBmkList objectAtIndex:0] objectForKey:@"updated_at"];
-    
-    return [self convertDiigoDateRep:dateRep];
+    NSDateFormatter* dtFmt = [[NSDateFormatter alloc] init];
+    [dtFmt setDateFormat:QS_SOCIAL_DIIGO_TIME_FORMAT];
+    NSDate* resDate = [dtFmt dateFromString:dateRep];
+    [dtFmt release];
+    return resDate;
 }
 
 - (id)tryAddNewBookmarks:(NSMutableArray*)bookmarks forUser:(NSString*)user password:(NSString*)password
@@ -107,9 +118,9 @@
     NSString* apiURLStr;
     apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=%d&count=100&user=%@",
                  user, password, [bookmarks count], user];
-    id bmkList = [self retrieveDiigoObject:apiURLStr];
+    id bmkList = [QSSocialDiigoAgent retrieveDiigoObject:apiURLStr];
     for (id bmk in bmkList) {
-        [bookmarks addObject:[self cacheEntryForDiigoRecord:bmk]];
+        [bookmarks addObject:[QSSocialDiigoAgent cacheEntryForDiigoRecord:bmk]];
     }
     if ([bmkList count] < 100) {
         return nil;

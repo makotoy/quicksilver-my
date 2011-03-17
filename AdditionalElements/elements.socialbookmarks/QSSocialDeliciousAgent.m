@@ -8,6 +8,7 @@
 
 #import "QSSocialDeliciousAgent.h"
 
+#define QS_SOCIAL_DELICIOUS_TIME_FMT @"yyyy-MM-dd'T'hh:mm:ss" // @"yyyy-MM-dd'T'hh:mm:ss'Z'"
 
 @implementation QSSocialDeliciousAgent
 
@@ -27,7 +28,7 @@
     [super dealloc];
 }
 
-- (id)getRecentDateForUser:(NSString*)user password:(NSString*)password
+- (NSDate*)getRecentDateForUser:(NSString*)user password:(NSString*)password
 {
     NSString *apiurl = [NSString stringWithFormat:@"https://%@:%@@api.del.icio.us/v1/posts/recent",
                         user, password];
@@ -53,7 +54,12 @@
     [posts removeAllObjects];
     [postsParser parse];
     [postsParser release], postsParser = nil;
-    return [[posts objectAtIndex:0] objectForKey:@"time"];
+    
+    NSDateFormatter* dtFmt = [[NSDateFormatter alloc] init];
+    [dtFmt setDateFormat:QS_SOCIAL_DELICIOUS_TIME_FMT];
+    NSDate* resDate = [dtFmt dateFromString:[[posts objectAtIndex:0] objectForKey:@"time"]];
+    [dtFmt release];
+    return resDate;
 }
 
 - (id)tryAddNewBookmarks:(NSMutableArray*)bookmarks forUser:(NSString*)user password:(NSString*)password

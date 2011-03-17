@@ -10,7 +10,7 @@
 
 
 @implementation QSSocialAgent
-- (id)getRecentDateForUser:(NSString*)user password:(NSString*)password
+- (NSDate*)getRecentDateForUser:(NSString*)user password:(NSString*)password
 {
     return nil;
 }
