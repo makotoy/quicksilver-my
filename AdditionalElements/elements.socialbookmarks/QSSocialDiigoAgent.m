@@ -102,7 +102,7 @@
 - (NSDate*)getRecentDateForUser:(NSString*)user password:(NSString*)password
 {
     NSString* apiURLStr;
-    apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=0&count=1&user=%@",
+    apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=0&count=1&user=%@&filter=all",
                  user, password, user];
     id latestBmkList = [QSSocialDiigoAgent retrieveDiigoObject:apiURLStr];
     NSString* dateRep = [[latestBmkList objectAtIndex:0] objectForKey:@"updated_at"];
@@ -116,7 +116,7 @@
 - (id)tryAddNewBookmarks:(NSMutableArray*)bookmarks forUser:(NSString*)user password:(NSString*)password
 {
     NSString* apiURLStr;
-    apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=%d&count=100&user=%@",
+    apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=%d&count=100&user=%@&filter=all",
                  user, password, [bookmarks count], user];
     id bmkList = [QSSocialDiigoAgent retrieveDiigoObject:apiURLStr];
     for (id bmk in bmkList) {

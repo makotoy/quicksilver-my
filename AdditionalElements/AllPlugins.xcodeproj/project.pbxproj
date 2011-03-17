@@ -18,7 +18,6 @@
 				084BB09210E9A842003D2539 /* PBXTargetDependency */,
 				084BB09410E9A842003D2539 /* PBXTargetDependency */,
 				084BB09610E9A842003D2539 /* PBXTargetDependency */,
-				084BB09810E9A842003D2539 /* PBXTargetDependency */,
 				084BB09A10E9A842003D2539 /* PBXTargetDependency */,
 				084BB09C10E9A842003D2539 /* PBXTargetDependency */,
 				084BB09E10E9A842003D2539 /* PBXTargetDependency */,
@@ -29,6 +28,7 @@
 				0847167A112598B600BA7FC5 /* PBXTargetDependency */,
 				085C5420112FA95100E8C4B8 /* PBXTargetDependency */,
 				08B78D57113121CD00DC1360 /* PBXTargetDependency */,
+				0861F47D133223B300DFE63E /* PBXTargetDependency */,
 			);
 			name = "Build All Plugins";
 			productName = "Build All Plugins";
@@ -39,13 +39,14 @@
 		0847167D112598D900BA7FC5 /* Camino Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08471678112598A400BA7FC5 /* Camino Module.element */; };
 		0847167E112598F100BA7FC5 /* Safari.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08E362B1110B3168008F2E6A /* Safari.element */; };
 		085C541E112FA93E00E8C4B8 /* Dictionary Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 085C541D112FA93600E8C4B8 /* Dictionary Module.element */; };
+		0861F47E133223C900DFE63E /* Social Bookmarks Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0861F465133221F300DFE63E /* Social Bookmarks Module.element */; };
+		0861F47F133223EA00DFE63E /* Chrome Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08B78D55113121C400DC1360 /* Chrome Module.element */; };
 		08B2FF5A10F017C700C3175C /* Terminal Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB09010E9A82E003D2539 /* Terminal Module.element */; };
 		08B2FF5B10F017DC00C3175C /* Primer Interface.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB08710E9A827003D2539 /* Primer Interface.element */; };
 		08B2FF5C10F017DC00C3175C /* Firefox Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB07E10E9A820003D2539 /* Firefox Module.element */; };
 		08B2FF5D10F017DC00C3175C /* Web Search.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB07510E9A817003D2539 /* Web Search.element */; };
 		08B2FF5E10F017F000C3175C /* Email Support.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB06C10E9A80D003D2539 /* Email Support.element */; };
 		08B2FF5F10F017F000C3175C /* Clipboard.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB06310E9A803003D2539 /* Clipboard.element */; };
-		08B2FF6010F017F000C3175C /* Social Bookmarks Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB05A10E9A7F6003D2539 /* Social Bookmarks Module.element */; };
 		08B2FF6110F017F000C3175C /* Apple Mail.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB05110E9A7EA003D2539 /* Apple Mail.element */; };
 		08B2FF6210F017FB00C3175C /* iTunes Module.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB04810E9A7E1003D2539 /* iTunes Module.element */; };
 		08B2FF6310F017FB00C3175C /* Apple Address Book.element in CopyFiles */ = {isa = PBXBuildFile; fileRef = 084BB03F10E9A7D3003D2539 /* Apple Address Book.element */; };
@@ -101,13 +102,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9;
 			remoteInfo = "Apple Mail";
-		};
-		084BB05910E9A7F6003D2539 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9;
-			remoteInfo = "Social Bookmarks Module";
 		};
 		084BB06210E9A803003D2539 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -172,13 +166,6 @@
 			remoteGlobalIDString = 084A9FFC1094D1D200E2CB93;
 			remoteInfo = "iTunes Module";
 		};
-		084BB09710E9A842003D2539 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
-			remoteInfo = "Social Bookmarks Module";
-		};
 		084BB09910E9A842003D2539 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 084BB06410E9A80D003D2539 /* MailSupportElement.xcodeproj */;
@@ -235,6 +222,20 @@
 			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
 			remoteInfo = "Dictionary Module";
 		};
+		0861F464133221F300DFE63E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9 /* Social Bookmarks Module.element */;
+			remoteInfo = "Social Bookmarks Module";
+		};
+		0861F47C133223B300DFE63E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* Social Bookmarks Module */;
+			remoteInfo = "Social Bookmarks Module";
+		};
 		08B78D54113121C400DC1360 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08B78D4D113121C400DC1360 /* ChromeElement.xcodeproj */;
@@ -272,6 +273,8 @@
 			dstPath = Quicksilver.app/Contents/PlugIns;
 			dstSubfolderSpec = 16;
 			files = (
+				0861F47F133223EA00DFE63E /* Chrome Module.element in CopyFiles */,
+				0861F47E133223C900DFE63E /* Social Bookmarks Module.element in CopyFiles */,
 				0847167E112598F100BA7FC5 /* Safari.element in CopyFiles */,
 				0847167D112598D900BA7FC5 /* Camino Module.element in CopyFiles */,
 				08B2FF6210F017FB00C3175C /* iTunes Module.element in CopyFiles */,
@@ -279,7 +282,6 @@
 				08B2FF6410F017FB00C3175C /* Bezel Interface.element in CopyFiles */,
 				08B2FF5E10F017F000C3175C /* Email Support.element in CopyFiles */,
 				08B2FF5F10F017F000C3175C /* Clipboard.element in CopyFiles */,
-				08B2FF6010F017F000C3175C /* Social Bookmarks Module.element in CopyFiles */,
 				08B2FF6110F017F000C3175C /* Apple Mail.element in CopyFiles */,
 				08B2FF5B10F017DC00C3175C /* Primer Interface.element in CopyFiles */,
 				08B2FF5C10F017DC00C3175C /* Firefox Module.element in CopyFiles */,
@@ -297,7 +299,7 @@
 		084BB03710E9A7D3003D2539 /* QSAddressBookElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSAddressBookElement.xcodeproj; path = com.apple.AddressBook/QSAddressBookElement.xcodeproj; sourceTree = "<group>"; };
 		084BB04010E9A7E1003D2539 /* iTunesElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iTunesElement.xcodeproj; path = com.apple.iTunes/iTunesElement.xcodeproj; sourceTree = "<group>"; };
 		084BB04910E9A7EA003D2539 /* AppleMailElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AppleMailElement.xcodeproj; path = com.apple.Mail/AppleMailElement.xcodeproj; sourceTree = "<group>"; };
-		084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSDeliciousPlugIn.xcodeproj; path = del.icio.us/QSDeliciousPlugIn.xcodeproj; sourceTree = "<group>"; };
+		084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QSDeliciousPlugIn.xcodeproj; path = elements.socialbookmarks/QSDeliciousPlugIn.xcodeproj; sourceTree = "<group>"; };
 		084BB05B10E9A803003D2539 /* ClipboardElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ClipboardElement.xcodeproj; path = elements.clipboard/ClipboardElement.xcodeproj; sourceTree = "<group>"; };
 		084BB06410E9A80D003D2539 /* MailSupportElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MailSupportElement.xcodeproj; path = elements.support.mail/MailSupportElement.xcodeproj; sourceTree = "<group>"; };
 		084BB06D10E9A817003D2539 /* WebSearchElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WebSearchElement.xcodeproj; path = elements.websearch/WebSearchElement.xcodeproj; sourceTree = "<group>"; };
@@ -380,14 +382,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		084BB05310E9A7F6003D2539 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				084BB05A10E9A7F6003D2539 /* Social Bookmarks Module.element */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		084BB05C10E9A803003D2539 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +449,14 @@
 			isa = PBXGroup;
 			children = (
 				085C541D112FA93600E8C4B8 /* Dictionary Module.element */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0861F461133221F300DFE63E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0861F465133221F300DFE63E /* Social Bookmarks Module.element */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -530,7 +532,7 @@
 					ProjectRef = 08471673112598A400BA7FC5 /* QSCaminoPlugIn.xcodeproj */;
 				},
 				{
-					ProductGroup = 084BB05310E9A7F6003D2539 /* Products */;
+					ProductGroup = 0861F461133221F300DFE63E /* Products */;
 					ProjectRef = 084BB05210E9A7F6003D2539 /* QSDeliciousPlugIn.xcodeproj */;
 				},
 				{
@@ -597,13 +599,6 @@
 			remoteRef = 084BB05010E9A7EA003D2539 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		084BB05A10E9A7F6003D2539 /* Social Bookmarks Module.element */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Social Bookmarks Module.element";
-			remoteRef = 084BB05910E9A7F6003D2539 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		084BB06310E9A803003D2539 /* Clipboard.element */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -653,6 +648,13 @@
 			remoteRef = 085C541C112FA93600E8C4B8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		0861F465133221F300DFE63E /* Social Bookmarks Module.element */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Social Bookmarks Module.element";
+			remoteRef = 0861F464133221F300DFE63E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		08B78D55113121C400DC1360 /* Chrome Module.element */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -695,11 +697,6 @@
 			name = "iTunes Module";
 			targetProxy = 084BB09510E9A842003D2539 /* PBXContainerItemProxy */;
 		};
-		084BB09810E9A842003D2539 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Social Bookmarks Module";
-			targetProxy = 084BB09710E9A842003D2539 /* PBXContainerItemProxy */;
-		};
 		084BB09A10E9A842003D2539 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Email Support";
@@ -734,6 +731,11 @@
 			isa = PBXTargetDependency;
 			name = "Dictionary Module";
 			targetProxy = 085C541F112FA95100E8C4B8 /* PBXContainerItemProxy */;
+		};
+		0861F47D133223B300DFE63E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Social Bookmarks Module";
+			targetProxy = 0861F47C133223B300DFE63E /* PBXContainerItemProxy */;
 		};
 		08B78D57113121CD00DC1360 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
