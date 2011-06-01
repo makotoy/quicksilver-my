@@ -64,7 +64,7 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
     if (!theObject && [[pasteboard types] containsObject:@"QSObjectAddress"]) {
         NSArray *objectIdentifier = [[pasteboard stringForType:@"QSObjectAddress"] componentsSeparatedByString:@":"];
         if ([[objectIdentifier objectAtIndex:0] intValue] == [[NSProcessInfo processInfo] processIdentifier])
-            return (QSObject *)[objectIdentifier lastObject];
+            return (QSObject *)[[objectIdentifier lastObject] integerValue];
         else if (VERBOSE)
             QSLog(@"Ignored old object: %@", objectIdentifier);
     }
@@ -230,11 +230,11 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
 }
 
 - (BOOL)putOnPasteboard:(NSPasteboard *)pboard declareTypes:(NSArray *)types includeDataForTypes:(NSArray *)includeTypes {
-    if (!types)
+    if (!types) {
         types = [[[[self dataDictionary] allKeys] mutableCopy] autorelease];
     
 	// ***warning   * should only include available types
-    else {
+    } else {
         NSMutableSet *typeSet = [NSMutableSet setWithArray:types];
         [typeSet intersectSet:[NSSet setWithArray:[[self dataDictionary] allKeys]]];
         types = [[[typeSet allObjects] mutableCopy] autorelease];
@@ -280,7 +280,7 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
 - (void)pasteboard:(NSPasteboard *)sender provideDataForType:(NSString *)type {
     //if (VERBOSE) QSLog(@"Provide: %@", [type decodedPasteboardType]);
     if ([type isEqualToString:@"QSObjectAddress"]) {
-        writeObjectToPasteboard(sender, type, [NSString stringWithFormat:@"%d:%d", [[NSProcessInfo processInfo] processIdentifier] , self]);
+        writeObjectToPasteboard(sender, type, [NSString stringWithFormat:@"%d:%ld", [[NSProcessInfo processInfo] processIdentifier] , (long int)self]);
 	} else {
 		id theData = nil;
 		id handler = [self handlerForType:type selector:@selector(dataForObject:pasteboardType:)];

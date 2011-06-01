@@ -146,7 +146,7 @@
 	[(QSDockingWindow *)[self window] show:sender];
 }
 
-- (void)pasteItem:(id)sender
+- (IBAction)pasteItem:(id)sender
 {
 	[(QSDockingWindow *)[self window] resignKeyWindowNow];
 	[self qsPaste:nil];
@@ -160,7 +160,7 @@
 	switch (mode) {
 		case QSPasteboardHistoryMode:
 		case QSPasteboardStoreMode:
-			[self copy:sender];
+            [[self selectedObject] putOnPasteboard:[NSPasteboard generalPasteboard] includeDataForTypes:nil];
 			QSForcePaste();
 			break;
 		case QSPasteboardQueueMode:
@@ -270,7 +270,6 @@
 	QSObject *newObject = [QSObject objectWithPasteboard:[notif object]];
 
 	if (newObject) {
-		BOOL recievingSelection = [[self selectedObject] isEqual:newObject];
 		if ([pasteboardHistoryArray containsObject:newObject]) {
 			[pasteboardHistoryArray removeObject:newObject];
 		}
@@ -294,21 +293,18 @@
 		}
 		supressCapture = NO;
 		[pasteboardHistoryTable reloadData];
-    
-		if (recievingSelection) {
+/*    
+		if ([[self selectedObject] isEqual:newObject]) {
 		  [pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
                               byExtendingSelection:NO];
 		} else {
             NSInteger row = [pasteboardHistoryTable selectedRow];
-            if (row>0) {
-                if (row+1<[pasteboardHistoryArray count]) {
-                    [pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row + 1]
-                                        byExtendingSelection:NO];
-                } else {
-                    [pasteboardHistoryTable deselectRow:row];
-                }
+            if (0 < row && row + 1 < [currentArray count]) {
+                [pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row + 1]
+                                    byExtendingSelection:NO];
             }
 		}
+*/
 		[QSLib savePasteboardHistory];
 	}
 }
@@ -364,24 +360,20 @@
 
 - (IBAction)hideWindow:(id)sender
 {
-	[(QSDockingWindow *)[self window] saveFrame];
-    if (![(QSDockingWindow *)[self window] canFade] && [[NSUserDefaults standardUserDefaults] boolForKey:@"QSPasteboardController HideAfterPasting"]) {
+    QSDockingWindow *dockWin = (QSDockingWindow *)[self window];
+	[dockWin saveFrame];
+    if (![dockWin canFade] && [[NSUserDefaults standardUserDefaults] boolForKey:@"QSPasteboardController HideAfterPasting"]) {
 		[[self window] orderOut:self];
     } else {
-        [(QSDockingWindow *)[self window] hide:self];
+        [dockWin hide:self];
     }
 }
 
 - (id)selectedObject
 {
-  NSInteger index = [pasteboardHistoryTable selectedRow];
-  if (index < 0 || ![currentArray count]) return nil;
-  return [currentArray objectAtIndex:index];
-}
-
-- (void)copy:(id)sender
-{
-  [[self selectedObject] putOnPasteboard:[NSPasteboard generalPasteboard] includeDataForTypes:nil];
+    NSInteger index = [pasteboardHistoryTable selectedRow];
+    if (index < 0 || ![currentArray count]) return nil;
+    return [currentArray objectAtIndex:index];
 }
 
 #pragma mark Key  Handling

@@ -39,7 +39,6 @@ typedef enum {
 	int mode;
 }
 
-- (void)copy:(id)sender;
 - (id)selectedObject;
 - (IBAction)clearHistory:(id)sender;
 - (IBAction)setMode:(id)sender;

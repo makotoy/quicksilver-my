@@ -74,9 +74,9 @@
 {
     if (-[indexDate timeIntervalSinceNow] < 10 * 60) {
         // ten minutes, keep cache but incr update
-        return NO;
+        return YES;
     }
-    return YES;
+    return NO;
 }
 
 - (BOOL)isVisibleSource { return YES; }
