@@ -12,4 +12,6 @@ build/
 *.mode1
 *.pespectivev3
 *.tm_build_errors
+xcuserdata
+project.xcworkspace
 
