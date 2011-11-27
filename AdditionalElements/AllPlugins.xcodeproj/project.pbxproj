@@ -797,7 +797,7 @@
 				084BB01710E9A722003D2539 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		084BB03210E9A799003D2539 /* Build configuration list for PBXAggregateTarget "Build All Plugins" */ = {
 			isa = XCConfigurationList;
@@ -806,7 +806,7 @@
 				084BB03110E9A77B003D2539 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
