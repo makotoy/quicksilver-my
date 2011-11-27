@@ -273,12 +273,6 @@
 		if ([pasteboardHistoryArray containsObject:newObject]) {
 			[pasteboardHistoryArray removeObject:newObject];
 		}
-/*
- NOTE: There were lines to do [newObject writeToFile:] to the path
-   @"~/Library/App_Support/QS/Data/Clipboard/foo-date"
- when newObject is not in pasteboardHistoryArray
- I ditched it because QSObject does not have writeToFile anymore.
- */
 		[pasteboardHistoryArray insertObject:newObject atIndex:0];
 		
 		if (!supressCapture) {
@@ -293,18 +287,7 @@
 		}
 		supressCapture = NO;
 		[pasteboardHistoryTable reloadData];
-/*    
-		if ([[self selectedObject] isEqual:newObject]) {
-		  [pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
-                              byExtendingSelection:NO];
-		} else {
-            NSInteger row = [pasteboardHistoryTable selectedRow];
-            if (0 < row && row + 1 < [currentArray count]) {
-                [pasteboardHistoryTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row + 1]
-                                    byExtendingSelection:NO];
-            }
-		}
-*/
+
 		[QSLib savePasteboardHistory];
 	}
 }
