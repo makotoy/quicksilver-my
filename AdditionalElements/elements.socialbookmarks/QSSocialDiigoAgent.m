@@ -29,7 +29,7 @@
     [dtFmt release], dtFmt = nil;
     
     dtFmt = [[NSDateFormatter alloc] init];
-    [dtFmt setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss"];
+    [dtFmt setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss'Z'"];
     NSString* resStr = [dtFmt stringFromDate:date];
     [dtFmt release], dtFmt = nil;
     return resStr;
@@ -99,6 +99,11 @@
 
 @implementation QSSocialDiigoAgent
 
+- (NSString*)siteName
+{
+    return @"diigo";
+}
+
 - (NSDate*)getRecentDateForUser:(NSString*)user password:(NSString*)password
 {
     NSString* apiURLStr;
@@ -113,19 +118,31 @@
     return resDate;
 }
 
-- (id)tryAddNewBookmarks:(NSMutableArray*)bookmarks forUser:(NSString*)user password:(NSString*)password
+- (BOOL)tryAddNewBookmarks:(NSMutableArray*)bookmarks afterDate:(NSDate*)date forUser:(NSString*)user password:(NSString*)password
 {
+    BOOL finished = NO;
     NSString* apiURLStr;
     apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=%d&count=100&user=%@&filter=all",
                  user, password, [bookmarks count], user];
     id bmkList = [QSSocialDiigoAgent retrieveDiigoObject:apiURLStr];
+    if ([bmkList count] == 0) {
+        return YES;
+    }    
+    NSDateFormatter* dtFmt = [[NSDateFormatter alloc] init];
+    [dtFmt setDateFormat:QS_SOCIAL_DELICIOUS_TIME_FMT];    
     for (id bmk in bmkList) {
-        [bookmarks addObject:[QSSocialDiigoAgent cacheEntryForDiigoRecord:bmk]];
+        NSString *bmkDateStr = [bmk objectForKey:@"time"];
+        NSDate *bmkDate = [dtFmt dateFromString:bmkDateStr];
+        if ([bmkDate compare:date] == NSOrderedDescending) {
+            [bookmarks addObject:[QSSocialDiigoAgent cacheEntryForDiigoRecord:bmk]];
+        } else {
+            finished = YES;
+            break;
+        }
     }
-    if ([bmkList count] < 100) {
-        return nil;
-    }
-    return [[bookmarks lastObject] objectForKey:@"time"];
+    [dtFmt release], dtFmt = nil;
+    
+    return finished;
 }
 
 @end

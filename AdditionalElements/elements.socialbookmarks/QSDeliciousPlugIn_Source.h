@@ -15,22 +15,15 @@ typedef enum _QSDeliciousPlugIn_Site {
     QSDeliciousPlugIn_Diigo
 } QSDeliciousPlugIn_Site;
 
-@interface QSDeliciousPlugIn_Source : QSObjectSource {
+@interface QSDeliciousPlugIn_Source : QSObjectSource <QSSocialAgentDelegate> {
 	NSMutableArray *tags;
     NSArray *agents;
-    NSMutableArray *bookmarks;
 	IBOutlet NSTextField *userField;
 	IBOutlet NSTextField *passField;
 }
 + (NSURL*)urlForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username;
 + (NSURL*)urlForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username password:(NSString*)password;
 - (QSSocialAgent*)agentForSite:(QSDeliciousPlugIn_Site)site;
-- (NSDate*)convertTimestampToDate:(NSString*)timestamp;
-- (NSArray *)cachedBookmarksForSite:(QSDeliciousPlugIn_Site)site user:(NSString *)username;
-- (NSString *)cachePathForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username;
-- (NSDictionary*)cacheDictionaryForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username;
-- (void)writeCacheForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username;
-- (void)updateCacheForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username;
-- (void)collectBookmarksForSite:(QSDeliciousPlugIn_Site)site user:(NSString *)username;
 - (NSString *)passwordForSite:(QSDeliciousPlugIn_Site)site user:(NSString *)username;
+- (void)refreshSource;
 @end

@@ -8,13 +8,13 @@
 
 #import "QSSocialDeliciousAgent.h"
 
-#define QS_SOCIAL_DELICIOUS_TIME_FMT @"yyyy-MM-dd'T'hh:mm:ss" // @"yyyy-MM-dd'T'hh:mm:ss'Z'"
+#define QS_SOCIAL_DELICIOUS_TIME_FMT @"yyyy-MM-dd'T'HH:mm:ss'Z'"
 
 @implementation QSSocialDeliciousAgent
 
 - (id)init
 {
-    if (self == [super init]) {
+    if ((self = [super init])) {
         posts = [[NSMutableArray alloc] initWithCapacity:0];
         dates = [[NSMutableArray alloc] initWithCapacity:0];
     }
@@ -26,6 +26,11 @@
     [posts release], posts = nil;
     [dates release], dates = nil;
     [super dealloc];
+}
+
+- (NSString*)siteName
+{
+    return @"delicious";
 }
 
 - (NSDate*)getRecentDateForUser:(NSString*)user password:(NSString*)password
@@ -42,7 +47,7 @@
                                          returningResponse:&response
                                                      error:&error];
     if (error) {
-        NSLog(@"Could not retrieve recent posts, code: %d domain: %@ desc: %@",
+        NSLog(@"Could not retrieve recent posts, code: %ld domain: %@ desc: %@",
               [error code], [error domain], [error localizedDescription]);
         return nil;
     } else if ([response statusCode] == 999) {
@@ -55,17 +60,22 @@
     [postsParser parse];
     [postsParser release], postsParser = nil;
     
+    if ([posts count] == 0) {
+        NSLog(@"Trying to get recent posts, but there were no recent posts. Empty account or authentication error?");
+        return nil;
+    }
+    NSString* dateStr = [[posts objectAtIndex:0] objectForKey:@"time"];
     NSDateFormatter* dtFmt = [[NSDateFormatter alloc] init];
     [dtFmt setDateFormat:QS_SOCIAL_DELICIOUS_TIME_FMT];
-    NSDate* resDate = [dtFmt dateFromString:[[posts objectAtIndex:0] objectForKey:@"time"]];
-    [dtFmt release];
+    NSDate* resDate = [dtFmt dateFromString:dateStr];
+    [dtFmt release], dtFmt = nil;
     return resDate;
 }
 
-- (id)tryAddNewBookmarks:(NSMutableArray*)bookmarks forUser:(NSString*)user password:(NSString*)password
+- (BOOL)tryAddNewBookmarks:(NSMutableArray*)bookmarks afterDate:(NSDate*)date forUser:(NSString*)user password:(NSString*)password
 {
     if (!user || !password) {
-        return nil;
+        return YES;
     }
 	NSString *apiurl;
     
@@ -81,21 +91,44 @@
                                          returningResponse:&response
                                                      error:&error];
     if (error) {
-        NSLog(@"Could not retrieve posts from Delicious: %@", apiurl);// for %@, code: %d domain: %@ desc: %@",
-        //dateStr, [error code], [error domain], [error localizedDescription]);
-        return nil;
+        NSLog(@"Could not retrieve posts from Delicious, code: %ld domain: %@ desc: %@",
+              [error code], [error domain], [error localizedDescription]);
+        return YES;
     } else if ([response statusCode] == 999) {
         NSLog(@"Received code 999 -- service temporarily unavailable -- while trying to obtain posts.  Do nothing for now");
-        return nil;
+        return YES;
     }
     [posts removeAllObjects];
 	NSXMLParser *postsParser = [[NSXMLParser alloc] initWithData:data];
 	[postsParser setDelegate:self];
 	[postsParser parse];
     [postsParser release], postsParser = nil;
-    
-    [bookmarks addObjectsFromArray:posts];
-    return [[posts lastObject] objectForKey:@"time"];
+    if ([posts count] == 0) {
+        return YES;
+    }
+    NSString *oldestPostDateStr = [[posts lastObject] objectForKey:@"time"];
+
+    NSDateFormatter* dtFmt = [[NSDateFormatter alloc] init];
+    [dtFmt setDateFormat:QS_SOCIAL_DELICIOUS_TIME_FMT];
+    NSDate *oldestDate = [dtFmt dateFromString:oldestPostDateStr];
+    [dtFmt release], dtFmt = nil;
+
+    if ([oldestDate compare:date] == NSOrderedDescending) {
+        [bookmarks addObjectsFromArray:posts];
+        return NO;
+    }
+    for (id post in posts) {
+        NSDateFormatter* postDtFmt = [[NSDateFormatter alloc] init];
+        [postDtFmt setDateFormat:QS_SOCIAL_DELICIOUS_TIME_FMT];
+        NSDate *postDate = [postDtFmt dateFromString:[post objectForKey:@"time"]];
+        [postDtFmt release], postDtFmt = nil;
+        if ([postDate compare:date] == NSOrderedDescending) {
+            [bookmarks addObject:post];
+        } else {
+            break;
+        }
+    }
+    return YES;
 }
 
 #pragma mark XML Stuff

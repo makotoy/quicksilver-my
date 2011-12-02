@@ -363,7 +363,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/JSON.framework/Versions/A/JSON\" \\\n \"@loader_path/../Frameworks/JSON.framework/Versions/A/JSON\" \\\n \"$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\"";
+			shellScript = "/Developer/usr/bin/install_name_tool -change \\\n \"@executable_path/../Frameworks/JSON.framework/Versions/A/JSON\" \\\n \"@loader_path/../Frameworks/JSON.framework/Versions/A/JSON\" \\\n \"$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\"";
 		};
 		E1022B2806B3475D00299BEC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
