@@ -34,14 +34,21 @@
 
 
 @implementation QSOldCaminoBookmarksParser
-- (BOOL)validParserForPath:(NSString *)path{
+- (BOOL)validParserForPath:(NSString *)path
+{
     return [[path lastPathComponent]isEqualToString:@"bookmarks.xml"];
 }
-- (NSArray *)objectsFromPath:(NSString *)path withSettings:(NSDictionary *)settings{
-    NSString *string=[NSString stringWithContentsOfFile: [path stringByStandardizingPath]];
+
+- (NSArray *)objectsFromPath:(NSString *)path withSettings:(NSDictionary *)settings
+{
+    NSString *string = [NSString stringWithContentsOfFile:[path stringByStandardizingPath]
+                                                 encoding:NSUTF8StringEncoding
+                                                    error:NULL];
     return [self linksFromCamino:string];
 }
-- (NSArray *)linksFromCamino:(NSString *)html{
+
+- (NSArray *)linksFromCamino:(NSString *)html
+{
     
     NSScanner *scanner=[NSScanner scannerWithString:html];
     
