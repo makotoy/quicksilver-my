@@ -85,7 +85,16 @@
     SBJsonWriter* jsonWriter = [[SBJsonWriter alloc] init];
     NSString* jsonRep = [jsonWriter stringWithObject:newCache];
     NSError* err;
-    [jsonRep writeToFile:[self cachePathForUser:username]
+    NSString* cachePath = [self cachePathForUser:username];
+    NSString* cacheDir = [cachePath stringByDeletingLastPathComponent];
+    NSFileManager* fileMan = [NSFileManager defaultManager];
+    if (![fileMan fileExistsAtPath:cacheDir]) {
+        [fileMan createDirectoryAtPath:cacheDir
+           withIntermediateDirectories:YES
+                            attributes:nil
+                                 error:nil];
+    }
+    [jsonRep writeToFile:cachePath
               atomically:NO
                 encoding:NSUTF16StringEncoding
                    error:&err];

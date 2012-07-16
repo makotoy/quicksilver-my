@@ -51,7 +51,8 @@
 
 
 - (NSDictionary *)elementsByID {
-	NSDictionary *dict = [NSDictionary dictionaryWithObjects:elements forKeys:[[self elements] valueForKey:@"id"]];
+	NSDictionary *dict = [NSDictionary dictionaryWithObjects:[self elements]
+                                                     forKeys:[[self elements] valueForKey:@"id"]];
 	return dict;
 }
 

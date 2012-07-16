@@ -159,7 +159,9 @@
  */
 + (id)descriptorWithURL:(NSURL *)aURL
 {
-	return [self descriptorWithDescriptorType:typeFileURL data:[NSData dataWithBytes:(void *)aURL length:sizeof(NSURL)]];
+	return [self descriptorWithDescriptorType:typeFileURL
+                                         data:[NSData dataWithBytes:(void *)aURL
+                                                             length:sizeof(id)]];
 }
 
 /*
