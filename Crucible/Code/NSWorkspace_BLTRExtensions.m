@@ -8,11 +8,8 @@
 
 #import "NSWorkspace_BLTRExtensions.h"
 #import "NSApplication_BLTRExtensions.h"
-//#import "QSApp.h"
 #include <signal.h>
 #include <unistd.h>
-
-//#import "NSString+NDCarbonUtilities.h"
 
 #import "Carbon/Carbon.h"
 bool _LSCopyAllApplicationURLs(NSArray **array);
