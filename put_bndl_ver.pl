@@ -14,7 +14,7 @@ SEARCHGIT: foreach my $GITCAND(@GITPATHS) {
 	}
 }
 my $REV;
-if ($GITBIN) {
+if ($GITBIN && -e "$ENV{PWD}/.git") {
 	$REV = `$GITBIN show --abbrev-commit | grep "^commit"`;
 } else {
 	$REV = "commit dummy-version";

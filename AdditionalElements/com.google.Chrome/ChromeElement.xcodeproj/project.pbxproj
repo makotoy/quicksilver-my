@@ -7,14 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		085E22901668E0D800B740C1 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D2BA3912F2BBF3000583A3 /* JSON.framework */; };
 		087633DF113103F700B51F69 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087633DE113103F700B51F69 /* Cocoa.framework */; };
 		08C3F92B1130FB880019338F /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 08C3F92A1130FB880019338F /* element.xml */; };
 		08C3F92F1130FCAB0019338F /* QSChromeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C3F92E1130FCAB0019338F /* QSChromeParser.m */; };
-		08D2BA4412F2BC01000583A3 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D2BA3912F2BBF3000583A3 /* JSON.framework */; };
 		08D2BA4512F2BC10000583A3 /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08D2BA3912F2BBF3000583A3 /* JSON.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		085E228E1668E06C00B740C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 53D229800C96121600276605;
+			remoteInfo = JSON;
+		};
 		08D2BA3812F2BBF3000583A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08D2BA3012F2BBF3000583A3 /* JSON.xcodeproj */;
@@ -82,8 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08D2BA4412F2BC01000583A3 /* JSON.framework in Frameworks */,
 				087633DF113103F700B51F69 /* Cocoa.framework in Frameworks */,
+				085E22901668E0D800B740C1 /* JSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +187,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				085E228F1668E06C00B740C1 /* PBXTargetDependency */,
 			);
 			name = "Chrome Module";
 			productName = "Chrome Module";
@@ -298,6 +306,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		085E228F1668E06C00B740C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JSON;
+			targetProxy = 085E228E1668E06C00B740C1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0881E37B1130F99600252374 /* Debug */ = {

@@ -1176,12 +1176,18 @@ static id _sharedInstance;
         
         if (DEBUG_STARTUP) QSLog(@"Rescanning every %d minutes", rescanInterval);
         
-        [[NSTimer scheduledTimerWithTimeInterval:rescanInterval*60
+        [[NSTimer scheduledTimerWithTimeInterval:rescanInterval * 60
                                           target:self
                                         selector:@selector(rescanItems:)
                                         userInfo:nil
                                          repeats:YES] retain];
     }
+    // initial rescan
+    [NSTimer scheduledTimerWithTimeInterval:5
+                                     target:self
+                                   selector:@selector(rescanItems:)
+                                   userInfo:nil
+                                    repeats:NO];
     if (DEBUG_STARTUP) QSLog(@"Register for Notifications");
     
     [[[NSWorkspace sharedWorkspace] notificationCenter]

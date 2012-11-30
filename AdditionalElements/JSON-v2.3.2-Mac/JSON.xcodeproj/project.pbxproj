@@ -260,6 +260,8 @@
 
 /* Begin PBXFileReference section */
 		084617C412F2A02700A403DF /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Common.xcconfig; path = ../../Configuration/Common.xcconfig; sourceTree = SOURCE_ROOT; };
+		088A55E11668C4BD00299F77 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configuration/Debug.xcconfig; sourceTree = "<group>"; };
+		088A55E21668C4BD00299F77 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configuration/Release.xcconfig; sourceTree = "<group>"; };
 		535157780F6E3BE100C8AABD /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		535157790F6E3BE100C8AABD /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		535157A30F6EE4A800C8AABD /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
@@ -430,6 +432,8 @@
 			isa = PBXGroup;
 			children = (
 				084617C412F2A02700A403DF /* Common.xcconfig */,
+				088A55E11668C4BD00299F77 /* Debug.xcconfig */,
+				088A55E21668C4BD00299F77 /* Release.xcconfig */,
 				53D229950C96123C00276605 /* Classes */,
 				53D229960C96124500276605 /* Tests */,
 				BCB559FF1221D09300ACE34F /* Test Data */,
@@ -1169,30 +1173,22 @@
 /* Begin XCBuildConfiguration section */
 		53D229750C9611FF00276605 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084617C412F2A02700A403DF /* Common.xcconfig */;
+			baseConfigurationReference = 088A55E11668C4BD00299F77 /* Debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-Wparentheses";
 			};
 			name = Debug;
 		};
 		53D229760C9611FF00276605 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084617C412F2A02700A403DF /* Common.xcconfig */;
+			baseConfigurationReference = 088A55E21668C4BD00299F77 /* Release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				OTHER_CFLAGS = "-Wparentheses";
 			};
 			name = Release;
 		};
 		53D229860C96121700276605 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084617C412F2A02700A403DF /* Common.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 11;
 				DYLIB_COMPATIBILITY_VERSION = 4;
@@ -1223,7 +1219,6 @@
 		};
 		53D229870C96121700276605 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 084617C412F2A02700A403DF /* Common.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 11;
 				DYLIB_COMPATIBILITY_VERSION = 4;
