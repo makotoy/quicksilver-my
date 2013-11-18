@@ -155,20 +155,38 @@ static id _sharedInstance;
     }
 }
 
-@synthesize activatedImage;
-- (void)setActivatedImage:(NSImage *)newActivatedImage
+- (NSImage*)activatedImage
 {
-    [activatedImage release];
-    activatedImage = [newActivatedImage retain];
-    [activatedImage setName:@"Quicksilver-Activated"];
+    return activatedImage;
 }
 
-@synthesize runningImage;
+- (void)setActivatedImage:(NSImage *)newActivatedImage
+{
+    if (activatedImage) {
+        [activatedImage release];
+        activatedImage = nil;
+    }
+    if (newActivatedImage) {
+        activatedImage = [newActivatedImage retain];
+        [activatedImage setName:@"Quicksilver-Activated"];
+    }
+}
+
+- (NSImage*)runningImage
+{
+    return runningImage;
+}
+
 - (void)setRunningImage:(NSImage *)newRunningImage
 {
-    [runningImage release];
-    runningImage = [newRunningImage retain];
-    [runningImage setName:@"Quicksilver-Running"];
+    if (runningImage) {
+        [runningImage release];
+        runningImage = nil;
+    }
+    if (newRunningImage) {
+        runningImage = [newRunningImage retain];
+        [runningImage setName:@"Quicksilver-Running"];
+    }
 }
 
 - (void)recompositeIconImages
@@ -178,10 +196,10 @@ static id _sharedInstance;
     NSImage *activatedIcon = [[icon copy] autorelease];
     NSImage *runningIcon = [[icon copy] autorelease];
     [activatedIcon lockFocus];
-    [[NSImage imageNamed:@"QSIconActivatedBadge"] dissolveToPoint:NSZeroPoint fraction:1.0];
+    [[NSImage imageNamed:@"QSIconActivatedBadge"] drawAtPoint:NSZeroPoint fromRect:NSMakeRect(0,0,128,128) operation:NSCompositeSourceOver fraction:1.0];
     [activatedIcon unlockFocus];
     [runningIcon lockFocus];
-    [[NSImage imageNamed:@"QSIconRunningBadge"] dissolveToPoint:NSZeroPoint fraction:1.0];
+    [[NSImage imageNamed:@"QSIconRunningBadge"] drawAtPoint:NSZeroPoint fromRect:NSMakeRect(0,0,128,128) operation:NSCompositeSourceOver fraction:1.0];
     [runningIcon unlockFocus];
 
     NSColor *uiColor = nil;
@@ -206,7 +224,7 @@ static id _sharedInstance;
     
     [self setActivatedImage:newActivated];
     [self setRunningImage:newRunning];
-    [NSApp setApplicationIconImage: [NSImage imageNamed:@"Quicksilver-Running"]];
+    [NSApp setApplicationIconImage:newRunning];
 }
 
 - (int) showMenuIcon { return -1; }
@@ -762,7 +780,7 @@ static id _sharedInstance;
         });
         dispatch_release(myGCDQueue);
     } else {
-        [NSApp setApplicationIconImage:[NSImage imageNamed:@"Quicksilver-Activated"]];
+        [NSApp setApplicationIconImage:[self activatedImage]];
     }
 }
 

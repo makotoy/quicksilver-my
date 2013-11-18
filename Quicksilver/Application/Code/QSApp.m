@@ -110,11 +110,6 @@ BOOL QSApplicationCompletedLaunch = NO;
 	return QSApplicationCompletedLaunch;
 }
 
-- (void)setApplicationIconImage:(NSImage *)image
-{
-    if (!isUIElement) [super setApplicationIconImage:image];
-}
-
 - (int) featureLevel {return featureLevel;}
 - (BOOL)betaLevel {return featureLevel > 0;}
 - (BOOL)alphaLevel {return featureLevel > 1;}
