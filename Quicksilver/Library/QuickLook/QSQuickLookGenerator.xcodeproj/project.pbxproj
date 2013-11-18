@@ -153,6 +153,8 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 2CA326220896AD4900168862 /* Build configuration list for PBXProject "QSQuickLookGenerator" */;
 			compatibilityVersion = "Xcode 3.0";
 			developmentRegion = English;

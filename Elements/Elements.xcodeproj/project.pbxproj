@@ -349,6 +349,8 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 43CBA85E0854FD520077C2AE /* Build configuration list for PBXProject "Elements" */;
 			compatibilityVersion = "Xcode 3.0";
 			developmentRegion = English;

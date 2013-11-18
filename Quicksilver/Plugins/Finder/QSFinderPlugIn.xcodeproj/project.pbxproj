@@ -173,6 +173,8 @@
 /* Begin PBXProject section */
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 7FE89560085D305D0016C421 /* Build configuration list for PBXProject "QSFinderPlugIn" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
