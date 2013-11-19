@@ -79,7 +79,7 @@
 	[window setOpaque:NO];
 	[window setHasShadow:NO];
 	[[window contentView] lockFocus];
-	[image compositeToPoint:NSZeroPoint operation:NSCompositeCopy];
+	[image drawAtPoint:NSZeroPoint fromRect:NSMakeRect(0, 0, [image size].width, [image size].height) operation:NSCompositeCopy fraction:1.0];
 	[[window contentView] unlockFocus];
 	[window setAutodisplay:NO];
 	[window setReleasedWhenClosed:YES];

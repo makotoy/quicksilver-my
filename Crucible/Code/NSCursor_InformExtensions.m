@@ -18,7 +18,7 @@
 	
 	if (![string length])return [self arrowCursor];
 	NSSize size=[string sizeWithAttributes:informAttributes];
-	NSImage *arrowImage=[[self arrowCursor]image];
+	NSImage *arrowImage=[[self arrowCursor] image];
 	NSSize arrowSize=[arrowImage size];
 	NSRect textRect=NSMakeRect(16,1,size.width,size.height);
 	NSPoint padding=NSMakePoint(size.height/2,1);
@@ -34,7 +34,7 @@
 	[roundRect appendBezierPathWithRoundedRectangle:blobRect withRadius:size.height/2 indent:NO];
 	
 	[cImg lockFocus];
-	[arrowImage compositeToPoint:NSZeroPoint operation:NSCompositeSourceOver];
+    [arrowImage drawAtPoint:NSZeroPoint fromRect:NSMakeRect(0, 0, [arrowImage size].width, [arrowImage size].height) operation:NSCompositeSourceOver fraction:1.0];
 	[[NSColor colorWithCalibratedWhite:1.0 alpha:0.7]setFill];
 	[[NSColor colorWithCalibratedWhite:0.5 alpha:0.3]setStroke];
 	[roundRect fill];  
@@ -46,26 +46,3 @@
 }
 
 @end
-/*
-+ informativeCursorWithString:(NSString *)string{
-	NSSize size=[string sizeWithAttributes:informAttributes];
-	NSImage *arrowImage=[[self arrowCursor]image];
-	NSRect imageRect=NSMakeRect(0,0,size.width,size.height);
-	imageRect=NSInsetRect(imageRect,0,NSHeight(imageRect)/2);
-	
-	NSImage * cImg=[[NSImage alloc]initWithSize:imageRect.size];
-	NSBezierPath *roundRect=[NSBezierPath bezierPath];
-	[roundRect appendBezierPathWithRoundedRectangle:NSInsetRect(imageRect,1,1) withRadius:size.height/2 indent:NO];
-	
-	[cImg lockFocus];
-	[arrowImage compositeToPoint:NSZeroPoint operation:NSCompositeSourceOver];
-	[[NSColor colorWithCalibratedWhite:1.0 alpha:0.8]setFill];
-	[[NSColor colorWithCalibratedWhite:0.5 alpha:0.8]setStroke];
-	[roundRect fill];  
-	[roundRect stroke];
-	
-	[string drawAtPoint:NSMakePoint(1,1) withAttributes:informAttributes];
-	[cImg unlockFocus];
-	return [[[NSCursor alloc]initWithImage:cImg hotSpot:NSZeroPoint]autorelease];
-}
-*/
