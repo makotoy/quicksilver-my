@@ -183,9 +183,15 @@
 /* Begin PBXProject section */
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 7FFF2579085E488700266176 /* Build configuration list for PBXProject "QSTerminalPlugIn" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 0259C574FE90428111CA0C5A /* QSTerminalPlugIn */;
 			projectDirPath = "";
 			projectRoot = "";

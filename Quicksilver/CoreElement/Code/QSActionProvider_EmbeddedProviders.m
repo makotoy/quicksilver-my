@@ -4,7 +4,6 @@
  */
 
 #import <Carbon/Carbon.h>
-#import <QSCrucible/NDAlias.h>
 #import <QSCrucible/QSFileConflictPanel.h>
 
 #import "QSController.h"
@@ -533,16 +532,6 @@
 
 - (QSObject *) makeAliasTo:(QSObject *)dObject inFolder:(QSObject *)iObject
 {
-	NSString *destination = [iObject singleFilePath];
-	NSEnumerator *files = [dObject enumeratorForType:QSFilePathType];
-	NSString *thisFile, *destinationFile;
-	while( ( thisFile = [files nextObject] ) ) {
-		destinationFile = [destination stringByAppendingPathComponent:[thisFile lastPathComponent]];
-		if ( [(NDAlias*)[NDAlias aliasWithPath:thisFile] writeToFile:destinationFile] ) {
-			[[NSWorkspace sharedWorkspace] noteFileSystemChanged:destination];
-		}
-	}	
-	// ***warning   *  return [QSObject fileObjectWithPath:destinationFile];
 	return nil;
 }
 

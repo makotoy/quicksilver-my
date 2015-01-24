@@ -73,10 +73,8 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
 }
 
 - (void)addContentsOfClipping:(NSString *)path
-{ // Not thread safe?
-	NSPasteboard *pasteboard = [NSPasteboard pasteboardByFilteringClipping:path];
-	[self addContentsOfPasteboard:pasteboard types:nil];
-	[pasteboard releaseGlobally];
+{
+    // text clipping uses deprecated Carbon
 }
 
 - (void)addContentsOfPasteboard:(NSPasteboard *)pasteboard types:(NSArray *)types
@@ -98,11 +96,9 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
 - (id)initWithPasteboard:(NSPasteboard *)pasteboard types:(NSArray *)types
 {
     if ((self = [self init])) {
-        //QSLog(@"new pasteboard object:%d", self);
-        if (!types)
+        if (!types) {
             types = [pasteboard types];
-        //pasteboard = [NSPasteboard pasteboardByFilteringTypesInPasteboard:pasteboard];
-        
+        }
 		NSString *source = @"Clipboard";
 		if (pasteboard == [NSPasteboard generalPasteboard])
 			source = [[[NSWorkspace sharedWorkspace] activeApplication] objectForKey:@"NSApplicationBundleIdentifier"];
@@ -132,13 +128,6 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
         if ([self objectForType:QSTextType]) {
 			[self sniffString]; 	
 		}
-        NSString *clippingPath = [self singleFilePath];
-        if (clippingPath) {
-            NSString *type = [[NSFileManager defaultManager] typeOfFile:clippingPath];
-            if ([clippingTypes containsObject:type])
-                [self addContentsOfClipping:clippingPath];
-        }
-        
         if ([self objectForType:kQSObjectPrimaryName]) {
             [self setName:[self objectForType:kQSObjectPrimaryName]];
         } else {
@@ -147,21 +136,6 @@ BOOL writeObjectToPasteboard(NSPasteboard *pasteboard, NSString *type, id data) 
         }
         [self loadIcon];
     }
-    return self;
-}
-
-+ (id)objectWithClipping:(NSString *)clippingFile
-{
-    return [[[QSObject alloc] initWithClipping:clippingFile] autorelease];
-}
-
-- (id)initWithClipping:(NSString *)clippingFile
-{
-	NSPasteboard *pasteboard = [NSPasteboard pasteboardByFilteringClipping:clippingFile];
-    if ((self = [self initWithPasteboard:pasteboard])) {
-		[self setLabel:[clippingFile lastPathComponent]];
-    }
-	[pasteboard releaseGlobally];
     return self;
 }
 

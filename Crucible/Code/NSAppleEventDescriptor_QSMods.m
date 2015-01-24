@@ -33,7 +33,4 @@
 	return nil;
 }
 
-//[self appleEventWithEventClass:kCoreEventClass eventID:kAEQuitApplication targetDescriptor:aTargetDescriptor returnID:kAutoGenerateReturnID transactionID:kAnyTransactionID] : nil;
-
-
 @end

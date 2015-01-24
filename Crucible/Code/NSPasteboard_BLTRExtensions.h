@@ -7,7 +7,3 @@
 //
 
 void QSForcePaste();
-
-@interface NSPasteboard (Clippings)
-+ (NSPasteboard *)pasteboardByFilteringClipping:(NSString *)pacg;
-@end

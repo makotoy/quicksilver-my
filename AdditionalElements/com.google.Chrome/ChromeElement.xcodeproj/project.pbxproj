@@ -199,6 +199,8 @@
 /* Begin PBXProject section */
 		0881E37A1130F99600252374 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 0881E37D1130F99600252374 /* Build configuration list for PBXProject "ChromeElement" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;

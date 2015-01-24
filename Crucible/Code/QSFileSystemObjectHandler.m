@@ -23,27 +23,7 @@
 static NSDictionary *bundlePresetChildren = nil;
 
 NSArray *recentDocumentsForBundle(NSString *bundleIdentifier) {
-    if (!bundleIdentifier)
-        return nil;
-    
-    NSArray *recentDocuments = [(NSArray *)CFPreferencesCopyValue((CFStringRef) @"NSRecentDocumentRecords", (CFStringRef) bundleIdentifier, kCFPreferencesCurrentUser, kCFPreferencesAnyHost) autorelease];
-    
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSMutableArray *documentsArray = [NSMutableArray arrayWithCapacity:[recentDocuments count]];
-    NSData *aliasData;
-    NSString *path;
-    
-    for (id loopItem in recentDocuments) {
-        aliasData = [[loopItem objectForKey:@"_NSLocator"] objectForKey:@"_NSAlias"];
-        path = [[NDAlias aliasWithData:aliasData] quickPath];
-        
-        
-		// ***warning * eventually include aliases
-        
-        
-        if (path && [manager fileExistsAtPath:path]) [documentsArray addObject:path];
-    }
-    return documentsArray;
+    return [NSArray array];
 }
 
 

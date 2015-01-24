@@ -8,29 +8,18 @@
 
 #import "NSAppleScript+QSStorage.h"
 #import "NSData_RangeExtensions.h"
-#import "NDAppleScriptObject.h"
-#import "NDResourceFork.h"
 
 #import <Carbon/Carbon.h>
-
-
-#import "NSAppleEventDescriptor+NDAppleScriptObject.h"
 
 @interface NSAppleScript (NSPrivate)
 + (struct ComponentInstanceRecord *)_defaultScriptingComponent;
 - (OSAID)_compiledScriptID;
 @end
 
-
-
 @interface NSScriptObjectSpecifier (NSScriptObjectSpecifierPrivate) // Private Foundation Methods
 + (id) _objectSpecifierFromDescriptor:(NSAppleEventDescriptor *) descriptor inCommandConstructionContext:(id) context;
 - (NSAppleEventDescriptor *) _asDescriptor;
 @end
-
-
-
-
 
 @implementation NSAppleScript (Constructors)
 + (NSAppleScript *)scriptWithContentsOfFile:(NSString *)path
@@ -70,7 +59,6 @@
 	//	[[self data]writeToFile:(NSString *)path atomically:flag];
 	return YES;
 }
-
 
 - (BOOL)writeToFile:(NSString *)path atomically:(BOOL)flag{
 	[[self data]writeToFile:(NSString *)path atomically:flag];

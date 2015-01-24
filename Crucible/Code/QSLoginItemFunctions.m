@@ -8,9 +8,6 @@
 
 #import "QSLoginItemFunctions.h"
 
-
-#import "NDAlias.h"
-
 BOOL QSItemShouldLaunchAtLogin(NSString *path){
     NSArray *loginItems = [(NSArray *) CFPreferencesCopyValue((CFStringRef) @"AutoLaunchedApplicationDictionary", (CFStringRef) @"loginwindow", kCFPreferencesCurrentUser, kCFPreferencesAnyHost) autorelease];
     for (id loopItem in loginItems){
@@ -33,11 +30,7 @@ void QSSetItemShouldLaunchAtLogin(NSString *path,BOOL launch,BOOL includeAlias){
         loginItems=[NSMutableArray arrayWithCapacity:1];
     }
     
-    if (launch && !QSItemShouldLaunchAtLogin(path)){
-        QSLog(@"Enabling Launch at login: %@",path);
-        NSDictionary *loginDict=[NSDictionary dictionaryWithObjectsAndKeys:path,@"Path",[NSNumber numberWithBool:NO],@"Hide",includeAlias?[[NDAlias aliasWithPath:path]data]:nil,@"AliasData",nil];
-        [loginItems addObject:loginDict];
-    }else if (!launch){
+   if (!launch){
         int i;
         for (i=0;i<[loginItems count];i++)
             if ([[[[loginItems objectAtIndex:i] objectForKey:@"Path"]stringByStandardizingPath]isEqualToString:path]) break;

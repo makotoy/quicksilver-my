@@ -18,8 +18,6 @@
 #import "QSPreferenceKeys.h"
 #import "NDResourceFork.h"
 #import "QSCatalogEntry.h"
-#import "NDAlias.h"
-#import "NDAlias+QSMods.h"
 #import "QSUTI.h"
 #import "QSExecutor.h"
 #import "QSMacros.h"
@@ -27,7 +25,6 @@
 
 #import "QSObject_PropertyList.h"
 
-#import "NSAppleEventDescriptor+NDAppleScriptObject.h"
 #import "NSImage+QuickLook.h"
 #import "QSLocalization.h"
 

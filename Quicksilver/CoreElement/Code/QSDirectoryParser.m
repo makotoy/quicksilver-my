@@ -8,9 +8,6 @@
 
 #import "QSDirectoryParser.h"
 
-#import <QSCrucible/NDAlias.h>
-#import <QSCrucible/NDAlias+AliasFile.h>
-
 @interface UKDirectoryEnumerator (QSFinderInfo)
 - (FSCatalogInfo *)currInfo;
 @end
@@ -80,7 +77,6 @@ int eCount=0;
     if (!enumerator)return nil;
 	
     eCount++;
-    NDAlias *aliasSource;
     QSObject *obj;
     [enumerator setDesiredInfo:kFSCatInfoGettableInfo|kFSCatInfoFinderInfo];
     while ((file = [enumerator nextObjectFullPath])) {
@@ -90,22 +86,9 @@ int eCount=0;
 	FileInfo* fInfo = (FileInfo*) currInfo->finderInfo;		
 	UInt16 finderFlags = fInfo->finderFlags;
 		
-	aliasSource = nil;
-	aliasFile = nil; 
+	aliasFile = nil;
     
 	isDirectory = [enumerator isDirectory];
-		
-	if (finderFlags & kIsAlias) {
-	    NSString *targetFile=[manager resolveAliasAtPath:file];
-	    if (targetFile) {
-		aliasSource=[NDAlias aliasWithContentsOfFile:file];
-		aliasFile=file;
-		file=targetFile;
-		type=[manager UTIOfFile:file];
-				
-		[manager fileExistsAtPath:file isDirectory:&isDirectory];
-	    }
-	}
 		
     
 	// if (![manager fileExistsAtPath:file isDirectory:&isDirectory]) continue;
@@ -123,10 +106,8 @@ int eCount=0;
 	    }
 	    if (include){
 		obj=[QSObject fileObjectWithPath:file];
-		if (aliasSource)[obj setObject:[aliasSource data] forType:QSAliasDataType];
 		if (aliasFile)[obj setObject:aliasFile forType:QSAliasFilePathType];
 		if (obj)[array addObject:obj];
-				
 	    }
 			
 	    if (depth && isDirectory){// && !(infoRec.flags & kLSItemInfoIsPackage))

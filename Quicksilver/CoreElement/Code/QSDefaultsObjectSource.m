@@ -3,8 +3,6 @@
  * 2010-01-09 Makoto Yamashita
  */
 
-#import <QSCrucible/NDAlias.h>
-
 #import "QSDefaultsObjectSource.h"
 
 #define kDefaultsObjectSourceBundleID @"bundle"
@@ -139,24 +137,11 @@
             case DefaultsURLEntry:
                 newObject=[QSObject URLObjectWithURL:thisObject title:nil];
                 break;
-            case DefaultsAliasEntry:
-                path=[[NDAlias aliasWithData:thisObject]quickPath];
-                if (path && [fm fileExistsAtPath:path])
-                    newObject=[QSObject fileObjectWithPath:path];
-                    break;
             case DefaultsTextEntry:
                 newObject=[QSObject objectWithString:thisObject];
                 break;
             case DefaultsFileDataEntry:
-				
-				// initWithCoder
-                path=[[NDAlias aliasWithData:[thisObject objectForKey:@"_CFURLAliasData"]]quickPath];
-                
-                if (path){
-                    newObject=[fm fileExistsAtPath:path]?[QSObject fileObjectWithPath:path]:nil;
-				} else{
-                    newObject=[QSObject URLObjectWithURL:[thisObject objectForKey:@"_CFURLString"] title:nil];
-				}
+				newObject=[QSObject URLObjectWithURL:[thisObject objectForKey:@"_CFURLString"] title:nil];
 					break;
                 
         }

@@ -166,9 +166,15 @@
 /* Begin PBXProject section */
 		084A9FE61094D16A00E2CB93 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 084A9FE91094D16A00E2CB93 /* Build configuration list for PBXProject "iTunesElement" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 084A9FE41094D16A00E2CB93;
 			productRefGroup = 084A9FFE1094D1D200E2CB93 /* Products */;
 			projectDirPath = "";

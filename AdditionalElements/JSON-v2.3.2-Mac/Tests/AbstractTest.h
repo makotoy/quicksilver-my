@@ -28,12 +28,12 @@
  */
 
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 @class SBJsonParser;
 @class SBJsonWriter;
 
-@interface AbstractTest : SenTestCase {
+@interface AbstractTest : XCTestCase {
   SBJsonParser * parser;
   SBJsonWriter * writer;
 }

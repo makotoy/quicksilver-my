@@ -31,13 +31,13 @@
 #import <JSON/JSON.h>
 
 #define assertErrorContains(e, s) \
-    STAssertTrue([[e localizedDescription] hasPrefix:s], @"%@", [e userInfo])
+    XCTAssertTrue([[e localizedDescription] hasPrefix:s], @"%@", [e userInfo])
 
 #define assertUnderlyingErrorContains(e, s) \
-    STAssertTrue([[[[e userInfo] objectForKey:NSUnderlyingErrorKey] localizedDescription] hasPrefix:s], @"%@", [e userInfo])
+    XCTAssertTrue([[[[e userInfo] objectForKey:NSUnderlyingErrorKey] localizedDescription] hasPrefix:s], @"%@", [e userInfo])
 
 #define assertUnderlyingErrorContains2(e, s) \
-    STAssertTrue([[[[[[e userInfo] objectForKey:NSUnderlyingErrorKey] userInfo] objectForKey:NSUnderlyingErrorKey] localizedDescription] hasPrefix:s], @"%@", [e userInfo])
+    XCTAssertTrue([[[[[[e userInfo] objectForKey:NSUnderlyingErrorKey] userInfo] objectForKey:NSUnderlyingErrorKey] localizedDescription] hasPrefix:s], @"%@", [e userInfo])
 
 @implementation ErrorTest
 
@@ -46,8 +46,8 @@
 - (void)testUnsupportedObject
 {
     NSError *error = nil;
-    STAssertNil([writer stringWithObject:[NSData data] error:&error], nil);
-    STAssertNotNil(error, nil);
+    XCTAssertNil([writer stringWithObject:[NSData data] error:&error]);
+    XCTAssertNotNil(error);
 }
 
 - (void)testNonStringDictionaryKey
@@ -61,8 +61,8 @@
     for (int i = 0; i < [keys count]; i++) {
         NSError *error = nil;
         NSDictionary *object = [NSDictionary dictionaryWithObject:@"1" forKey:[keys objectAtIndex:i]];
-        STAssertNil([writer stringWithObject:object error:&error], nil);
-        STAssertNotNil(error, nil);
+        XCTAssertNil([writer stringWithObject:object error:&error]);
+        XCTAssertNotNil(error);
     }
 }
 
@@ -75,10 +75,10 @@
         
         // We don't check the convenience category here, like we do for parsing,
         // because the category is explicitly on the NSArray and NSDictionary objects.
-        // STAssertNil([fragment JSONRepresentation], nil);
+        // XCTAssertNil([fragment JSONRepresentation]);
         
         NSError *error = nil;
-        STAssertNil([writer stringWithObject:fragment error:&error], @"%@", fragment);
+        XCTAssertNil([writer stringWithObject:fragment error:&error], @"%@", fragment);
         assertErrorContains(error, @"Not valid type for JSON");
     }
 }
@@ -86,21 +86,21 @@
 - (void)testInfinity {
     NSArray *obj = [NSArray arrayWithObject:[NSNumber numberWithDouble:INFINITY]];
     NSError *error = nil;
-    STAssertNil([writer stringWithObject:obj error:&error], nil);
+    XCTAssertNil([writer stringWithObject:obj error:&error]);
     assertUnderlyingErrorContains(error, @"Infinity is not a valid number in JSON");
 }
 
 - (void)testNegativeInfinity {
     NSArray *obj = [NSArray arrayWithObject:[NSNumber numberWithDouble:-INFINITY]];
     NSError *error = nil;
-    STAssertNil([writer stringWithObject:obj error:&error], nil);
+    XCTAssertNil([writer stringWithObject:obj error:&error]);
     assertUnderlyingErrorContains(error, @"Infinity is not a valid number in JSON");
 }
 
 - (void)testNaN {
     NSArray *obj = [NSArray arrayWithObject:[NSDecimalNumber notANumber]];
     NSError *error = nil;
-    STAssertNil([writer stringWithObject:obj error:&error], nil);
+    XCTAssertNil([writer stringWithObject:obj error:&error]);
     assertUnderlyingErrorContains(error, @"NaN is not a valid number in JSON");
 }
 
@@ -109,28 +109,28 @@
 - (void)testArray {
     NSError *error;
 
-    STAssertNil([parser objectWithString:@"[1,,2]" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[1,,2]" error:&error]);
     assertErrorContains(error, @"Expected value");
     
-    STAssertNil([parser objectWithString:@"[1,,]" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[1,,]" error:&error]);
     assertErrorContains(error, @"Expected value");
 
-    STAssertNil([parser objectWithString:@"[,1]" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[,1]" error:&error]);
     assertErrorContains(error, @"Expected value");
 
 
-    STAssertNil([parser objectWithString:@"[1,]" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[1,]" error:&error]);
     assertErrorContains(error, @"Trailing comma disallowed");
     
     
-    STAssertNil([parser objectWithString:@"[1" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[1" error:&error]);
     assertErrorContains(error, @"End of input while parsing array");
     
-    STAssertNil([parser objectWithString:@"[[]" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[[]" error:&error]);
     assertErrorContains(error, @"End of input while parsing array");
 
     // See if seemingly-valid arrays have nasty elements
-    STAssertNil([parser objectWithString:@"[+1]" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[+1]" error:&error]);
     assertErrorContains(error, @"Expected value");
     assertUnderlyingErrorContains(error, @"Leading + disallowed");
 }
@@ -138,116 +138,116 @@
 - (void)testObject {
     NSError *error;
 
-    STAssertNil([parser objectWithString:@"{1" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{1" error:&error]);
     assertErrorContains(error, @"Object key string expected");
         
-    STAssertNil([parser objectWithString:@"{null" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{null" error:&error]);
     assertErrorContains(error, @"Object key string expected");
     
-    STAssertNil([parser objectWithString:@"{\"a\":1,,}" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{\"a\":1,,}" error:&error]);
     assertErrorContains(error, @"Object key string expected");
     
-    STAssertNil([parser objectWithString:@"{,\"a\":1}" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{,\"a\":1}" error:&error]);
     assertErrorContains(error, @"Object key string expected");
     
 
-    STAssertNil([parser objectWithString:@"{\"a\"" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{\"a\"" error:&error]);
     assertErrorContains(error, @"Expected ':'");
     
 
-    STAssertNil([parser objectWithString:@"{\"a\":" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{\"a\":" error:&error]);
     assertErrorContains(error, @"Object value expected");
     
-    STAssertNil([parser objectWithString:@"{\"a\":," error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{\"a\":," error:&error]);
     assertErrorContains(error, @"Object value expected");
     
     
-    STAssertNil([parser objectWithString:@"{\"a\":1,}" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{\"a\":1,}" error:&error]);
     assertErrorContains(error, @"Trailing comma disallowed");
     
     
-    STAssertNil([parser objectWithString:@"{" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{" error:&error]);
     assertErrorContains(error, @"End of input while parsing object");
     
-    STAssertNil([parser objectWithString:@"{\"a\":{}" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"{\"a\":{}" error:&error]);
     assertErrorContains(error, @"End of input while parsing object");
 }
 
 - (void)testNumber {
     NSError *error;
 
-    STAssertNil([parser objectWithString:@"[-" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[-" error:&error]);
     assertUnderlyingErrorContains(error, @"No digits after initial minus");
         
-    STAssertNil([parser objectWithString:@"[+1" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[+1" error:&error]);
     assertUnderlyingErrorContains(error, @"Leading + disallowed in number");
 
-    STAssertNil([parser objectWithString:@"[01" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[01" error:&error]);
     assertUnderlyingErrorContains(error, @"Leading 0 disallowed in number");
     
-    STAssertNil([parser objectWithString:@"[0." error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[0." error:&error]);
     assertUnderlyingErrorContains(error, @"No digits after decimal point");
     
     
-    STAssertNil([parser objectWithString:@"[1e" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[1e" error:&error]);
     assertUnderlyingErrorContains(error, @"No digits after exponent");
     
-    STAssertNil([parser objectWithString:@"[1e-" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[1e-" error:&error]);
     assertUnderlyingErrorContains(error, @"No digits after exponent");
     
-    STAssertNil([parser objectWithString:@"[1e+" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[1e+" error:&error]);
     assertUnderlyingErrorContains(error, @"No digits after exponent");
 }
 
 - (void)testNull {
     NSError *error;
     
-    STAssertNil([parser objectWithString:@"[nil" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[nil" error:&error]);
     assertUnderlyingErrorContains(error, @"Expected 'null'");
 }
 
 - (void)testBool {
     NSError *error;
     
-    STAssertNil([parser objectWithString:@"[truth" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[truth" error:&error]);
     assertUnderlyingErrorContains(error, @"Expected 'true'");
     
-    STAssertNil([parser objectWithString:@"[fake" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[fake" error:&error]);
     assertUnderlyingErrorContains(error, @"Expected 'false'");
 }    
 
 - (void)testString {
     NSError *error;
     
-    STAssertNil([parser objectWithString:@"" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"" error:&error]);
     assertErrorContains(error, @"Unexpected end of string");
 
-    STAssertNil([parser objectWithString:@"" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"" error:&error]);
     assertErrorContains(error, @"Unexpected end of string");
     
-    STAssertNil([parser objectWithString:@"[\"" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[\"" error:&error]);
     assertUnderlyingErrorContains(error, @"Unescaped control character");
     
-    STAssertNil([parser objectWithString:@"[\"foo" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[\"foo" error:&error]);
     assertUnderlyingErrorContains(error, @"Unescaped control character");
 
     
-    STAssertNil([parser objectWithString:@"[\"\\uD834foo\"" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[\"\\uD834foo\"" error:&error]);
     assertUnderlyingErrorContains(error, @"Broken unicode character");
     assertUnderlyingErrorContains2(error, @"Missing low character");
         
-    STAssertNil([parser objectWithString:@"[\"\\uD834\\u001E\"" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[\"\\uD834\\u001E\"" error:&error]);
     assertUnderlyingErrorContains(error, @"Broken unicode character");
     assertUnderlyingErrorContains2(error, @"Invalid low surrogate");
     
-    STAssertNil([parser objectWithString:@"[\"\\uDD1Ef\"" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[\"\\uDD1Ef\"" error:&error]);
     assertUnderlyingErrorContains(error, @"Broken unicode character");
     assertUnderlyingErrorContains2(error, @"Invalid high character");
 
     
-    for (NSUInteger i = 0; i < 0x20; i++) {
+    for (unsigned short i = 0; i < 0x20; i++) {
         NSString *str = [NSString stringWithFormat:@"\"[%C\"", i];
-        STAssertNil([parser objectWithString:str error:&error], nil);
+        XCTAssertNil([parser objectWithString:str error:&error]);
         assertErrorContains(error, @"Unescaped control character");
     }
 }
@@ -255,16 +255,16 @@
 - (void)testObjectGarbage {
     NSError *error;
 
-    STAssertNil([parser objectWithString:@"['1'" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"['1'" error:&error]);
     assertUnderlyingErrorContains(error, @"Unrecognised leading character");
     
-    STAssertNil([parser objectWithString:@"['hello'" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"['hello'" error:&error]);
     assertUnderlyingErrorContains(error, @"Unrecognised leading character");
     
-    STAssertNil([parser objectWithString:@"[**" error:&error], nil);
+    XCTAssertNil([parser objectWithString:@"[**" error:&error]);
     assertUnderlyingErrorContains(error, @"Unrecognised leading character");
     
-    STAssertNil([parser objectWithString:nil error:&error], nil);
+    XCTAssertNil([parser objectWithString:nil error:&error]);
     assertErrorContains(error, @"Input was 'nil'");
 }
 

@@ -55,27 +55,27 @@
         NSString *jsonText = [NSString stringWithContentsOfFile:jsonPath
                                                        encoding:NSUTF8StringEncoding
                                                           error:nil];
-        STAssertNotNil(jsonText, @"Could not load %@", jsonPath);
+        XCTAssertNotNil(jsonText, @"Could not load %@", jsonPath);
         
         id parsed;
-        STAssertNoThrow(parsed = [parser objectWithString:jsonText], jsonPath);
-        STAssertNotNil(parsed, jsonPath);
-        STAssertNil(parser.errorTrace, @"%@: %@", jsonPath, parser.errorTrace);
+        XCTAssertNoThrow(parsed = [parser objectWithString:jsonText]);
+        XCTAssertNotNil(parsed);
+        XCTAssertNil(parser.errorTrace, @"%@: %@", jsonPath, parser.errorTrace);
         
         NSString *written;
-        STAssertNoThrow(written = [writer stringWithObject:parsed], jsonPath);
-        STAssertNotNil(written, jsonPath);
-        STAssertNil(writer.errorTrace, @"%@: %@", jsonPath, writer.errorTrace);
+        XCTAssertNoThrow(written = [writer stringWithObject:parsed]);
+        XCTAssertNotNil(written);
+        XCTAssertNil(writer.errorTrace, @"%@: %@", jsonPath, writer.errorTrace);
         
         NSString *path = [jsonPath stringByAppendingPathExtension:suffix];
         NSString *text = [NSString stringWithContentsOfFile:path
 												   encoding:NSUTF8StringEncoding
 													  error:nil];
-        STAssertNotNil(text, @"Could not load %@", path);
+        XCTAssertNotNil(text, @"Could not load %@", path);
 		
         // Chop off newline at end of string
         text = [text substringToIndex:[text length]-1];
-        STAssertEqualObjects(written, text, @"at %@", jsonPath);
+        XCTAssertEqualObjects(written, text, @"at %@", jsonPath);
     }
 	
 }
@@ -103,8 +103,8 @@
                                                    encoding:NSUTF8StringEncoding
                                                       error:nil];
 
-        STAssertNil([parser objectWithString:json], path);
-        STAssertNotNil(parser.errorTrace, path);
+        XCTAssertNil([parser objectWithString:json]);
+        XCTAssertNotNil(parser.errorTrace);
     }
 }
 

@@ -270,10 +270,10 @@
 		535158720F70DE7B00C8AABD /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
 		5355C86B0E392B2A00A18C15 /* ErrorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorTest.h; sourceTree = "<group>"; };
 		5355C86C0E392B2A00A18C15 /* DataDrivenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDrivenTest.h; sourceTree = "<group>"; };
-		53C45B9B0C98A87600546F66 /* ErrorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorTest.m; sourceTree = "<group>"; };
+		53C45B9B0C98A87600546F66 /* ErrorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ErrorTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53D229810C96121600276605 /* JSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D229830C96121600276605 /* JSON-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JSON-Info.plist"; sourceTree = "<group>"; };
-		53D2298D0C96122A00276605 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		53D2298D0C96122A00276605 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D2298E0C96122A00276605 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		53D2299A0C96129800276605 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		BC010B181248A5E400ACC736 /* RefreshOnlineDocs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = RefreshOnlineDocs.sh; sourceTree = "<group>"; };
@@ -284,7 +284,7 @@
 		BC3A1CDE12060DAC0051A978 /* Installation.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Installation.md; sourceTree = "<group>"; };
 		BC3A1CDF12060DAC0051A978 /* License.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.md; sourceTree = "<group>"; };
 		BC74B6EA0FC9FAD0000BD3DD /* MaxDepthTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaxDepthTest.h; sourceTree = "<group>"; };
-		BC74B6EB0FC9FAD0000BD3DD /* MaxDepthTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaxDepthTest.m; sourceTree = "<group>"; };
+		BC74B6EB0FC9FAD0000BD3DD /* MaxDepthTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MaxDepthTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		BC74B7AC0FCA8B89000BD3DD /* ProxyTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProxyTest.h; sourceTree = "<group>"; };
 		BC74B7AD0FCA8B89000BD3DD /* ProxyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProxyTest.m; sourceTree = "<group>"; };
 		BC8F72A51235331400678720 /* WriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WriterTest.h; sourceTree = "<group>"; };
@@ -388,7 +388,7 @@
 		E75716440C96DB530084A449 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
 		E757164B0C96E39B0084A449 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
 		E757164C0C96E39B0084A449 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
-		E76A1EB60C996C2000A0CC83 /* DataDrivenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDrivenTest.m; sourceTree = "<group>"; };
+		E76A1EB60C996C2000A0CC83 /* DataDrivenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataDrivenTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FE2BBD800D8B0D3900184787 /* libjson.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjson.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE2BBDAB0D8B0EE000184787 /* libjsontests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libjsontests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE2BBDAC0D8B0EE100184787 /* libjsontests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "libjsontests-Info.plist"; sourceTree = "<group>"; };
@@ -448,7 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				53D229810C96121600276605 /* JSON.framework */,
-				53D2298D0C96122A00276605 /* Tests.octest */,
+				53D2298D0C96122A00276605 /* Tests.xctest */,
 				FE2BBD800D8B0D3900184787 /* libjson.a */,
 				FE2BBDAB0D8B0EE000184787 /* libjsontests.octest */,
 			);
@@ -707,7 +707,6 @@
 				53D229880C96122A00276605 /* Resources */,
 				53D229890C96122A00276605 /* Sources */,
 				53D2298A0C96122A00276605 /* Frameworks */,
-				53D2298B0C96122A00276605 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -716,8 +715,8 @@
 			);
 			name = Tests;
 			productName = Tests;
-			productReference = 53D2298D0C96122A00276605 /* Tests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 53D2298D0C96122A00276605 /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		FE2BBD7F0D8B0D3900184787 /* libjson */ = {
 			isa = PBXNativeTarget;
@@ -755,13 +754,16 @@
 			name = libjsontests;
 			productName = libjsontests;
 			productReference = FE2BBDAB0D8B0EE000184787 /* libjsontests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		53D229730C9611FF00276605 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+			};
 			buildConfigurationList = 53D229740C9611FF00276605 /* Build configuration list for PBXProject "JSON" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -992,19 +994,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		53D2298B0C96122A00276605 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
 		BC3A1CB112023B860051A978 /* Refresh Online Docs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -1197,9 +1186,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
@@ -1226,9 +1213,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -1253,14 +1238,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(value)",
 					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_ENABLE_OBJC_GC = required;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
@@ -1271,12 +1255,11 @@
 					"-framework",
 					Foundation,
 					"-framework",
-					SenTestingKit,
+					XCTest,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
 				SDKROOT = "";
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
@@ -1288,13 +1271,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(value)",
 					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_ENABLE_OBJC_GC = required;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Foundation.framework/Headers/Foundation.h";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -1304,12 +1286,11 @@
 					"-framework",
 					Foundation,
 					"-framework",
-					SenTestingKit,
+					XCTest,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
 				SDKROOT = "";
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};

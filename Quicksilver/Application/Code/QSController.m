@@ -644,9 +644,7 @@ static id _sharedInstance;
 
 - (NSString *)internetDownloadLocation
 {
-    NSDictionary *icDict = [(NSDictionary *)CFPreferencesCopyValue((CFStringRef) @"Version 2.5.4", (CFStringRef) @"com.apple.internetconfig", kCFPreferencesCurrentUser, kCFPreferencesAnyHost) autorelease];
-    NSData *data = [[[icDict objectForKey:@"ic-added"] objectForKey:@"DownloadFolder"] objectForKey:@"ic-data"];
-    return [[[NDAlias aliasWithData:data] path] stringByStandardizingPath];
+    return @"~/Downloads/";
 }
 
 - (void)checkForFirstRun

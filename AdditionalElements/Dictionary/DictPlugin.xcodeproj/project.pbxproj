@@ -162,9 +162,15 @@
 /* Begin PBXProject section */
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 7F07ADED085E432400E2AFC4 /* Build configuration list for PBXProject "DictPlugin" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 0259C574FE90428111CA0C5A /* DictPlugin */;
 			projectDirPath = "";
 			projectRoot = "";

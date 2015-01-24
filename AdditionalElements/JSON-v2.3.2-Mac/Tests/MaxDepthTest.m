@@ -38,26 +38,26 @@
 }
 
 - (void)testParseDepthOk {
-    STAssertNotNil([parser objectWithString:@"[[]]"], nil);
+    XCTAssertNotNil([parser objectWithString:@"[[]]"]);
 }
 
 - (void)testParseTooDeep {
-    STAssertNil([parser objectWithString:@"[[[]]]"], nil);
-    STAssertEquals([[parser.errorTrace objectAtIndex:0] code], (NSInteger)EDEPTH, nil);
+    XCTAssertNil([parser objectWithString:@"[[[]]]"]);
+    XCTAssertEqual([[parser.errorTrace objectAtIndex:0] code], (NSInteger)EDEPTH);
 }
 
 - (void)testWriteDepthOk {
     NSArray *a1 = [NSArray array];
     NSArray *a2 = [NSArray arrayWithObject:a1];
-    STAssertNotNil([writer stringWithObject:a2], nil);
+    XCTAssertNotNil([writer stringWithObject:a2]);
 }
 
 - (void)testWriteTooDeep {
     NSArray *a1 = [NSArray array];
     NSArray *a2 = [NSArray arrayWithObject:a1];
     NSArray *a3 = [NSArray arrayWithObject:a2];
-    STAssertNil([writer stringWithObject:a3], nil);
-    STAssertEquals([[writer.errorTrace objectAtIndex:0] code], (NSInteger)EDEPTH, nil);
+    XCTAssertNil([writer stringWithObject:a3]);
+    XCTAssertEqual([[writer.errorTrace objectAtIndex:0] code], (NSInteger)EDEPTH);
 }
 
 - (void)testWriteRecursion {
@@ -69,8 +69,8 @@
     NSMutableArray *a2 = [NSMutableArray arrayWithObject:a1];
     [a1 addObject:a2];
 
-    STAssertNil([writer stringWithObject:a1], nil);
-    STAssertEquals([[writer.errorTrace objectAtIndex:0] code], (NSInteger)EDEPTH, nil);
+    XCTAssertNil([writer stringWithObject:a1]);
+    XCTAssertEqual([[writer.errorTrace objectAtIndex:0] code], (NSInteger)EDEPTH);
 }
 
 @end

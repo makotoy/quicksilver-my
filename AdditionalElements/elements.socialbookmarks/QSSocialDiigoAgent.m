@@ -124,7 +124,7 @@
     NSString* apiURLStr;
     apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=%d&count=100&user=%@&filter=all",
                  user, password, [bookmarks count], user];
-    id bmkList = [QSSocialDiigoAgent retrieveDiigoObject:apiURLStr];
+    NSArray *bmkList = (NSArray*)[QSSocialDiigoAgent retrieveDiigoObject:apiURLStr];
     if ([bmkList count] == 0) {
         return YES;
     }    

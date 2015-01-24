@@ -482,6 +482,8 @@
 /* Begin PBXProject section */
 		084BB01510E9A722003D2539 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 084BB01810E9A722003D2539 /* Build configuration list for PBXProject "AllPlugins" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;

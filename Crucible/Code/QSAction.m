@@ -11,7 +11,6 @@
 
 
 #import "QSResourceManager.h"
-#import "NDAppleScriptObject.h"
 #import "NSBundle_BLTRExtensions.h"
 
 //#import "QSAppleScriptActions.h"

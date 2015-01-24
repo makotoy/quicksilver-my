@@ -78,21 +78,20 @@
 	}
 	return nil;
 }
-- (BOOL)loadChildrenForObject:(QSObject *)object{
+- (BOOL)loadChildrenForObject:(QSObject *)object
+{
 	if ([[object primaryType]isEqualToString:QSFilePathType] && [NSApp featureLevel]>1){
 		[object setChildren:[self objectsForEntry:nil]];
 		return YES;
 	}
-	if ([[object primaryType]isEqualToString:kQSAppleMailMailboxType]){
+/*
+	if ([[object primaryType]isEqualToString:kQSAppleMailMailboxType]) {
 		NSString *mailbox=[object objectForType:kQSAppleMailMailboxType];
-		
 		NSAppleScript *script=[[QSReg getClassInstance:@"QSAppleMailMediator"]
 							   performSelector:@selector(mailScript)];
-		
 		id result=[[script executeSubroutine:@"list_messages"
 								   arguments:mailbox
 									   error:nil]objectValue];
-		//NSLog(@"res %@",result);
 		NSArray *ids=[result objectAtIndex:0];
 		NSArray *subjects=[result objectAtIndex:1];
 		NSArray *senders=[result objectAtIndex:2];
@@ -114,8 +113,7 @@
 		return YES; 
 	}
 	
-	if ([[object primaryType]isEqualToString:kQSAppleMailMessageType]){
-		
+	if ([[object primaryType]isEqualToString:kQSAppleMailMessageType]) {
 		NSArray *message=[[object objectForType:kQSAppleMailMessageType]componentsSeparatedByString:@"//"];
 		NSAppleScript *script=[[QSReg getClassInstance:@"QSAppleMailMediator"]
 							   performSelector:@selector(mailScript)];
@@ -135,9 +133,7 @@
 		[object setChildren:objects];
 		return YES;
 	}
-	
-	
-	
+ */
 	return NO;
 }
 
@@ -171,17 +167,4 @@
     return objects;
 }
 
-// Object Handler Methods
-
-/*
- - (void)setQuickIconForObject:(QSObject *)object{
-	 [object setIcon:nil]; // An icon that is either already in memory or easy to load
- }
- - (BOOL)loadIconForObject:(QSObject *)object{
-	 return NO;
-	 id data=[object objectForType:QSAppleMailPlugInType];
-	 [object setIcon:nil];
-	 return YES;
- }
- */
 @end

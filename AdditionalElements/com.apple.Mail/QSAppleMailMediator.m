@@ -3,24 +3,33 @@
 
 #import "QSAppleMailMediator.h"
 
+#import <AddressBook/AddressBook.h>
+
 #import "QSMailMediator.h"
 //#import <QSCore/QSBadgeImage.h>
 @class QSCountBadgeImage;
 
 @implementation QSAppleMailMediator
 
+- (id)init
+{
+    if (self = [super init]) {
+        NSString *oldScriptPath = [[NSBundle bundleForClass:[QSAppleMailMediator class]] pathForResource:@"Mail" ofType:@"scpt"];
+        if (oldScriptPath) {
+            [self setMailScript:[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:oldScriptPath] error:nil]];
+        }
+    }
+}
+
 - (void) sendEmailTo:(NSArray *)addresses from:(NSString *)sender
 			 subject:(NSString *)subject body:(NSString *)body
 		 attachments:(NSArray *)pathArray sendNow:(BOOL)sendNow
 {
-	NSString *accountFormatted;
+/*	NSString *accountFormatted;
     if (sender) {
 		accountFormatted = sender;
 	} else {
-        NSArray *accounts = [[[self mailScript]
-							  executeSubroutine:@"account_list"
-									  arguments:[NSArray arrayWithObjects:subject,body,addresses,pathArray,nil]
-										  error:nil]objectValue];
+        NSArray *accounts = [self accountList:addresses];
         NSArray *account;
         for (NSArray *accountCand in accounts) {
             if (emailsShareDomain([addresses lastObject],
@@ -45,6 +54,23 @@
 	                   body:body
 				attachments:pathArray
 					sendNow:sendNow];
+ */
+}
+
+- (NSArray *)accountList:(NSArray *)addresses
+{
+    ABAddressBook *AB = [ABAddressBook sharedAddressBook];
+    NSMutableArray *queryRes = [NSMutableArray arrayWithCapacity:0];
+    for (NSString* theAddr in addresses) {
+        ABSearchElement *searchQuery = [ABPerson searchElementForProperty:kABEmailProperty
+                                                                    label:nil
+                                                                      key:nil
+                                                                    value:theAddr
+                                                               comparison:kABPrefixMatchCaseInsensitive];
+        [queryRes addObjectsFromArray:[AB recordsMatchingSearchElement:searchQuery]];
+    }
+    
+    return [NSArray array];
 }
 
 - (NSString *)scriptPath{
@@ -74,21 +100,6 @@
     //  NSLog(@"%@",message);
     if (errorDict) 
         NSRunAlertPanel(@"An error occured while sending mail", [errorDict objectForKey:@"NSAppleScriptErrorMessage"], nil,nil,nil);
-}
-
-- (NSAppleScript *)mailScript
-{
-    if (!mailScript) {
-        NSString *path=[self scriptPath];
-        if (path) mailScript=[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
-    }
-    return mailScript;
-}
-
-- (void)setMailScript:(NSAppleScript *)newMailScript
-{
-    [mailScript release];
-    mailScript = [newMailScript retain];
 }
 
 - (BOOL)drawIconForObject:(QSObject *)object inRect:(NSRect)rect flipped:(BOOL)flipped
