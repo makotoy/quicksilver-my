@@ -24,10 +24,11 @@
 
 @implementation QSCLExecutableProvider
 
-- (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject{
-    if ([dObject objectForType:NSFilenamesPboardType]){
+- (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject
+{
+    if ([dObject objectForType:NSFilenamesPboardType]) {
         NSString *path=[dObject singleFilePath];
-        if (!path)return nil;
+        if (!path) return nil;
         
 		BOOL isDirectory;
         
@@ -56,13 +57,15 @@
     return nil;
 }
 
-- (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
+- (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject
+{
     QSObject *proxy=[QSObject textProxyObjectWithDefaultValue:@""];
     return [NSArray arrayWithObject:proxy];
     
 }
 
-- (QSObject *) executeObject:(QSObject *)dObject arguments:(QSObject *)iObject{
+- (QSObject *)executeObject:(QSObject *)dObject arguments:(QSObject *)iObject
+{
 	NSString *result=[self runExecutable:[(QSObject *)dObject singleFilePath] withArguments:[iObject stringValue] inTerminal:NO];
     if ([result length]) return [QSObject objectWithString:result];
     return nil;
@@ -74,7 +77,8 @@
     return nil;
 }
 
-- (NSString *)runExecutable:(NSString *)path withArguments:(NSString *)arguments inTerminal:(BOOL)inTerminal{
+- (NSString *)runExecutable:(NSString *)path withArguments:(NSString *)arguments inTerminal:(BOOL)inTerminal
+{
     BOOL executable=[[NSFileManager defaultManager] isExecutableFileAtPath:path];
     
     NSString *taskPath=path;
@@ -86,61 +90,60 @@
         [argArray addObject:taskPath];
         [scanner scanString:@"#!" intoString:nil];
         [scanner scanUpToCharactersFromSet:[NSCharacterSet characterSetWithCharactersInString:@"\r\n"] intoString:&taskPath];
-    }//else if (!inTerminal){
-	 //taskPath=@"/bin/sh";
-	 //[argArray addObject:@"-c"];
-	 //[argArray addObject:taskPath];
-	 //}
-    
-    if ([arguments length]);
-    [argArray addObjectsFromArray:[arguments componentsSeparatedByString:@" "]];
-
-    if (inTerminal){
+    }
+    if ([arguments length]) {
+        [argArray addObjectsFromArray:[arguments componentsSeparatedByString:@" "]];
+    }
+    if (inTerminal) {
         NSString *fullCommand=[NSString stringWithFormat:@"%@ %@",[self escapeString:taskPath],[argArray componentsJoinedByString:@" "]];
         [self performCommandInTerminal:fullCommand];      
-		///  NSLog(@"Run Shell Script: %@",fullCommand);
-    }else{
-        
+    } else {
         NSTask *task=[[[NSTask alloc]init]autorelease];
         [task setLaunchPath:taskPath];
         [task setArguments:argArray];
         [task setStandardOutput:[NSPipe pipe]];
         [task launch];
         [task waitUntilExit];
-		// NSLog(@"Run Task: %@ %@",taskPath,argArray);
-        
-        NSString *string=[[[NSString alloc] initWithData:[[[task standardOutput]fileHandleForReading] readDataToEndOfFile] encoding:NSUTF8StringEncoding]autorelease];
+
+        NSString *string=[[NSString alloc] initWithData:[[[task standardOutput] fileHandleForReading] readDataToEndOfFile]
+                                               encoding:NSUTF8StringEncoding];
         int status = [task terminationStatus];
-        if (status == 0) NSLog(@"Task succeeded.");
-        else NSLog(@"Task failed.");
+        if (status == 0) {
+            NSLog(@"Task succeeded.");
+        } else {
+            NSLog(@"Task failed.");
+        }
         return string;
+    }
+    return nil;
 }
-return nil;
-}
-- (NSString *)escapeString:(NSString *)string{
+
+- (NSString *)escapeString:(NSString *)string
+{
     NSString *escapeString=@"\\!$&\"'*(){[|;<>?~` ";
     
     int i;
     for (i=0;i<[escapeString length];i++){
         NSString *thisString=[escapeString substringWithRange:NSMakeRange(i,1)];
         string=[[string componentsSeparatedByString:thisString]componentsJoinedByString:[@"\\" stringByAppendingString:thisString]];
-        
     }
     return string;
 }
 
-- (QSObject *) showManPage:(QSObject *)dObject{
+- (QSObject *)showManPage:(QSObject *)dObject
+{
     NSString *path=[dObject singleFilePath];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"x-man-page://%@",[path lastPathComponent]]]];
     return nil;
 }
 
-- (QSObject *) executeText:(QSObject *)dObject{
+- (QSObject *)executeText:(QSObject *)dObject
+{
 	NSString *string=[dObject objectForType:QSShellCommandType];
 	if (!string)string=[dObject stringValue];
 	
 	if ([string rangeOfString:@"sudo" options:NSCaseInsensitiveSearch].location!=NSNotFound){
-		NSLog(@"sudo in %@",string);
+		NSLog(@"sudo in %@", string);
 		if (![self sudoIfNeeded]){
 			NSBeep();
 			return nil;
@@ -167,14 +170,16 @@ return nil;
     return nil;
 }
 
-- (QSObject *) executeTextInTerminal:(QSObject *)dObject{
+- (QSObject *) executeTextInTerminal:(QSObject *)dObject
+{
 	NSString *string=[dObject objectForType:QSShellCommandType];
 	if (!string)string=[dObject stringValue];
     [self performCommandInTerminal:string];
 	return nil;
 }
 
-- (QSObject *) showDirectoryInTerminal:(QSObject *)dObject{
+- (QSObject *) showDirectoryInTerminal:(QSObject *)dObject
+{
     NSString *path=[dObject singleFilePath];
     //  NSLog(@"path %@",path);
     [self performCommandInTerminal:[NSString stringWithFormat:@"cd %@",[self escapeString:path]]];
@@ -190,17 +195,26 @@ return nil;
 
 
 
-- (BOOL)sudoIfNeeded{
-	BOOL status=YES;
-	while (status){
-		NSTask *task=[NSTask taskWithLaunchPath:@"/usr/bin/sudo" arguments:[NSArray arrayWithObjects:@"-v",@"-S",nil]];
+- (BOOL)sudoIfNeeded
+{
+	BOOL status = YES;
+	while (status) {
+		NSTask *task = [NSTask taskWithLaunchPath:@"/usr/bin/sudo" arguments:@[@"-v",@"-S"]];
 		[task setStandardInput:[NSPipe pipe]]; 
 		[task setStandardError:[NSPipe pipe]];
 		[task launch];
-		NSData *data= [[[task standardError]fileHandleForReading]availableData];
+		NSData *data = [[[task standardError] fileHandleForReading] availableData];
 		if ([data length]){
-			if (!window)[NSBundle loadNibNamed:@"QSSudoPasswordAlert" owner:self];
-			[window makeKeyAndOrderFront:self];
+            if (!window) {
+                NSArray *dummyArray;
+                BOOL res = [[NSBundle bundleForClass:[self class]] loadNibNamed:@"QSSudoPasswordAlert" owner:self topLevelObjects:&dummyArray];
+                if (!res) {
+                    NSLog(@"sudoIfNeeded could not create window");
+                    return NO;
+                } else {
+                    [self setSudoWindowTopLevelObjects:dummyArray];
+                }
+            }
 			int result=[NSApp runModalForWindow:window];
 			[window close];
 			
@@ -208,20 +222,19 @@ return nil;
 				[task interrupt];
 				return NO;
 			}
-			NSString *string=[(NSSecureTextField*)[window initialFirstResponder] stringValue];
-			//string=[string stringByAppendingString:@"\n"];
-			[[[task standardInput]fileHandleForWriting]writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
-			[[[task standardInput]fileHandleForWriting]closeFile];
+			NSString *string = [[(NSSecureTextField*)[window initialFirstResponder] stringValue] stringByAppendingString:@"\n"];
+
+			[[[task standardInput] fileHandleForWriting] writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+			[[[task standardInput] fileHandleForWriting] closeFile];
 		}
 		
-		usleep(250000);	
+		usleep(250000);
 		if ([task isRunning])
 			[task interrupt];
 		else
 			status=[task terminationStatus];
 		if (status)
 			NSBeep();
-			//NSLog(@"term %d",status);
 	}
 	
 	return !status;
