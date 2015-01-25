@@ -1,7 +1,11 @@
+/* QSMailMediator.h */
+/* QuickSilver Gamma project, derived from Blacktree codebase */
+/* Makoto Yamashita 2015 */
 
 
 #import <Foundation/Foundation.h>
-//#import <QSCore/QSRegistry.h>
+#import <QSElements/QSRegistry.h>
+
 #define emailsShareDomain(email1,email2) ![[[email1 componentsSeparatedByString:@"@"]lastObject]caseInsensitiveCompare:[[email2 componentsSeparatedByString:@"@"]lastObject]]
 NSString *preferredMailMediatorID();
 #define kQSMailMediators @"QSMailMediators"
@@ -14,6 +18,8 @@ NSString *preferredMailMediatorID();
 @interface QSMailMediator : NSObject <QSMailMediator> {
     NSAppleScript *mailScript;
 }
+@property(nonatomic,retain) NSAppleScript *mailScript;
+
 + (id <QSMailMediator>)defaultMediator;
 - (void) sendEmailTo:(NSArray *)addresses from:(NSString *)sender subject:(NSString *)subject body:(NSString *)body attachments:(NSArray *)pathArray sendNow:(BOOL)sendNow;
 - (void) sendEmailWithScript:(NSAppleScript *)script to:(NSArray *)addresses from:(NSString *)sender subject:(NSString *)subject body:(NSString *)body attachments:(NSArray *)pathArray sendNow:(BOOL)sendNow;

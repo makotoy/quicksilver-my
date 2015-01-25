@@ -7,8 +7,9 @@
 //
 
 #import "QSSocialDiigoAgent.h"
+#import <QSCrucible/QSCrucible.h>
 #import <JSON/JSON.h>
-#include <CommonCrypto/CommonDigest.h>
+#import <CommonCrypto/CommonDigest.h>
 
 #define QS_SOCIAL_DIIGO_TIME_FORMAT @"yyyy/MM/dd HH:mm:ss Z"
 
@@ -122,8 +123,8 @@
 {
     BOOL finished = NO;
     NSString* apiURLStr;
-    apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=%d&count=100&user=%@&filter=all",
-                 user, password, [bookmarks count], user];
+    apiURLStr = [NSString stringWithFormat:@"https://%@:%@@secure.diigo.com/api/v2/bookmarks?start=%ld&count=100&user=%@&filter=all",
+                 user, password, (unsigned long)[bookmarks count], user];
     NSArray *bmkList = (NSArray*)[QSSocialDiigoAgent retrieveDiigoObject:apiURLStr];
     if ([bmkList count] == 0) {
         return YES;

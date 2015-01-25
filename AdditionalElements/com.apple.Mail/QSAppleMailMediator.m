@@ -2,11 +2,11 @@
 // Makoto Yamashita 2009-11-30
 
 #import "QSAppleMailMediator.h"
+#import "QSMailMediator.h"
 
 #import <AddressBook/AddressBook.h>
+#import <QSCrucible/QSCrucible.h>
 
-#import "QSMailMediator.h"
-//#import <QSCore/QSBadgeImage.h>
 @class QSCountBadgeImage;
 
 @implementation QSAppleMailMediator
@@ -19,6 +19,7 @@
             [self setMailScript:[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:oldScriptPath] error:nil]];
         }
     }
+    return self;
 }
 
 - (void) sendEmailTo:(NSArray *)addresses from:(NSString *)sender

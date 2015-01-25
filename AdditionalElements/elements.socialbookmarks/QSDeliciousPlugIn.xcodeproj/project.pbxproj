@@ -175,7 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				08D2BA2212F2BB78000583A3 /* JSON.framework */,
-				08D2BA2412F2BB78000583A3 /* Tests.octest */,
+				08D2BA2412F2BB78000583A3 /* Tests.xctest */,
 				08D2BA2612F2BB78000583A3 /* libjson.a */,
 				08D2BA2812F2BB78000583A3 /* libjsontests.octest */,
 			);
@@ -306,10 +306,10 @@
 			remoteRef = 08D2BA2112F2BB78000583A3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		08D2BA2412F2BB78000583A3 /* Tests.octest */ = {
+		08D2BA2412F2BB78000583A3 /* Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = Tests.octest;
+			path = Tests.xctest;
 			remoteRef = 08D2BA2312F2BB78000583A3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

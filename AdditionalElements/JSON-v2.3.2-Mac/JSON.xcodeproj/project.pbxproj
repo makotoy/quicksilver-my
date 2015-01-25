@@ -716,7 +716,7 @@
 			name = Tests;
 			productName = Tests;
 			productReference = 53D2298D0C96122A00276605 /* Tests.xctest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		FE2BBD7F0D8B0D3900184787 /* libjson */ = {
 			isa = PBXNativeTarget;

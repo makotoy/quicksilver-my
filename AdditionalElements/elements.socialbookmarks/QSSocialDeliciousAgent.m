@@ -48,7 +48,7 @@
                                                      error:&error];
     if (error) {
         NSLog(@"Could not retrieve recent posts, code: %ld domain: %@ desc: %@",
-              [error code], [error domain], [error localizedDescription]);
+              (long)[error code], [error domain], [error localizedDescription]);
         return nil;
     } else if ([response statusCode] == 999) {
         NSLog(@"Received code 999 -- service temporarily unavailable -- while trying to obtain recent posts.  Do nothing for now");
@@ -79,8 +79,8 @@
     }
 	NSString *apiurl;
     
-    apiurl = [NSString stringWithFormat:@"https://%@:%@@api.del.icio.us/v1/posts/all?start=%d&results=%d",
-              user, password, [bookmarks count], 100];
+    apiurl = [NSString stringWithFormat:@"https://%@:%@@api.del.icio.us/v1/posts/all?start=%ld&results=%d",
+              user, password, (unsigned long)[bookmarks count], 100];
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:apiurl]
 															cachePolicy:NSURLRequestUseProtocolCachePolicy
 														timeoutInterval:4.0];
@@ -92,7 +92,7 @@
                                                      error:&error];
     if (error) {
         NSLog(@"Could not retrieve posts from Delicious, code: %ld domain: %@ desc: %@",
-              [error code], [error domain], [error localizedDescription]);
+              (long)[error code], [error domain], [error localizedDescription]);
         return YES;
     } else if ([response statusCode] == 999) {
         NSLog(@"Received code 999 -- service temporarily unavailable -- while trying to obtain posts.  Do nothing for now");

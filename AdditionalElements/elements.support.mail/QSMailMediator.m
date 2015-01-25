@@ -3,85 +3,83 @@
 
 
 #import "QSMailMediator.h"
+#import <QSCrucible/QSResourceManager.h>
+#import <QSCrucible/NSAppleScript+QSSubroutine.h>
+#import <CoreServices/CoreServices.h>
 
 NSString *defaultMailClientID(){
-    NSURL *appURL = nil; 
-    OSStatus err; 
-    err = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString: @"mailto:"],kLSRolesAll, NULL, (CFURLRef *)&appURL); 
-    if (err != noErr){
-		NSLog(@"No default mail client found. Error %ld", err); 
+    CFURLRef appURLRef;
+    OSStatus err = LSGetApplicationForURL((CFURLRef)[NSURL URLWithString: @"mailto:"],kLSRolesAll, NULL, &appURLRef);
+    if (err == kLSApplicationNotFoundErr) {
+        NSLog(@"defaultMailClientID could not find a mail app.");
+        return nil;
+    } else if (err != noErr){
+		NSLog(@"defaultMailClientID encountered some unhandlable error.");
 		return nil;
 	}
-    NSDictionary *infoDict=(NSDictionary *)CFBundleCopyInfoDictionaryForURL((CFURLRef)appURL);
-	[infoDict autorelease];
-    return [infoDict objectForKey:(NSString *)kCFBundleIdentifierKey];
+    CFStringRef bdlIdStrRef = CFDictionaryGetValue(CFBundleCopyInfoDictionaryForURL(appURLRef), kCFBundleIdentifierKey);
+    return (NSString*) bdlIdStrRef;
 }
-
 
 @implementation QSMailMediator
 
-
-+ (id <QSMailMediator>)defaultMediator{
++ (id <QSMailMediator>)defaultMediator
+{
     return [QSReg QSMailMediator];
 }
 
-
-
-- (void) sendEmailTo:(NSArray *)addresses from:(NSString *)sender subject:(NSString *)subject body:(NSString *)body attachments:(NSArray *)pathArray sendNow:(BOOL)sendNow{
+- (void) sendEmailTo:(NSArray *)addresses from:(NSString *)sender subject:(NSString *)subject body:(NSString *)body attachments:(NSArray *)pathArray sendNow:(BOOL)sendNow
+{
 	[self sendEmailWithScript:[self mailScript] to:(NSArray *)addresses from:(NSString *)sender subject:(NSString *)subject body:(NSString *)body attachments:(NSArray *)pathArray sendNow:(BOOL)sendNow];
 }
 
 - (void) sendEmailWithScript:(NSAppleScript *)script to:(NSArray *)addresses from:(NSString *)sender subject:(NSString *)subject body:(NSString *)body attachments:(NSArray *)pathArray sendNow:(BOOL)sendNow
 {
-    
-    if (!sender) sender = @""; 
-    if (!addresses){ 
-        NSRunAlertPanel(@"Invalid address",@"Missing email address", nil,nil,nil);
-        
-        // [self sendDirectEmailTo:address subject:subject body:body attachments:pathArray];
+    if (!sender) sender = @"";
+    if (!addresses) {
+        NSRunAlertPanel(@"Invalid address", @"Missing email address", nil,nil,nil);
         return;
     }
-    
-   NSLog(@"Sending Email:\r     To: %@\rSubject: %@\r   Body: %@\rAttachments: %@\r",[addresses componentsJoinedByString:@", "],subject,body,[pathArray componentsJoinedByString:@"\r"]);
+    NSLog(@"Sending Email:\r     To: %@\rSubject: %@\r   Body: %@\rAttachments: %@\r",[addresses componentsJoinedByString:@", "],subject,body,[pathArray componentsJoinedByString:@"\r"]);
     
     NSDictionary *errorDict=nil;
-    
-    //id message=
-	[script executeSubroutine:(sendNow?@"send_mail":@"compose_mail")
-							   arguments:[NSArray arrayWithObjects:subject,body,sender,addresses,(pathArray?pathArray:[NSArray array]),nil]
-								   error:&errorDict];
-    //  NSLog(@"%@",message);
-    if (errorDict) 
+    NSString *subroutineName = sendNow ? @"send_mail" : @"compose_mail";
+    NSArray *subroutineArgs = @[subject, body, sender, addresses, (pathArray ? pathArray : [NSArray array])];
+	[script executeSubroutine:subroutineName
+                    arguments:subroutineArgs
+                        error:&errorDict];
+
+    if (errorDict) {
         NSRunAlertPanel(@"An error occured while sending mail", [errorDict objectForKey:@"NSAppleScriptErrorMessage"], nil,nil,nil);
+    }
 }
 
-
-
-- (NSString *)scriptPath{
+- (NSString *)scriptPath
+{
     return nil;
 }
-- (NSAppleScript *)mailScript {
-    if (!mailScript){
-        NSString *path=[self scriptPath];
-        if (path) mailScript=[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
+
+- (NSAppleScript *)mailScript
+{
+    NSString *path;
+    if (!mailScript && (path = [self scriptPath])){
+        mailScript=[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
     }
     return mailScript;
 }
 
-- (void)setMailScript:(NSAppleScript *)newMailScript {
-    [mailScript release];
-    mailScript = [newMailScript retain];
-}
+@synthesize mailScript;
 
 @end
 
 
 @implementation QSRegistry (QSMailMediator)
-- (id <QSMailMediator>)QSMailMediator{
+
+- (id <QSMailMediator>)QSMailMediator
+{
 	id <QSMailMediator> mediator=[prefInstances objectForKey:kQSMailMediators];
 	if (!mediator){
-		mediator=[self instanceForKey:[QSReg QSMailMediatorID]
-							  inTable:kQSMailMediators];
+		mediator = [self instanceForKey:[QSReg QSMailMediatorID] inTable:kQSMailMediators];
 		if (mediator)
 			[prefInstances setObject:mediator forKey:kQSMailMediators];
 		else NSLog(@"Mediator not found %@",[[NSUserDefaults standardUserDefaults] stringForKey:kQSMailMediators]);
@@ -94,13 +92,16 @@ NSString *defaultMailClientID(){
 	if (!key)key=defaultMailClientID();
 	return key;
 }
+
 @end
 
 @interface QSResourceManager (QSMailMediator)
 - (NSImage *)defaultMailClientImage;
 @end
+
 @implementation QSResourceManager (QSMailMediator)
-- (NSImage *)defaultMailClientImage{
+- (NSImage *)defaultMailClientImage
+{
 	return [[NSWorkspace sharedWorkspace]iconForFile:[[NSWorkspace sharedWorkspace]absolutePathForAppBundleWithIdentifier:[QSReg QSMailMediatorID]]];
 }
 @end

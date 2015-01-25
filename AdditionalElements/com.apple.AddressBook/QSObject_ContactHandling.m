@@ -41,7 +41,7 @@
 + (NSString *)contactlingNameForPerson:(ABPerson *)person label:(NSString *)label type:(NSString *)type asChild:(BOOL)child
 {
 	if (child) {
-		return [NSString stringWithFormat:@"%@ %@ (%@)", label, type, [person displayName], label, type];
+		return [NSString stringWithFormat:@"%@ %@ (%@)", label, type, [person displayName]];
     }
     return [NSString stringWithFormat:@"%@'s %@ %@", [person displayName], label, type];
 }

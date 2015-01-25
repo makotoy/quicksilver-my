@@ -1,7 +1,10 @@
-
+// QSSafariPlugin.h
+// QuickSilver Gamma project
+// Derived from Blacktree codebase
+// Makoto Yamashita 2015
 
 #import <Foundation/Foundation.h>
-
+#import <QSCrucible/QSCrucible.h>
 
 @interface QSSafariObjectHandler : NSObject
 - (NSArray *)safariChildren;

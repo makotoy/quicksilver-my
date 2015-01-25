@@ -43,8 +43,8 @@
 
 + (BOOL)isITunesRunning
 {
-	NSArray *runningApps = [[NSWorkspace sharedWorkspace] launchedApplications];
-	NSPredicate* iTunesPred = [NSPredicate predicateWithFormat:@"NSApplicationBundleIdentifier = \"com.apple.iTunes\""];
+	NSArray *runningApps = [[NSWorkspace sharedWorkspace] runningApplications];
+	NSPredicate* iTunesPred = [NSPredicate predicateWithFormat:@"bundleIdentifier = \"com.apple.iTunes\""];
 	if ([[runningApps filteredArrayUsingPredicate:iTunesPred] count] > 0) {
 		return YES;
 	}

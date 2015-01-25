@@ -8,7 +8,7 @@
 //  Makoto Yamashita 2009-11-30
 
 
-// #import "QSWebSearchPlugIn_Source.h"
+#import <QSCrucible/QSCrucible.h>
 
 @interface QSWebSearchSource : QSObjectSource {
 	IBOutlet NSTableView *searchTable;
@@ -18,4 +18,3 @@
 - (NSMenu *)encodingMenu;
 
 @end
-

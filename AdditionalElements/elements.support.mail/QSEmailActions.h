@@ -1,6 +1,9 @@
-
+/* QSEmailActions.h */
+/* QuickSilver Gamma project, derived from Blacktree codebase */
+/* Makoto Yamashita 2015 */
 
 #import <Foundation/Foundation.h>
+#import <QSCrucible/QSCrucible.h>
 
 @interface QSEmailActions : QSActionProvider {
 

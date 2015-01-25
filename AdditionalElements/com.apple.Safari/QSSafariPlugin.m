@@ -70,8 +70,8 @@
 	NSString *type = [dict objectForKey:@"WebBookmarkType"];
 	
 	if (![type isEqualToString:@"WebBookmarkTypeProxy"]) {
-		int count = [[dict objectForKey:@"Children"] count];
-		return [NSString stringWithFormat:@"%d item%@", count, ESS(count)];
+		NSUInteger count = [(NSArray*)[dict objectForKey:@"Children"] count];
+		return [NSString stringWithFormat:@"%ld item%@", (unsigned long)count, ESS(count)];
 	}
 	return nil;
 }

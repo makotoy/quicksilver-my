@@ -9,6 +9,7 @@
 //  2010-02-20 Makoto Yamashita
 
 #import <Foundation/Foundation.h>
+#import <QSCrucible/QSCrucible.h>
 
 @interface DictPlugin : QSActionProvider
 {

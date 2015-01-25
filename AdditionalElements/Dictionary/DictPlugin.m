@@ -22,21 +22,13 @@ void showResultsWindow(NSString *input, NSString *title, id delegate);
 
 - (id)init
 {
-	if ((self == [super init])) {
+	if (self = [super init]) {
 		dictTask = nil;
 		dictTaskStatus = nil;
 		NSBundle *plugin = [NSBundle bundleForClass:[self class]];
 		dictIcon = [[NSImage alloc] initByReferencingFile:[plugin pathForResource:@"dict" ofType:@"jpg"]];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[dictTask release], dictTask = nil;
-	[dictTaskStatus release], dictTaskStatus = nil;
-	[dictIcon release], dictIcon = nil;
-	[super dealloc];
 }
 
 - (QSObject *)define:(QSObject *)dObject

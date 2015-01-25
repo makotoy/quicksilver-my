@@ -21,7 +21,8 @@
 
 @implementation QSEmailActions
 
-- (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject{
+- (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject
+{
     NSMutableArray *newActions=[NSMutableArray arrayWithCapacity:1];
 	BOOL mediatorAvailable=[[QSReg tableNamed:kQSMailMediators]count];
     if ([[dObject types] containsObject:QSEmailAddressType]){
@@ -40,7 +41,8 @@
 }
 
 
-- (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject{
+- (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject
+{
 	if ([action isEqualToString:kEmailItemAction] || [action isEqualToString:kComposeEmailItemAction]){
 		return nil;
 	}else if ([action isEqualToString:kEmailItemReverseAction] ||[action isEqualToString:kDirectEmailItemReverseAction] || [action isEqualToString:kComposeEmailItemReverseAction]){
@@ -50,7 +52,8 @@
 	return nil;
 }
 
-- (QSObject *) sendEmailTo:(QSObject *)dObject{
+- (QSObject *) sendEmailTo:(QSObject *)dObject
+{
     NSArray *addresses=[dObject arrayForType:QSEmailAddressType];
 	NSString *addressesString=[addresses componentsJoinedByString:@","];
 	addressesString=[addressesString URLEncoding];
@@ -59,8 +62,12 @@
 	[[NSWorkspace sharedWorkspace] openURL:url];
     return nil;
 }
-- (QSObject *) sendEmailTo:(QSObject *)dObject withItem:(QSObject *)iObject{
-    return [self composeEmailTo:(QSObject *)dObject withItem:(QSObject *)iObject sendNow:(BOOL)YES direct:NO];}
+
+- (QSObject *) sendEmailTo:(QSObject *)dObject withItem:(QSObject *)iObject
+{
+    return [self composeEmailTo:(QSObject *)dObject withItem:(QSObject *)iObject sendNow:(BOOL)YES direct:NO];
+}
+
 - (QSObject *) sendDirectEmailTo:(QSObject *)dObject withItem:(QSObject *)iObject{
     return [self composeEmailTo:(QSObject *)dObject withItem:(QSObject *)iObject sendNow:(BOOL)YES direct:YES];}
 - (QSObject *) composeEmailTo:(QSObject *)dObject withItem:(QSObject *)iObject{
