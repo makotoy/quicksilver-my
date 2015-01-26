@@ -25,7 +25,9 @@
 - (NSView *)settingsView
 {
     if (![super settingsView]) {
-        [NSBundle loadNibNamed:@"QSAddressBookObjectSource" owner:self];
+        NSArray *topLevelObjs;
+        [[NSBundle bundleForClass:[self class]] loadNibNamed:@"QSAddressBookObjectSource" owner:self topLevelObjects:&topLevelObjs];
+        [self setAddrViewTopLevelObjs:topLevelObjs];
 	}
     return [super settingsView];
 }

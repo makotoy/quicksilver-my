@@ -2,6 +2,7 @@
 //  Makoto Yamashita 2009-12-15
 
 #import <Foundation/Foundation.h>
+#import <QSCrucible/QSCrucible.h>
 
 @interface QSABContactActions : QSObjectSource
 @end
@@ -15,7 +16,7 @@
 }
 @property (retain) NSPopUpButton *groupList;
 @property (retain) NSPopUpButton *distributionList;
-
+@property (strong) NSArray *addrViewTopLevelObjs;
 @end
 
 @interface QSABMailRecentsObjectSource : QSObjectSource
