@@ -24,6 +24,8 @@
 
 @implementation QSCLExecutableProvider
 
+@synthesize sudoWindowTopLevelObjects;
+
 - (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject
 {
     if ([dObject objectForType:NSFilenamesPboardType]) {

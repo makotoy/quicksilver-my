@@ -3,19 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		08980FD7108CEF94007A1C01 /* QSElement_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 08CE108C108CE0CB0033FFBC /* QSElement_Prefix.pch */; };
 		08980FD8108CEF96007A1C01 /* QSPlugIn_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 08CE108E108CE0CB0033FFBC /* QSPlugIn_Prefix.pch */; };
 		08981035108CF44F007A1C01 /* QSTerminalMediator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FE52C14082B12AC00BFD611 /* QSTerminalMediator.h */; };
-		08CE1091108CE0CB0033FFBC /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08CE1089108CE0CB0033FFBC /* Common.xcconfig */; };
-		08CE1092108CE0CB0033FFBC /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08CE108A108CE0CB0033FFBC /* Debug.xcconfig */; };
-		08CE1093108CE0CB0033FFBC /* Developer.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08CE108B108CE0CB0033FFBC /* Developer.xcconfig */; };
-		08CE1094108CE0CB0033FFBC /* QSElement.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08CE108D108CE0CB0033FFBC /* QSElement.xcconfig */; };
-		08CE1095108CE0CB0033FFBC /* QSPlugIn.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08CE108F108CE0CB0033FFBC /* QSPlugIn.xcconfig */; };
-		08CE1096108CE0CB0033FFBC /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08CE1090108CE0CB0033FFBC /* Release.xcconfig */; };
 		08CE109E108CE1220033FFBC /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 08CE109D108CE1220033FFBC /* element.xml */; };
 		7F55E6460843927100A29511 /* QSSudoPasswordAlert.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7F55E6450843927100A29511 /* QSSudoPasswordAlert.nib */; };
 		7FE52C18082B12AC00BFD611 /* QSCLExecutableProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE52C16082B12AC00BFD611 /* QSCLExecutableProvider.m */; };
@@ -184,9 +178,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7FFF2579085E488700266176 /* Build configuration list for PBXProject "QSTerminalPlugIn" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -208,12 +203,6 @@
 			files = (
 				7FE52C46082B149E00BFD611 /* Terminal.scpt in Resources */,
 				7F55E6460843927100A29511 /* QSSudoPasswordAlert.nib in Resources */,
-				08CE1091108CE0CB0033FFBC /* Common.xcconfig in Resources */,
-				08CE1092108CE0CB0033FFBC /* Debug.xcconfig in Resources */,
-				08CE1093108CE0CB0033FFBC /* Developer.xcconfig in Resources */,
-				08CE1094108CE0CB0033FFBC /* QSElement.xcconfig in Resources */,
-				08CE1095108CE0CB0033FFBC /* QSPlugIn.xcconfig in Resources */,
-				08CE1096108CE0CB0033FFBC /* Release.xcconfig in Resources */,
 				08CE109E108CE1220033FFBC /* element.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,6 +242,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 08CE108A108CE0CB0033FFBC /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -260,6 +250,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 08CE108D108CE0CB0033FFBC /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Debug;
 		};
@@ -267,6 +258,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 08CE108D108CE0CB0033FFBC /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Release;
 		};
