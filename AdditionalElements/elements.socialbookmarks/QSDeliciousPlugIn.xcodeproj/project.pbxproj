@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,18 +16,12 @@
 		0878B10213027035009B789D /* QSSocialAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0878B10013027035009B789D /* QSSocialAgent.m */; };
 		0878B13E13028D0A009B789D /* QSSocialDiigoAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0878B13C13028D0A009B789D /* QSSocialDiigoAgent.h */; };
 		0878B13F13028D0A009B789D /* QSSocialDiigoAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0878B13D13028D0A009B789D /* QSSocialDiigoAgent.m */; };
-		087D59BB108F571A001FF05F /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 087D59B3108F571A001FF05F /* Common.xcconfig */; };
-		087D59BC108F571A001FF05F /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 087D59B4108F571A001FF05F /* Debug.xcconfig */; };
-		087D59BD108F571A001FF05F /* Developer.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 087D59B5108F571A001FF05F /* Developer.xcconfig */; };
-		087D59BE108F571A001FF05F /* QSElement.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 087D59B7108F571A001FF05F /* QSElement.xcconfig */; };
-		087D59BF108F571A001FF05F /* QSPlugIn.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 087D59B9108F571A001FF05F /* QSPlugIn.xcconfig */; };
-		087D59C0108F571A001FF05F /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 087D59BA108F571A001FF05F /* Release.xcconfig */; };
 		087D5A0E108F5A92001FF05F /* QSDeliciousPlugIn_Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 087D5A0B108F5A92001FF05F /* QSDeliciousPlugIn_Action.m */; };
 		087D5A0F108F5A92001FF05F /* QSDeliciousPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 087D5A0D108F5A92001FF05F /* QSDeliciousPlugIn.m */; };
 		087D5A18108F5B0C001FF05F /* del.icio.us.png in Resources */ = {isa = PBXBuildFile; fileRef = 087D5A16108F5B0C001FF05F /* del.icio.us.png */; };
 		087D5A19108F5B0C001FF05F /* del.icio.us.tif in Resources */ = {isa = PBXBuildFile; fileRef = 087D5A17108F5B0C001FF05F /* del.icio.us.tif */; };
 		08D2BA2912F2BB83000583A3 /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D2BA2212F2BB78000583A3 /* JSON.framework */; };
-		08D2BA4812F2BC1C000583A3 /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08D2BA2212F2BB78000583A3 /* JSON.framework */; };
+		08D2BA4812F2BC1C000583A3 /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08D2BA2212F2BB78000583A3 /* JSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		08DF1A381302D678007350CF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08DF1A371302D678007350CF /* Cocoa.framework */; };
 		7F8AD05107F2503600011548 /* QSDeliciousPlugInSource.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8AD05007F2503600011548 /* QSDeliciousPlugInSource.nib */; };
 		7F9441A10803A9D9007EDC31 /* QSObjectSource.name.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F9441A00803A9D9007EDC31 /* QSObjectSource.name.strings */; };
@@ -271,9 +265,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7F07AFAE085E432E00E2AFC4 /* Build configuration list for PBXProject "QSDeliciousPlugIn" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -339,12 +334,6 @@
 				7F8AD05107F2503600011548 /* QSDeliciousPlugInSource.nib in Resources */,
 				7F9441A10803A9D9007EDC31 /* QSObjectSource.name.strings in Resources */,
 				7FB0DC1A0B91FF8600A5B6FF /* bookmark_icon.png in Resources */,
-				087D59BB108F571A001FF05F /* Common.xcconfig in Resources */,
-				087D59BC108F571A001FF05F /* Debug.xcconfig in Resources */,
-				087D59BD108F571A001FF05F /* Developer.xcconfig in Resources */,
-				087D59BE108F571A001FF05F /* QSElement.xcconfig in Resources */,
-				087D59BF108F571A001FF05F /* QSPlugIn.xcconfig in Resources */,
-				087D59C0108F571A001FF05F /* Release.xcconfig in Resources */,
 				087D5A18108F5B0C001FF05F /* del.icio.us.png in Resources */,
 				087D5A19108F5B0C001FF05F /* del.icio.us.tif in Resources */,
 				0853D8D1108F5C1C005FEEF0 /* element.xml in Resources */,
@@ -414,6 +403,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 087D59B4108F571A001FF05F /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -421,6 +411,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 087D59B7108F571A001FF05F /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -432,6 +423,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 087D59B7108F571A001FF05F /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",

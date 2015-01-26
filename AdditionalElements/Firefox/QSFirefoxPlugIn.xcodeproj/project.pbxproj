@@ -3,16 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0815F3821090BA190020793E /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0815F37A1090BA180020793E /* Common.xcconfig */; };
-		0815F3831090BA190020793E /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0815F37B1090BA190020793E /* Debug.xcconfig */; };
-		0815F3841090BA190020793E /* Developer.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0815F37C1090BA190020793E /* Developer.xcconfig */; };
-		0815F3851090BA190020793E /* QSElement.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0815F37E1090BA190020793E /* QSElement.xcconfig */; };
-		0815F3861090BA190020793E /* QSPlugIn.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0815F3801090BA190020793E /* QSPlugIn.xcconfig */; };
-		0815F3871090BA190020793E /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0815F3811090BA190020793E /* Release.xcconfig */; };
 		0815F3941090BBAD0020793E /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0815F3931090BBAD0020793E /* element.xml */; };
 		7FF4485B08047FA100316DB6 /* mork.pl in Resources */ = {isa = PBXBuildFile; fileRef = 7FF4485A08047FA100316DB6 /* mork.pl */; };
 		7FF448BA08048B9E00316DB6 /* QSParser.name.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7FF448B908048B9E00316DB6 /* QSParser.name.strings */; };
@@ -160,9 +154,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7F07AFFE085E433100E2AFC4 /* Build configuration list for PBXProject "QSFirefoxPlugIn" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -184,12 +179,6 @@
 			files = (
 				7FF4485B08047FA100316DB6 /* mork.pl in Resources */,
 				7FF448BA08048B9E00316DB6 /* QSParser.name.strings in Resources */,
-				0815F3821090BA190020793E /* Common.xcconfig in Resources */,
-				0815F3831090BA190020793E /* Debug.xcconfig in Resources */,
-				0815F3841090BA190020793E /* Developer.xcconfig in Resources */,
-				0815F3851090BA190020793E /* QSElement.xcconfig in Resources */,
-				0815F3861090BA190020793E /* QSPlugIn.xcconfig in Resources */,
-				0815F3871090BA190020793E /* Release.xcconfig in Resources */,
 				0815F3941090BBAD0020793E /* element.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,6 +217,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0815F37B1090BA190020793E /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -235,6 +225,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0815F37E1090BA190020793E /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
@@ -245,6 +236,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0815F37E1090BA190020793E /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Release;
 		};

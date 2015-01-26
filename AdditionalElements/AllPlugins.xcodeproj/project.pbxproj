@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -456,9 +456,10 @@
 		084BB01510E9A722003D2539 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 084BB01810E9A722003D2539 /* Build configuration list for PBXProject "AllPlugins" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -714,6 +715,7 @@
 			baseConfigurationReference = 084BB0A710E9A88B003D2539 /* Debug.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};

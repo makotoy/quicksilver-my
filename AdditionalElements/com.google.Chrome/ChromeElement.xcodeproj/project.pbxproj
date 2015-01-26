@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,7 +11,7 @@
 		087633DF113103F700B51F69 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 087633DE113103F700B51F69 /* Cocoa.framework */; };
 		08C3F92B1130FB880019338F /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 08C3F92A1130FB880019338F /* element.xml */; };
 		08C3F92F1130FCAB0019338F /* QSChromeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C3F92E1130FCAB0019338F /* QSChromeParser.m */; };
-		08D2BA4512F2BC10000583A3 /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08D2BA3912F2BBF3000583A3 /* JSON.framework */; };
+		08D2BA4512F2BC10000583A3 /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08D2BA3912F2BBF3000583A3 /* JSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,9 +200,10 @@
 		0881E37A1130F99600252374 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 0881E37D1130F99600252374 /* Build configuration list for PBXProject "ChromeElement" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -323,6 +324,7 @@
 			baseConfigurationReference = 089236AD1130F9D8005CE45C /* Debug.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -338,6 +340,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 089236AF1130F9D8005CE45C /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					/System/Library/PrivateFrameworks,
@@ -357,6 +360,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 089236AF1130F9D8005CE45C /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "Chrome Module-Info.plist";

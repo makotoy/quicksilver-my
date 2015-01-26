@@ -4,7 +4,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import <QSElements/QSRegistry.h>
+#import <QSElements/QSElements.h>
 
 #define emailsShareDomain(email1,email2) ![[[email1 componentsSeparatedByString:@"@"]lastObject]caseInsensitiveCompare:[[email2 componentsSeparatedByString:@"@"]lastObject]]
 NSString *preferredMailMediatorID();

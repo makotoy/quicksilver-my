@@ -64,11 +64,7 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [agents release], agents = nil;
-    [super dealloc];
-}
+@synthesize deliciousPlugInSourceTabTLObjs;
 
 - (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry
 {
@@ -94,7 +90,11 @@
 - (NSView *)settingsView
 {
     if (![super settingsView]) {
-        [NSBundle loadNibNamed:@"QSDeliciousPlugInSource" owner:self];
+        NSArray *topLevelObjs;
+        [[NSBundle bundleForClass:[self class]] loadNibNamed:@"QSDeliciousPlugInSource"
+                                                       owner:self
+                                             topLevelObjects:&topLevelObjs];
+        [self setDeliciousPlugInSourceTabTLObjs:topLevelObjs];
     }
     return [super settingsView];
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,14 +17,8 @@
 		7F839CD807CCD6CF003F2874 /* QSMailMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F839CD207CCD6CF003F2874 /* QSMailMediator.m */; };
 		7F839CD907CCD6E5003F2874 /* QSMailMediator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F839CCD07CCD6CF003F2874 /* QSMailMediator.h */; };
 		7FB39972083FDEA60053AB86 /* QSMailSupportPrefPane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7FB39971083FDEA60053AB86 /* QSMailSupportPrefPane.nib */; };
-		7FE7D3430D1EFF990043A815 /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7D33B0D1EFF990043A815 /* Common.xcconfig */; };
-		7FE7D3440D1EFF990043A815 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7D33C0D1EFF990043A815 /* Debug.xcconfig */; };
-		7FE7D3450D1EFF990043A815 /* Developer.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7D33D0D1EFF990043A815 /* Developer.xcconfig */; };
-		7FE7D3460D1EFF990043A815 /* QSElement.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7D33E0D1EFF990043A815 /* QSElement.xcconfig */; };
 		7FE7D3470D1EFF990043A815 /* QSElement_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 7FE7D33F0D1EFF990043A815 /* QSElement_Prefix.pch */; };
-		7FE7D3480D1EFF990043A815 /* QSPlugIn.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7D3400D1EFF990043A815 /* QSPlugIn.xcconfig */; };
 		7FE7D3490D1EFF990043A815 /* QSPlugIn_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 7FE7D3410D1EFF990043A815 /* QSPlugIn_Prefix.pch */; };
-		7FE7D34A0D1EFF990043A815 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7D3420D1EFF990043A815 /* Release.xcconfig */; };
 		8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -178,9 +172,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7FFF2462085E488500266176 /* Build configuration list for PBXProject "MailSupportElement" */;
-			compatibilityVersion = "Xcode 3.0";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -205,12 +200,6 @@
 			files = (
 				7FB39972083FDEA60053AB86 /* QSMailSupportPrefPane.nib in Resources */,
 				7F6E34020C10F58F00303BFE /* element.xml in Resources */,
-				7FE7D3430D1EFF990043A815 /* Common.xcconfig in Resources */,
-				7FE7D3440D1EFF990043A815 /* Debug.xcconfig in Resources */,
-				7FE7D3450D1EFF990043A815 /* Developer.xcconfig in Resources */,
-				7FE7D3460D1EFF990043A815 /* QSElement.xcconfig in Resources */,
-				7FE7D3480D1EFF990043A815 /* QSPlugIn.xcconfig in Resources */,
-				7FE7D34A0D1EFF990043A815 /* Release.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +239,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D33C0D1EFF990043A815 /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -257,6 +247,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D33E0D1EFF990043A815 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -268,6 +259,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D33E0D1EFF990043A815 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

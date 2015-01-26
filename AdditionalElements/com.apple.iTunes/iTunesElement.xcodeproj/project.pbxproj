@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -167,9 +167,10 @@
 		084A9FE61094D16A00E2CB93 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 084A9FE91094D16A00E2CB93 /* Build configuration list for PBXProject "iTunesElement" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -240,6 +241,7 @@
 			baseConfigurationReference = 084A9FF01094D18900E2CB93 /* Debug.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -254,6 +256,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 084A9FF31094D18900E2CB93 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "iTunes Module-Info.plist";
 			};
 			name = Debug;
@@ -262,6 +265,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 084A9FF31094D18900E2CB93 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "iTunes Module-Info.plist";
 			};
 			name = Release;

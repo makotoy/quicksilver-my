@@ -12,6 +12,8 @@
 
 @implementation QSWebSearchSource
 
+@synthesize searchSourceTabTopLevelObjects;
+
 - (BOOL)isVisibleSource {return YES;}
 
 - (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry
@@ -52,7 +54,9 @@
 - (NSView *) settingsView
 {
     if (![super settingsView]) {
-        [NSBundle loadNibNamed:@"QSWebSearchSource" owner:self];
+        NSArray *topLevelObjs;
+        [[NSBundle bundleForClass:[self class]] loadNibNamed:@"QSWebSearchSource" owner:self topLevelObjects:&topLevelObjs];
+        [self setSearchSourceTabTopLevelObjects:topLevelObjs];
 	}
     return [super settingsView];
 }

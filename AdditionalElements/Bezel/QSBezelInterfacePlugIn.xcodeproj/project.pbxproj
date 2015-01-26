@@ -3,16 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08C2245410BD482C00AD42EB /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08C2244C10BD482C00AD42EB /* Common.xcconfig */; };
-		08C2245510BD482C00AD42EB /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08C2244D10BD482C00AD42EB /* Debug.xcconfig */; };
-		08C2245610BD482C00AD42EB /* Developer.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08C2244E10BD482C00AD42EB /* Developer.xcconfig */; };
-		08C2245710BD482C00AD42EB /* QSElement.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08C2244F10BD482C00AD42EB /* QSElement.xcconfig */; };
-		08C2245810BD482C00AD42EB /* QSPlugIn.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08C2245110BD482C00AD42EB /* QSPlugIn.xcconfig */; };
-		08C2245910BD482C00AD42EB /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 08C2245310BD482C00AD42EB /* Release.xcconfig */; };
 		08C2246410BD49A500AD42EB /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 08C2246310BD49A500AD42EB /* element.xml */; };
 		8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		E131FA0B07B4493B00D0E4AC /* QSBezelInterfaceController.h in Resources */ = {isa = PBXBuildFile; fileRef = E131FA0907B4493B00D0E4AC /* QSBezelInterfaceController.h */; };
@@ -153,9 +147,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7FE899C1085D4ADF0016C421 /* Build configuration list for PBXProject "QSBezelInterfacePlugIn" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -182,12 +177,6 @@
 				E131FA0B07B4493B00D0E4AC /* QSBezelInterfaceController.h in Resources */,
 				E190B39207B470E70027D8A0 /* QSBezelInterface.nib in Resources */,
 				E190B39D07B470F80027D8A0 /* Localizable.strings in Resources */,
-				08C2245410BD482C00AD42EB /* Common.xcconfig in Resources */,
-				08C2245510BD482C00AD42EB /* Debug.xcconfig in Resources */,
-				08C2245610BD482C00AD42EB /* Developer.xcconfig in Resources */,
-				08C2245710BD482C00AD42EB /* QSElement.xcconfig in Resources */,
-				08C2245810BD482C00AD42EB /* QSPlugIn.xcconfig in Resources */,
-				08C2245910BD482C00AD42EB /* Release.xcconfig in Resources */,
 				08C2246410BD49A500AD42EB /* element.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +226,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 08C2244D10BD482C00AD42EB /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -244,6 +234,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 08C2244F10BD482C00AD42EB /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 			};
 			name = Debug;
@@ -252,6 +243,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 08C2244F10BD482C00AD42EB /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 			};
 			name = Release;

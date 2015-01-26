@@ -8,6 +8,7 @@
 //  Derived from Blacktree codebase
 //  Makoto Yamashita 2009-11-30
 
+#import <QSCrucible/QSCrucible.h>
 #import "QSSocialAgent.h"
 
 typedef enum _QSDeliciousPlugIn_Site {
@@ -20,10 +21,13 @@ typedef enum _QSDeliciousPlugIn_Site {
     NSArray *agents;
 	IBOutlet NSTextField *userField;
 	IBOutlet NSTextField *passField;
+    NSArray *deliciousPlugInSourceTabTLObjs;
 }
 + (NSURL*)urlForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username;
 + (NSURL*)urlForSite:(QSDeliciousPlugIn_Site)site user:(NSString*)username password:(NSString*)password;
 - (QSSocialAgent*)agentForSite:(QSDeliciousPlugIn_Site)site;
 - (NSString *)passwordForSite:(QSDeliciousPlugIn_Site)site user:(NSString *)username;
 - (void)refreshSource;
+
+@property(strong) NSArray *deliciousPlugInSourceTabTLObjs;
 @end

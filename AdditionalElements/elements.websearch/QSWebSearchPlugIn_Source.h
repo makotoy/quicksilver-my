@@ -13,8 +13,11 @@
 @interface QSWebSearchSource : QSObjectSource {
 	IBOutlet NSTableView *searchTable;
 	IBOutlet NSPopUpButtonCell *encodingCell;
+    NSArray *searchSourceTabTopLevelObjects;
 }
 
 - (NSMenu *)encodingMenu;
+
+@property(strong) NSArray *searchSourceTabTopLevelObjects;
 
 @end

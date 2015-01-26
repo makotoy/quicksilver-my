@@ -50,7 +50,10 @@ NSString *defaultMailClientID(){
                         error:&errorDict];
 
     if (errorDict) {
-        NSRunAlertPanel(@"An error occured while sending mail", [errorDict objectForKey:@"NSAppleScriptErrorMessage"], nil,nil,nil);
+        NSRunAlertPanel(@"An error occured while sending mail",
+                        @"Apple Script Execution returned error: %@",
+                        nil,nil,nil,
+                        [errorDict objectForKey:@"NSAppleScriptErrorMessage"]);
     }
 }
 

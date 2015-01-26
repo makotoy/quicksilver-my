@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -163,9 +163,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7F07ADED085E432400E2AFC4 /* Build configuration list for PBXProject "DictPlugin" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -241,6 +242,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0807F752112F836E0029FF32 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Debug;
 		};
@@ -248,6 +250,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0807F752112F836E0029FF32 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Release;
 		};
@@ -255,6 +258,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D0C0D860E0FC0480027D189 /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
