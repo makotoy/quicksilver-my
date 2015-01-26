@@ -7,19 +7,17 @@
 //  Makoto Yamashita 2009-11-30
 
 #import "QSAppleMailPlugIn_Source.h"
-//#import <QSCore/QSObject.h>
-//
-//#import <QSCore/QSCore.h>
-//#import <QSFoundation/QSFoundation.h>
 
 #define SPECIAL_ARRAY [NSArray arrayWithObjects:@"Inbox",@"Out",@"Drafts",@"Sent",@"Trash",@"Junk",nil]
 
 @implementation QSAppleMailPlugIn_Source
-- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry{
+- (BOOL)indexIsValidFromDate:(NSDate *)indexDate forEntry:(NSDictionary *)theEntry
+{
     return YES;
 }
 
-- (NSImage *) iconForEntry:(NSDictionary *)dict{
+- (NSImage *) iconForEntry:(NSDictionary *)dict
+{
     return nil;
 }
 
@@ -27,7 +25,8 @@
     return nil;
 }
 
-- (void)setQuickIconForObject:(QSObject *)object{
+- (void)setQuickIconForObject:(QSObject *)object
+{
 	
 	if ([[object primaryType]isEqualToString:kQSAppleMailMailboxType]){
 		[object setIcon:[QSResourceManager imageNamed:@"GenericFolderIcon"]];
@@ -40,7 +39,8 @@
 }
 
 
-- (BOOL)loadIconForObject:(QSObject *)object{
+- (BOOL)loadIconForObject:(QSObject *)object
+{
 	if ([[object primaryType]isEqualToString:kQSAppleMailMailboxType]){
 		NSString *mailbox=[object objectForType:kQSAppleMailMailboxType];
 		
@@ -54,8 +54,9 @@
 	
 }
 
-
-- (id)initFileObject:(QSObject *)object ofType:(NSString *)type{
+/* implements QSObjects (QSFileObjectCreationProtocol) */
+- (id)initFileObject:(QSObject *)object ofType:(NSString *)type
+{
 	NSString *filePath=[object singleFilePath];
 	NSString *iden=[[filePath lastPathComponent]stringByDeletingPathExtension];
 	NSString *mailbox=[[[filePath stringByDeletingLastPathComponent]stringByDeletingLastPathComponent]lastPathComponent];
@@ -70,14 +71,15 @@
 	
 }
 
-- (NSString *)detailsOfObject:(QSObject *)object{
+- (NSString *)detailsOfObject:(QSObject *)object
+{
 	if ([[object primaryType]isEqualToString:kQSAppleMailMailboxType]){
-		
 		NSString *mailbox=[object objectForType:kQSAppleMailMailboxType];
 		return [mailbox stringByDeletingLastPathComponent]; 
 	}
 	return nil;
 }
+
 - (BOOL)loadChildrenForObject:(QSObject *)object
 {
 	if ([[object primaryType]isEqualToString:QSFilePathType] && [NSApp featureLevel]>1){
@@ -137,15 +139,18 @@
 	return NO;
 }
 
-- (NSArray *) objectsForEntry:(NSDictionary *)theEntry {
+- (NSArray *) objectsForEntry:(NSDictionary *)theEntry
+{
 	return [self allMailboxes];
 }
 
-- (NSArray *)allMailboxes {
+- (NSArray *)allMailboxes
+{
 	NSMutableArray *objects=[NSMutableArray arrayWithCapacity:1];
     QSObject *newObject;
-	
 	NSFileManager *manager=[NSFileManager defaultManager];
+    NSDirectoryEnumerator *de = [manager enumeratorAtPath:[@"~/Library/Mail/Mailboxes/" stringByStandardizingPath]];
+    NSString *path;
 	
 	for (NSString *path in SPECIAL_ARRAY) {
 		newObject=[QSObject objectWithName:path];
@@ -153,8 +158,6 @@
 		[newObject setPrimaryType:kQSAppleMailMailboxType];
 		[objects addObject:newObject];
 	}
-	NSDirectoryEnumerator *de = [manager enumeratorAtPath:[@"~/Library/Mail/Mailboxes/" stringByStandardizingPath]];
-	NSString *path;
 	while ((path = [de nextObject])) {
 		if ([[path pathExtension]isEqual:@"mbox"]){
 			newObject=[QSObject objectWithName:[[path lastPathComponent]stringByDeletingPathExtension]];

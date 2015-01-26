@@ -9,6 +9,8 @@
 
 
 #import "QSAppleMailPlugIn_Source.h"
+#import <QSCrucible/QSCrucible.h>
+
 #define kQSAppleMailMailboxType @"qs.mail.mailbox"
 #define kQSAppleMailMessageType @"qs.mail.message"
 #define MAIL_BID @"com.apple.mail"

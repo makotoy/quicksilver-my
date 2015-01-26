@@ -94,13 +94,15 @@
     
     NSDictionary *errorDict=nil;
     
-    //id message=
 	[[self mailScript] executeSubroutine:(sendNow?@"send_mail":@"compose_mail")
 							   arguments:[NSArray arrayWithObjects:subject,body,sender,addresses,(pathArray?pathArray:[NSArray array]),nil]
 								   error:&errorDict];
-    //  NSLog(@"%@",message);
-    if (errorDict) 
-        NSRunAlertPanel(@"An error occured while sending mail", [errorDict objectForKey:@"NSAppleScriptErrorMessage"], nil,nil,nil);
+    if (errorDict) {
+        NSRunAlertPanel(@"An error occured while sending mail",
+                        @"AppleScript Error: %@",
+                        nil,nil,nil,
+                        [errorDict objectForKey:@"NSAppleScriptErrorMessage"]);
+    }
 }
 
 - (BOOL)drawIconForObject:(QSObject *)object inRect:(NSRect)rect flipped:(BOOL)flipped
@@ -108,9 +110,8 @@
 	if (![object objectForType:QSProcessType]) return NO;
 	
 	int count=[[[self mailScript] executeSubroutine:@"unread_count"
-																   arguments:nil
-																	   error:nil]int32Value];
-	//NSLog(@"count %d",count);
+                                          arguments:nil
+                                              error:nil]int32Value];
 	NSImage *icon=[object icon];
 	[icon setFlipped:flipped];
 	NSImageRep *bestBadgeRep=[icon bestRepresentationForSize:rect.size];    

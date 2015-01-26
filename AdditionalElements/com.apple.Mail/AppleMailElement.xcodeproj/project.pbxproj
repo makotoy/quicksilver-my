@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -152,9 +152,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7F07AF2A085E432A00E2AFC4 /* Build configuration list for PBXProject "AppleMailElement" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -223,6 +224,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D3180D1EFF610043A815 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
 					QSCrucible,
@@ -245,6 +247,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D3160D1EFF610043A815 /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -252,6 +255,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FE7D3180D1EFF610043A815 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
 					QSCrucible,
