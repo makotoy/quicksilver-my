@@ -22,6 +22,8 @@
     return self;
 }
 
+@synthesize mailScript;
+
 - (void) sendEmailTo:(NSArray *)addresses from:(NSString *)sender
 			 subject:(NSString *)subject body:(NSString *)body
 		 attachments:(NSArray *)pathArray sendNow:(BOOL)sendNow

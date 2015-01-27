@@ -13,6 +13,7 @@
 	
 	IBOutlet NSPopUpButton *groupList;
 	IBOutlet NSPopUpButton *distributionList;
+    NSArray *addrViewTopLevelObjs;
 }
 @property (retain) NSPopUpButton *groupList;
 @property (retain) NSPopUpButton *distributionList;

@@ -34,6 +34,7 @@
 
 @synthesize groupList;
 @synthesize distributionList;
+@synthesize addrViewTopLevelObjs;
 
 - (NSArray *)contactGroups
 {
