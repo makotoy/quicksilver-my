@@ -3,12 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		084BAFF810E9A679003D2539 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 084BAFF610E9A679003D2539 /* Debug.xcconfig */; };
-		084BAFF910E9A679003D2539 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 084BAFF710E9A679003D2539 /* Release.xcconfig */; };
 		332EA8F20B99E76900614E3D /* element.xml in Resources */ = {isa = PBXBuildFile; fileRef = 332EA7DF0B99E3B700614E3D /* element.xml */; };
 		7F2817B207B6F4EB007D4010 /* QSFinderProxy.h in Resources */ = {isa = PBXBuildFile; fileRef = 7F2817B007B6F4EB007D4010 /* QSFinderProxy.h */; };
 		7F2817B307B6F4EB007D4010 /* QSFinderProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2817B107B6F4EB007D4010 /* QSFinderProxy.m */; };
@@ -174,9 +172,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7FE89560085D305D0016C421 /* Build configuration list for PBXProject "QSFinderPlugIn" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -222,8 +221,6 @@
 				7F2817B207B6F4EB007D4010 /* QSFinderProxy.h in Resources */,
 				7F2817B707B6F4FC007D4010 /* Finder.scpt in Resources */,
 				332EA8F20B99E76900614E3D /* element.xml in Resources */,
-				084BAFF810E9A679003D2539 /* Debug.xcconfig in Resources */,
-				084BAFF910E9A679003D2539 /* Release.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +266,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D508A1F0D133E8600A9B360 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = "Finder Module";
 			};
@@ -278,6 +276,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D508A1F0D133E8600A9B360 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = "Finder Module";
 			};
@@ -287,6 +286,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 084BAFF610E9A679003D2539 /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};

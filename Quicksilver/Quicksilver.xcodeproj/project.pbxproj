@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -35,7 +35,7 @@
 		4D9A1E240D0ED0C20072DE55 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9A89950C497DD400B5912D /* Cocoa.framework */; };
 		4D9DBBBA0E017A680051D7F0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D9DBBB90E017A680051D7F0 /* SystemConfiguration.framework */; };
 		4DC81F040D12B3B50039BD1B /* QSPlugInsPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5D23330C49C3B700812049 /* QSPlugInsPrefPane.m */; };
-		4DF635570D106A8000910FC0 /* QSCrucible.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7093B30D101CCE008498FD /* QSCrucible.framework */; };
+		4DF635570D106A8000910FC0 /* QSCrucible.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7093B30D101CCE008498FD /* QSCrucible.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7F17F18C0C4F1FE6001ADE1A /* QSActionsPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5D23090C49C3B700812049 /* QSActionsPrefPane.m */; };
 		7F17F18D0C4F1FE6001ADE1A /* QSAdvancedPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5D230B0C49C3B700812049 /* QSAdvancedPrefPane.m */; };
 		7F17F18E0C4F1FE6001ADE1A /* QSCatalogPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5D23170C49C3B700812049 /* QSCatalogPrefPane.m */; };
@@ -150,8 +150,8 @@
 		7F9A87190C497A8B00B5912D /* About.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F9A861A0C497A8B00B5912D /* About.strings */; };
 		7F9A871A0C497A8B00B5912D /* Catalog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F9A861C0C497A8B00B5912D /* Catalog.strings */; };
 		7F9A871B0C497A8B00B5912D /* Preferences.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F9A861E0C497A8B00B5912D /* Preferences.strings */; };
-		7FA7DB160C5CF10100A27607 /* Quicksilver.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = 7FA7DB0A0C5CF0DB00A27607 /* Quicksilver.mdimporter */; };
-		7FA7DB1E0C5CF12000A27607 /* Quicksilver.qlgenerator in Copy Quick Look Generator */ = {isa = PBXBuildFile; fileRef = 7FA7DB130C5CF0F200A27607 /* Quicksilver.qlgenerator */; };
+		7FA7DB160C5CF10100A27607 /* Quicksilver.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = 7FA7DB0A0C5CF0DB00A27607 /* Quicksilver.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7FA7DB1E0C5CF12000A27607 /* Quicksilver.qlgenerator in Copy Quick Look Generator */ = {isa = PBXBuildFile; fileRef = 7FA7DB130C5CF0F200A27607 /* Quicksilver.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7FC05C8A0C81D374004C8D58 /* prefsGeneral.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FC05C890C81D374004C8D58 /* prefsGeneral.png */; };
 		7FE0BC220C4998610012249C /* ActionsPrecedence.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FE0BBBD0C4998610012249C /* ActionsPrecedence.plist */; };
 		7FE0BC230C4998610012249C /* BundleChildHandlers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FE0BBBE0C4998610012249C /* BundleChildHandlers.plist */; };
@@ -247,7 +247,7 @@
 		7FE0BC7F0C4998610012249C /* QSStyle.css in Resources */ = {isa = PBXBuildFile; fileRef = 7FE0BC1B0C4998610012249C /* QSStyle.css */; };
 		7FE0BC830C4998610012249C /* version.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FE0BC200C4998610012249C /* version.plist */; };
 		7FE0BC840C4998610012249C /* wildcard.* in Resources */ = {isa = PBXBuildFile; fileRef = 7FE0BC210C4998610012249C /* wildcard.* */; };
-		7FE1D2F50CEC8D9900E19D9E /* QSElements.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F69D8860CDE367E002B6B3E /* QSElements.framework */; };
+		7FE1D2F50CEC8D9900E19D9E /* QSElements.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7F69D8860CDE367E002B6B3E /* QSElements.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7FE82FDC0C4A83CE00A321E0 /* ResultWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE82FDB0C4A83CE00A321E0 /* ResultWindow.nib */; };
 /* End PBXBuildFile section */
 
@@ -1283,9 +1283,10 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Quicksilver" */;
-			compatibilityVersion = "Xcode 3.0";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -1855,6 +1856,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4DE9903E0D0F165C00593B3B /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -1890,6 +1892,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D7094F30D102708008498FD /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "CoreElement/QSCoreElement-Info.plist";
 				PRODUCT_NAME = Core;
 			};
@@ -1899,6 +1902,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D7094F30D102708008498FD /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "CoreElement/QSCoreElement-Info.plist";
 				PRODUCT_NAME = Core;
 			};
@@ -1907,6 +1911,7 @@
 		7F9A7A670C49595900B5912D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(QS_SOURCE_ROOT)/Configuration/QSElement_Prefix.pch";
 				INFOPLIST_FILE = "Application/Quicksilver-Info.plist";
@@ -1918,6 +1923,7 @@
 		7F9A7A680C49595900B5912D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(QS_SOURCE_ROOT)/Configuration/QSElement_Prefix.pch";
 				INFOPLIST_FILE = "Application/Quicksilver-Info.plist";

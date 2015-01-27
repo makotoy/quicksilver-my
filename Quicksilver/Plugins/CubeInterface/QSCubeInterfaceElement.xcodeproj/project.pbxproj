@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -290,9 +290,10 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 7F6B3EEF085CE8DF000735A8 /* Build configuration list for PBXProject "QSCubeInterfaceElement" */;
-			compatibilityVersion = "Xcode 3.0";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -446,6 +447,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F4996BC0D2A9B1A00EDA932 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Debug;
 		};
@@ -453,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F4996BC0D2A9B1A00EDA932 /* QSElement.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Release;
 		};
@@ -460,6 +463,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F4996BA0D2A9B1A00EDA932 /* Debug.xcconfig */;
 			buildSettings = {
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
