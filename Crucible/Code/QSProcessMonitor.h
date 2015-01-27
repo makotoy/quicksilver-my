@@ -1,6 +1,7 @@
 
 
 #import <Foundation/Foundation.h>
+
 @class QSObject;
 
 @interface QSProcessMonitor : NSObject {
@@ -12,7 +13,6 @@
 -(NSArray *)visibleProcesses;
 -(NSArray *)allProcesses;
 - (void)reloadProcesses;
-- (QSObject *)imbuedFileProcessForDict:(NSDictionary *)dict;
 
 + (id)sharedInstance;
 + (NSArray *)processes;

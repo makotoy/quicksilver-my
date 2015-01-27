@@ -198,7 +198,7 @@ static id sharedInstance = nil;
 	
     [self validateExistingPlugins];
     
-	NSMutableSet *foundPluginPaths = [NSMutableArray array];
+    NSMutableSet *foundPluginPaths = [NSMutableSet setWithCapacity:0];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSMutableArray *pluginSearchPaths = [self pluginSearchPaths];
 	NSString *eachSearchPath;

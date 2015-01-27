@@ -1,8 +1,13 @@
+/* QSFinderProxy.h
+ * QuickSilver Gamma project
+ * Derived from Blacktree codebase
+ * Makoto Yamashita 2015
+ */
 
 #import "QSFSBrowserMediator.h"
 
 @interface QSFinderProxy : NSObject <QSFSBrowserMediator> {
-NSAppleScript *finderScript;
+    NSAppleScript *finderScript;
 }
 + (id)sharedInstance;
 
@@ -16,4 +21,5 @@ NSAppleScript *finderScript;
 - (NSAppleScript *)finderScript;
 - (void)setFinderScript:(NSAppleScript *)aFinderScript;
 
+@property (strong) NSAppleScript *finderScript;
 @end

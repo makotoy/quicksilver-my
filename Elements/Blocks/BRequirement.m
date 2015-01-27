@@ -16,36 +16,42 @@
 
 #pragma mark Lifetime
 
-- (id)initWithIdentifier:(NSString *)identifier version:(NSString *)version optional:(BOOL)isOptional {
+- (id)initWithIdentifier:(NSString *)identifier version:(NSString *)version optional:(BOOL)isOptional
+{
 	if ((self = [super init])) {
-	[self setValue:identifier forKey:@"identifier"];
-	[self setValue:version forKey:@"version"];
-	[self setValue:[NSNumber numberWithBool:isOptional] forKey:@"optional"];
+        [self setValue:identifier forKey:@"identifier"];
+        [self setValue:version forKey:@"version"];
+        [self setValue:[NSNumber numberWithBool:isOptional] forKey:@"optional"];
 	}
 	return self;
 }
 
 #pragma mark Accessors
 
-- (NSString *)description {
-    return [NSString stringWithFormat:@"bundleIdentifier: %@ optional: %i", [self valueForKey:@"bundle"], [self valueForKey:@"optional"]];
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"bundleIdentifier: %@ optional: %@", [self valueForKey:@"bundle"], [self valueForKey:@"optional"]];
 }
 
-- (BPlugin *)requiredPlugin {
+- (BPlugin *)requiredPlugin
+{
 	return [[BRegistry sharedInstance] pluginWithID:[self valueForKey:@"bundleIdentifier"]];
 }
 
-- (NSBundle *)requiredBundle {
+- (NSBundle *)requiredBundle
+{
 	return [NSBundle bundleWithIdentifier:[self valueForKey:@"bundleIdentifier"]];
 }
 
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key{
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
 	BLog(@"Requirement %@ could not set value %@ to %@", self,  key, value);	
 }
 
 #pragma mark Loading
 
-- (BOOL)isLoaded {
+- (BOOL)isLoaded
+{
 	BPlugin *plugin = [self requiredPlugin];
 	if (plugin) return [plugin isLoaded];
 	NSBundle *bundle = [self requiredBundle];
@@ -53,7 +59,8 @@
 	return NO;
 }
 
-- (BOOL)load {
+- (BOOL)load
+{
 	BPlugin *plugin = [self requiredPlugin];
 	if (plugin) return [plugin load];
 	NSBundle *bundle = [self requiredBundle];
